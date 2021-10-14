@@ -1,8 +1,38 @@
 ﻿using System;
 
-namespace DAL
+namespace IDAL
 {
-    public class Class1
+    namespace DO
     {
+        enum 
+        struct Customer
+        {
+            
+        }
+        
+        struct Customer
+        {
+            
+        }
+        
+        struct Customer
+        {
+            
+        }
+        
+        struct Customer
+        {
+            
+        }
+        
+        struct Customer
+        {
+            
+        }
+        
+        struct Customer
+        {
+            
+        }
     }
 }
