@@ -28,9 +28,9 @@ namespace IDAL
             public Priorities Lattitube{ get; set; }
             public datetime Requested{ get; set; }
             public int Droneld{ get; set; }
-            public datetime Scheduled{ get; set; }
-            public datetime PickedUp{ get; set; }
-            public datetime Delivered{ get; set; }
+            public Datetime Scheduled{ get; set; }
+            public Datetime PickedUp{ get; set; }
+            public Datetime Delivered{ get; set; }
         }
         
        public struct Drone
