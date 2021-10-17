@@ -4,6 +4,12 @@ namespace ConsoleUI
 {
     class Program
     {
+        static void Main(string[] args)
+        {
+            MainMenu();
+            //
+        }
+        
         static void MainMenu()
         {
             int choice;
@@ -61,6 +67,7 @@ namespace ConsoleUI
             SecondMenu(choice, secondChoice);
 
         }
+        
         static void SecondMenu(int choice, int secondChoice)
         {
             switch (choice)
@@ -94,14 +101,10 @@ namespace ConsoleUI
         {
             Console.WriteLine("you chose some kind of status");
         }
+        
         static void lists(int num)
         {
             Console.WriteLine("you chose some kind of lists");
-        }
-        
-        static void Main(string[] args)
-        {
-            MainMenu();
         }
     }
 }
