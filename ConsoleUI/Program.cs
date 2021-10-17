@@ -1,4 +1,6 @@
 using System;
+using IDAL;
+using IDAL.DO;
 
 namespace ConsoleUI
 {
