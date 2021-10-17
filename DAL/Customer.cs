@@ -11,6 +11,9 @@ namespace IDAL
             public string Phone { get; set; }
             public double Longitube { get; set; }
             public double Lattitube{ get; set; }
+            
+            public string override ToString() 
+            { return $"Id: {Id}\nName: {Name}\nPhone: {Phone}\nLongitube: {Longitube}\nLattitube: {Lattitube}\n"; }
         }
     }
 }
