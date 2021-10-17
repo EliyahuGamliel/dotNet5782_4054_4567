@@ -2,8 +2,16 @@ using System;
 
 namespace DalObject
 {
-    public struct DataSource
+    public class DataSource
     {
-        
+        internal static IDAL.DO.Drone[] drones = new IDAL.DO.Drone[10];
+        internal static IDAL.DO.Station[] stations = new IDAL.DO.Station[5];
+        internal static IDAL.DO.Customer[] customers = new IDAL.DO.Customer[100];
+        internal static IDAL.DO.Parcel[] parcels = new IDAL.DO.Parcel[1000];
+
+        internal class Confing
+        {
+             void Initialize()
+        }
     }
 } 
