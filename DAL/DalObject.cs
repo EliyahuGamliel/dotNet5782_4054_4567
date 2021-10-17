@@ -15,11 +15,17 @@ namespace DalObject
             public static int Drones_Index = 0;
             public static int Drones_Index = 0;
             public static int Drones_Index = 0;
+            public static int Number_ID = 0;
             
             public void Initialize()
             {
                 
             }
         }
+    }
+    
+    public class DalObject
+    {
+        
     }
 } 
