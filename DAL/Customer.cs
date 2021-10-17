@@ -13,7 +13,39 @@ namespace IDAL
             public double Lattitube{ get; set; }
             
             public string override ToString() 
-            { return $"Id: {Id}\nName: {Name}\nPhone: {Phone}\nLongitube: {Longitube}\nLattitube: {Lattitube}\n"; }
+            { return $"Id: {Id}\nName: {Name}\nPhone: {Phone}\nLongitube: {Longitube_Bonus(Longitube)}\nLattitube: {Lattitube_Bonus(Lattitube)}\n"; }
+            
+            public static string Longitube_Bonus(double num)
+            {
+                char dir = 'S';
+                if (num < 0)
+                    num = -num;
+                else
+                    dir = 'N';
+                int degrees = (int)num;
+                num = num - degrees;
+                double help = num * 60;
+                int minutes = (int)help;
+                help = num - ((double)minutes / 60);
+                seconds = help * 3600;
+                return $"{degrees}° {minutes}' {seconds}\" {dir}\n";
+            }
+            
+            public static string Lattitube_Bonus(double num)
+            {
+                char dir = 'W';
+                if (num < 0)
+                    num = -num;
+                else
+                    dir = 'E';
+                int degrees = (int)num;
+                num = num - degrees;
+                double help = num * 60;
+                int minutes = (int)help;
+                help = num - ((double)minutes / 60);
+                seconds = help * 3600;
+                return $"{degrees}° {minutes}' {seconds}\" {dir}\n";
+            }
         }
     }
 }
