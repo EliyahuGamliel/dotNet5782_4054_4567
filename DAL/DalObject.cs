@@ -8,6 +8,11 @@ namespace DalObject
         internal static IDAL.DO.Station[] stations = new IDAL.DO.Station[5];
         internal static IDAL.DO.Customer[] customers = new IDAL.DO.Customer[100];
         internal static IDAL.DO.Parcel[] parcels = new IDAL.DO.Parcel[1000];
+        
+         public void Initialize()
+         {
+                
+         }
 
         internal class Confing
         {
@@ -15,12 +20,7 @@ namespace DalObject
             public static int Drones_Index = 0;
             public static int Drones_Index = 0;
             public static int Drones_Index = 0;
-            public static int Number_ID = 0;
-            
-            public void Initialize()
-            {
-                
-            }
+            public static int Number_ID = 0;       
         }
     }
     
