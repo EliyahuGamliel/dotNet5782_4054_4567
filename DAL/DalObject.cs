@@ -12,6 +12,9 @@ namespace DalObject
         internal class Confing
         {
              void Initialize()
+             {
+                 
+             }
         }
     }
 } 
