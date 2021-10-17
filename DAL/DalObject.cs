@@ -11,10 +11,15 @@ namespace DalObject
 
         internal class Confing
         {
-             void Initialize()
-             {
-                 
-             }
+            public static int Drones_Index = 0;
+            public static int Drones_Index = 0;
+            public static int Drones_Index = 0;
+            public static int Drones_Index = 0;
+            
+            public void Initialize()
+            {
+                
+            }
         }
     }
 } 
