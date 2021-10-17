@@ -26,11 +26,11 @@ namespace IDAL
             public int Targetld { get; set; }
             public WeightCategories Weight { get; set; }
             public Priorities Lattitube{ get; set; }
-            public datetime Requested{ get; set; }
+            public DateTime Requested{ get; set; }
             public int Droneld{ get; set; }
-            public datetime Scheduled{ get; set; }
-            public datetime PickedUp{ get; set; }
-            public datetime Delivered{ get; set; }
+            public DateTime Scheduled{ get; set; }
+            public DateTime PickedUp{ get; set; }
+            public DateTime Delivered{ get; set; }
         }
         
        public struct Drone
