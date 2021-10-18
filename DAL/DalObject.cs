@@ -1,5 +1,5 @@
 using System;
-
+using IDAL.DO
 namespace DalObject
 {
     public class DataSource
@@ -11,7 +11,11 @@ namespace DalObject
         
          public void Initialize()
          {
-           ///IC stupid     
+           ///IC 
+            Random r = new Random();
+            int l = r.next(2, 10);
+            for(int i = 0;i < r;)
+             
          }
 
         internal class Confing
