@@ -11,7 +11,7 @@ namespace DalObject
         
          public void Initialize()
          {
-                
+           ///IC stupid     
          }
 
         internal class Confing
