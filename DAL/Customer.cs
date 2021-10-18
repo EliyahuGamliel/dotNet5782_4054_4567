@@ -17,18 +17,17 @@ namespace IDAL
             
             public static string Longitube_Bonus(double num)
             {
-                char dir = 'S';
+            char dir = 'S';
                 if (num < 0)
                     num = -num;
                 else
                     dir = 'N';
                 int degrees = (int)num;
                 num = num - degrees;
-                double help = num * 60;
-                int minutes = (int)help;
-                help = num - ((double)minutes / 60);
-                seconds = help * 3600;
-                return $"{degrees}° {minutes}' {seconds}\" {dir}\n";
+                int minutes = (int)(num * 60);
+                double rest = num - ((double)minutes / 60);
+                double seconds = rest * 3600;
+                return $"{degrees}° {minutes}' {Math.Round(seconds, 3, MidpointRounding.ToZero)}\" {dir}\n";
             }
             
             public static string Lattitube_Bonus(double num)
@@ -40,11 +39,10 @@ namespace IDAL
                     dir = 'E';
                 int degrees = (int)num;
                 num = num - degrees;
-                double help = num * 60;
-                int minutes = (int)help;
-                help = num - ((double)minutes / 60);
-                seconds = help * 3600;
-                return $"{degrees}° {minutes}' {seconds}\" {dir}\n";
+                int minutes = (int)(num * 60);
+                double rest = num - ((double)minutes / 60);
+                double seconds = rest * 3600;
+                return $"{degrees}° {minutes}' {Math.Round(seconds, 3, MidpointRounding.ToZero)}\" {dir}\n";
             }
         }
     }
