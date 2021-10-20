@@ -12,17 +12,15 @@ namespace DalObject
 		public void static DistancePrint(double lat1, double lon1, char letter, int id)
 		{
 			if (letter == 'c')
-				dis = DistanceTo(lat1, lon1,
+				dis = DistanceTo(lat1, lon1, customers[IndexOfCustomerId(id)].Lattitude , customers[IndexOfCustomerId(id)].Longitude)
 			else
-
+				dis = DistanceTo(lat1, lon1, stations[IndexOfStationId(id)].Lattitude , stations[IndexOfStationId(id)].Longitude)
 		}
 
 		internal int static IndexOfCustomerId(int CSID)
 		{
-			for (int i = 0;i < Customers_Index; ++i)
-			{
-				if (customers.id == CSID)
-				{
+			for (int i = 0;i < Customers_Index; ++i) {
+				if (customers.Id == CSID) {
 					return i;
 				}
 			}
@@ -30,14 +28,13 @@ namespace DalObject
 
 		internal int static IndexOfStationId(int CSID)
 		{
-			for (int i = 0;i < Stations_Index; ++i)
-			{
-				if (Stations.id == CSID)
-				{
+			for (int i = 0;i < Stations_Index; ++i) {
+				if (Stations.id == CSID) {
 					return i;
 				}
 			}
 		}
+		
 		public void Initialize()
 		{
 			///IC 
