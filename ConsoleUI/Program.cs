@@ -19,7 +19,7 @@ namespace ConsoleUI
 			Console.WriteLine("Enter 2 for update");
 			Console.WriteLine("Enter 3 to show");
 			Console.WriteLine("Enter 4 for the list");
-			Console.WriteLine("Enter 6 to show the distance from the station\customer");
+			Console.WriteLine("Enter 6 to show the distance from the station/customer");
 			Console.WriteLine("Enter 5 to exit");
 
 
@@ -72,7 +72,8 @@ namespace ConsoleUI
 				break;
 
 			}
-			int secondChoice = Int32.TryParse(Console.ReadLine());
+			int secondChoice;
+			Int32.TryParse(Console.ReadLine(), out secondChoice);
 			SecondMenu(choice, secondChoice);
 
 		}
@@ -103,20 +104,25 @@ namespace ConsoleUI
 
 		static void coordinateMa()
 		{
-			double lat = Double.tryParse(Console.ReadLine());
-			double lon = Double.tryParse(Console.ReadLine());
-			Console.WriteLine("do you want to mesure the distance from a customer or from a station? (c\s)");
-			char ch = Char.tryParse(Console.ReadLine());
+			double lat;
+			Double.TryParse(Console.ReadLine(),out lat);
+			double lon;
+			Double.TryParse(Console.ReadLine(), out lon);
+			Console.WriteLine("do you want to mesure the distance from a customer or from a station? (c/s)");
+			char ch;
+			Char.TryParse(Console.ReadLine(), out ch);
 			if (ch == 'c')
 			{
 				Console.WriteLine("enter the id");
-				int CID = Int32.TryParse(Console.ReadLine());
+				int CID;
+				Int32.TryParse(Console.ReadLine(), out CID);
 				DistancePrint(lat, lon, ch, CID);
 			}
 			else
 			{
 				Console.WriteLine("enter the id");
-				int SID = Int32.TryParse(Console.ReadLine());
+				int SID;
+				Int32.TryParse(Console.ReadLine(), out SID);
 				DistancePrint(lat, lon, ch, SID);
 			}
 		}
