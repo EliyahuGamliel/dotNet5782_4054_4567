@@ -9,7 +9,7 @@ namespace DalObject
         internal static Customer[] customers = new IDAL.DO.Customer[100];
         internal static Parcel[] parcels = new IDAL.DO.Parcel[1000];
          
-        public static DistancePrint(double lat1, double lon1, char letter, int id)
+        public void static DistancePrint(double lat1, double lon1, char letter, int id)
         {
             if (letter == 'c')
                 dis = DistanceTo(lat1, lon1,  
@@ -17,6 +17,27 @@ namespace DalObject
                                  
         }
         
+        internal int static IndexOfCustomerId(int CSID)
+        {
+            for(int i = 0;i < Customers_Index; ++i)
+            {
+                if(customers.id == CSID)
+                {
+                    return i;
+                }
+            }
+        }
+                                 
+        internal int static IndexOfStationId(int CSID)
+        {
+            for(int i = 0;i < Stations_Index; ++i)
+            {
+                if(Stations.id == CSID)
+                {
+                    return i;
+                }
+            }
+        }
          public void Initialize()
          {
            ///IC 
@@ -113,8 +134,8 @@ namespace DalObject
         {
             public static int Drones_Index = 0;
             public static int Parcels_Index = 0;
-            public static int Drones_Index = 0;
-            public static int Drones_Index = 0;
+            public static int Customers_Index = 0;
+            public static int Stations_Index = 0;
             public static int Number_ID = 0;       
         }
     }
