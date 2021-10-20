@@ -27,8 +27,8 @@ namespace DalObject
                 }
                 drone[i].Id = rid;
                 drone[i].Model = ("Mark" + 1);
-                drone[i].MaxWeight = (WeightCategories)(r.next(0, 2));
-                drone[i].Status = (DroneStatuses)(r.next(0, 2));  //change the status so they wil be different 
+                drone[i].MaxWeight = (WeightCategories)(r.next(0, 3));
+                drone[i].Status = (DroneStatuses)(r.next(0, 3));  //change the status so they wil be different 
                 drone[i].Battery = 100;
             }
 
@@ -48,8 +48,8 @@ namespace DalObject
                 }
                 stations[i].Id = rid;
                 stations[i].Name = ("PumbaNumber " + i);
-                stations[i].Longitube = r.next(-180, 180);
-                stations[i].Lattitube = r.next(-90, 90);
+                stations[i].Longitube = r.nextDouble(-180, 180);
+                stations[i].Lattitube = r.nextDouble(-90, 90);
                 int numberOsCells = 5;//to change
                 stations[i].ChargeSlots = numberOsCells;
             }
@@ -82,28 +82,19 @@ namespace DalObject
                         h = -1;
                     }
                 }
-                customers[i].Longitube = r.next(-180, 180);
-                customers[i].Lattitube = r.next(-90, 90);
+                customers[i].Longitube = r.nextDouble(-180, 180);
+                customers[i].Lattitube = r.nextDouble(-90, 90);
             }
              
 
             l = r.next(10, 1001);
             for(int i = 0;i < l;++i)
             {
-                int rid = r.next();
-                for(int h = 0;h < i;++h)
-                {
-                    if(rid == drones[h].Id)
-                    {
-                        rid = r.next();
-                        h = -1;
-                    }
-                }
-                drone[i].Id = rid;
-                drone[i].Model = ("Mark" + 1);
-                drone[i].MaxWeight = (WeightCategories)(r.next(0, 2));
-                drone[i].Status = (DroneStatuses)(r.next(0, 2));  //change the status so they wil be different 
-                drone[i].Battery = 100;
+                drone[i].Id = Confing.Parcels_Index;
+                //need to add here the sender id, target id, drone id, 
+                parcels[i].Longitube = r.nextDouble(-180, 180);
+                parcels[i].Lattitube = r.nextDouble(-90, 90);
+
             }
 
             
@@ -113,7 +104,7 @@ namespace DalObject
         internal class Confing
         {
             public static int Drones_Index = 0;
-            public static int Drones_Index = 0;
+            public static int Parcels_Index = 0;
             public static int Drones_Index = 0;
             public static int Drones_Index = 0;
             public static int Number_ID = 0;       
