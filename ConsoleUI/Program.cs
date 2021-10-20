@@ -1,6 +1,7 @@
 using System;
 using IDAL;
 using IDAL.DO;
+using DalObject;
 
 namespace ConsoleUI
 {
@@ -8,6 +9,7 @@ namespace ConsoleUI
 	{
 		static void Main(string[] args)
 		{
+			DataSource GamlielTambal;
 			MainMenu();
 			//
 		}
@@ -19,8 +21,10 @@ namespace ConsoleUI
 			Console.WriteLine("Enter 2 for update");
 			Console.WriteLine("Enter 3 to show");
 			Console.WriteLine("Enter 4 for the list");
-			Console.WriteLine("Enter 6 to show the distance from the station/customer");
-			Console.WriteLine("Enter 5 to exit");
+			Console.WriteLine("Enter 5 to show the distance from the station/customer");
+			Console.WriteLine("Enter 6 to exit");
+
+
 
 
 
@@ -64,7 +68,7 @@ namespace ConsoleUI
 				break;
 			case 5:
 				Console.WriteLine("enter the latitude and then the longitude");
-
+				coordinateMa();
 
 				break;
 			case 6:
@@ -105,6 +109,7 @@ namespace ConsoleUI
 		static void coordinateMa()
 		{
 			double lat;
+			int ID;
 			Double.TryParse(Console.ReadLine(),out lat);
 			double lon;
 			Double.TryParse(Console.ReadLine(), out lon);
@@ -114,20 +119,18 @@ namespace ConsoleUI
 			if (ch == 'c')
 			{
 				Console.WriteLine("enter the id");
-				int CID;
-				Int32.TryParse(Console.ReadLine(), out CID);
-				DistancePrint(lat, lon, ch, CID);
+				Int32.TryParse(Console.ReadLine(), out ID);
+                Console.WriteLine(DataSource.DistancePrint(lat, lon, ch, ID));
 			}
 			else
 			{
 				Console.WriteLine("enter the id");
-				int SID;
-				Int32.TryParse(Console.ReadLine(), out SID);
-				DistancePrint(lat, lon, ch, SID);
+				Int32.TryParse(Console.ReadLine(), out ID);
+				Console.WriteLine(DataSource.DistancePrint(lat, lon, ch, ID));
 			}
 		}
 
-		static void update(int num)
+        static void update(int num)
 		{
 			Console.WriteLine("you chose some kind of update");
 		}

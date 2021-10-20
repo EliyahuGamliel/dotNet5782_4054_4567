@@ -7,12 +7,12 @@ namespace IDAL
        public struct Station
        {
            public int Id { get; set; }
-           public int Name { get; set; }
+           public string Name { get; set; }
            public double Longitude { get; set; }
            public double Lattitude{ get; set; } 
            public int ChargeSlots{ get; set; }
            
-           public string override ToString() 
+           public override string ToString() 
            { return $"Id: {Id}\nName: {Name}\nLongitude: {Longitube_Bonus(Longitude)}\nLattitude: {Lattitube_Bonus(Lattitude)}\nChargeSlots: {ChargeSlots}\n"; }     
            
            public static string Longitube_Bonus(double num)
@@ -45,7 +45,7 @@ namespace IDAL
                 return $"{degrees}° {minutes}' {Math.Round(seconds, 3, MidpointRounding.ToZero)}\" {dir}\n";
             }
            
-           public static double DistanceTo(double lat1, double lon1, double lat2, double lon2, char unit = 'K')
+           public double DistanceTo(double lat1, double lon1, double lat2, double lon2)
         {
             double rlat1 = Math.PI * lat1 / 180;
             double rlat2 = Math.PI * lat2 / 180;

@@ -9,7 +9,7 @@ namespace IDAL
             public int Droneld { get; set; }
             public int Stationld { get; set; }
             
-            public string override ToString() 
+            public override string ToString() 
             { return $"Droneld: {Droneld}\nStationld: {Stationld}\n"; }
         } 
     }
