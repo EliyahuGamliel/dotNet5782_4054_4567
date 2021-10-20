@@ -4,10 +4,18 @@ namespace DalObject
 {
     public class DataSource
     {
-        internal static IDAL.DO.Drone[] drones = new IDAL.DO.Drone[10];
-        internal static IDAL.DO.Station[] stations = new IDAL.DO.Station[5];
-        internal static IDAL.DO.Customer[] customers = new IDAL.DO.Customer[100];
-        internal static IDAL.DO.Parcel[] parcels = new IDAL.DO.Parcel[1000];
+        internal static Drone[] drones = new IDAL.DO.Drone[10];
+        internal static Station[] stations = new IDAL.DO.Station[5];
+        internal static Customer[] customers = new IDAL.DO.Customer[100];
+        internal static Parcel[] parcels = new IDAL.DO.Parcel[1000];
+         
+        public static DistancePrint(double lat1, double lon1, char letter, int id)
+        {
+            if (letter == 'c')
+                dis = DistanceTo(lat1, lon1,  
+            else
+                                 
+        }
         
          public void Initialize()
          {
