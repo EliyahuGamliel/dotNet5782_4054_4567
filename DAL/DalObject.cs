@@ -40,24 +40,21 @@ namespace DalObject
 			int l = r.Next(5, 11);
 			for (int i = 0;i < l;++i)
 			{
-				bool check = true;
 				int rid = r.Next();
-				for (int h = 0;h < i;++h) 
+				for (int h = 0;h < i;++h) {
 					if (rid == drones[h].Id) {
 						i -= 1;
-						check = false;
+						rid = r.Next();
 					}
-				
-				if (check)
-				{
-					Drone d = new Drone();
-					d.Id = rid;
-					d.Model = ("Mark" + 1);
-					d.MaxWeight = (WeightCategories)(r.Next(0, 3));
-					d.Status = (DroneStatuses)(r.Next(0, 3));  //change the status so they wil be different 
-					d.Battery = 100;
-					drones.Add(d);
 				}
+				
+				Drone d = new Drone();
+				d.Id = rid;
+				d.Model = ("Mark" + 1);
+				d.MaxWeight = (WeightCategories)(r.Next(0, 3));
+				d.Status = (DroneStatuses)(r.Next(0, 3));  //change the status so they wil be different 
+				d.Battery = 100;
+				drones.Add(d);
 			}
 
 
@@ -65,25 +62,22 @@ namespace DalObject
 			l = r.Next(2, 6);
 			for (int i = 0;i < l;++i)
 			{
-				bool check = true;
 				int rid = r.Next();
-				for (int h = 0;h < i;++h) 
-					if (rid == drones[h].Id) {
-						i -= 1;
-						check = false;
+				for (int h = 0;h < i;++h) {
+					if (rid == statins[h].Id) {
+						h =  -1;
+						rid = r.Next();
 					}
-				
-				if (check)
-				{
-					Station s = new Station();
-					int numberOsCells = 5;//to change
-					s.ChargeSlots = numberOsCells;
-					s.Id = rid;
-					//s.Name = 
-					s.Longitube = r.NextDouble() + r.Next(-180, 180);
-					s.Lattitube = r.NextDouble() + r.Next(-90, 90);
-					stations.Add(s);
 				}
+				
+				Station s = new Station();
+				int numberOsCells = 5;//to change
+				s.ChargeSlots = numberOsCells;
+				s.Id = rid;
+				//s.Name = 
+				s.Longitube = r.NextDouble() + r.Next(-180, 180);
+				s.Lattitube = r.NextDouble() + r.Next(-90, 90);
+				stations.Add(s);
 			}
 					
 
@@ -92,20 +86,20 @@ namespace DalObject
 			for (int i = 0;i < l;++i)
 			{
 				int rid = r.Next();
-				for (int h = 0;h < i;++h)
-				{
-					if (rid == stations[h].Id)
-					{
-						h = -1;
+				for (int h = 0;h < i;++h) {
+					if (rid == customers[h].Id) {
+						h =  -1;
+						rid = r.Next();
 					}
 				}
-				stations[i].Id = rid;
-				customers[i].Name = ("MyNameIs" + i);
+				
+				Customer c = new Customer();
+				c.Id = rid;
+				c.Name = ("MyNameIs" + i);
 
 
 				rid = r.Next(1000, 10000);
-				for (int h = 0;h < i;++h)
-				{
+				for (int h = 0;h < i;++h) {
 					string ph = "053758" + rid;
 					if (ph == customers[h].Phone)
 					{
@@ -113,35 +107,17 @@ namespace DalObject
 						h = -1;
 					}
 				}
-				customers[i].Longitube = r.NextDouble() + r.Next(-180, 180);
-				customers[i].Lattitube = r.NextDouble() + r.Next(-90, 90);
-				
-				bool check = true;
-				int rid = r.Next();
-				for (int h = 0;h < i;++h) 
-					if (rid == drones[h].Id) {
-						i -= 1;
-						check = false;
-					}
-				
-				if (check)
-				{
-					Station s = new Station();
-					int numberOsCells = 5;//to change
-					s.ChargeSlots = numberOsCells;
-					s.Id = rid;
-					//s.Name = 
-					s.Longitube = r.NextDouble() + r.Next(-180, 180);
-					s.Lattitube = r.NextDouble() + r.Next(-90, 90);
-					stations.Add(s);
-				}
+				c.Phone = ph;
+				c.Longitube = r.NextDouble() + r.Next(-180, 180);
+				c.Lattitube = r.NextDouble() + r.Next(-90, 90);
+				customers.Add(c);
 			}
 
 			//Parcel
 			l = r.Next(10, 1001);
 			for (int i = 0;i < l;++i)
 			{
-				drones[i].Id = Config.Parcels_Index;
+				//drones[i].Id = Config.Parcels_Index;
 				//need to add here the sender id, target id, drone id, 
 
 			}
