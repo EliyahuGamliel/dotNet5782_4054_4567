@@ -71,10 +71,9 @@ namespace DalObject
 				}
 				
 				Station s = new Station();
-				int numberOsCells = 5;//to change
-				s.ChargeSlots = numberOsCells;
+				s.ChargeSlots = 2 + r.Next(0, 3);
 				s.Id = rid;
-				//s.Name = 
+				s.Name = "station" + s.Id;
 				s.Longitube = r.NextDouble() + r.Next(-180, 180);
 				s.Lattitube = r.NextDouble() + r.Next(-90, 90);
 				stations.Add(s);
@@ -117,9 +116,55 @@ namespace DalObject
 			l = r.Next(10, 1001);
 			for (int i = 0;i < l;++i)
 			{
-				//drones[i].Id = Config.Parcels_Index;
-				//need to add here the sender id, target id, drone id, 
-
+				Parcel p = new Parcel();
+				p.Id = Config.Parcels_Index;
+				p.Scheduled = DateTime.now;//should be created
+				int len = customers.Count;
+				for(int h = 0; h < len;++h)
+				{
+					int len2 = parcels.Count;
+					for(int u = 0; u < len2; ++u)
+					{
+						if(customers[h].Id == parcels[u].Senderld)
+						{
+							h = -1;
+							break;
+						}
+					}
+					p.Senderld = customers[h].Id;
+				}
+				
+				
+				int len = drones.Count;
+				for(int h = 0; h < len;++h)
+				{
+					if(drones[h].DroneStatuses == DroneStatuses.Available)
+					{
+						p.Droneld = drones[h].Id;	
+						p.PickedUp = DateTime.now;
+					}
+				}
+				
+				
+				int len = customers.Count;
+				for(int h = 0; h < len;++h)
+				{
+					int len2 = parcels.Count;
+					for(int u = 0; u < len2; ++u)
+					{
+						if(customers[h].Id == parcels[u].Targetld)
+						{
+							h = -1;
+							break;
+						}
+					}
+					p.Targetld = customers[h].Id;
+				}
+				
+				p.Weight = (WeightCategories)(r.Next(0, 3));
+				p.priority = (Priorities)(r.Next(0, 3));
+				
+				
 			}
 
 
