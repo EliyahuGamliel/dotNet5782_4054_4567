@@ -118,7 +118,7 @@ namespace DalObject
 			{
 				Parcel p = new Parcel();
 				p.Id = Config.Parcels_Index;
-				p.Scheduled = DateTime.now;//should be created
+				p.Requested = DateTime.now;//should be created
 				int len = customers.Count;
 				for(int h = 0; h < len;++h)
 				{
@@ -141,7 +141,7 @@ namespace DalObject
 					if(drones[h].DroneStatuses == DroneStatuses.Available)
 					{
 						p.Droneld = drones[h].Id;	
-						p.PickedUp = DateTime.now;
+						p.Scheduled = DateTime.now;
 					}
 				}
 				
