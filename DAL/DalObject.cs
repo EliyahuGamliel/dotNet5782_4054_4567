@@ -111,7 +111,7 @@ namespace DalObject
 				c.Id = rid;
 				c.Name = ("MyNameIs" + i);
 
-				string ph = "LOL";
+				string ph = "0537589982";
 				rid = r.Next(1000, 10000);
 				for (int h = 0;h < i;++h) {
 					ph = "053758" + rid;
