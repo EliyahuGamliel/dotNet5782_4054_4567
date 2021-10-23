@@ -15,37 +15,7 @@ namespace DalObject
 		{
 			public static int Number_ID = 0;
 		}
-		public static void AddStation(Station oj)
-        {
-			stations.Add(oj);
-        }
-		public static void AddDrone(Drone oj)
-		{
-			drones.Add(oj);
-		}
-		public static void AddParcel(Parcel oj)
-		{
-			parcels.Add(oj);
-		}
-		public static void AddCustomer(Customer oj)
-		{
-			customers.Add(oj);
-		}
-		public static double DistancePrint(double lat1, double lon1, char letter, int id)
-		{
-			double dis;
-			if (letter == 'c') {
-				Customer c = customers.Find(c => id == c.Id);
-				int index = customers.IndexOf(c);
-				dis = customers[index].DistanceTo(lat1, lon1, customers[index].Lattitude, customers[index].Longitude);
-			}
-			else {
-				Station s = stations.Find(s => id == s.Id);
-				int index = stations.IndexOf(s);
-				dis = stations[index].DistanceTo(lat1, lon1, stations[index].Lattitude, stations[index].Longitude);
-			}
-			return dis;
-		}
+		
 		
 		public static void Initialize()
 		{
@@ -153,7 +123,7 @@ namespace DalObject
 				int Len = drones.Count;
 				for(int h = 0; h < Len;++h)
 				{
-					if(drones[h].Status == DroneStatuses.Available)
+					if(drones[h].Status == DroneStatuses.Del)
 					{
 						p.Droneld = drones[h].Id;	
 						p.Scheduled = DateTime.Now;
@@ -192,27 +162,41 @@ namespace DalObject
 	public class DalObject
 	{
 		public DalObject() { DataSource.Initialize(); }
-		public int AddParcel()
+		
+		public static double DistancePrint(double lat1, double lon1, char letter, int id)
 		{
-
+			double dis;
+			if (letter == 'c') {
+				Customer c = DataSource.customers.Find(c => id == c.Id);
+				int index = DataSource.customers.IndexOf(c);
+				dis = DataSource.customers[index].DistanceTo(lat1, lon1, DataSource.customers[index].Lattitude, DataSource.customers[index].Longitude);
+			}
+			else {
+				Station s = DataSource.stations.Find(s => id == s.Id);
+				int index = DataSource.stations.IndexOf(s);
+				dis = DataSource.stations[index].DistanceTo(lat1, lon1, DataSource.stations[index].Lattitude, DataSource.stations[index].Longitude);
+			}
+			return dis;
+		}
+		
+		public int AddParcel() {
 			DataSource.Config.Number_ID += 1;
 			return 0;
 		}
 
-		public static void AddStation(Station oj)
-		{
+		public static void AddStation(Station oj) {
 			DataSource.AddStation(oj);
 		}
-		public static void AddDrone(Drone oj)
-		{
+		
+		public static void AddDrone(Drone oj) {
 			DataSource.AddDrone(oj);
 		}
-		public static void AddParcel(Parcel oj)
-		{
+		
+		public static void AddParcel(Parcel oj) {
 			DataSource.AddParcel(oj);
 		}
-		public static void AddCustomer(Customer oj)
-		{
+		
+		public static void AddCustomer(Customer oj) {
 			DataSource.AddCustomer(oj);
 		}
 	}
