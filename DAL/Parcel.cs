@@ -18,7 +18,7 @@ namespace IDAL
             public DateTime Delivered{ get; set; }
             
             public override string ToString() 
-            { return $"Id: {Id}\nSenderld: {Senderld}\nTargetld: {Targetld}\nWeight: {Weight}\nLattitube: {Lattitube}\nRequested: {Requested}\nDroneld: {Droneld}\nScheduled: {Scheduled}\nPickedUp: {PickedUp}\n Delivered: {Delivered}\n"; }
+            { return $"Id: {Id}\nSenderld: {Senderld}\nTargetld: {Targetld}\nWeight: {Weight}\nRequested: {Requested}\nDroneld: {Droneld}\nScheduled: {Scheduled}\nPickedUp: {PickedUp}\n Delivered: {Delivered}\n"; }
         }
     }
 }

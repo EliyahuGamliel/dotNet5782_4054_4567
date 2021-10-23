@@ -13,7 +13,7 @@ namespace IDAL
            public int ChargeSlots{ get; set; }
            
            public override string ToString() 
-           { return $"Id: {Id}\nName: {Name}\nLongitude: {Longitube_Bonus(Longitude)}\nLattitude: {Lattitube_Bonus(Lattitude)}\nChargeSlots: {ChargeSlots}\n"; }     
+           { return $"Id: {Id}\nName: {Name}\nLongitude: {Longitube_Bonus(Longitude)}\nLattitude: {Lattitude_Bonus(Lattitude)}\nChargeSlots: {ChargeSlots}\n"; }     
            
            public static string Longitube_Bonus(double num)
            {
@@ -27,10 +27,10 @@ namespace IDAL
                 int minutes = (int)(num * 60);
                 double rest = num - ((double)minutes / 60);
                 double seconds = rest * 3600;
-                return $"{degrees}° {minutes}' {Math.Round(seconds, 3, MidpointRounding.ToZero)}\" {dir}\n";
+                return $"{degrees}° {minutes}' {Math.Round(seconds, 3, MidpointRounding.ToZero)}\" {dir}";
             }
             
-            public static string Lattitube_Bonus(double num)
+            public static string Lattitude_Bonus(double num)
             {
                 char dir = 'W';
                 if (num < 0)
@@ -42,7 +42,7 @@ namespace IDAL
                 int minutes = (int)(num * 60);
                 double rest = num - ((double)minutes / 60);
                 double seconds = rest * 3600;
-                return $"{degrees}° {minutes}' {Math.Round(seconds, 3, MidpointRounding.ToZero)}\" {dir}\n";
+                return $"{degrees}° {minutes}' {Math.Round(seconds, 3, MidpointRounding.ToZero)}\" {dir}";
             }
            
            public double DistanceTo(double lat1, double lon1, double lat2, double lon2)

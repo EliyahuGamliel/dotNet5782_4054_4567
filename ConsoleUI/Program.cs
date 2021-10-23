@@ -9,7 +9,7 @@ namespace ConsoleUI
 	{
 		static void Main(string[] args)
 		{
-			DataSource GamlielTambal;
+			DalObject.DalObject i = new DalObject.DalObject();
 			MainMenu();
 			//
 		}

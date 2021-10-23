@@ -10,10 +10,10 @@ namespace IDAL
             public string Name { get; set; }
             public string Phone { get; set; }
             public double Longitube { get; set; }
-            public double Lattitube{ get; set; }
+            public double Lattitude{ get; set; }
             
             public override string ToString() 
-            { return $"Id: {Id}\nName: {Name}\nPhone: {Phone}\nLongitube: {Longitube_Bonus(Longitube)}\nLattitube: {Lattitube_Bonus(Lattitube)}\n"; }
+            { return $"Id: {Id}\nName: {Name}\nPhone: {Phone}\nLongitube: {Longitube_Bonus(Longitube)}\nLattitude: {Lattitude_Bonus(Lattitude)}\n"; }
             
             public static string Longitube_Bonus(double num)
             {
@@ -27,10 +27,10 @@ namespace IDAL
                 int minutes = (int)(num * 60);
                 double rest = num - ((double)minutes / 60);
                 double seconds = rest * 3600;
-                return $"{degrees}° {minutes}' {Math.Round(seconds, 3, MidpointRounding.ToZero)}\" {dir}\n";
+                return $"{degrees}° {minutes}' {Math.Round(seconds, 3, MidpointRounding.ToZero)}\" {dir}";
             }
             
-            public static string Lattitube_Bonus(double num)
+            public static string Lattitude_Bonus(double num)
             {
                 char dir = 'W';
                 if (num < 0)
@@ -42,7 +42,7 @@ namespace IDAL
                 int minutes = (int)(num * 60);
                 double rest = num - ((double)minutes / 60);
                 double seconds = rest * 3600;
-                return $"{degrees}° {minutes}' {Math.Round(seconds, 3, MidpointRounding.ToZero)}\" {dir}\n";
+                return $"{degrees}° {minutes}' {Math.Round(seconds, 3, MidpointRounding.ToZero)}\" {dir}";
             }
             
             public double DistanceTo(double lat1, double lon1, double lat2, double lon2)

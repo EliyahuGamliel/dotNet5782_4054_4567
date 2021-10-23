@@ -6,10 +6,10 @@ namespace DalObject
 {
 	public class DataSource
 	{
-		internal static list<Drone> drones = new list<Drone>();
-		internal static list<Station> stations = new list<Station>();
-		internal static list<Customer> customers = new list<Customer>();
-		internal static list<Parcel> parcels = new list<Parcel>();
+		internal static List<Drone> drones = new List<Drone>();
+		internal static List<Station> stations = new List<Station>();
+		internal static List<Customer> customers = new List<Customer>();
+		internal static List<Parcel> parcels = new List<Parcel>();
 
 		internal class Config
 		{
@@ -20,19 +20,19 @@ namespace DalObject
 		{
 			double dis;
 			if (letter == 'c') {
-				Customer c = customers.find(c => id == c.Id);
-				int index = customers.indexof(c);
-				dis = customers[index].DistanceTo(lat1, lon1, customers[index].Lattitube, customers[index].Longitube);
+				Customer c = customers.Find(c => id == c.Id);
+				int index = customers.IndexOf(c);
+				dis = customers[index].DistanceTo(lat1, lon1, customers[index].Lattitude, customers[index].Longitube);
 			}
 			else {
-				Station s = stations.find(s => id == s.Id);
-				int index = stations.indexof(s);
+				Station s = stations.Find(s => id == s.Id);
+				int index = stations.IndexOf(s);
 				dis = stations[index].DistanceTo(lat1, lon1, stations[index].Lattitude, stations[index].Longitude);
 			}
 			return dis;
 		}
 		
-		public void Initialize()
+		public static void Initialize()
 		{
 			Random r = new Random();
 			
@@ -64,7 +64,7 @@ namespace DalObject
 			{
 				int rid = r.Next();
 				for (int h = 0;h < i;++h) {
-					if (rid == statins[h].Id) {
+					if (rid == stations[h].Id) {
 						h =  -1;
 						rid = r.Next();
 					}
@@ -74,8 +74,8 @@ namespace DalObject
 				s.ChargeSlots = 2 + r.Next(0, 3);
 				s.Id = rid;
 				s.Name = "station" + s.Id;
-				s.Longitube = r.NextDouble() + r.Next(-180, 180);
-				s.Lattitube = r.NextDouble() + r.Next(-90, 90);
+				s.Longitude = r.NextDouble() + r.Next(-180, 180);
+				s.Lattitude = r.NextDouble() + r.Next(-90, 90);
 				stations.Add(s);
 			}
 					
@@ -96,10 +96,10 @@ namespace DalObject
 				c.Id = rid;
 				c.Name = ("MyNameIs" + i);
 
-
+				string ph = "LOL";
 				rid = r.Next(1000, 10000);
 				for (int h = 0;h < i;++h) {
-					string ph = "053758" + rid;
+					ph = "053758" + rid;
 					if (ph == customers[h].Phone)
 					{
 						rid = r.Next();
@@ -108,7 +108,7 @@ namespace DalObject
 				}
 				c.Phone = ph;
 				c.Longitube = r.NextDouble() + r.Next(-180, 180);
-				c.Lattitube = r.NextDouble() + r.Next(-90, 90);
+				c.Lattitude = r.NextDouble() + r.Next(-90, 90);
 				customers.Add(c);
 			}
 
@@ -117,8 +117,8 @@ namespace DalObject
 			for (int i = 0;i < l;++i)
 			{
 				Parcel p = new Parcel();
-				p.Id = Config.Parcels_Index;
-				p.Requested = DateTime.now;//should be created
+				p.Id = i;
+				p.Requested = DateTime.Now;//should be created
 				int len = customers.Count;
 				for(int h = 0; h < len;++h)
 				{
@@ -135,19 +135,19 @@ namespace DalObject
 				}
 				
 				
-				int len = drones.Count;
-				for(int h = 0; h < len;++h)
+				int Len = drones.Count;
+				for(int h = 0; h < Len;++h)
 				{
-					if(drones[h].DroneStatuses == DroneStatuses.Available)
+					if(drones[h].Status == DroneStatuses.Available)
 					{
 						p.Droneld = drones[h].Id;	
-						p.Scheduled = DateTime.now;
+						p.Scheduled = DateTime.Now;
 					}
 				}
 				
 				
-				int len = customers.Count;
-				for(int h = 0; h < len;++h)
+				Len = customers.Count;
+				for(int h = 0; h < Len;++h)
 				{
 					int len2 = parcels.Count;
 					for(int u = 0; u < len2; ++u)
@@ -176,10 +176,12 @@ namespace DalObject
 
 	public class DalObject
 	{
-		public DalObject() { DataSource.Initialize() }
-		public int AddParcel() { 
-			
+		public DalObject() { DataSource.Initialize(); }
+		public int AddParcel()
+		{
+
 			DataSource.Config.Number_ID += 1;
-			
+			return 0;
+		}
 	}
 }
