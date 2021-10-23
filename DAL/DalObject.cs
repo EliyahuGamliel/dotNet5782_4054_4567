@@ -97,7 +97,8 @@ namespace DalObject
 				Parcel p = new Parcel();
 				p.Id = i;
 				//p.Requested = DateTime.Now;
-				p.Requested = DateTime.Now.AddDays(new Random().Next(-10));
+				//p.Requested = DateTime.Now.AddDays(new Random().Next(-10));
+				p.Requested = new DateTime(2021, rand.Next(10, 12), rand.Next(0, 28), rand.Next(0, 24), rand.Next(0, 60), rand.Next(0, 60));
 				int len = customers.Count;
 				for(int h = 0; h < len;++h) {
 					int len2 = parcels.Count;
@@ -116,7 +117,8 @@ namespace DalObject
 					if(drones[h].Status == DroneStatuses.Delivery) {
 						p.Droneld = drones[h].Id;	
 						//p.Scheduled = DateTime.Now;
-						p.Scheduled = DateTime.Now.AddDays(new Random().Next(1000));
+						p.Scheduled = new DateTime(2021, rand.Next(10, 12), rand.Next(0, 28), rand.Next(0, 24), rand.Next(0, 60), rand.Next(0, 60));
+						//p.Scheduled = DateTime.Now.AddDays(new Random().Next(1000));
 					}
 				}
 				
