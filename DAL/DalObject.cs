@@ -2,29 +2,26 @@ using System;
 using IDAL.DO;
 using System.Collections.Generic;
 
-namespace DalObject
+namespace DalObject 
 {
-	public class DataSource
+	public class DataSource 
 	{
 		internal static List<Drone> drones = new List<Drone>();
 		internal static List<Station> stations = new List<Station>();
 		internal static List<Customer> customers = new List<Customer>();
 		internal static List<Parcel> parcels = new List<Parcel>();
 
-		internal class Config
-		{
+		internal class Config {
 			public static int Number_ID = 0;
 		}
 		
 		
-		public static void Initialize()
-		{
+		public static void Initialize() {
 			Random r = new Random();
 			
 			//Drones
 			int l = r.Next(5, 11);
-			for (int i = 0;i < l;++i)
-			{
+			for (int i = 0;i < l;++i) {
 				int rid = r.Next();
 				for (int h = 0;h < i;++h) {
 					if (rid == drones[h].Id) {
@@ -45,8 +42,7 @@ namespace DalObject
 
 			//Station
 			l = r.Next(2, 6);
-			for (int i = 0;i < l;++i)
-			{
+			for (int i = 0;i < l;++i) {
 				int rid = r.Next();
 				for (int h = 0;h < i;++h) {
 					if (rid == stations[h].Id) {
@@ -67,8 +63,7 @@ namespace DalObject
 
 			//Customer
 			l = r.Next(10, 101);
-			for (int i = 0;i < l;++i)
-			{
+			for (int i = 0;i < l;++i) {
 				int rid = r.Next();
 				for (int h = 0;h < i;++h) {
 					if (rid == customers[h].Id) {
@@ -85,8 +80,7 @@ namespace DalObject
 				rid = r.Next(1000, 10000);
 				for (int h = 0;h < i;++h) {
 					ph = "053758" + rid;
-					if (ph == customers[h].Phone)
-					{
+					if (ph == customers[h].Phone) {
 						rid = r.Next();
 						h = -1;
 					}
@@ -99,19 +93,16 @@ namespace DalObject
 
 			//Parcel
 			l = r.Next(10, 1001);
-			for (int i = 0;i < l;++i)
-			{
+			for (int i = 0;i < l;++i) {
 				Parcel p = new Parcel();
 				p.Id = i;
-				p.Requested = DateTime.Now;//should be created
+				//p.Requested = DateTime.Now;
+				p.Requested = DateTime.Now.AddDays(new Random().Next(-10));
 				int len = customers.Count;
-				for(int h = 0; h < len;++h)
-				{
+				for(int h = 0; h < len;++h) {
 					int len2 = parcels.Count;
-					for(int u = 0; u < len2; ++u)
-					{
-						if(customers[h].Id == parcels[u].Senderld)
-						{
+					for(int u = 0; u < len2; ++u) {
+						if(customers[h].Id == parcels[u].Senderld) {
 							h = -1;
 							break;
 						}
@@ -120,25 +111,21 @@ namespace DalObject
 				}
 				
 				
-				int Len = drones.Count;
-				for(int h = 0; h < Len;++h)
-				{
-					if(drones[h].Status == DroneStatuses.Del)
-					{
+				len = drones.Count;
+				for(int h = 0; h < len;++h) {
+					if(drones[h].Status == DroneStatuses.Delivery) {
 						p.Droneld = drones[h].Id;	
-						p.Scheduled = DateTime.Now;
+						//p.Scheduled = DateTime.Now;
+						p.Scheduled = DateTime.Now.AddDays(new Random().Next(1000));
 					}
 				}
 				
 				
-				Len = customers.Count;
-				for(int h = 0; h < Len;++h)
-				{
+				len = customers.Count;
+				for(int h = 0; h < Len;++h) {
 					int len2 = parcels.Count;
-					for(int u = 0; u < len2; ++u)
-					{
-						if(customers[h].Id == parcels[u].Targetld)
-						{
+					for(int u = 0; u < len2; ++u) {
+						if(customers[h].Id == parcels[u].Targetld) {
 							h = -1;
 							break;
 						}
@@ -152,11 +139,8 @@ namespace DalObject
 				
 			}
 
-
-
 		}
-
-		
+	
 	}
 
 	public class DalObject
