@@ -15,14 +15,29 @@ namespace DalObject
 		{
 			public static int Number_ID = 0;
 		}
-
+		public static void AddStation(Station oj)
+        {
+			stations.Add(oj);
+        }
+		public static void AddDrone(Drone oj)
+		{
+			drones.Add(oj);
+		}
+		public static void AddParcel(Parcel oj)
+		{
+			parcels.Add(oj);
+		}
+		public static void AddCustomer(Customer oj)
+		{
+			customers.Add(oj);
+		}
 		public static double DistancePrint(double lat1, double lon1, char letter, int id)
 		{
 			double dis;
 			if (letter == 'c') {
 				Customer c = customers.Find(c => id == c.Id);
 				int index = customers.IndexOf(c);
-				dis = customers[index].DistanceTo(lat1, lon1, customers[index].Lattitude, customers[index].Longitube);
+				dis = customers[index].DistanceTo(lat1, lon1, customers[index].Lattitude, customers[index].Longitude);
 			}
 			else {
 				Station s = stations.Find(s => id == s.Id);
@@ -107,7 +122,7 @@ namespace DalObject
 					}
 				}
 				c.Phone = ph;
-				c.Longitube = r.NextDouble() + r.Next(-180, 180);
+				c.Longitude = r.NextDouble() + r.Next(-180, 180);
 				c.Lattitude = r.NextDouble() + r.Next(-90, 90);
 				customers.Add(c);
 			}
@@ -182,6 +197,23 @@ namespace DalObject
 
 			DataSource.Config.Number_ID += 1;
 			return 0;
+		}
+
+		public static void AddStation(Station oj)
+		{
+			DataSource.AddStation(oj);
+		}
+		public static void AddDrone(Drone oj)
+		{
+			DataSource.AddDrone(oj);
+		}
+		public static void AddParcel(Parcel oj)
+		{
+			DataSource.AddParcel(oj);
+		}
+		public static void AddCustomer(Customer oj)
+		{
+			DataSource.AddCustomer(oj);
 		}
 	}
 }

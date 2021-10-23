@@ -9,13 +9,13 @@ namespace IDAL
             public int Id { get; set; }
             public string Name { get; set; }
             public string Phone { get; set; }
-            public double Longitube { get; set; }
+            public double Longitude { get; set; }
             public double Lattitude{ get; set; }
             
             public override string ToString() 
-            { return $"Id: {Id}\nName: {Name}\nPhone: {Phone}\nLongitube: {Longitube_Bonus(Longitube)}\nLattitude: {Lattitude_Bonus(Lattitude)}\n"; }
+            { return $"Id: {Id}\nName: {Name}\nPhone: {Phone}\nLongitude: {Longitude_Bonus(Longitude)}\nLattitude: {Lattitude_Bonus(Lattitude)}\n"; }
             
-            public static string Longitube_Bonus(double num)
+            public static string Longitude_Bonus(double num)
             {
             char dir = 'S';
                 if (num < 0)
@@ -56,6 +56,16 @@ namespace IDAL
                 dist = dist * 180 / Math.PI;
                 dist = dist * 60 * 1.1515;
                 return Math.Round(dist * 1.609344, 2);
+            }
+            public static Customer CreateCustomer(int id, string name, string phone, double longitude, double lattitude)
+            {
+                Customer ojct = new Customer();
+                ojct.Id = id;
+                ojct.Name = name;
+                ojct.Phone = phone;
+                ojct.Longitude = longitude;
+                ojct.Lattitude = lattitude;
+                return ojct;
             }
         }
     }

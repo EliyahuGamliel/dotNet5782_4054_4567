@@ -46,7 +46,7 @@ namespace IDAL
             }
            
            public double DistanceTo(double lat1, double lon1, double lat2, double lon2)
-        {
+           {
             double rlat1 = Math.PI * lat1 / 180;
             double rlat2 = Math.PI * lat2 / 180;
             double theta = lon1 - lon2;
@@ -56,7 +56,21 @@ namespace IDAL
             dist = dist * 180 / Math.PI;
             dist = dist * 60 * 1.1515;
             return Math.Round(dist * 1.609344, 2);
+           }
+
+            public static Station CreateStation(int id, string name, double longitude, double lattitude, int chargeSlots)
+            {
+                Station ojct = new Station();
+                ojct.Id = id;
+                ojct.Name = name;
+                ojct.Longitude = longitude;
+                ojct.Lattitude = lattitude;
+                ojct.ChargeSlots = chargeSlots;
+
+                return ojct;
             }
+
         }  
+
     }
 }
