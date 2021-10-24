@@ -181,7 +181,32 @@ namespace ConsoleUI
         
         static void status(int num)
         {
-            Console.WriteLine("you chose some kind of status");
+            char ch;
+            int ID;
+            Console.WriteLine("Do you want to display - a customer, station, parcel or drone? (c/s/p/d)");
+            Char.TryParse(Console.ReadLine(), out ch);
+            if (ch == 'c') {
+                Console.WriteLine("Enter the Id of customer");
+                Int32.TryParse(Console.ReadLine(), out ID);
+                
+            }
+            else if (ch == 's') {
+                Console.WriteLine("Enter the Id of station");
+                Int32.TryParse(Console.ReadLine(), out ID);
+                Console.WriteLine(DalObject.DalObject.DistancePrint(lat, lon, ch, ID));
+            }
+            
+            else if (ch == 'p') {
+                Console.WriteLine("Enter the Id of parcel");
+                Int32.TryParse(Console.ReadLine(), out ID);
+                
+            }
+            
+            else {
+                Console.WriteLine("Enter the Id of drone");
+                Int32.TryParse(Console.ReadLine(), out ID);
+            }
+            
         }
 
         
