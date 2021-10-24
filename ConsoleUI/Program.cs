@@ -1,6 +1,4 @@
 using System;
-using IDAL;
-using IDAL.DO;
 using DalObject;
 
 namespace ConsoleUI
@@ -9,9 +7,9 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            DalObject.DalObject i = new DalObject.DalObject();
-
+            DalObject.DalObject data = new DalObject.DalObject();
             MainMenu();
+            
             //
         }
 
@@ -24,10 +22,6 @@ namespace ConsoleUI
             Console.WriteLine("Enter 4 for the list");
             Console.WriteLine("Enter 5 to show the distance from the station/customer");
             Console.WriteLine("Enter 6 to exit");
-
-
-
-
 
             choice = Convert.ToInt32(Console.ReadLine());
             FirstMenu(choice);
@@ -67,11 +61,11 @@ namespace ConsoleUI
                     Console.WriteLine("Enter 5 fop the list of packages that hadn't been assigned to a drone");
                     Console.WriteLine("Enter 6 fop the list of stations that have sper place for charging");
                     break;
+                    
                 case 5:
-                    Console.WriteLine("enter the latitude and then the longitude");
                     coordinateMa();
-
                     break;
+                    
                 case 6:
                     Console.WriteLine("Enter 5 to exit");
                     break;
@@ -102,8 +96,7 @@ namespace ConsoleUI
             }
         }
 
-        static void adding(int num)
-        {
+        static void adding(int num) {
             int id;
             double longitude;
             double latitude;
@@ -111,96 +104,114 @@ namespace ConsoleUI
             switch (num)
             {
                 case 1:
-                    Console.WriteLine("enter the following: id, name, longitude, latitude, chargeslots.");
-                    
-                    Int32.TryParse(Console.ReadLine(), out id);
-                    name = Console.ReadLine();
-                    Double.TryParse(Console.ReadLine(), out longitude);
-                    Double.TryParse(Console.ReadLine(), out latitude);
                     int chargeslots;
+                    Console.WriteLine("Enter Id: ");
+                    Int32.TryParse(Console.ReadLine(), out id);
+                    Console.WriteLine("Enter Name: ");
+                    name = Console.ReadLine();
+                    Console.WriteLine("Enter Longitude: ");
+                    Double.TryParse(Console.ReadLine(), out longitude);
+                    Console.WriteLine("Enter Latitude: ");
+                    Double.TryParse(Console.ReadLine(), out latitude);
+                    Console.WriteLine("Enter ChargeSlots: ");
                     Int32.TryParse(Console.ReadLine(), out chargeslots);
-                    DataSource.AddStation(Station.CreateStation(id, name, longitude, latitude, chargeslots));
+                    DalObject.AddStation(id, name, longitude, latitude, chargeslots);
                     break;
+                    
                 case 2:
-                    Console.WriteLine("enter the following: id, model, maxWeight, status, battery.");
                     int maxw;
                     int ds;
-                    Int32.TryParse(Console.ReadLine(), out id);
-                    string model = Console.ReadLine();
-                    Int32.TryParse(Console.ReadLine(), out maxw);
-                    Int32.TryParse(Console.ReadLine(), out ds);
                     double battery;
+                    Console.WriteLine("Enter Id: ");
+                    Int32.TryParse(Console.ReadLine(), out id);
+                    Console.WriteLine("Enter model: ");
+                    string model = Console.ReadLine();
+                    Console.WriteLine("Enter maxWeight: ");
+                    Int32.TryParse(Console.ReadLine(), out maxw);
+                    Console.WriteLine("Enter status: ");
+                    Int32.TryParse(Console.ReadLine(), out ds);
+                    Console.WriteLine("Enter battery: ");
                     Double.TryParse(Console.ReadLine(), out battery);
-
-                    DalObject.DalObject.AddDrone(Drone.CreateDrone(id, model, (WeightCategories)maxw, (DroneStatuses)ds, battery));
+                    DalObject.DalObject.AddDrone(id, model, (WeightCategories)maxw, (DroneStatuses)ds, battery);
                     break;
+                    
                 case 3:
-                    Console.WriteLine("enter the following: id, name, phone, longitude, Lattitude.");
+                    Console.WriteLine("Enter the id: ");
                     Int32.TryParse(Console.ReadLine(), out id);
+                    Console.WriteLine("Enter the name: ");
                     name = Console.ReadLine();
+                    Console.WriteLine("Enter the phone: ");
                     string phone = Console.ReadLine();
+                    Console.WriteLine("Enter the longitude: ");
                     Double.TryParse(Console.ReadLine(), out longitude);
+                    Console.WriteLine("Enter the lattitude: ");
                     Double.TryParse(Console.ReadLine(), out latitude);
-
-                    DalObject.DalObject.AddCustomer(Customer.CreateCustomer(id, name, phone, longitude, latitude));
-
+                    DalObject.DalObject.AddCustomer(id, name, phone, longitude, latitude);
                     break;
+                    
                 case 4:
-                    //CreateParcel(int id, int senderId, int targetld, WeightCategories weight, Priorities Priority, int droneld)
-                    Console.WriteLine("enter the following: id, senderId, targetld, weight, Priority, droneld.");
-                    Int32.TryParse(Console.ReadLine(), out id);
                     int senderId;
-                    Int32.TryParse(Console.ReadLine(), out senderId);
                     int targetld;
-                    Int32.TryParse(Console.ReadLine(), out targetld);
                     int wh;
-                    Int32.TryParse(Console.ReadLine(), out wh);
                     int pr;
-                    Int32.TryParse(Console.ReadLine(), out pr);
                     int droneld;
+                    Console.WriteLine("Enter Id: ");
+                    Int32.TryParse(Console.ReadLine(), out id);
+                    Console.WriteLine("Enter senderId: ");
+                    Int32.TryParse(Console.ReadLine(), out senderId);
+                    Console.WriteLine("Enter targetId: ");
+                    Int32.TryParse(Console.ReadLine(), out targetld);
+                    Console.WriteLine("Enter weight: ");
+                    Int32.TryParse(Console.ReadLine(), out wh);
+                    Console.WriteLine("Enter Priority: ");
+                    Int32.TryParse(Console.ReadLine(), out pr);
+                    Console.WriteLine("Enter droneId: ");
                     Int32.TryParse(Console.ReadLine(), out droneld);
-                    DalObject.DalObject.AddParcel(Parcel.CreateParcel(id, senderId, targetld, (WeightCategories)wh, (Priorities)pr, droneld));
+                    DalObject.DalObject.AddParcel(id, senderId, targetld, (WeightCategories)wh, (Priorities)pr, droneld);
                     break;
             }
         }
 
-        static void coordinateMa()
-        {
-            double lat;
-            int ID;
-            Double.TryParse(Console.ReadLine(), out lat);
-            double lon;
-            Double.TryParse(Console.ReadLine(), out lon);
-            Console.WriteLine("do you want to mesure the distance from a customer or from a station? (c/s)");
-            char ch;
-            Char.TryParse(Console.ReadLine(), out ch);
-            if (ch == 'c')
-            {
-                Console.WriteLine("enter the id");
-                Int32.TryParse(Console.ReadLine(), out ID);
-                Console.WriteLine(DataSource.DistancePrint(lat, lon, ch, ID));
-            }
-            else
-            {
-                Console.WriteLine("enter the id");
-                Int32.TryParse(Console.ReadLine(), out ID);
-                Console.WriteLine(DataSource.DistancePrint(lat, lon, ch, ID));
-            }
-        }
-
+        
         static void update(int num)
         {
             Console.WriteLine("you chose some kind of update");
         }
 
+        
         static void status(int num)
         {
             Console.WriteLine("you chose some kind of status");
         }
 
+        
         static void lists(int num)
         {
             Console.WriteLine("you chose some kind of lists");
+        }
+        
+        
+        static void coordinateMa() {
+            double lat;
+            double lon;
+            int ID;
+            char ch;
+            Console.WriteLine("Enter the lattitude: ")
+            Double.TryParse(Console.ReadLine(), out lat);
+            Console.WriteLine("Enter the longitude: ");
+            Double.TryParse(Console.ReadLine(), out lon);
+            Console.WriteLine("Do you want to mesure the distance from a customer or from a station? (c/s)");
+            Char.TryParse(Console.ReadLine(), out ch);
+            if (ch == 'c') {
+                Console.WriteLine("Enter the Id of customer");
+                Int32.TryParse(Console.ReadLine(), out ID);
+                Console.WriteLine(DalObject.DalObject.DistancePrint(lat, lon, ch, ID));
+            }
+            else {
+                Console.WriteLine("Enter the Id of station");
+                Int32.TryParse(Console.ReadLine(), out ID);
+                Console.WriteLine(DalObject.DalObject.DistancePrint(lat, lon, ch, ID));
+            }
         }
     }
 }
