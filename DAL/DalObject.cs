@@ -213,74 +213,50 @@ namespace DalObject
 			DataSource.customers.Add(c);
 		}
 		
-		public static void PrintById(int Id, int num) {
+		public static string PrintById(int Id, int num) {
 			switch (num)
 			{
 				case 1:
 					Station s = DataSource.stations.Find(st => Id == st.Id);
-					s.ToString();
-					break;
+					return s.ToString();
 					
 				case 2:
 					Drone d = DataSource.drones.Find(dr => Id == dr.Id);
-					d.ToString();
-					break;
+					return d.ToString();
 					
 				case 3:
 					Customer c = DataSource.customers.Find(cu => Id == cu.Id);
-					c.ToString();
-					break;
+					return c.ToString();
 					
 				case 4:
 					Parcel p = DataSource.parcels.Find(pa => Id == pa.Id);
-					p.ToString();
-					break;
+					return p.ToString();
 			}
-			
+			return " ";
 		}
 		
-		public static void PrintList(int num) {
-			int i = 0;
-			switch (num)
-			{
-				case 1:
-						return DataSource.stations;
-					break;
-					
-				case 2:
-					for (; i < DataSource.drones.Count; i++)
-						DataSource.drones[i].ToString();
-					break;
-					
-				case 3:
-					for (; i < DataSource.customers.Count; i++)
-						DataSource.customers[i].ToString();
-					break;
-					
-				case 4:
-					for (; i < DataSource.parcels.Count; i++)
-						DataSource.parcels[i].ToString();
-					break;
-					
-				case 5:
-					for (; i < DataSource.parcels.Count; i++)
-						if (DataSource.parcels[i].DroneId == 0)
-							DataSource.parcels[i].ToString();
-					break;
-					
-				case 6:
-					for (; i < DataSource.stations.Count; i++) {
-						int id = DataSource.stations[i].Id;
-						int count = 0;
-						for (int j = 0; j < DataSource.droneCharges.Count; j++) 
-							if (DataSource.droneCharges[j].StationId == id)
-								count += 1;
-						if (count != DataSource.stations[i].ChargeSlots)
-							DataSource.stations[i].ToString();
-					}
-					break;
-			}
-			
+		public static Station[] PrintListStation() {
+			return DataSource.stations.ToArray();
+		}
+
+		public static Drone[] PrintListDrone() {
+			return DataSource.drones.ToArray();
+		}
+
+		public static Customer[] PrintListCustomer() {
+			return DataSource.customers.ToArray();
+		}
+
+		public static Parcel[] PrintListParcel() {
+			return DataSource.parcels.ToArray();
+		}
+
+		public static Parcel[] PrintListParcelDrone() {
+			return DataSource.parcels.FindAll(pa => 0 == pa.DroneId).ToArray();
+		}
+
+		public static Station[] PrintListStationCharge() {
+			return DataSource.stations.FindAll(st => 0 != st.ChargeSlots).ToArray();
 		}
 	}
 }
