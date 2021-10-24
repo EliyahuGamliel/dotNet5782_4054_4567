@@ -99,7 +99,7 @@ namespace DalObject
 				p.Id = i;
 				//p.Requested = DateTime.Now;
 				//p.Requested = DateTime.Now.AddDays(new Random().Next(-10));
-				p.Requested = new DateTime(2021, r.Next(10, 12), r.Next(0, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
+				p.Requested = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
 				int len = customers.Count;
 				for(int h = 0; h < len;++h) {
 					int len2 = parcels.Count;
@@ -118,7 +118,7 @@ namespace DalObject
 					if(drones[h].Status == DroneStatuses.Delivery) {
 						p.DroneId = drones[h].Id;	
 						//p.Scheduled = DateTime.Now;
-						p.Scheduled = new DateTime(2021, r.Next(10, 12), r.Next(0, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
+						p.Scheduled = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
 						//p.Scheduled = DateTime.Now.AddDays(new Random().Next(1000));
 					}
 				}
@@ -150,7 +150,7 @@ namespace DalObject
 	{
 		public DalObject() { DataSource.Initialize(); }
 		
-		public static double DistancePrint(double lat1, double lon1, char letter, int id)
+		public double DistancePrint(double lat1, double lon1, char letter, int id)
 		{
 			double dis;
 			if (letter == 'c') {
@@ -166,7 +166,7 @@ namespace DalObject
 			return dis;
 		}
 
-		public static void AddStation(int Id, string Name, double Longitude, double Lattitude, int ChargeSlots) {
+		public void AddStation(int Id, string Name, double Longitude, double Lattitude, int ChargeSlots) {
 			Station s = new Station();
 			s.Id = Id;
 			s.Name = Name;
@@ -176,7 +176,7 @@ namespace DalObject
 			DataSource.stations.Add(s);
 		}
 		
-		public static void AddDrone(int Id, string Model, int MaxWeight, int Status, double Battery) {
+		public void AddDrone(int Id, string Model, int MaxWeight, int Status, double Battery) {
 			Drone d = new Drone();
 			d.Id = Id;
 			d.Model = Model;
@@ -186,7 +186,7 @@ namespace DalObject
 			DataSource.drones.Add(d);
 		}
 		
-		public static int AddParcel(int Id, int Senderld, int Targetld, int Weight, int priority, DateTime Requested, int Droneld, DateTime Scheduled, DateTime PickedUp, DateTime Delivered) {
+		public int AddParcel(int Id, int Senderld, int Targetld, int Weight, int priority, int Droneld) {
 			DataSource.Config.Number_ID += 1;
 			Parcel p = new Parcel();
 			p.Id = Id;
@@ -195,15 +195,12 @@ namespace DalObject
 			p.Weight = (WeightCategories)Weight;
 			p.priority = (Priorities)priority;
 			p.TargetId = Targetld;
-			p.Requested = Requested;
-			p.Scheduled = Scheduled;
-			p.PickedUp = PickedUp;
-			p.Delivered = Delivered;
+			p.Requested = DateTime.Now;
 			DataSource.parcels.Add(p);
 			return DataSource.Config.Number_ID;
 		}
 		
-		public static void AddCustomer(int Id, string Name, string Phone, double Longitude, double Lattitude) {
+		public void AddCustomer(int Id, string Name, string Phone, double Longitude, double Lattitude) {
 			Customer c = new Customer();
 			c.Id = Id;
 			c.Name = Name;
@@ -213,7 +210,7 @@ namespace DalObject
 			DataSource.customers.Add(c);
 		}
 		
-		public static string PrintById(int Id, int num) {
+		public string PrintById(int Id, int num) {
 			switch (num)
 			{
 				case 1:
@@ -235,27 +232,27 @@ namespace DalObject
 			return " ";
 		}
 		
-		public static Station[] PrintListStation() {
+		public Station[] PrintListStation() {
 			return DataSource.stations.ToArray();
 		}
 
-		public static Drone[] PrintListDrone() {
+		public Drone[] PrintListDrone() {
 			return DataSource.drones.ToArray();
 		}
 
-		public static Customer[] PrintListCustomer() {
+		public Customer[] PrintListCustomer() {
 			return DataSource.customers.ToArray();
 		}
 
-		public static Parcel[] PrintListParcel() {
+		public Parcel[] PrintListParcel() {
 			return DataSource.parcels.ToArray();
 		}
 
-		public static Parcel[] PrintListParcelDrone() {
+		public Parcel[] PrintListParcelDrone() {
 			return DataSource.parcels.FindAll(pa => 0 == pa.DroneId).ToArray();
 		}
 
-		public static Station[] PrintListStationCharge() {
+		public Station[] PrintListStationCharge() {
 			return DataSource.stations.FindAll(st => 0 != st.ChargeSlots).ToArray();
 		}
 	}
