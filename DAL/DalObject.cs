@@ -164,26 +164,52 @@ namespace DalObject
 			}
 			return dis;
 		}
-		
-		public int AddParcel() {
-			DataSource.Config.Number_ID += 1;
-			return 0;
-		}
 
-		public static void AddStation(Station oj) {
-			DataSource.AddStation(oj);
+		public static void AddStation(int Id, string Name, double Longitude, double Lattitude, int ChargeSlots) {
+			Station s = new Station();
+			s.Id = Id;
+			s.Name = Name;
+			s.Longitude = Longitude;
+			s.Lattitude = Lattitude;
+			s.ChargeSlots = ChargeSlots;
+			DataSource.stations.Add(s);
 		}
 		
-		public static void AddDrone(Drone oj) {
-			DataSource.AddDrone(oj);
+		public static void AddDrone(int Id, string Model, WeightCategories MaxWeight, DroneStatuses Status, double Battery) {
+			Drone d = new Drone();
+			d.Id = Id;
+			d.Model = Model;
+			d.MaxWeight = MaxWeight;
+			d.Status = Status;
+			d.Battery = Battery;
+			DataSource.drones.Add(d);
 		}
 		
-		public static void AddParcel(Parcel oj) {
-			DataSource.AddParcel(oj);
+		public static int AddParcel(int Id, int Senderld, int Targetld, WeightCategories Weight, Priorities priority, DateTime Requested, int Droneld, DateTime Scheduled, DateTime PickedUp, DateTime Delivered) {
+			DataSource.Config.Number_ID += 1;
+			Parcel p = new Parcel();
+			p.Id = Id;
+			p.Senderld = Senderld;
+			p.Targetld = Targetld;
+			p.Weight = Weight;
+			p.priority = priority;
+			p.Targetld = Targetld;
+			p.Requested = Requested;
+			p.Scheduled = Scheduled;
+			p.PickedUp = PickedUp;
+			p.Delivered = Delivered;
+			DataSource.parcels.Add(p);
+			return DataSource.Config.Number_ID;
 		}
 		
-		public static void AddCustomer(Customer oj) {
-			DataSource.AddCustomer(oj);
+		public static void AddCustomer(int Id, string Name, string Phone, double Longitude, double Lattitude) {
+			Customer c = new Customer();
+			c.Id = Id;
+			c.Name = Name;
+			c.Phone = Phone;
+			c.Longitude = Longitude;
+			c.Lattitude = Lattitude;
+			DataSource.customers.Add(c);
 		}
 	}
 }
