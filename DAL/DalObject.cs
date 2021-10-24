@@ -211,5 +211,25 @@ namespace DalObject
 			c.Lattitude = Lattitude;
 			DataSource.customers.Add(c);
 		}
+		
+		public static void PrintCustomer(int Id) {
+			Customer c = DataSource.customers.Find(c => id == c.Id);
+			c.ToString();
+		}
+		
+		public static void PrintStation(int Id) {
+			Station s = DataSource.stations.Find(s => id == s.Id);
+			s.ToString();
+		}
+		
+		public static void PrintParcel(int Id) {
+			Parcel p = DataSource.parcels.Find(p => id == p.Id);
+			p.ToString();
+		}
+		
+		public static void PrintDrone(int Id) {
+			Drone d = DataSource.drones.Find(d => id == d.Id);
+			d.ToString();
+		}
 	}
 }
