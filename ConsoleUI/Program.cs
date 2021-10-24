@@ -85,17 +85,22 @@ namespace ConsoleUI
                 case 1:
                     adding(secondChoice);
                     break;
+
                 case 2:
                     update(secondChoice);
                     break;
+
                 case 3:
                     status(secondChoice);
                     break;
+
                 case 4:
                     lists(secondChoice);
                     break;
+
                 case 5:
                     coordinateMa(secondChoice);
+                    break;
             }
         }
 
@@ -223,7 +228,6 @@ namespace ConsoleUI
         static void coordinateMa(int num) {
             double lat, lon;
             int ID;
-            char ch;
             Console.WriteLine("Enter the lattitude: ");
             Double.TryParse(Console.ReadLine(), out lat);
             Console.WriteLine("Enter the longitude: ");
@@ -234,12 +238,14 @@ namespace ConsoleUI
                 case 1:
                     Console.WriteLine("Enter the Id of customer");
                     Int32.TryParse(Console.ReadLine(), out ID);
-                    Console.WriteLine($"The distance from the customer is: {data.DistancePrint(lat, lon, ch, ID)}\n");
+                    Console.WriteLine($"The distance from the customer is: {data.DistancePrint(lat, lon, 'c', ID)}\n");
+                    break;
                 
                 case 2:
                     Console.WriteLine("Enter the Id of station");
                     Int32.TryParse(Console.ReadLine(), out ID);
-                    Console.WriteLine($"The distance from the station is: {data.DistancePrint(lat, lon, ch, ID)}\n");
+                    Console.WriteLine($"The distance from the station is: {data.DistancePrint(lat, lon, 's', ID)}\n");
+                    break;
             }
         }
     }
