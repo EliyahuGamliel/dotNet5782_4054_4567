@@ -50,7 +50,7 @@ namespace ConsoleUI
                     Console.WriteLine("Enter 1 for station status");
                     Console.WriteLine("Enter 2 for drone status");
                     Console.WriteLine("Enter 3 for customer status");
-                    Console.WriteLine("Enter 4 for package status");
+                    Console.WriteLine("Enter 4 for parcel status");
                     break;
 
                 case 4:
@@ -181,38 +181,20 @@ namespace ConsoleUI
         
         static void status(int num)
         {
-            char ch;
-            int ID;
-            Console.WriteLine("Do you want to display - a customer, station, parcel or drone? (c/s/p/d)");
-            Char.TryParse(Console.ReadLine(), out ch);
-            if (ch == 'c') {
-                Console.WriteLine("Enter the Id of customer");
-                Int32.TryParse(Console.ReadLine(), out ID);
-                
-            }
-            else if (ch == 's') {
-                Console.WriteLine("Enter the Id of station");
-                Int32.TryParse(Console.ReadLine(), out ID);
-                Console.WriteLine(DalObject.DalObject.DistancePrint(lat, lon, ch, ID));
-            }
-            
-            else if (ch == 'p') {
-                Console.WriteLine("Enter the Id of parcel");
-                Int32.TryParse(Console.ReadLine(), out ID);
-                
-            }
-            
-            else {
-                Console.WriteLine("Enter the Id of drone");
-                Int32.TryParse(Console.ReadLine(), out ID);
-            }
-            
+            Console.WriteLine("Enter the Id: ");
+            Int32.TryParse(Console.ReadLine(), out ID);
+            DalObject.DalObject.PrintById(ID, num);
         }
 
         
         static void lists(int num)
         {
-            Console.WriteLine("you chose some kind of lists");
+            Console.WriteLine("Enter 1 for the stations's list");
+            Console.WriteLine("Enter 2 for drones's list");
+            Console.WriteLine("Enter 3 for customers's list");
+            Console.WriteLine("Enter 4 for the packages's list");
+            Console.WriteLine("Enter 5 fop the list of packages that hadn't been assigned to a drone");
+            Console.WriteLine("Enter 6 fop the list of stations that have sper place for charging");
         }
         
         
