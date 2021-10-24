@@ -98,8 +98,7 @@ namespace ConsoleUI
 
         static void adding(int num) {
             int id;
-            double longitude;
-            double latitude;
+            double longitude, latitude;
             string name;
             switch (num)
             {
@@ -115,24 +114,23 @@ namespace ConsoleUI
                     Double.TryParse(Console.ReadLine(), out latitude);
                     Console.WriteLine("Enter ChargeSlots: ");
                     Int32.TryParse(Console.ReadLine(), out chargeslots);
-                    DalObject.AddStation(id, name, longitude, latitude, chargeslots);
+                    DalObject.DalObject.AddStation(id, name, longitude, latitude, chargeslots);
                     break;
                     
                 case 2:
-                    int maxw;
-                    int ds;
+                    int maxw, ds;
                     double battery;
                     Console.WriteLine("Enter Id: ");
                     Int32.TryParse(Console.ReadLine(), out id);
                     Console.WriteLine("Enter model: ");
                     string model = Console.ReadLine();
-                    Console.WriteLine("Enter maxWeight: ");
+                    Console.WriteLine("Enter the number of maxWeight: \n0) Light\n1) Medium\n2) Heavy");
                     Int32.TryParse(Console.ReadLine(), out maxw);
-                    Console.WriteLine("Enter status: ");
+                    Console.WriteLine("Enter the number of status: \n0) Available\n1) Maintenance\n2) Delivery");
                     Int32.TryParse(Console.ReadLine(), out ds);
                     Console.WriteLine("Enter battery: ");
                     Double.TryParse(Console.ReadLine(), out battery);
-                    DalObject.DalObject.AddDrone(id, model, (WeightCategories)maxw, (DroneStatuses)ds, battery);
+                    DalObject.DalObject.AddDrone(id, model, maxw, ds, battery);
                     break;
                     
                 case 3:
@@ -150,24 +148,20 @@ namespace ConsoleUI
                     break;
                     
                 case 4:
-                    int senderId;
-                    int targetld;
-                    int wh;
-                    int pr;
-                    int droneld;
+                    int senderId, targetId, wh, pr, droneId;
                     Console.WriteLine("Enter Id: ");
                     Int32.TryParse(Console.ReadLine(), out id);
                     Console.WriteLine("Enter senderId: ");
                     Int32.TryParse(Console.ReadLine(), out senderId);
                     Console.WriteLine("Enter targetId: ");
-                    Int32.TryParse(Console.ReadLine(), out targetld);
-                    Console.WriteLine("Enter weight: ");
+                    Int32.TryParse(Console.ReadLine(), out targetId);
+                    Console.WriteLine("Enter the number of weight: \n0) Light\n1) Medium\n2) Heavy");
                     Int32.TryParse(Console.ReadLine(), out wh);
-                    Console.WriteLine("Enter Priority: ");
+                    Console.WriteLine("Enter the number of priority: \n0) Normal\n1) Fast\n2) Emergency");
                     Int32.TryParse(Console.ReadLine(), out pr);
                     Console.WriteLine("Enter droneId: ");
-                    Int32.TryParse(Console.ReadLine(), out droneld);
-                    DalObject.DalObject.AddParcel(id, senderId, targetld, (WeightCategories)wh, (Priorities)pr, droneld);
+                    Int32.TryParse(Console.ReadLine(), out droneId);
+                    //DalObject.DalObject.AddParcel(id, senderId, targetId, wh, pr, droneId); to fix
                     break;
             }
         }
@@ -181,6 +175,7 @@ namespace ConsoleUI
         
         static void status(int num)
         {
+            int ID;
             Console.WriteLine("Enter the Id: ");
             Int32.TryParse(Console.ReadLine(), out ID);
             DalObject.DalObject.PrintById(ID, num);
@@ -203,7 +198,7 @@ namespace ConsoleUI
             double lon;
             int ID;
             char ch;
-            Console.WriteLine("Enter the lattitude: ")
+            Console.WriteLine("Enter the lattitude: ");
             Double.TryParse(Console.ReadLine(), out lat);
             Console.WriteLine("Enter the longitude: ");
             Double.TryParse(Console.ReadLine(), out lon);

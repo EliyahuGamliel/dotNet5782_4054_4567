@@ -99,41 +99,41 @@ namespace DalObject
 				p.Id = i;
 				//p.Requested = DateTime.Now;
 				//p.Requested = DateTime.Now.AddDays(new Random().Next(-10));
-				p.Requested = new DateTime(2021, rand.Next(10, 12), rand.Next(0, 28), rand.Next(0, 24), rand.Next(0, 60), rand.Next(0, 60));
+				p.Requested = new DateTime(2021, r.Next(10, 12), r.Next(0, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
 				int len = customers.Count;
 				for(int h = 0; h < len;++h) {
 					int len2 = parcels.Count;
 					for(int u = 0; u < len2; ++u) {
-						if(customers[h].Id == parcels[u].Senderld) {
+						if(customers[h].Id == parcels[u].SenderId) {
 							h = -1;
 							break;
 						}
 					}
-					p.Senderld = customers[h].Id;
+					p.SenderId = customers[h].Id;
 				}
 				
 				
 				len = drones.Count;
 				for(int h = 0; h < len;++h) {
 					if(drones[h].Status == DroneStatuses.Delivery) {
-						p.Droneld = drones[h].Id;	
+						p.DroneId = drones[h].Id;	
 						//p.Scheduled = DateTime.Now;
-						p.Scheduled = new DateTime(2021, rand.Next(10, 12), rand.Next(0, 28), rand.Next(0, 24), rand.Next(0, 60), rand.Next(0, 60));
+						p.Scheduled = new DateTime(2021, r.Next(10, 12), r.Next(0, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
 						//p.Scheduled = DateTime.Now.AddDays(new Random().Next(1000));
 					}
 				}
 				
 				
 				len = customers.Count;
-				for(int h = 0; h < Len;++h) {
+				for(int h = 0; h < len ;++h) {
 					int len2 = parcels.Count;
 					for(int u = 0; u < len2; ++u) {
-						if(customers[h].Id == parcels[u].Targetld) {
+						if(customers[h].Id == parcels[u].TargetId) {
 							h = -1;
 							break;
 						}
 					}
-					p.Targetld = customers[h].Id;
+					p.TargetId = customers[h].Id;
 				}
 				
 				p.Weight = (WeightCategories)(r.Next(0, 3));
@@ -176,25 +176,25 @@ namespace DalObject
 			DataSource.stations.Add(s);
 		}
 		
-		public static void AddDrone(int Id, string Model, WeightCategories MaxWeight, DroneStatuses Status, double Battery) {
+		public static void AddDrone(int Id, string Model, int MaxWeight, int Status, double Battery) {
 			Drone d = new Drone();
 			d.Id = Id;
 			d.Model = Model;
-			d.MaxWeight = MaxWeight;
-			d.Status = Status;
+			d.MaxWeight = (WeightCategories)MaxWeight;
+			d.Status = (DroneStatuses)Status;
 			d.Battery = Battery;
 			DataSource.drones.Add(d);
 		}
 		
-		public static int AddParcel(int Id, int Senderld, int Targetld, WeightCategories Weight, Priorities priority, DateTime Requested, int Droneld, DateTime Scheduled, DateTime PickedUp, DateTime Delivered) {
+		public static int AddParcel(int Id, int Senderld, int Targetld, int Weight, int priority, DateTime Requested, int Droneld, DateTime Scheduled, DateTime PickedUp, DateTime Delivered) {
 			DataSource.Config.Number_ID += 1;
 			Parcel p = new Parcel();
 			p.Id = Id;
-			p.Senderld = Senderld;
-			p.Targetld = Targetld;
-			p.Weight = Weight;
-			p.priority = priority;
-			p.Targetld = Targetld;
+			p.SenderId = Senderld;
+			p.TargetId = Targetld;
+			p.Weight = (WeightCategories)Weight;
+			p.priority = (Priorities)priority;
+			p.TargetId = Targetld;
 			p.Requested = Requested;
 			p.Scheduled = Scheduled;
 			p.PickedUp = PickedUp;
@@ -217,20 +217,24 @@ namespace DalObject
 			switch (num)
 			{
 				case 1:
-					Station s = DataSource.stations.Find(s => id == s.Id);
+					Station s = DataSource.stations.Find(s => Id == s.Id);
 					s.ToString();
+					break;
 					
 				case 2:
-					Drone d = DataSource.drones.Find(d => id == d.Id);
+					Drone d = DataSource.drones.Find(d => Id == d.Id);
 					d.ToString();
+					break;
 					
 				case 3:
-					Customer c = DataSource.customers.Find(c => id == c.Id);
+					Customer c = DataSource.customers.Find(c => Id == c.Id);
 					c.ToString();
+					break;
 					
 				case 4:
-					Parcel p = DataSource.parcels.Find(p => id == p.Id);
+					Parcel p = DataSource.parcels.Find(p => Id == p.Id);
 					p.ToString();
+					break;
 			}
 			
 		}
@@ -242,23 +246,28 @@ namespace DalObject
 				case 1:
 					for (; i < DataSource.stations.Count; i++)
 						DataSource.stations[i].ToString();
+					break;
 					
 				case 2:
 					for (; i < DataSource.drones.Count; i++)
 						DataSource.drones[i].ToString();
+					break;
 					
 				case 3:
 					for (; i < DataSource.customers.Count; i++)
 						DataSource.customers[i].ToString();
+					break;
 					
 				case 4:
 					for (; i < DataSource.parcels.Count; i++)
 						DataSource.parcels[i].ToString();
+					break;
 					
 				case 5:
 					for (; i < DataSource.parcels.Count; i++)
 						if (DataSource.parcels[i].DroneId == 0)
 							DataSource.parcels[i].ToString();
+					break;
 					
 				case 6:
 					for (; i < DataSource.stations.Count; i++) {
@@ -270,6 +279,7 @@ namespace DalObject
 						if (count != DataSource.stations[i].ChargeSlots)
 							DataSource.stations[i].ToString();
 					}
+					break;
 			}
 			
 		}
