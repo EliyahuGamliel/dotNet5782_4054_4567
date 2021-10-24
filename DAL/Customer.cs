@@ -15,8 +15,7 @@ namespace IDAL
             public override string ToString() 
             { return $"Id: {Id}\nName: {Name}\nPhone: {Phone}\nLongitude: {Longitude_Bonus(Longitude)}\nLattitude: {Lattitude_Bonus(Lattitude)}\n"; }
             
-            public static string Longitude_Bonus(double num)
-            {
+            public static string Longitude_Bonus(double num) {
             char dir = 'S';
                 if (num < 0)
                     num = -num;
@@ -27,11 +26,10 @@ namespace IDAL
                 int minutes = (int)(num * 60);
                 double rest = num - ((double)minutes / 60);
                 double seconds = rest * 3600;
-                return $"{degrees}° {minutes}' {Math.Round(seconds, 3, MidpointRounding.ToZero)}\" {dir}";
+                return $"{degrees}° {minutes}' {Math.Round(seconds, 3)}\" {dir}";
             }
             
-            public static string Lattitude_Bonus(double num)
-            {
+            public static string Lattitude_Bonus(double num) {
                 char dir = 'W';
                 if (num < 0)
                     num = -num;
@@ -42,11 +40,10 @@ namespace IDAL
                 int minutes = (int)(num * 60);
                 double rest = num - ((double)minutes / 60);
                 double seconds = rest * 3600;
-                return $"{degrees}° {minutes}' {Math.Round(seconds, 3, MidpointRounding.ToZero)}\" {dir}";
+                return $"{degrees}° {minutes}' {Math.Round(seconds, 3)}\" {dir}";
             }
             
-            public double DistanceTo(double lat1, double lon1, double lat2, double lon2)
-            {
+            public double DistanceTo(double lat1, double lon1, double lat2, double lon2) {
                 double rlat1 = Math.PI * lat1 / 180;
                 double rlat2 = Math.PI * lat2 / 180;
                 double theta = lon1 - lon2;
@@ -56,16 +53,6 @@ namespace IDAL
                 dist = dist * 180 / Math.PI;
                 dist = dist * 60 * 1.1515;
                 return Math.Round(dist * 1.609344, 2);
-            }
-            public static Customer CreateCustomer(int id, string name, string phone, double longitude, double lattitude)
-            {
-                Customer ojct = new Customer();
-                ojct.Id = id;
-                ojct.Name = name;
-                ojct.Phone = phone;
-                ojct.Longitude = longitude;
-                ojct.Lattitude = lattitude;
-                return ojct;
             }
         }
     }

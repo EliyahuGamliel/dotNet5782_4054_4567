@@ -178,7 +178,7 @@ namespace ConsoleUI
             int ID;
             Console.WriteLine("Enter the Id: ");
             Int32.TryParse(Console.ReadLine(), out ID);
-            DalObject.DalObject.PrintById(ID, num);
+            Console.WriteLine(DalObject.DalObject.PrintById(ID, num));
         }
 
         
@@ -190,7 +190,7 @@ namespace ConsoleUI
             Console.WriteLine("Enter 4 for the packages's list");
             Console.WriteLine("Enter 5 fop the list of packages that hadn't been assigned to a drone");
             Console.WriteLine("Enter 6 fop the list of stations that have sper place for charging");
-            
+
         }
         
         
