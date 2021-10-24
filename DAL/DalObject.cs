@@ -154,12 +154,12 @@ namespace DalObject
 		{
 			double dis;
 			if (letter == 'c') {
-				Customer c = DataSource.customers.Find(c => id == c.Id);
+				Customer c = DataSource.customers.Find(cu => id == cu.Id);
 				int index = DataSource.customers.IndexOf(c);
 				dis = DataSource.customers[index].DistanceTo(lat1, lon1, DataSource.customers[index].Lattitude, DataSource.customers[index].Longitude);
 			}
 			else {
-				Station s = DataSource.stations.Find(s => id == s.Id);
+				Station s = DataSource.stations.Find(st => id == st.Id);
 				int index = DataSource.stations.IndexOf(s);
 				dis = DataSource.stations[index].DistanceTo(lat1, lon1, DataSource.stations[index].Lattitude, DataSource.stations[index].Longitude);
 			}
@@ -217,22 +217,22 @@ namespace DalObject
 			switch (num)
 			{
 				case 1:
-					Station s = DataSource.stations.Find(s => Id == s.Id);
+					Station s = DataSource.stations.Find(st => Id == st.Id);
 					s.ToString();
 					break;
 					
 				case 2:
-					Drone d = DataSource.drones.Find(d => Id == d.Id);
+					Drone d = DataSource.drones.Find(dr => Id == dr.Id);
 					d.ToString();
 					break;
 					
 				case 3:
-					Customer c = DataSource.customers.Find(c => Id == c.Id);
+					Customer c = DataSource.customers.Find(cu => Id == cu.Id);
 					c.ToString();
 					break;
 					
 				case 4:
-					Parcel p = DataSource.parcels.Find(p => Id == p.Id);
+					Parcel p = DataSource.parcels.Find(pa => Id == pa.Id);
 					p.ToString();
 					break;
 			}
@@ -244,8 +244,7 @@ namespace DalObject
 			switch (num)
 			{
 				case 1:
-					for (; i < DataSource.stations.Count; i++)
-						DataSource.stations[i].ToString();
+						return DataSource.stations;
 					break;
 					
 				case 2:
