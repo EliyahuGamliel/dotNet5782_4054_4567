@@ -214,7 +214,6 @@ namespace ConsoleUI
                         Console.WriteLine(item.ToString());
                     break;
             }
-
         }
         
         
