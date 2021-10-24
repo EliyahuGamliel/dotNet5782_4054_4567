@@ -58,8 +58,8 @@ namespace ConsoleUI
                     Console.WriteLine("Enter 2 for drones's list");
                     Console.WriteLine("Enter 3 for customers's list");
                     Console.WriteLine("Enter 4 for the packages's list");
-                    Console.WriteLine("Enter 5 fop the list of packages that hadn't been assigned to a drone");
-                    Console.WriteLine("Enter 6 fop the list of stations that have sper place for charging");
+                    Console.WriteLine("Enter 5 for the list of packages that hadn't been assigned to a drone");
+                    Console.WriteLine("Enter 6 for the list of stations that have sper place for charging");
                     break;
                     
                 case 5:
