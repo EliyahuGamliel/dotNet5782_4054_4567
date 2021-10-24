@@ -5,9 +5,9 @@ namespace ConsoleUI
 {
     class Program
     {
+        static DalObject.DalObject data = new DalObject.DalObject();
         static void Main(string[] args)
         {
-            DalObject.DalObject data = new DalObject.DalObject();
             MainMenu();
             
             //
@@ -57,8 +57,8 @@ namespace ConsoleUI
                     Console.WriteLine("Enter 1 for the stations's list");
                     Console.WriteLine("Enter 2 for drones's list");
                     Console.WriteLine("Enter 3 for customers's list");
-                    Console.WriteLine("Enter 4 for the packages's list");
-                    Console.WriteLine("Enter 5 for the list of packages that hadn't been assigned to a drone");
+                    Console.WriteLine("Enter 4 for the parcel's list");
+                    Console.WriteLine("Enter 5 for the list of parcels that hadn't been assigned to a drone");
                     Console.WriteLine("Enter 6 for the list of stations that have sper place for charging");
                     break;
                     
@@ -173,8 +173,7 @@ namespace ConsoleUI
         }
 
         
-        static void status(int num)
-        {
+        static void status(int num) {
             int ID;
             Console.WriteLine("Enter the Id: ");
             Int32.TryParse(Console.ReadLine(), out ID);
@@ -182,14 +181,39 @@ namespace ConsoleUI
         }
 
         
-        static void lists(int num)
-        {
-            Console.WriteLine("Enter 1 for the stations's list");
-            Console.WriteLine("Enter 2 for drones's list");
-            Console.WriteLine("Enter 3 for customers's list");
-            Console.WriteLine("Enter 4 for the packages's list");
-            Console.WriteLine("Enter 5 fop the list of packages that hadn't been assigned to a drone");
-            Console.WriteLine("Enter 6 fop the list of stations that have sper place for charging");
+        static void lists(int num) {
+            switch (num)
+            {
+                case 1:
+                    foreach (var item in data.PrintListStation())
+                        Console.WriteLine(item.ToString());
+                    break;
+
+                case 2:
+                    foreach (var item in data.PrintListDrone())
+                        Console.WriteLine(item.ToString());
+                    break;
+
+                case 3:
+                    foreach (var item in data.PrintListCustomer())
+                        Console.WriteLine(item.ToString());
+                    break;
+
+                case 4:
+                    foreach (var item in data.PrintListParcel())
+                        Console.WriteLine(item.ToString());
+                    break;
+                
+                case 5:
+                    foreach (var item in data.PrintListParcelDrone())
+                        Console.WriteLine(item.ToString());
+                    break;
+
+                case 6:
+                    foreach (var item in data.PrintListStationCharge())
+                        Console.WriteLine(item.ToString());
+                    break;
+            }
 
         }
         
