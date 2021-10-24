@@ -212,24 +212,24 @@ namespace DalObject
 			DataSource.customers.Add(c);
 		}
 		
-		public static void PrintById(int Id, char ch) {
-			switch (ch)
+		public static void PrintById(int Id, int num) {
+			switch (num)
 			{
-				case 'c':
-					Customer c = DataSource.customers.Find(c => id == c.Id);
-					c.ToString();
-					
-				case 's':
+				case 1:
 					Station s = DataSource.stations.Find(s => id == s.Id);
 					s.ToString();
 					
-				case 'p':
-					Parcel p = DataSource.parcels.Find(p => id == p.Id);
-					p.ToString();
-					
-				case 'd':
+				case 2:
 					Drone d = DataSource.drones.Find(d => id == d.Id);
 					d.ToString();
+					
+				case 3:
+					Customer c = DataSource.customers.Find(c => id == c.Id);
+					c.ToString();
+					
+				case 4:
+					Parcel p = DataSource.parcels.Find(p => id == p.Id);
+					p.ToString();
 			}
 			
 		}
