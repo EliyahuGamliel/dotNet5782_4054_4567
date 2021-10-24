@@ -267,7 +267,7 @@ namespace DalObject
 						for (int j = 0; j < DataSource.droneCharges.Count; j++) 
 							if (DataSource.droneCharges[j].StationId == id)
 								count += 1;
-						if (count == DataSource.stations[i].ChargeSlots)
+						if (count != DataSource.stations[i].ChargeSlots)
 							DataSource.stations[i].ToString();
 					}
 			}
