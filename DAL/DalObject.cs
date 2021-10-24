@@ -260,7 +260,7 @@ namespace DalObject
 						if (DataSource.parcels[i].DroneId == 0)
 							DataSource.parcels[i].ToString();
 					
-				case 6: //to fix
+				case 6:
 					for (; i < DataSource.stations.Count; i++) {
 						int id = DataSource.stations[i].Id;
 						int count = 0;
