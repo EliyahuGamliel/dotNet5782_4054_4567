@@ -10,6 +10,7 @@ namespace DalObject
 		internal static List<Station> stations = new List<Station>();
 		internal static List<Customer> customers = new List<Customer>();
 		internal static List<Parcel> parcels = new List<Parcel>();
+		internal static List<DroneCharge> droneCharges = new List<DroneCharge>();
 
 		internal class Config {
 			public static int Number_ID = 0;
@@ -230,6 +231,45 @@ namespace DalObject
 				case 4:
 					Parcel p = DataSource.parcels.Find(p => id == p.Id);
 					p.ToString();
+			}
+			
+		}
+		
+		public static void PrintList(int num) {
+			int i = 0;
+			switch (num)
+			{
+				case 1:
+					for (; i < DataSource.stations.Count; i++)
+						DataSource.stations[i].ToString();
+					
+				case 2:
+					for (; i < DataSource.drones.Count; i++)
+						DataSource.drones[i].ToString();
+					
+				case 3:
+					for (; i < DataSource.customers.Count; i++)
+						DataSource.customers[i].ToString();
+					
+				case 4:
+					for (; i < DataSource.parcels.Count; i++)
+						DataSource.parcels[i].ToString();
+					
+				case 5:
+					for (; i < DataSource.parcels.Count; i++)
+						if (DataSource.parcels[i].DroneId == 0)
+							DataSource.parcels[i].ToString();
+					
+				case 6: //to fix
+					for (; i < DataSource.stations.Count; i++) {
+						int id = DataSource.stations[i].Id;
+						int count = 0;
+						for (int j = 0; j < DataSource.droneCharges.Count; j++) 
+							if (DataSource.droneCharges[j].StationId == id)
+								count += 1;
+						if (count == DataSource.stations[i].ChargeSlots)
+							DataSource.stations[i].ToString();
+					}
 			}
 			
 		}
