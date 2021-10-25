@@ -135,7 +135,6 @@ namespace ConsoleUI
                     Console.WriteLine("Enter Id: ");
                     Int32.TryParse(Console.ReadLine(), out id);
                     Console.WriteLine("Enter Name: ");
-                    
                     Int32.TryParse(Console.ReadLine(), out name1);
                     Console.WriteLine("Enter Longitude: ");
                     Double.TryParse(Console.ReadLine(), out longitude);
@@ -146,7 +145,7 @@ namespace ConsoleUI
                     data.AddStation(id, name1, longitude, latitude, chargeslots);
                     break;
                 
-                //For adding a srone
+                //For adding a drone
                 case 2:
                     int maxw, ds;
                     double battery;
