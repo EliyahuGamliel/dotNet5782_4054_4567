@@ -17,11 +17,10 @@ namespace DalObject
 		}
 		
 		/// <summary>
-		/// this function initialise the data at the beginning
+		/// The function initialise the data at the beginning
 		/// </summary>
 		public static void Initialize() {
 			Random r = new Random();
-			bool tof;
 			//Drones
 			int l = r.Next(5, 11);
 			for (int i = 0;i < l;++i) {
@@ -98,19 +97,13 @@ namespace DalObject
 			int IndexOfSender = 0;
 			l = r.Next(10, 1001);
 			for (int i = 0;i < l;++i) {
-				tof = true;
 				Parcel p = new Parcel();
 				p.Id = i;
 				p.Requested = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
 				int len = customers.Count;
-
 				int ind = r.Next(0, len);
 				p.TargetId = customers[ind].Id;
 				IndexOfSender = ind;
-				
-
-
-
 				len = drones.Count;
 				for(int h = 0; h < len;++h) {
 					if(drones[h].Status == DroneStatuses.Delivery) {
@@ -125,23 +118,17 @@ namespace DalObject
 				
 				
 				len = customers.Count;
-
 				int ind2 = r.Next(0, len);
-				while(ind2 == ind)//so that the sender and the target won't be the same customer
-                {
+				//so that the sender and the target won't be the same customer
+				while(ind2 == ind) {
 					ind2 = r.Next(0, len);
 				}
 				p.SenderId = customers[ind2].Id;
-
-
 				p.Weight = (WeightCategories)(r.Next(0, 3));
 				p.priority = (Priorities)(r.Next(0, 3));
-
 				parcels.Add(p);
 			}
-
 		}
-	
 	}
 
 	public class DalObject
@@ -175,6 +162,14 @@ namespace DalObject
 			return dis;
 		}
 
+		/// <summary>
+		/// Add a station at the request of the user to the list
+		/// </summary>
+		/// <param name="Id">id of station</param>
+		/// <param name="Name">name of station</param>
+		/// <param name="Longitude">Longitude of station</param>
+		/// <param name="Lattitude">Lattitude of station</param>
+		/// <param name="ChargeSlots">Number of available charging stations</param>
 		public void AddStation(int Id, int Name, double Longitude, double Lattitude, int ChargeSlots) {
 			Station s = new Station();
 			s.Id = Id;
@@ -185,6 +180,14 @@ namespace DalObject
 			DataSource.stations.Add(s);
 		}
 		
+		/// <summary>
+		/// Add a drone at the request of the user to the list
+		/// </summary>
+		/// <param name="Id">id of drone</param>
+		/// <param name="Model">model of drone</param>
+		/// <param name="MaxWeight">MaxWeight of drone</param>
+		/// <param name="Status">Status of drone</param>
+		/// <param name="Battery">Battery of drone</param>
 		public void AddDrone(int Id, string Model, int MaxWeight, int Status, double Battery) {
 			Drone d = new Drone();
 			d.Id = Id;
@@ -195,21 +198,39 @@ namespace DalObject
 			DataSource.drones.Add(d);
 		}
 		
-		public int AddParcel(int Id, int Senderld, int Targetld, int Weight, int priority, int droneId) {
+		/// <summary>
+		/// Add a parcel at the request of the user to the list
+		/// </summary>
+		/// <param name="Id">id of parcel</param>
+		/// <param name="SenderId">SenderId of parcel</param>
+		/// <param name="TargetId">TargetId of parcel</param>
+		/// <param name="Weight">Weight of parcel</param>
+		/// <param name="priority">priority of parcel</param>
+		/// <param name="droneId">droneId of parcel</param>
+		/// <returns></returns>
+		public int AddParcel(int Id, int SenderId, int TargetId, int Weight, int priority, int droneId) {
 			DataSource.Config.Number_ID += 1;
 			Parcel p = new Parcel();
 			p.Id = Id;
-			p.SenderId = Senderld;
-			p.TargetId = Targetld;
+			p.SenderId = SenderId;
+			p.TargetId = TargetId;
 			p.Weight = (WeightCategories)Weight;
 			p.priority = (Priorities)priority;
-			p.TargetId = Targetld;
+			p.TargetId = TargetId;
 			p.Requested = DateTime.Now;
 			p.DroneId = droneId;
 			DataSource.parcels.Add(p);
 			return DataSource.Config.Number_ID;
 		}
 		
+		/// <summary>
+		/// Add a customer at the request of the user to the list
+		/// </summary>
+		/// <param name="Id">id of customer</param>
+		/// <param name="Name">name of customer</param>
+		/// <param name="Phone"> phone of customer</param>
+		/// <param name="Longitude">Longitude of customer</param>
+		/// <param name="Lattitude">Lattitude of customer</param>
 		public void AddCustomer(int Id, string Name, string Phone, double Longitude, double Lattitude) {
 			Customer c = new Customer();
 			c.Id = Id;
@@ -220,6 +241,10 @@ namespace DalObject
 			DataSource.customers.Add(c);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="id"></param>
 		public void AssignDroneParcel(int id) {
 			Parcel p = DataSource.parcels.Find(pa => id == pa.Id);
 			WeightCategories w = p.Weight;
@@ -261,7 +286,7 @@ public void PickUpDroneParcel(int id) {///
 			DataSource.drones[index] = d;
 		}
 		/// <summary>
-		/// sends the drone
+		/// Sends the drone
 		/// </summary>
 		/// <param name="idDrone">the drone's id</param>
 		/// <param name="idStation">the station's id</param>
@@ -279,8 +304,9 @@ public void PickUpDroneParcel(int id) {///
 			s.ChargeSlots -= 1;
 			DataSource.stations[index] = s;
 		}
+
 		/// <summary>
-		/// ///releases the drone from the charging cell
+		/// Releases the drone from the charging cell
 		/// </summary>
 		/// <param name="id">the id of the drone that needs releasing</param>
 		public void ReleasDrone(int id) {
@@ -299,8 +325,9 @@ public void PickUpDroneParcel(int id) {///
 			s.ChargeSlots += 1;
 			DataSource.stations[index] = s;
 		}
+
 		/// <summary>
-		/// prints the item
+		/// Prints the item
 		/// </summary>
 		/// <param name="Id">the id of the item</param>
 		/// <param name="num">the number of what needs to be printed</param>
@@ -308,18 +335,22 @@ public void PickUpDroneParcel(int id) {///
 		public string PrintById(int Id, int num) {
 			switch (num)
 			{
+				//For print a selected station
 				case 1:
 					Station s = DataSource.stations.Find(st => Id == st.Id);
 					return s.ToString();
-					
+
+				//For print a selected drone	
 				case 2:
 					Drone d = DataSource.drones.Find(dr => Id == dr.Id);
 					return d.ToString();
-					
+
+				//For print a selected customer	
 				case 3:
 					Customer c = DataSource.customers.Find(cu => Id == cu.Id);
 					return c.ToString();
-					
+
+				//For print a selected parcel	
 				case 4:
 					Parcel p = DataSource.parcels.Find(pa => Id == pa.Id);
 					return p.ToString();
