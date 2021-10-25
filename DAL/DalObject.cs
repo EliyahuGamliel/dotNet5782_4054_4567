@@ -57,7 +57,7 @@ namespace DalObject
 				Station s = new Station();
 				s.ChargeSlots = 2 + r.Next(0, 3);
 				s.Id = rid;
-				s.Name = "station" + s.Id;
+				s.Name = s.Id;
 				s.Longitude = r.NextDouble() + r.Next(-180, 180);
 				s.Lattitude = r.NextDouble() + r.Next(-90, 90);
 				stations.Add(s);
@@ -175,7 +175,7 @@ namespace DalObject
 			return dis;
 		}
 
-		public void AddStation(int Id, string Name, double Longitude, double Lattitude, int ChargeSlots) {
+		public void AddStation(int Id, int Name, double Longitude, double Lattitude, int ChargeSlots) {
 			Station s = new Station();
 			s.Id = Id;
 			s.Name = Name;
