@@ -113,11 +113,8 @@ namespace DalObject
 					if(tof)
                     {
 						p.SenderId = customers[h].Id;
+						h = len;
 					}
-                    else
-                    {
-						h = -1;
-                    }
 					
 				}
 				
@@ -145,14 +142,12 @@ namespace DalObject
 						if(customers[h].Id == parcels[u].TargetId) {
 							tof = false;
 						}
-						if(tof)
-                        {
-							p.TargetId = customers[h].Id;
-						}
-                        else
-                        {
-							h = -1;
-                        }
+						
+					}
+					if (tof)
+					{
+						p.TargetId = customers[h].Id;
+						h = len;
 					}
 				}
 				
