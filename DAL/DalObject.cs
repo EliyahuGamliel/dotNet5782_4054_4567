@@ -24,7 +24,7 @@ namespace DalObject
 			int l = r.Next(5, 11);
 			for (int i = 0;i < l;++i) {
 				int rid = r.Next();
-				for (int h = 0;h < i;++h) {
+				for (int h = 0;h < i;++h) {//to check if the id already exists
 					if (rid == drones[h].Id) {
 						i -= 1;
 						rid = r.Next();
@@ -156,12 +156,12 @@ namespace DalObject
 			if (letter == 'c') {
 				Customer c = DataSource.customers.Find(cu => id == cu.Id);
 				int index = DataSource.customers.IndexOf(c);
-				dis = DataSource.customers[index].DistanceTo(lat1, lon1, DataSource.customers[index].Lattitude, DataSource.customers[index].Longitude);
+				dis = DataSource.customers[index].DistanceTo(lat1, lon1, DataSource.customers[index].Lattitude, DataSource.customers[index].Longitude);//the sis between the customers
 			}
 			else {
 				Station s = DataSource.stations.Find(st => id == st.Id);
 				int index = DataSource.stations.IndexOf(s);
-				dis = DataSource.stations[index].DistanceTo(lat1, lon1, DataSource.stations[index].Lattitude, DataSource.stations[index].Longitude);
+				dis = DataSource.stations[index].DistanceTo(lat1, lon1, DataSource.stations[index].Lattitude, DataSource.stations[index].Longitude);//the dis between the customer and the station
 			}
 			return dis;
 		}
@@ -186,7 +186,7 @@ namespace DalObject
 			DataSource.drones.Add(d);
 		}
 		
-		public int AddParcel(int Id, int Senderld, int Targetld, int Weight, int priority, int Droneld) {
+		public int AddParcel(int Id, int Senderld, int Targetld, int Weight, int priority, int droneId) {
 			DataSource.Config.Number_ID += 1;
 			Parcel p = new Parcel();
 			p.Id = Id;
@@ -196,6 +196,7 @@ namespace DalObject
 			p.priority = (Priorities)priority;
 			p.TargetId = Targetld;
 			p.Requested = DateTime.Now;
+			p.DroneId = droneId;
 			DataSource.parcels.Add(p);
 			return DataSource.Config.Number_ID;
 		}
@@ -215,7 +216,7 @@ namespace DalObject
 			WeightCategories w = p.Weight;
 			int index = DataSource.parcels.IndexOf(p);
 			for (int i = 0; i < DataSource.drones.Count; i++) {
-				if (DataSource.drones[i].MaxWeight >= w && DataSource.drones[i].Status == DroneStatuses.Available){
+				if (DataSource.drones[i].MaxWeight >= w && DataSource.drones[i].Status == DroneStatuses.Available){//if the drone can pick up the parcel
 					Drone d = DataSource.drones[i];
 					d.Status = DroneStatuses.Delivery;
 					DataSource.drones[i] = d;

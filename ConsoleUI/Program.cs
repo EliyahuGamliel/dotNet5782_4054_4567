@@ -110,7 +110,7 @@ namespace ConsoleUI
             string name;
             switch (num)
             {
-                case 1:
+                case 1://for adding a station
                     int chargeslots;
                     Console.WriteLine("Enter Id: ");
                     Int32.TryParse(Console.ReadLine(), out id);
@@ -125,7 +125,7 @@ namespace ConsoleUI
                     data.AddStation(id, name, longitude, latitude, chargeslots);
                     break;
                     
-                case 2:
+                case 2://for adding a srone
                     int maxw, ds;
                     double battery;
                     Console.WriteLine("Enter Id: ");
@@ -141,7 +141,7 @@ namespace ConsoleUI
                     data.AddDrone(id, model, maxw, ds, battery);
                     break;
                     
-                case 3:
+                case 3://for adding a customer
                     Console.WriteLine("Enter the id: ");
                     Int32.TryParse(Console.ReadLine(), out id);
                     Console.WriteLine("Enter the name: ");
@@ -155,7 +155,7 @@ namespace ConsoleUI
                     data.AddCustomer(id, name, phone, longitude, latitude);
                     break;
                     
-                case 4:
+                case 4://for adding a parcel
                     int senderId, targetId, wh, pr, droneId;
                     Console.WriteLine("Enter Id: ");
                     Int32.TryParse(Console.ReadLine(), out id);
