@@ -24,7 +24,7 @@ namespace DalObject
 			int l = r.Next(5, 11);
 			for (int i = 0;i < l;++i) {
 				int rid = r.Next();
-				for (int h = 0;h < i;++h) {//to check if the id already exists
+				for (int h = 0;h < i;++h) {///to check if the id already exists
 					if (rid == drones[h].Id) {
 						i -= 1;
 						rid = r.Next();
@@ -35,7 +35,7 @@ namespace DalObject
 				d.Id = rid;
 				d.Model = ("Mark" + i);
 				d.MaxWeight = (WeightCategories)(r.Next(0, 3));
-				d.Status = (DroneStatuses)(r.Next(0, 3));  //change the status so they wil be different 
+				d.Status = (DroneStatuses)(r.Next(0, 3));  ///change the status so they wil be different 
 				d.Battery = 100;
 				drones.Add(d);
 			}
@@ -92,13 +92,13 @@ namespace DalObject
 				customers.Add(c);
 			}
 
-			//Parcel
+			///Parcel
 			l = r.Next(10, 1001);
 			for (int i = 0;i < l;++i) {
 				Parcel p = new Parcel();
 				p.Id = i;
-				//p.Requested = DateTime.Now;
-				//p.Requested = DateTime.Now.AddDays(new Random().Next(-10));
+				///p.Requested = DateTime.Now;
+				///p.Requested = DateTime.Now.AddDays(new Random().Next(-10));
 				p.Requested = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
 				int len = customers.Count;
 				for(int h = 0; h < len;++h) {
@@ -117,9 +117,9 @@ namespace DalObject
 				for(int h = 0; h < len;++h) {
 					if(drones[h].Status == DroneStatuses.Delivery) {
 						p.DroneId = drones[h].Id;	
-						//p.Scheduled = DateTime.Now;
+						///p.Scheduled = DateTime.Now;
 						p.Scheduled = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
-						//p.Scheduled = DateTime.Now.AddDays(new Random().Next(1000));
+						///p.Scheduled = DateTime.Now.AddDays(new Random().Next(1000));
 					}
 				}
 				
@@ -156,12 +156,12 @@ namespace DalObject
 			if (letter == 'c') {
 				Customer c = DataSource.customers.Find(cu => id == cu.Id);
 				int index = DataSource.customers.IndexOf(c);
-				dis = DataSource.customers[index].DistanceTo(lat1, lon1, DataSource.customers[index].Lattitude, DataSource.customers[index].Longitude);//the sis between the customers
+				dis = DataSource.customers[index].DistanceTo(lat1, lon1, DataSource.customers[index].Lattitude, DataSource.customers[index].Longitude);///the sis between the customers
 			}
 			else {
 				Station s = DataSource.stations.Find(st => id == st.Id);
 				int index = DataSource.stations.IndexOf(s);
-				dis = DataSource.stations[index].DistanceTo(lat1, lon1, DataSource.stations[index].Lattitude, DataSource.stations[index].Longitude);//the dis between the customer and the station
+				dis = DataSource.stations[index].DistanceTo(lat1, lon1, DataSource.stations[index].Lattitude, DataSource.stations[index].Longitude);///the dis between the customer and the station
 			}
 			return dis;
 		}
@@ -216,7 +216,7 @@ namespace DalObject
 			WeightCategories w = p.Weight;
 			int index = DataSource.parcels.IndexOf(p);
 			for (int i = 0; i < DataSource.drones.Count; i++) {
-				if (DataSource.drones[i].MaxWeight >= w && DataSource.drones[i].Status == DroneStatuses.Available){//if the drone can pick up the parcel
+				if (DataSource.drones[i].MaxWeight >= w && DataSource.drones[i].Status == DroneStatuses.Available){///if the drone can pick up the parcel
 					Drone d = DataSource.drones[i];
 					d.Status = DroneStatuses.Delivery;
 					DataSource.drones[i] = d;
@@ -228,14 +228,14 @@ namespace DalObject
 			}
 		}
 
-public void PickUpDroneParcel(int id) {
+public void PickUpDroneParcel(int id) {///
 			Parcel p = DataSource.parcels.Find(pa => id == pa.Id);
 			int index = DataSource.parcels.IndexOf(p);
 			p.PickedUp = DateTime.Now;
 			DataSource.parcels[index] = p;
 		}
 
-public void DeliverParcelCustomer(int id) {
+public void DeliverParcelCustomer(int id) {///deliverring the parcel
 			Parcel p = DataSource.parcels.Find(pa => id == pa.Id);
 			int index = DataSource.parcels.IndexOf(p);
 			p.Delivered = DateTime.Now;
@@ -246,7 +246,7 @@ public void DeliverParcelCustomer(int id) {
 			DataSource.drones[index] = d;
 		}
 
-		public void SendDrone(int idDrone, int idStation) { //to continue 
+		public void SendDrone(int idDrone, int idStation) { ///to continue 
 			DroneCharge dc = new DroneCharge();
 			dc.DroneId = idDrone;
 			dc.StationId = idStation;
@@ -261,7 +261,7 @@ public void DeliverParcelCustomer(int id) {
 			DataSource.stations[index] = s;
 		}
 
-		public void ReleasDrone(int id) {
+		public void ReleasDrone(int id) {///releases the drone from the charging cell
 			int index;
 			DroneCharge dc = DataSource.droneCharges.Find(drch => id == drch.DroneId);
 			int stationId = dc.StationId;

@@ -258,7 +258,7 @@ namespace ConsoleUI
                     break;
             }
         }    
-        static void coordinateMa(int num) {//the coordinate distance managger
+        static void coordinateMa(int num) {///the coordinate distance manager
             double lat, lon;
             int ID;
             Console.WriteLine("Enter the lattitude: ");

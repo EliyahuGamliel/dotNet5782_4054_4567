@@ -43,7 +43,7 @@ namespace IDAL
                 return $"{degrees}° {minutes}' {Math.Round(seconds, 3)}\" {dir}";
             }
             
-            public double DistanceTo(double lat1, double lon1, double lat2, double lon2) {
+            public double DistanceTo(double lat1, double lon1, double lat2, double lon2) {///calculating the distance between them
                 double rlat1 = Math.PI * lat1 / 180;
                 double rlat2 = Math.PI * lat2 / 180;
                 double theta = lon1 - lon2;

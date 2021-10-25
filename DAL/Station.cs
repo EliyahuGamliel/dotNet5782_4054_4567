@@ -15,7 +15,7 @@ namespace IDAL
            public override string ToString() 
            { return $"Id: {Id}\nName: {Name}\nLongitude: {Longitube_Bonus(Longitude)}\nLattitude: {Lattitude_Bonus(Lattitude)}\nChargeSlots: {ChargeSlots}\n"; }     
            
-           public static string Longitube_Bonus(double num) {
+           public static string Longitube_Bonus(double num) {///returns the longitude
             char dir = 'S';
                 if (num < 0)
                     num = -num;
@@ -29,7 +29,7 @@ namespace IDAL
                 return $"{degrees}° {minutes}' {Math.Round(seconds, 3)}\" {dir}";
             }
             
-            public static string Lattitude_Bonus(double num) {
+            public static string Lattitude_Bonus(double num) {///returns the lattitude
                 char dir = 'W';
                 if (num < 0)
                     num = -num;
@@ -43,7 +43,7 @@ namespace IDAL
                 return $"{degrees}° {minutes}' {Math.Round(seconds, 3)}\" {dir}";
             }
            
-           public double DistanceTo(double lat1, double lon1, double lat2, double lon2) {
+           public double DistanceTo(double lat1, double lon1, double lat2, double lon2) {///calculates the distance
             double rlat1 = Math.PI * lat1 / 180;
             double rlat2 = Math.PI * lat2 / 180;
             double theta = lon1 - lon2;

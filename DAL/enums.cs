@@ -2,7 +2,7 @@
 
 namespace IDAL
 {
-    namespace DO
+    namespace DO///all the required for the project
     {
         public enum WeightCategories {Light, Medium, Heavy}
         
