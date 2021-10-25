@@ -358,26 +358,45 @@ public void PickUpDroneParcel(int id) {///
 			return " ";
 		}
 		
+		/// <summary>
+		/// prints the stations
+		/// </summary>
+		/// <returns></returns>
 		public Station[] PrintListStation() {
 			return DataSource.stations.ToArray();
 		}
-
+		/// <summary>
+		/// prints the drones
+		/// </summary>
+		/// <returns></returns>
 		public Drone[] PrintListDrone() {
 			return DataSource.drones.ToArray();
 		}
-
+		/// <summary>
+		/// prints the customers
+		/// </summary>
+		/// <returns></returns>
 		public Customer[] PrintListCustomer() {
 			return DataSource.customers.ToArray();
 		}
-
+		/// <summary>
+		/// prints the parcels
+		/// </summary>
+		/// <returns></returns>
 		public Parcel[] PrintListParcel() {
 			return DataSource.parcels.ToArray();
 		}
-
+		/// <summary>
+		/// prints all the parcels that dont have a drone
+		/// </summary>
+		/// <returns></returns>
 		public Parcel[] PrintListParcelDrone() {
 			return DataSource.parcels.FindAll(pa => 0 == pa.DroneId).ToArray();
 		}
-
+		/// <summary>
+		/// prints all the stations with avaliable charging slots
+		/// </summary>
+		/// <returns></returns>
 		public Station[] PrintListStationCharge() {
 			return DataSource.stations.FindAll(st => 0 != st.ChargeSlots).ToArray();
 		}
