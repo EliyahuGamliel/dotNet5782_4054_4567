@@ -93,19 +93,23 @@ namespace DalObject
 			}
 
 			///Parcel
+			int IndexOfSender = 0;
 			l = r.Next(10, 1001);
 			for (int i = 0;i < l;++i) {
 				tof = true;
 				Parcel p = new Parcel();
 				p.Id = i;
-				///p.Requested = DateTime.Now;
-				///p.Requested = DateTime.Now.AddDays(new Random().Next(-10));
 				p.Requested = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
 				int len = customers.Count;
 				for(int h = 0; h < len;++h) {
 					int len2 = parcels.Count;
 					for(int u = 0; u < len2; ++u) {
-						if(customers[h].Id == parcels[u].SenderId) {
+						tof = true;
+						if (h == IndexOfSender)
+						{
+							++h;
+						}
+						else if (customers[h].Id == parcels[u].SenderId) {
 							tof = false;
 							
 						}
@@ -113,6 +117,7 @@ namespace DalObject
 					if(tof)
                     {
 						p.SenderId = customers[h].Id;
+						IndexOfSender = h;
 						h = len;
 					}
 					
@@ -123,13 +128,11 @@ namespace DalObject
 				for(int h = 0; h < len;++h) {
 					if(drones[h].Status == DroneStatuses.Delivery) {
 						p.DroneId = drones[h].Id;
-						///p.Scheduled = DateTime.Now;
 						p.Scheduled = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
 						while (DateTime.Compare(p.Requested, p.Scheduled) > 0)
 						{
 							p.Scheduled = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));//////////////
 						}
-						///p.Scheduled = DateTime.Now.AddDays(new Random().Next(1000));
 					}
 				}
 				
@@ -138,13 +141,23 @@ namespace DalObject
 				for(int h = 0; h < len ;++h) {
 					tof = true;
 					int len2 = parcels.Count;
-					for(int u = 0; u < len2; ++u) {
-						if(customers[h].Id == parcels[u].TargetId) {
+					for (int u = 0; u < len2; ++u)
+					{
+						if (h == IndexOfSender)
+						{
+							++h;
+						}
+						else if (customers[h].Id == parcels[u].TargetId)
+						{
 							tof = false;
 						}
-						
 					}
-					if (tof)
+					if(tof && h == IndexOfSender)
+                    {
+						p.TargetId = customers[h + 1].Id;
+						h = len;
+					}
+					else if (tof)
 					{
 						p.TargetId = customers[h].Id;
 						h = len;

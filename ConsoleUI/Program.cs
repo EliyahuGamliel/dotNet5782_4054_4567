@@ -6,12 +6,18 @@ namespace ConsoleUI
     class Program
     {
         static DalObject.DalObject data;
+        /// <summary>
+        /// the main function
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             data = new DalObject.DalObject();
             MainMenu();
         }
-
+        /// <summary>
+        /// the menu
+        /// </summary>
         static void MainMenu()
         {
             int choice;
@@ -29,7 +35,10 @@ namespace ConsoleUI
             
             
         }
-
+        /// <summary>
+        /// the first part of the menu
+        /// </summary>
+        /// <param name="choice">the first choice of the user</param>
         static void FirstMenu(int choice)
         {
             switch (choice)
@@ -78,7 +87,11 @@ namespace ConsoleUI
             Int32.TryParse(Console.ReadLine(), out secondChoice);
             SecondMenu(choice, secondChoice);
         }
-
+        /// <summary>
+        /// the second part of the menu
+        /// </summary>
+        /// <param name="choice"></param>
+        /// <param name="secondChoice"></param>
         static void SecondMenu(int choice, int secondChoice)
         {
             switch (choice)
