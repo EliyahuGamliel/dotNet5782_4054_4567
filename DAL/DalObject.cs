@@ -127,12 +127,10 @@ namespace DalObject
 				for(int h = 0; h < len ;++h) {
 					int len2 = parcels.Count;
 					for(int u = 0; u < len2; ++u) {
-						if(customers[h].Id == parcels[u].TargetId) {
-							h = -1;
-							break;
+						if(customers[h].Id != parcels[u].TargetId) {
+							p.TargetId = customers[h].Id;
 						}
 					}
-					p.TargetId = customers[h].Id;
 				}
 				
 				p.Weight = (WeightCategories)(r.Next(0, 3));
