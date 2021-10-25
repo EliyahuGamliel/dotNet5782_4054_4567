@@ -33,7 +33,7 @@ namespace DalObject
 				
 				Drone d = new Drone();
 				d.Id = rid;
-				d.Model = ("Mark" + 1);
+				d.Model = ("Mark" + i);
 				d.MaxWeight = (WeightCategories)(r.Next(0, 3));
 				d.Status = (DroneStatuses)(r.Next(0, 3));  //change the status so they wil be different 
 				d.Battery = 100;
