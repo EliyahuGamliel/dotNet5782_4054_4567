@@ -118,7 +118,7 @@ namespace DalObject
 						p.DroneId = drones[h].Id;
 						///p.Scheduled = DateTime.Now;
 						p.Scheduled = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
-						while (DateTime.Compare(p.Requested, p.Scheduled) < 0)
+						while (DateTime.Compare(p.Requested, p.Scheduled) > 0)
 						{
 							p.Scheduled = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));//////////////
 						}
