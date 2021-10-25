@@ -130,18 +130,20 @@ namespace ConsoleUI
             {
                 //For adding a station
                 case 1:
+                    int name1;
                     int chargeslots;
                     Console.WriteLine("Enter Id: ");
                     Int32.TryParse(Console.ReadLine(), out id);
                     Console.WriteLine("Enter Name: ");
-                    name = Console.ReadLine();
+                    
+                    Int32.TryParse(Console.ReadLine(), out name1);
                     Console.WriteLine("Enter Longitude: ");
                     Double.TryParse(Console.ReadLine(), out longitude);
                     Console.WriteLine("Enter Latitude: ");
                     Double.TryParse(Console.ReadLine(), out latitude);
                     Console.WriteLine("Enter ChargeSlots: ");
                     Int32.TryParse(Console.ReadLine(), out chargeslots);
-                    data.AddStation(id, name, longitude, latitude, chargeslots);
+                    data.AddStation(id, name1, longitude, latitude, chargeslots);
                     break;
                 
                 //For adding a srone
