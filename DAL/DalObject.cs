@@ -16,7 +16,9 @@ namespace DalObject
 			public static int Number_ID = 0;
 		}
 		
-		
+		/// <summary>
+		/// this function initialise the data at the beginning
+		/// </summary>
 		public static void Initialize() {
 			Random r = new Random();
 			bool tof;
@@ -35,7 +37,7 @@ namespace DalObject
 				d.Id = rid;
 				d.Model = ("Mark" + i);
 				d.MaxWeight = (WeightCategories)(r.Next(0, 3));
-				d.Status = (DroneStatuses)(r.Next(0, 3));  ///change the status so they wil be different 
+				d.Status = (DroneStatuses)(r.Next(0, 3));  //change the status so they wil be different 
 				d.Battery = 100;
 				drones.Add(d);
 			}
@@ -81,7 +83,7 @@ namespace DalObject
 				rid = r.Next(1000, 10000);
 				for (int h = 0;h < i;++h) {
 					ph = "053758" + rid;
-					if (ph == customers[h].Phone) {
+					if (ph == customers[h].Phone) {//it takes a random number from 0000 to 9999 and add it to "053758"
 						rid = r.Next();
 						h = -1;
 					}
@@ -101,29 +103,14 @@ namespace DalObject
 				p.Id = i;
 				p.Requested = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
 				int len = customers.Count;
-				for(int h = 0; h < len;++h) {
-					int len2 = parcels.Count;
-					for(int u = 0; u < len2; ++u) {
-						tof = true;
-						if (h == IndexOfSender)
-						{
-							++h;
-						}
-						else if (customers[h].Id == parcels[u].SenderId) {
-							tof = false;
-							
-						}
-					}
-					if(tof)
-                    {
-						p.SenderId = customers[h].Id;
-						IndexOfSender = h;
-						h = len;
-					}
-					
-				}
+
+				int ind = r.Next(0, len);
+				p.TargetId = customers[ind].Id;
+				IndexOfSender = ind;
 				
-				
+
+
+
 				len = drones.Count;
 				for(int h = 0; h < len;++h) {
 					if(drones[h].Status == DroneStatuses.Delivery) {
@@ -138,32 +125,15 @@ namespace DalObject
 				
 				
 				len = customers.Count;
-				for(int h = 0; h < len ;++h) {
-					tof = true;
-					int len2 = parcels.Count;
-					for (int u = 0; u < len2; ++u)
-					{
-						if (h == IndexOfSender)
-						{
-							++h;
-						}
-						else if (customers[h].Id == parcels[u].TargetId)
-						{
-							tof = false;
-						}
-					}
-					if(tof && h == IndexOfSender)
-                    {
-						p.TargetId = customers[h + 1].Id;
-						h = len;
-					}
-					else if (tof)
-					{
-						p.TargetId = customers[h].Id;
-						h = len;
-					}
+
+				int ind2 = r.Next(0, len);
+				while(ind2 == ind)//so that the sender and the target won't be the same customer
+                {
+					ind2 = r.Next(0, len);
 				}
-				
+				p.SenderId = customers[ind2].Id;
+
+
 				p.Weight = (WeightCategories)(r.Next(0, 3));
 				p.priority = (Priorities)(r.Next(0, 3));
 
@@ -176,8 +146,19 @@ namespace DalObject
 
 	public class DalObject
 	{
+		/// <summary>
+		/// uses the function Initialize() in order to initialise the data
+		/// </summary>
 		public DalObject() { DataSource.Initialize(); }
-		
+
+		/// <summary>
+		/// prints the distance between a given point and a customer/station
+		/// </summary>
+		/// <param name="lat1">the lattitude of place number 1</param>
+		/// <param name="lon1">the longitude of place number 1</param>
+		/// <param name="letter">if the user wants to check the distance from a station or a customer</param>
+		/// <param name="id">the id of the customer/station</param>
+		/// <returns></returns>
 		public double DistancePrint(double lat1, double lon1, char letter, int id)
 		{
 			double dis;
