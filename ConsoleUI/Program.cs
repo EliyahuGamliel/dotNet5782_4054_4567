@@ -177,7 +177,42 @@ namespace ConsoleUI
         
         static void update(int num)
         {
-            Console.WriteLine("you chose some kind of update");
+            int id;
+            switch (num)
+            {
+                case 1:
+                    Console.WriteLine("Enter Id of Parcel: ");
+                    Int32.TryParse(Console.ReadLine(), out id);
+                    data.AssignDroneParcel(id);
+                    break;
+
+                case 2:
+                    Console.WriteLine("Enter Id of Parcel: ");
+                    Int32.TryParse(Console.ReadLine(), out id);
+                    data.PickUpDroneParcel(id);
+                    break;
+
+                case 3:
+                    Console.WriteLine("Enter Id of Parcel: ");
+                    Int32.TryParse(Console.ReadLine(), out id);
+                    data.DeliverParcelCustomer(id);
+                    break;
+
+                case 4:
+                    int idStation;
+                    Console.WriteLine("Enter Id of Drone: ");
+                    Int32.TryParse(Console.ReadLine(), out id);
+                    Console.WriteLine("Enter Id of Station: ");
+                    Int32.TryParse(Console.ReadLine(), out idStation);
+                    data.SendDrone(id, idStation);
+                    break;
+                
+                case 5:
+                    Console.WriteLine("Enter Id of Drone: ");
+                    Int32.TryParse(Console.ReadLine(), out id);
+                    data.ReleasDrone(id);
+                    break;
+            }
         }
 
         

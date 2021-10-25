@@ -209,7 +209,74 @@ namespace DalObject
 			c.Lattitude = Lattitude;
 			DataSource.customers.Add(c);
 		}
-		
+
+		public void AssignDroneParcel(int id) {
+			Parcel p = DataSource.parcels.Find(pa => id == pa.Id);
+			WeightCategories w = p.Weight;
+			int index = DataSource.parcels.IndexOf(p);
+			for (int i = 0; i < DataSource.drones.Count; i++) {
+				if (DataSource.drones[i].MaxWeight >= w && DataSource.drones[i].Status == DroneStatuses.Available){
+					Drone d = DataSource.drones[i];
+					d.Status = DroneStatuses.Delivery;
+					DataSource.drones[i] = d;
+					p.DroneId = d.Id;
+					p.Scheduled = DateTime.Now;
+					DataSource.parcels[index] = p;
+					return;
+				}
+			}
+		}
+
+public void PickUpDroneParcel(int id) {
+			Parcel p = DataSource.parcels.Find(pa => id == pa.Id);
+			int index = DataSource.parcels.IndexOf(p);
+			p.PickedUp = DateTime.Now;
+			DataSource.parcels[index] = p;
+		}
+
+public void DeliverParcelCustomer(int id) {
+			Parcel p = DataSource.parcels.Find(pa => id == pa.Id);
+			int index = DataSource.parcels.IndexOf(p);
+			p.Delivered = DateTime.Now;
+			DataSource.parcels[index] = p;
+			Drone d = DataSource.drones.Find(dr => p.DroneId == dr.Id);
+			index = DataSource.drones.IndexOf(d);
+			d.Status = DroneStatuses.Available;
+			DataSource.drones[index] = d;
+		}
+
+		public void SendDrone(int idDrone, int idStation) { //to continue 
+			DroneCharge dc = new DroneCharge();
+			dc.DroneId = idDrone;
+			dc.StationId = idStation;
+			DataSource.droneCharges.Add(dc);
+			Drone d = DataSource.drones.Find(dr => idDrone == dr.Id);
+			int index = DataSource.drones.IndexOf(d);
+			d.Status = DroneStatuses.Maintenance;
+			DataSource.drones[index] = d;
+			Station s = DataSource.stations.Find(st => idStation == st.Id);
+			index = DataSource.stations.IndexOf(s);
+			s.ChargeSlots -= 1;
+			DataSource.stations[index] = s;
+		}
+
+		public void ReleasDrone(int id) {
+			int index;
+			DroneCharge dc = DataSource.droneCharges.Find(drch => id == drch.DroneId);
+			int stationId = dc.StationId;
+			int droneId = dc.DroneId;
+			DataSource.droneCharges.Remove(dc);
+			Drone d = DataSource.drones.Find(dr => droneId == dr.Id);
+			index = DataSource.drones.IndexOf(d);
+			d.Status = DroneStatuses.Available;
+			d.Battery = 100;
+			DataSource.drones[index] = d;
+			Station s = DataSource.stations.Find(st => stationId == st.Id);
+			index = DataSource.stations.IndexOf(s);
+			s.ChargeSlots += 1;
+			DataSource.stations[index] = s;
+		}
+
 		public string PrintById(int Id, int num) {
 			switch (num)
 			{
