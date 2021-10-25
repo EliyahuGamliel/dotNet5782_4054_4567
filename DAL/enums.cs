@@ -2,8 +2,11 @@
 
 namespace IDAL
 {
-    namespace DO///all the required for the project
+    namespace DO
     {
+        /// <summary>
+        /// Set up all the enums relevant to the program
+        /// </summary>
         public enum WeightCategories {Light, Medium, Heavy}
         
         public enum DroneStatuses {Available, Maintenance, Delivery}

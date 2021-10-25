@@ -4,6 +4,9 @@ namespace IDAL
 {
     namespace DO
     {
+        /// <summary>
+        /// Defining the "Station" class
+        /// </summary>
        public struct Station
        {
            public int Id { get; set; }
@@ -12,10 +15,18 @@ namespace IDAL
            public double Lattitude{ get; set; } 
            public int ChargeSlots{ get; set; }
            
+           /// <summary><returns>
+           /// The function returns a string to print on all entity data
+           /// </returns></summary>
            public override string ToString() 
-           { return $"Id: {Id}\nName: {Name}\nLongitude: {Longitube_Bonus(Longitude)}\nLattitude: {Lattitude_Bonus(Lattitude)}\nChargeSlots: {ChargeSlots}\n"; }     
+           { return $"Id: {Id}\nName: {Name}\nLongitude: {Longitude_Bonus(Longitude)}\nLattitude: {Lattitude_Bonus(Lattitude)}\nChargeSlots: {ChargeSlots}\n"; }     
            
-           public static string Longitube_Bonus(double num) {///returns the longitude
+            /// <summary>
+            /// The function gets a longitube and turns it into a longitube at base 60
+            /// </summary>
+            /// <param name="num">The number to change</param>
+            /// <returns>The function returns a string of a number representing base 60</returns>
+            public static string Longitude_Bonus(double num) {///returns the longitude
             char dir = 'S';
                 if (num < 0)
                     num = -num;
@@ -29,6 +40,11 @@ namespace IDAL
                 return $"{degrees}° {minutes}' {Math.Round(seconds, 3)}\" {dir}";
             }
             
+            /// <summary>
+            /// The function gets a lattitude and turns it into a lattitude at base 60
+            /// </summary>
+            /// <param name="num">The number to change</param>
+            /// <returns>The function returns a string of a number representing base 60</returns>
             public static string Lattitude_Bonus(double num) {///returns the lattitude
                 char dir = 'W';
                 if (num < 0)
@@ -43,7 +59,15 @@ namespace IDAL
                 return $"{degrees}° {minutes}' {Math.Round(seconds, 3)}\" {dir}";
             }
            
-           public double DistanceTo(double lat1, double lon1, double lat2, double lon2) {///calculates the distance
+            /// <summary>
+            /// The function calculates the distance between two points by their longitude and latitude lines
+            /// </summary>
+            /// <param name="lat1">latitude number 1</param>
+            /// <param name="lon1">longitude number 1</param>
+            /// <param name="lat2">latitude number 2</param>
+            /// <param name="lon2">longitude number 2</param>
+            /// <returns>Distance between two points on the globe</returns>
+            public double DistanceTo(double lat1, double lon1, double lat2, double lon2) {
             double rlat1 = Math.PI * lat1 / 180;
             double rlat2 = Math.PI * lat2 / 180;
             double theta = lon1 - lon2;
