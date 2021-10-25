@@ -19,7 +19,7 @@ namespace DalObject
 		
 		public static void Initialize() {
 			Random r = new Random();
-			
+			bool tof;
 			//Drones
 			int l = r.Next(5, 11);
 			for (int i = 0;i < l;++i) {
@@ -95,6 +95,7 @@ namespace DalObject
 			///Parcel
 			l = r.Next(10, 1001);
 			for (int i = 0;i < l;++i) {
+				tof = true;
 				Parcel p = new Parcel();
 				p.Id = i;
 				///p.Requested = DateTime.Now;
@@ -104,10 +105,19 @@ namespace DalObject
 				for(int h = 0; h < len;++h) {
 					int len2 = parcels.Count;
 					for(int u = 0; u < len2; ++u) {
-						if(customers[h].Id != parcels[u].SenderId) {
-							p.SenderId = customers[h].Id;
+						if(customers[h].Id == parcels[u].SenderId) {
+							tof = false;
+							
 						}
 					}
+					if(tof)
+                    {
+						p.SenderId = customers[h].Id;
+					}
+                    else
+                    {
+						h = -1;
+                    }
 					
 				}
 				
@@ -129,11 +139,20 @@ namespace DalObject
 				
 				len = customers.Count;
 				for(int h = 0; h < len ;++h) {
+					tof = true;
 					int len2 = parcels.Count;
 					for(int u = 0; u < len2; ++u) {
-						if(customers[h].Id != parcels[u].TargetId) {
+						if(customers[h].Id == parcels[u].TargetId) {
+							tof = false;
+						}
+						if(tof)
+                        {
 							p.TargetId = customers[h].Id;
 						}
+                        else
+                        {
+							h = -1;
+                        }
 					}
 				}
 				
