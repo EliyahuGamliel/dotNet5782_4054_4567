@@ -5,9 +5,10 @@ namespace ConsoleUI
 {
     class Program
     {
-        static DalObject.DalObject data = new DalObject.DalObject();
+        static DalObject.DalObject data;
         static void Main(string[] args)
         {
+            data = new DalObject.DalObject();
             MainMenu();
         }
 

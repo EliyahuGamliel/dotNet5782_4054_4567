@@ -14,7 +14,12 @@ namespace IDAL
             
             public override string ToString() 
             { return $"Id: {Id}\nName: {Name}\nPhone: {Phone}\nLongitude: {Longitude_Bonus(Longitude)}\nLattitude: {Lattitude_Bonus(Lattitude)}\n"; }
-            
+
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="num"></param>
+            /// <returns></returns>
             public static string Longitude_Bonus(double num) {
             char dir = 'S';
                 if (num < 0)

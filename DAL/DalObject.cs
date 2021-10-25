@@ -104,12 +104,11 @@ namespace DalObject
 				for(int h = 0; h < len;++h) {
 					int len2 = parcels.Count;
 					for(int u = 0; u < len2; ++u) {
-						if(customers[h].Id == parcels[u].SenderId) {
-							h = -1;
-							break;
+						if(customers[h].Id != parcels[u].SenderId) {
+							p.SenderId = customers[h].Id;
 						}
 					}
-					p.SenderId = customers[h].Id;
+					
 				}
 				
 				
@@ -138,8 +137,8 @@ namespace DalObject
 				
 				p.Weight = (WeightCategories)(r.Next(0, 3));
 				p.priority = (Priorities)(r.Next(0, 3));
-				
-				
+
+				parcels.Add(p);
 			}
 
 		}
@@ -227,15 +226,21 @@ namespace DalObject
 				}
 			}
 		}
-
+		/// <summary>
+		/// the function takes care of picking up the drone using a drone
+		/// </summary>
+		/// <param name="id"></param>
 public void PickUpDroneParcel(int id) {///
 			Parcel p = DataSource.parcels.Find(pa => id == pa.Id);
 			int index = DataSource.parcels.IndexOf(p);
 			p.PickedUp = DateTime.Now;
 			DataSource.parcels[index] = p;
 		}
-
-public void DeliverParcelCustomer(int id) {///deliverring the parcel
+		/// <summary>
+		/// the function takes care of delivering the parcel to the customer
+		/// </summary>
+		/// <param name="id">the id of the parcel that needs to be delivered</param>
+		public void DeliverParcelCustomer(int id) {///deliverring the parcel
 			Parcel p = DataSource.parcels.Find(pa => id == pa.Id);
 			int index = DataSource.parcels.IndexOf(p);
 			p.Delivered = DateTime.Now;
@@ -245,8 +250,12 @@ public void DeliverParcelCustomer(int id) {///deliverring the parcel
 			d.Status = DroneStatuses.Available;
 			DataSource.drones[index] = d;
 		}
-
-		public void SendDrone(int idDrone, int idStation) { ///to continue 
+		/// <summary>
+		/// sends the drone
+		/// </summary>
+		/// <param name="idDrone">the drone's id</param>
+		/// <param name="idStation">the station's id</param>
+		public void SendDrone(int idDrone, int idStation) { 
 			DroneCharge dc = new DroneCharge();
 			dc.DroneId = idDrone;
 			dc.StationId = idStation;
@@ -260,8 +269,11 @@ public void DeliverParcelCustomer(int id) {///deliverring the parcel
 			s.ChargeSlots -= 1;
 			DataSource.stations[index] = s;
 		}
-
-		public void ReleasDrone(int id) {///releases the drone from the charging cell
+		/// <summary>
+		/// ///releases the drone from the charging cell
+		/// </summary>
+		/// <param name="id">the id of the drone that needs releasing</param>
+		public void ReleasDrone(int id) {
 			int index;
 			DroneCharge dc = DataSource.droneCharges.Find(drch => id == drch.DroneId);
 			int stationId = dc.StationId;
@@ -277,7 +289,12 @@ public void DeliverParcelCustomer(int id) {///deliverring the parcel
 			s.ChargeSlots += 1;
 			DataSource.stations[index] = s;
 		}
-
+		/// <summary>
+		/// prints the item
+		/// </summary>
+		/// <param name="Id">the id of the item</param>
+		/// <param name="num">the number of what needs to be printed</param>
+		/// <returns></returns>
 		public string PrintById(int Id, int num) {
 			switch (num)
 			{
