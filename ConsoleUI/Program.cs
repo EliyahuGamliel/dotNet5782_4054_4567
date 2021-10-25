@@ -121,7 +121,7 @@ namespace ConsoleUI
         static void adding(int num) {
             int id;
             double longitude, latitude;
-            string name;
+            int name;
             switch (num)
             {
                 case 1://for adding a station
@@ -129,7 +129,7 @@ namespace ConsoleUI
                     Console.WriteLine("Enter Id: ");
                     Int32.TryParse(Console.ReadLine(), out id);
                     Console.WriteLine("Enter Name: ");
-                    name = Console.ReadLine();
+                    Int32.TryParse(Console.ReadLine(), out name);
                     Console.WriteLine("Enter Longitude: ");
                     Double.TryParse(Console.ReadLine(), out longitude);
                     Console.WriteLine("Enter Latitude: ");
@@ -139,7 +139,7 @@ namespace ConsoleUI
                     data.AddStation(id, name, longitude, latitude, chargeslots);
                     break;
                     
-                case 2://for adding a srone
+                case 2://for adding a drone
                     int maxw, ds;
                     double battery;
                     Console.WriteLine("Enter Id: ");
