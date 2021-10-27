@@ -5,7 +5,7 @@ namespace ConsoleUI
 {
     class Program
     {
-        static DalObject.DalObject data;
+        static IDAL.IDAL data;
 
         /// <summary>
         /// The main function

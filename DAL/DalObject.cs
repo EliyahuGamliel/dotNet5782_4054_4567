@@ -371,7 +371,7 @@ namespace DalObject
         /// prints the stations
         /// </summary>
         /// <returns></returns>
-        public Station[] PrintListStation() {
+        public IEnumerable<Station> PrintListStation() {
             return DataSource.stations.ToArray();
         }
 
