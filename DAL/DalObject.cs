@@ -12,26 +12,22 @@ namespace DalObject
         internal static List<Parcel> parcels = new List<Parcel>();
         internal static List<DroneCharge> droneCharges = new List<DroneCharge>();
 
-        internal class Config
-        {
+        internal class Config {
             public static int Number_ID = 0;
         }
 
         /// <summary>
         /// The function initialise the data at the beginning
         /// </summary>
-        public static void Initialize()
-        {
+        public static void Initialize() {
             Random r = new Random();
             //Drones
             int l = r.Next(5, 11);
-            for (int i = 0; i < l; ++i)
-            {
+            for (int i = 0; i < l; ++i) {
                 int rid = r.Next();
-                for (int h = 0; h < i; ++h)
-                {///to check if the id already exists
-					if (rid == drones[h].Id)
-                    {
+                for (int h = 0; h < i; ++h) {
+					if (rid == drones[h].Id) {
+                        ///to check if the id already exists
                         i -= 1;
                         rid = r.Next();
                     }
@@ -49,13 +45,10 @@ namespace DalObject
 
             //Station
             l = r.Next(2, 6);
-            for (int i = 0; i < l; ++i)
-            {
+            for (int i = 0; i < l; ++i) {
                 int rid = r.Next();
-                for (int h = 0; h < i; ++h)
-                {
-                    if (rid == stations[h].Id)
-                    {
+                for (int h = 0; h < i; ++h) {
+                    if (rid == stations[h].Id) {
                         h = -1;
                         rid = r.Next();
                     }
@@ -73,13 +66,10 @@ namespace DalObject
 
             //Customer
             l = r.Next(10, 101);
-            for (int i = 0; i < l; ++i)
-            {
+            for (int i = 0; i < l; ++i) {
                 int rid = r.Next();
-                for (int h = 0; h < i; ++h)
-                {
-                    if (rid == customers[h].Id)
-                    {
+                for (int h = 0; h < i; ++h) {
+                    if (rid == customers[h].Id) {
                         h = -1;
                         rid = r.Next();
                     }
@@ -88,14 +78,12 @@ namespace DalObject
                 Customer c = new Customer();
                 c.Id = rid;
                 c.Name = ("MyNameIs" + i);
-
                 string ph = "0537589982";
                 rid = r.Next(1000, 10000);
-                for (int h = 0; h < i; ++h)
-                {
+                for (int h = 0; h < i; ++h) {
                     ph = "053758" + rid;
-                    if (ph == customers[h].Phone)
-                    {//it takes a random number from 0000 to 9999 and add it to "053758"
+                    if (ph == customers[h].Phone) {
+                        //it takes a random number from 0000 to 9999 and add it to "053758"
                         rid = r.Next();
                         h = -1;
                     }
@@ -109,8 +97,7 @@ namespace DalObject
             ///Parcel
             int IndexOfSender = 0;
             l = r.Next(10, 1001);
-            for (int i = 0; i < l; ++i)
-            {
+            for (int i = 0; i < l; ++i) {
                 Parcel p = new Parcel();
                 p.Id = i;
                 p.Requested = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
@@ -119,10 +106,8 @@ namespace DalObject
                 p.TargetId = customers[ind].Id;
                 IndexOfSender = ind;
                 len = drones.Count;
-                for (int h = 0; h < len; ++h)
-                {
-                    if (drones[h].Status == DroneStatuses.Delivery)
-                    {
+                for (int h = 0; h < len; ++h) {
+                    if (drones[h].Status == DroneStatuses.Delivery) {
                         p.DroneId = drones[h].Id;
                         p.Scheduled = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
                         while (DateTime.Compare(p.Requested, p.Scheduled) > 0)
@@ -136,8 +121,7 @@ namespace DalObject
                 len = customers.Count;
                 int ind2 = r.Next(0, len);
                 //so that the sender and the target won't be the same customer
-                while (ind2 == ind)
-                {
+                while (ind2 == ind) {
                     ind2 = r.Next(0, len);
                 }
                 p.SenderId = customers[ind2].Id;
@@ -253,8 +237,7 @@ namespace DalObject
         /// <param name="Phone"> phone of customer</param>
         /// <param name="Longitude">Longitude of customer</param>
         /// <param name="Lattitude">Lattitude of customer</param>
-        public void AddCustomer(int Id, string Name, string Phone, double Longitude, double Lattitude)
-        {
+        public void AddCustomer(int Id, string Name, string Phone, double Longitude, double Lattitude) {
             Customer c = new Customer();
             c.Id = Id;
             c.Name = Name;
@@ -268,8 +251,7 @@ namespace DalObject
         /// 
         /// </summary>
         /// <param name="id"></param>
-        public void AssignDroneParcel(int id)
-        {
+        public void AssignDroneParcel(int id) {
             Parcel p = DataSource.parcels.Find(pa => id == pa.Id);
             WeightCategories w = p.Weight;
             int index = DataSource.parcels.IndexOf(p);
@@ -287,23 +269,23 @@ namespace DalObject
                 }
             }
         }
+
         /// <summary>
         /// the function takes care of picking up the drone using a drone
         /// </summary>
         /// <param name="id"></param>
-        public void PickUpDroneParcel(int id)
-        {///
+        public void PickUpDroneParcel(int id) {
 			Parcel p = DataSource.parcels.Find(pa => id == pa.Id);
             int index = DataSource.parcels.IndexOf(p);
             p.PickedUp = DateTime.Now;
             DataSource.parcels[index] = p;
         }
+
         /// <summary>
         /// the function takes care of delivering the parcel to the customer
         /// </summary>
         /// <param name="id">the id of the parcel that needs to be delivered</param>
-        public void DeliverParcelCustomer(int id)
-        {///deliverring the parcel
+        public void DeliverParcelCustomer(int id) {
 			Parcel p = DataSource.parcels.Find(pa => id == pa.Id);
             int index = DataSource.parcels.IndexOf(p);
             p.Delivered = DateTime.Now;
@@ -313,13 +295,13 @@ namespace DalObject
             d.Status = DroneStatuses.Available;
             DataSource.drones[index] = d;
         }
+
         /// <summary>
         /// Sends the drone
         /// </summary>
         /// <param name="idDrone">the drone's id</param>
         /// <param name="idStation">the station's id</param>
-        public void SendDrone(int idDrone, int idStation)
-        {
+        public void SendDrone(int idDrone, int idStation) {
             DroneCharge dc = new DroneCharge();
             dc.DroneId = idDrone;
             dc.StationId = idStation;
@@ -338,8 +320,7 @@ namespace DalObject
         /// Releases the drone from the charging cell
         /// </summary>
         /// <param name="id">the id of the drone that needs releasing</param>
-        public void ReleasDrone(int id)
-        {
+        public void ReleasDrone(int id) {
             int index;
             DroneCharge dc = DataSource.droneCharges.Find(drch => id == drch.DroneId);
             int stationId = dc.StationId;
@@ -362,8 +343,7 @@ namespace DalObject
         /// <param name="Id">the id of the item</param>
         /// <param name="num">the number of what needs to be printed</param>
         /// <returns></returns>
-        public string PrintById(int Id, int num)
-        {
+        public string PrintById(int Id, int num) {
             switch (num)
             {
                 //For print a selected station
@@ -393,49 +373,48 @@ namespace DalObject
         /// prints the stations
         /// </summary>
         /// <returns></returns>
-        public Station[] PrintListStation()
-        {
+        public Station[] PrintListStation() {
             return DataSource.stations.ToArray();
         }
+
         /// <summary>
         /// prints the drones
         /// </summary>
         /// <returns></returns>
-        public Drone[] PrintListDrone()
-        {
-            return DataSource.drones.ToArray();
+        public IEnumerable<Drone> PrintListDrone() {
+            return DataSource.drones;
         }
+
         /// <summary>
         /// prints the customers
         /// </summary>
         /// <returns></returns>
-        public Customer[] PrintListCustomer()
-        {
-            return DataSource.customers.ToArray();
+        public IEnumerable<Customer> PrintListCustomer() {
+            return DataSource.customers;
         }
+
         /// <summary>
         /// prints the parcels
         /// </summary>
         /// <returns></returns>
-        public Parcel[] PrintListParcel()
-        {
-            return DataSource.parcels.ToArray();
+        public IEnumerable<Parcel> PrintListParcel() {
+            return DataSource.parcels;
         }
+
         /// <summary>
         /// prints all the parcels that dont have a drone
         /// </summary>
         /// <returns></returns>
-        public Parcel[] PrintListParcelDrone()
-        {
-            return DataSource.parcels.FindAll(pa => 0 == pa.DroneId).ToArray();
+        public IEnumerable<Parcel> PrintListParcelDrone() {
+            return DataSource.parcels.FindAll(pa => 0 == pa.DroneId);
         }
+
         /// <summary>
         /// prints all the stations with avaliable charging slots
         /// </summary>
         /// <returns></returns>
-        public Station[] PrintListStationCharge()
-        {
-            return DataSource.stations.FindAll(st => 0 != st.ChargeSlots).ToArray();
+        public IEnumerable<Station> PrintListStationCharge() {
+            return DataSource.stations.FindAll(st => 0 != st.ChargeSlots);
         }
     }
 }
