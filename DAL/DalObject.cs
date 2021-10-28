@@ -106,9 +106,22 @@ namespace DalObject
                 p.TargetId = customers[ind].Id;
                 IndexOfSender = ind;
                 len = drones.Count;
+
+                //if(p.Id < len)
+                //{
+                //    p.DroneId = drones[p.Id].Id;
+                //    p.Scheduled = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
+                //    while (DateTime.Compare(p.Requested, p.Scheduled) > 0)
+                //        p.Scheduled = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
+                //}
+                //else
+                //{
+                //    p.DroneId = 0;
+                //}
+
                 for (int h = 0; h < len; ++h) {
                     if (drones[h].Status == DroneStatuses.Delivery) {
-                        p.DroneId = drones[h].Id;
+                        p.DroneId = drones[p.Id].Id;
                         p.Scheduled = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
                         while (DateTime.Compare(p.Requested, p.Scheduled) > 0)
                             p.Scheduled = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
