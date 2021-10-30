@@ -1,8 +1,8 @@
 using System;
 
-namespace IDAL
+namespace IBL
 {
-    namespace DO
+    namespace BO
     {
         /// <summary>
         /// Defining the "Parcel" class
@@ -12,10 +12,10 @@ namespace IDAL
             public int Id { get; set; }
             public int SenderId { get; set; }
             public int TargetId { get; set; }
+            public Drone Drone { get; set; }
             public WeightCategories Weight { get; set; }
             public Priorities Priority { get; set; }
             public DateTime Requested{ get; set; }
-            public int DroneId{ get; set; }
             public DateTime Scheduled{ get; set; }
             public DateTime PickedUp{ get; set; }
             public DateTime Delivered{ get; set; }
@@ -24,7 +24,7 @@ namespace IDAL
             /// The function returns a string to print on all entity data
             /// </returns></summary>
             public override string ToString() 
-            { return $"Id: {Id}\nSenderld: {SenderId}\nTargetld: {TargetId}\nWeight: {Weight}\nPriority: {Priority}\nRequested: {Requested}\ndroneId: {DroneId}\nScheduled: {Scheduled}\nPickedUp: {PickedUp}\nDelivered:{Delivered}\n"; }
+            { return $"Id: {Id}\nSenderId: {SenderId}\nTargetId: {TargetId}\nWeight: {Weight}\nDrone: {Drone.ToString()}Priority: {Priority}\nRequested: {Requested}\nScheduled: {Scheduled}\nPickedUp: {PickedUp}\nDelivered:{Delivered}\n"; }
         }
     }
 }

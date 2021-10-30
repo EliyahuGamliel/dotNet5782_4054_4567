@@ -23,5 +23,6 @@ namespace IDAL
         IEnumerable<Parcel> PrintListParcel();
         IEnumerable<Parcel> PrintListParcelDrone();
         IEnumerable<Station> PrintListStationCharge();
+        bool[] DroneElectricityUse();
     }
 }

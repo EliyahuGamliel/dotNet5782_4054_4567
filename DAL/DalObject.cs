@@ -15,6 +15,11 @@ namespace DalObject
         internal class Config
         {
             public static int Number_ID = 0;
+            public static double Avaliable;
+            public static double WeightLight;
+            public static double WeightMedium;
+            public static double WeightHeavy;
+            public static double ChargingRate;
         }
 
         /// <summary>
@@ -107,8 +112,8 @@ namespace DalObject
                 d.Id = rid;
                 d.Model = ("Mark" + i);
                 d.MaxWeight = (WeightCategories)(r.Next(0, 3));
-                d.Status = (DroneStatuses)(r.Next(0, 3));  //change the status so they wil be different 
-                d.Battery = 100;
+                //d.Status = (DroneStatuses)(r.Next(0, 3));  //change the status so they wil be different -targil2
+                //d.Battery = 100; - targil2
                 for (int h = 0; h < parcels.Count; ++h) {
                     if (d.Status == DroneStatuses.Delivery && parcels[h].DroneId == 0 && d.MaxWeight >= parcels[h].Weight) {
                         Parcel p = parcels[h];
@@ -187,7 +192,7 @@ namespace DalObject
             d.Model = Model;
             d.MaxWeight = (WeightCategories)MaxWeight;
             d.Status = (DroneStatuses)Status;
-            d.Battery = Battery;
+            //d.Battery = Battery; - targil2
             DataSource.drones.Add(d);
         }
 
@@ -279,7 +284,7 @@ namespace DalObject
             DataSource.parcels[index] = p;
             Drone d = DataSource.drones.Find(dr => p.DroneId == dr.Id);
             index = DataSource.drones.IndexOf(d);
-            d.Status = DroneStatuses.Available;
+            //d.Status = DroneStatuses.Available; - targil2
             DataSource.drones[index] = d;
         }
 
@@ -315,8 +320,8 @@ namespace DalObject
             DataSource.droneCharges.Remove(dc);
             Drone d = DataSource.drones.Find(dr => droneId == dr.Id);
             index = DataSource.drones.IndexOf(d);
-            d.Status = DroneStatuses.Available;
-            d.Battery = 100;
+            //d.Status = DroneStatuses.Available; - targil2
+            //d.Battery = 100; - targil2
             DataSource.drones[index] = d;
             Station s = DataSource.stations.Find(st => stationId == st.Id);
             index = DataSource.stations.IndexOf(s);
@@ -402,6 +407,16 @@ namespace DalObject
         /// <returns></returns>
         public IEnumerable<Station> PrintListStationCharge() {
             return DataSource.stations.FindAll(st => 0 != st.ChargeSlots);
+        }
+
+        double[] DroneElectricityUse(){
+            double[] arr = new double[5]; 
+            arr[0] = DataSource.Config.Avaliable;
+            arr[1] = DataSource.Config.WeightLight;
+            arr[2] = DataSource.Config.WeightMedium;
+            arr[3] = DataSource.Config.WeightHeavy;
+            arr[4] = DataSource.Config.ChargingRate;
+            return arr;
         }
     }
 }
