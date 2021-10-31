@@ -117,7 +117,7 @@ namespace DalObject
         }
     }
 
-    public class DalObject : IDAL.IDAL
+    public partial class DalObject : IDAL.IDAL
     {
         /// <summary>
         /// uses the function Initialize() in order to initialise the data
@@ -148,106 +148,6 @@ namespace DalObject
         }
 
         /// <summary>
-        /// Add a station at the request of the user to the list
-        /// </summary>
-        /// <param name="Id">id of station</param>
-        /// <param name="Name">name of station</param>
-        /// <param name="Longitude">Longitude of station</param>
-        /// <param name="Lattitude">Lattitude of station</param>
-        /// <param name="ChargeSlots">Number of available charging stations</param>
-        public void AddStation(int Id, int Name, double Longitude, double Lattitude, int ChargeSlots) {
-            Station s = new Station();
-            s.Id = Id;
-            s.Name = Name;
-            s.Longitude = Longitude;
-            s.Lattitude = Lattitude;
-            s.ChargeSlots = ChargeSlots;
-            DataSource.stations.Add(s);
-        }
-
-        /// <summary>
-        /// Add a drone at the request of the user to the list
-        /// </summary>
-        /// <param name="Id">id of drone</param>
-        /// <param name="Model">model of drone</param>
-        /// <param name="MaxWeight">MaxWeight of drone</param>
-        /// <param name="Status">Status of drone</param>
-        /// <param name="Battery">Battery of drone</param>
-        public void AddDrone(int Id, string Model, int MaxWeight, int Status, double Battery) {
-            Drone d = new Drone();
-            d.Id = Id;
-            d.Model = Model;
-            d.MaxWeight = (WeightCategories)MaxWeight;
-            DataSource.drones.Add(d);
-        }
-
-        /// <summary>
-        /// Add a parcel at the request of the user to the list
-        /// </summary>
-        /// <param name="Id">id of parcel</param>
-        /// <param name="SenderId">SenderId of parcel</param>
-        /// <param name="TargetId">TargetId of parcel</param>
-        /// <param name="Weight">Weight of parcel</param>
-        /// <param name="priority">priority of parcel</param>
-        /// <param name="droneId">droneId of parcel</param>
-        /// <returns></returns>
-        public int AddParcel(int Id, int SenderId, int TargetId, int Weight, int priority, int droneId) {
-            DataSource.Config.Number_ID += 1;
-            Parcel p = new Parcel();
-            p.Id = Id;
-            p.SenderId = SenderId;
-            p.TargetId = TargetId;
-            p.Weight = (WeightCategories)Weight;
-            p.Priority = (Priorities)priority;
-            p.TargetId = TargetId;
-            p.Requested = DateTime.Now;
-            p.DroneId = droneId;
-            DataSource.parcels.Add(p);
-            return DataSource.Config.Number_ID;
-        }
-
-        /// <summary>
-        /// Add a customer at the request of the user to the list
-        /// </summary>
-        /// <param name="Id">id of customer</param>
-        /// <param name="Name">name of customer</param>
-        /// <param name="Phone"> phone of customer</param>
-        /// <param name="Longitude">Longitude of customer</param>
-        /// <param name="Lattitude">Lattitude of customer</param>
-        public void AddCustomer(int Id, string Name, string Phone, double Longitude, double Lattitude) {
-            Customer c = new Customer();
-            c.Id = Id;
-            c.Name = Name;
-            c.Phone = Phone;
-            c.Longitude = Longitude;
-            c.Lattitude = Lattitude;
-            DataSource.customers.Add(c);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        public void AssignDroneParcel(int DroneId, int ParcelId) {
-            Parcel p = DataSource.parcels.Find(pa => ParcelId == pa.Id);
-            int index = DataSource.parcels.IndexOf(p);
-            p.DroneId = DroneId;
-            p.Scheduled = DateTime.Now;
-            DataSource.parcels[index] = p;
-        }
-
-        /// <summary>
-        /// the function takes care of picking up the drone using a drone
-        /// </summary>
-        /// <param name="id"></param>
-        public void PickUpDroneParcel(int id) {
-            Parcel p = DataSource.parcels.Find(pa => id == pa.Id);
-            int index = DataSource.parcels.IndexOf(p);
-            p.PickedUp = DateTime.Now;
-            DataSource.parcels[index] = p;
-        }
-
-        /// <summary>
         /// the function takes care of delivering the parcel to the customer
         /// </summary>
         /// <param name="id">the id of the parcel that needs to be delivered</param>
@@ -258,46 +158,7 @@ namespace DalObject
             DataSource.parcels[index] = p;
             Drone d = DataSource.drones.Find(dr => p.DroneId == dr.Id);
             index = DataSource.drones.IndexOf(d);
-            //d.Status = DroneStatuses.Available; - targil2
             DataSource.drones[index] = d;
-        }
-
-        /// <summary>
-        /// Sends the drone
-        /// </summary>
-        /// <param name="idDrone">the drone's id</param>
-        /// <param name="idStation">the station's id</param>
-        public void SendDrone(int idDrone, int idStation) {
-            DroneCharge dc = new DroneCharge();
-            dc.DroneId = idDrone;
-            dc.StationId = idStation;
-            DataSource.droneCharges.Add(dc);
-            Drone d = DataSource.drones.Find(dr => idDrone == dr.Id);
-            int index = DataSource.drones.IndexOf(d);
-            DataSource.drones[index] = d;
-            Station s = DataSource.stations.Find(st => idStation == st.Id);
-            index = DataSource.stations.IndexOf(s);
-            s.ChargeSlots -= 1;
-            DataSource.stations[index] = s;
-        }
-
-        /// <summary>
-        /// Releases the drone from the charging cell
-        /// </summary>
-        /// <param name="id">the id of the drone that needs releasing</param>
-        public void ReleasDrone(int id) {
-            int index;
-            DroneCharge dc = DataSource.droneCharges.Find(drch => id == drch.DroneId);
-            int stationId = dc.StationId;
-            int droneId = dc.DroneId;
-            DataSource.droneCharges.Remove(dc);
-            Drone d = DataSource.drones.Find(dr => droneId == dr.Id);
-            index = DataSource.drones.IndexOf(d);
-            DataSource.drones[index] = d;
-            Station s = DataSource.stations.Find(st => stationId == st.Id);
-            index = DataSource.stations.IndexOf(s);
-            s.ChargeSlots += 1;
-            DataSource.stations[index] = s;
         }
 
         /// <summary>
@@ -330,64 +191,6 @@ namespace DalObject
                     return p.ToString();
             }
             return " ";
-        }
-
-        /// <summary>
-        /// prints the stations
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<Station> PrintListStation() {
-            return DataSource.stations.ToArray();
-        }
-
-        /// <summary>
-        /// prints the drones
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<Drone> PrintListDrone() {
-            return DataSource.drones;
-        }
-
-        /// <summary>
-        /// prints the customers
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<Customer> PrintListCustomer() {
-            return DataSource.customers;
-        }
-
-        /// <summary>
-        /// prints the parcels
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<Parcel> PrintListParcel() {
-            return DataSource.parcels;
-        }
-
-        /// <summary>
-        /// prints all the parcels that dont have a drone
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<Parcel> PrintListParcelDrone() {
-            return DataSource.parcels.FindAll(pa => 0 == pa.DroneId);
-        }
-
-        /// <summary>
-        /// prints all the stations with avaliable charging slots
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<Station> PrintListStationCharge() {
-            return DataSource.stations.FindAll(st => 0 != st.ChargeSlots);
-        }
-
-        public double[] DroneElectricityUse(){
-            double[] arr = new double[5]; 
-            arr[0] = DataSource.Config.Avaliable;
-            arr[1] = DataSource.Config.WeightLight;
-            arr[2] = DataSource.Config.WeightMedium;
-            arr[3] = DataSource.Config.WeightHeavy;
-            arr[4] = DataSource.Config.ChargingRate;
-            return arr;
         }
     }
 }
