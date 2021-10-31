@@ -208,9 +208,12 @@ namespace ConsoleUI
             {
                 //For associating a parcel with a drone
                 case 1:
+                    int idDrone;
                     Console.WriteLine("Enter Id of Parcel: ");
                     Int32.TryParse(Console.ReadLine(), out id);
-                    data.AssignDroneParcel(id);
+                    Console.WriteLine("Enter Id of Drone: ");
+                    Int32.TryParse(Console.ReadLine(), out idDrone);
+                    data.AssignDroneParcel(idDrone, id);
                     break;
                 
                 //For collection of a parcel by the drone

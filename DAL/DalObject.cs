@@ -93,7 +93,7 @@ namespace DalObject
                 }
                 p.SenderId = customers[ind].Id;
                 p.DroneId = 0;
-                p.priority = (Priorities)(r.Next(0, 3));
+                p.Priority = (Priorities)(r.Next(0, 3));
                 parcels.Add(p);
             }
 
@@ -112,19 +112,6 @@ namespace DalObject
                 d.Id = rid;
                 d.Model = ("Mark" + i);
                 d.MaxWeight = (WeightCategories)(r.Next(0, 3));
-                //d.Status = (DroneStatuses)(r.Next(0, 3));  //change the status so they wil be different -targil2
-                //d.Battery = 100; - targil2
-                for (int h = 0; h < parcels.Count; ++h) {
-                    if (d.Status == DroneStatuses.Delivery && parcels[h].DroneId == 0 && d.MaxWeight >= parcels[h].Weight) {
-                        Parcel p = parcels[h];
-                        p.DroneId = d.Id;
-                        p.Scheduled = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
-                        while (DateTime.Compare(p.Requested, p.Scheduled) > 0)
-                            p.Scheduled = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
-                        parcels[h] = p;
-                        h = parcels.Count;
-                    }
-                }
                 drones.Add(d);
             }
         }
@@ -191,8 +178,6 @@ namespace DalObject
             d.Id = Id;
             d.Model = Model;
             d.MaxWeight = (WeightCategories)MaxWeight;
-            d.Status = (DroneStatuses)Status;
-            //d.Battery = Battery; - targil2
             DataSource.drones.Add(d);
         }
 
@@ -213,7 +198,7 @@ namespace DalObject
             p.SenderId = SenderId;
             p.TargetId = TargetId;
             p.Weight = (WeightCategories)Weight;
-            p.priority = (Priorities)priority;
+            p.Priority = (Priorities)priority;
             p.TargetId = TargetId;
             p.Requested = DateTime.Now;
             p.DroneId = droneId;
@@ -243,23 +228,12 @@ namespace DalObject
         /// 
         /// </summary>
         /// <param name="id"></param>
-        public void AssignDroneParcel(int id) {
-            Parcel p = DataSource.parcels.Find(pa => id == pa.Id);
-            WeightCategories w = p.Weight;
+        public void AssignDroneParcel(int DroneId, int ParcelId) {
+            Parcel p = DataSource.parcels.Find(pa => ParcelId == pa.Id);
             int index = DataSource.parcels.IndexOf(p);
-            for (int i = 0; i < DataSource.drones.Count; i++)
-            {
-                if (DataSource.drones[i].MaxWeight >= w && DataSource.drones[i].Status == DroneStatuses.Available)
-                {///if the drone can pick up the parcel
-					Drone d = DataSource.drones[i];
-                    d.Status = DroneStatuses.Delivery;
-                    DataSource.drones[i] = d;
-                    p.DroneId = d.Id;
-                    p.Scheduled = DateTime.Now;
-                    DataSource.parcels[index] = p;
-                    return;
-                }
-            }
+            p.DroneId = DroneId;
+            p.Scheduled = DateTime.Now;
+            DataSource.parcels[index] = p;
         }
 
         /// <summary>
@@ -300,7 +274,6 @@ namespace DalObject
             DataSource.droneCharges.Add(dc);
             Drone d = DataSource.drones.Find(dr => idDrone == dr.Id);
             int index = DataSource.drones.IndexOf(d);
-            d.Status = DroneStatuses.Maintenance;
             DataSource.drones[index] = d;
             Station s = DataSource.stations.Find(st => idStation == st.Id);
             index = DataSource.stations.IndexOf(s);
@@ -320,8 +293,6 @@ namespace DalObject
             DataSource.droneCharges.Remove(dc);
             Drone d = DataSource.drones.Find(dr => droneId == dr.Id);
             index = DataSource.drones.IndexOf(d);
-            //d.Status = DroneStatuses.Available; - targil2
-            //d.Battery = 100; - targil2
             DataSource.drones[index] = d;
             Station s = DataSource.stations.Find(st => stationId == st.Id);
             index = DataSource.stations.IndexOf(s);
@@ -409,7 +380,7 @@ namespace DalObject
             return DataSource.stations.FindAll(st => 0 != st.ChargeSlots);
         }
 
-        double[] DroneElectricityUse(){
+        public double[] DroneElectricityUse(){
             double[] arr = new double[5]; 
             arr[0] = DataSource.Config.Avaliable;
             arr[1] = DataSource.Config.WeightLight;
