@@ -12,7 +12,7 @@ namespace ConsoleUI
         /// </summary>
         static void Main(string[] args)
         {
-            data = new IBL.BO();
+            data = new IBL.BL();
             MainMenu();
         }
 
@@ -28,11 +28,10 @@ namespace ConsoleUI
                 Console.WriteLine("Enter 2 for update");
                 Console.WriteLine("Enter 3 to show by Id");
                 Console.WriteLine("Enter 4 for the list");
-                Console.WriteLine("Enter 5 to show the distance from the station/customer");
-                Console.WriteLine("Enter 6 to exit");
+                Console.WriteLine("Enter 5 to exit");
                 Int32.TryParse(Console.ReadLine(), out choice);
                 FirstMenu(choice);
-            } while (choice != 6);   
+            } while (choice != 5);   
         }
         /// <summary>
         /// The first part of the menu
@@ -43,10 +42,10 @@ namespace ConsoleUI
             switch (choice)
             {
                 case 1:
-                    Console.WriteLine("Enter 1 for adding a station to the list");
+                    Console.WriteLine("Enter 1 for adding a station");
                     Console.WriteLine("Enter 2 for adding a drone");
                     Console.WriteLine("Enter 3 for adding a customer");
-                    Console.WriteLine("Enter 4 for adding a parcel to the delivery list");
+                    Console.WriteLine("Enter 4 for adding a parcel");
                     break;
 
                 case 2:
@@ -74,11 +73,6 @@ namespace ConsoleUI
                     break;
                     
                 case 5:
-                    Console.WriteLine("Enter 1 to mesure the distance from a customer");
-                    Console.WriteLine("Enter 2 to mesure the distance from a station");
-                    break;
-                    
-                case 6:
                     Console.WriteLine("Bye Bye!");
                     return;
             }
@@ -111,10 +105,6 @@ namespace ConsoleUI
                 case 4:
                     lists(secondChoice);
                     break;
-
-                case 5:
-                    coordinateMa(secondChoice);
-                    break;
             }
         }
 
@@ -124,7 +114,7 @@ namespace ConsoleUI
         /// <param name="num">The second choice of the user</param>
         static void adding(int num) {
             int id;
-            double longitude, latitude;
+            Location location;
             string name;
             switch (num)
             {
@@ -137,12 +127,12 @@ namespace ConsoleUI
                     Console.WriteLine("Enter Name: ");
                     Int32.TryParse(Console.ReadLine(), out name1);
                     Console.WriteLine("Enter Longitude: ");
-                    Double.TryParse(Console.ReadLine(), out longitude);
+                    Double.TryParse(Console.ReadLine(), out location.Longitude);
                     Console.WriteLine("Enter Latitude: ");
-                    Double.TryParse(Console.ReadLine(), out latitude);
+                    Double.TryParse(Console.ReadLine(), out location.Lattitude);
                     Console.WriteLine("Enter ChargeSlots: ");
                     Int32.TryParse(Console.ReadLine(), out chargeslots);
-                    data.AddStation(id, name1, longitude, latitude, chargeslots);
+                    data.AddStation(id, name1, location, chargeslots);
                     break;
                 
                 //For adding a drone
@@ -298,35 +288,5 @@ namespace ConsoleUI
                     break;
             }
         }    
-
-        /// <summary>
-        /// The function prints the distance from a customer or base station (according to the user's decision)
-        /// from a point entered by the user (by longitude and latitude)
-        /// </summary>
-        /// <param name="num">Indicates whether the user has selected "customer" or "station"</param>
-        static void coordinateMa(int num) {///the coordinate distance manager
-            double lat, lon;
-            int ID;
-            Console.WriteLine("Enter the lattitude: ");
-            Double.TryParse(Console.ReadLine(), out lat);
-            Console.WriteLine("Enter the longitude: ");
-            Double.TryParse(Console.ReadLine(), out lon);
-            switch (num)
-            {
-                //The distance from customer
-                case 1:
-                    Console.WriteLine("Enter the Id of customer");
-                    Int32.TryParse(Console.ReadLine(), out ID);
-                    Console.WriteLine($"The distance from the customer is: {data.DistancePrint(lat, lon, 'c', ID)}\n");
-                    break;
-                
-                //The distance from station
-                case 2:
-                    Console.WriteLine("Enter the Id of station");
-                    Int32.TryParse(Console.ReadLine(), out ID);
-                    Console.WriteLine($"The distance from the station is: {data.DistancePrint(lat, lon, 's', ID)}\n");
-                    break;
-            }
-        }
     }
 }
