@@ -7,10 +7,10 @@ namespace IDAL
     public interface IDAL
     { 
         double DistancePrint(double lat1, double lon1, char letter, int id);
-        void AddStation(int Id, int Name, double Longitude, double Lattitude, int ChargeSlots);
-        void AddDrone(int Id, string Model, int MaxWeight, int Status, double Battery);
-        int AddParcel(int Id, int SenderId, int TargetId, int Weight, int priority, int droneId);
-        void AddCustomer(int Id, string Name, string Phone, double Longitude, double Lattitude);
+        void AddStation(Station s);
+        void AddDrone(Drone d);
+        int AddParcel(Parcel p);
+        void AddCustomer(Customer c);
         void AssignDroneParcel(int DroneId, int ParcelId);
         void PickUpDroneParcel(int id);
         void DeliverParcelCustomer(int id);

@@ -213,7 +213,7 @@ namespace ConsoleUI
                     Int32.TryParse(Console.ReadLine(), out id);
                     Console.WriteLine("Enter Id of Drone: ");
                     Int32.TryParse(Console.ReadLine(), out idDrone);
-                    data.AssignDroneParcel(idDrone, id);
+                    data.AssignDroneParcel(idDrone, idDrone);
                     break;
                 
                 //For collection of a parcel by the drone

@@ -14,13 +14,7 @@ namespace DalObject
         /// <param name="Longitude">Longitude of station</param>
         /// <param name="Lattitude">Lattitude of station</param>
         /// <param name="ChargeSlots">Number of available charging stations</param>
-        public void AddStation(int Id, int Name, double Longitude, double Lattitude, int ChargeSlots) {
-            Station s = new Station();
-            s.Id = Id;
-            s.Name = Name;
-            s.Longitude = Longitude;
-            s.Lattitude = Lattitude;
-            s.ChargeSlots = ChargeSlots;
+        public void AddStation(Station s) {
             DataSource.stations.Add(s);
         }
 

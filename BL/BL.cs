@@ -1,22 +1,13 @@
 using System;
 using IBL.BO;
+using System.Collections.Generic;
 
 namespace IBL
 {
-    public class BL : IBL
+    public partial class BL : IBL
     {
-        public void AddStation(int Id, int Name, Location loca, int ChargeSlots){
-            
-        }
-        public void AddDrone(int Id, string Model, int MaxWeight, int Status, double Battery){
-
-        }
-        public int AddParcel(int Id, int SenderId, int TargetId, int Weight, int priority, int droneId){
-
-        }
-        public void AddCustomer(int Id, string Name, string Phone, double Longitude, double Lattitude){
-
-        }
+        static IDAL.IDAL data;
+        
         public void AssignDroneParcel(int DroneId, int ParcelId){
 
         }
@@ -26,35 +17,15 @@ namespace IBL
         public void DeliverParcelCustomer(int id){
 
         }
-        public void SendDrone(int idDrone, int idStation){
-
+        public string PrintById(int Id, int num){
+            return data.PrintById(Id, num);
         }
-        void ReleasDrone(int id){
-
-        }
-        string PrintById(int Id, int num){
-
-        }
-        IEnumerable<Station> PrintListStation(){
-
-        }
-        IEnumerable<Drone> PrintListDrone(){
-
-        }
-        IEnumerable<Customer> PrintListCustomer()|{
-
-        }
-        IEnumerable<Parcel> PrintListParcel(){
-
-        }
+        
         IEnumerable<Parcel> PrintListParcelDrone(){
-
+            return data.PrintListParcelDrone;
         }
         IEnumerable<Station> PrintListStationCharge(){
-
-        }
-        double[] DroneElectricityUse(){
-
+            return data.PrintListStationCharge();
         }
     }
 }

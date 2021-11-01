@@ -14,13 +14,7 @@ namespace DalObject
         /// <param name="Phone"> phone of customer</param>
         /// <param name="Longitude">Longitude of customer</param>
         /// <param name="Lattitude">Lattitude of customer</param>
-        public void AddCustomer(int Id, string Name, string Phone, double Longitude, double Lattitude) {
-            Customer c = new Customer();
-            c.Id = Id;
-            c.Name = Name;
-            c.Phone = Phone;
-            c.Longitude = Longitude;
-            c.Lattitude = Lattitude;
+        public void AddCustomer(Customer c) {
             DataSource.customers.Add(c);
         }
 

@@ -14,11 +14,7 @@ namespace DalObject
         /// <param name="MaxWeight">MaxWeight of drone</param>
         /// <param name="Status">Status of drone</param>
         /// <param name="Battery">Battery of drone</param>
-        public void AddDrone(int Id, string Model, int MaxWeight, int Status, double Battery) {
-            Drone d = new Drone();
-            d.Id = Id;
-            d.Model = Model;
-            d.MaxWeight = (WeightCategories)MaxWeight;
+        public void AddDrone(Drone d) {
             DataSource.drones.Add(d);
         }
 

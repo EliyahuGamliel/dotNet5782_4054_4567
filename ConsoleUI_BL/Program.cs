@@ -121,42 +121,37 @@ namespace ConsoleUI
             {
                 //For adding a station
                 case 1:
-                    int name1;
-                    int chargeslots;
+                    Station s = new Station();
                     Console.WriteLine("Enter Station Id: ");
-                    Int32.TryParse(Console.ReadLine(), out id);
+                    //Int32.TryParse(Console.ReadLine(), out s.Id);
                     Console.WriteLine("Enter Station Name: ");
-                    Int32.TryParse(Console.ReadLine(), out name1);
+                    //Int32.TryParse(Console.ReadLine(), out name1);
                     Console.WriteLine("Enter Station Longitude: ");
-                    Double.TryParse(Console.ReadLine(), out longitude);
+                    //Double.TryParse(Console.ReadLine(), out longitude);
                     Console.WriteLine("Enter Station Latitude: ");
-                    Double.TryParse(Console.ReadLine(), out latitude);
+                    //Double.TryParse(Console.ReadLine(), out latitude);
                     location.Longitude = longitude;
                     location.Lattitude = latitude;
                     Console.WriteLine("Enter Charge Slots: ");
                     Int32.TryParse(Console.ReadLine(), out chargeslots);
-                    logic.AddStation(id, name1, location, chargeslots);
+                    logic.AddStation(s);
                     break;
                 
                 //For adding a drone
                 case 2:
-                    int maxw, ds;
-                    double battery;
+                    Drone d = new Drone();
                     Console.WriteLine("Enter Id: ");
                     Int32.TryParse(Console.ReadLine(), out id);
-                    Console.WriteLine("Enter model: ");
+                    Console.WriteLine("Enter Model: ");
                     string model = Console.ReadLine();
                     Console.WriteLine("Enter the number of maxWeight: \n0) Light\n1) Medium\n2) Heavy");
                     Int32.TryParse(Console.ReadLine(), out maxw);
-                    Console.WriteLine("Enter the number of status: \n0) Available\n1) Maintenance\n2) Delivery");
-                    Int32.TryParse(Console.ReadLine(), out ds);
-                    Console.WriteLine("Enter battery: ");
-                    Double.TryParse(Console.ReadLine(), out battery);
-                    logic.AddDrone(id, model, maxw, ds, battery);
+                    logic.AddDrone(d);
                     break;
 
                 //For adding a customer
                 case 3:
+                    Customer c = new Customer();
                     Console.WriteLine("Enter the id: ");
                     Int32.TryParse(Console.ReadLine(), out id);
                     Console.WriteLine("Enter the name: ");
@@ -167,11 +162,12 @@ namespace ConsoleUI
                     Double.TryParse(Console.ReadLine(), out longitude);
                     Console.WriteLine("Enter the lattitude: ");
                     Double.TryParse(Console.ReadLine(), out latitude);
-                    logic.AddCustomer(id, name, phone, longitude, latitude);
+                    logic.AddCustomer(c);
                     break;
 
                 //For adding a parcel
                 case 4:
+                    Parcel p = new Parcel();
                     int senderId, targetId, wh, pr, droneId;
                     Console.WriteLine("Enter Id: ");
                     Int32.TryParse(Console.ReadLine(), out id);
@@ -185,11 +181,11 @@ namespace ConsoleUI
                     Int32.TryParse(Console.ReadLine(), out pr);
                     Console.WriteLine("Enter droneId: ");
                     Int32.TryParse(Console.ReadLine(), out droneId);
-                    logic.AddParcel(id, senderId, targetId, wh, pr, droneId);
+                    logic.AddParcel(p);
                     break;
             }
         }
-
+        
         /// <summary>
         /// The function takes care of the existing update options
         /// </summary>
