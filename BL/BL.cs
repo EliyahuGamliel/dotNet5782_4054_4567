@@ -21,10 +21,10 @@ namespace IBL
             return data.PrintById(Id, num);
         }
         
-        IEnumerable<Parcel> PrintListParcelDrone(){
-            return data.PrintListParcelDrone;
+        public IEnumerable<IDAL.DO.Parcel> PrintListParcelDrone(){
+            return data.PrintListParcelDrone();
         }
-        IEnumerable<Station> PrintListStationCharge(){
+        public IEnumerable<IDAL.DO.Station> PrintListStationCharge(){
             return data.PrintListStationCharge();
         }
     }

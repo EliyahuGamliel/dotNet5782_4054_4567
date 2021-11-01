@@ -1,5 +1,6 @@
 using System;
 using IBL.BO;
+using System.Collections.Generic;
 
 namespace IBL
 {
@@ -8,8 +9,8 @@ namespace IBL
         public void AddCustomer(Customer c){
 
         }
-        IEnumerable<Customer> PrintListCustomer()|{
-
+        public IEnumerable<IDAL.DO.Customer> PrintListCustomer(){
+            return data.PrintListCustomer();
         }
     }
 }

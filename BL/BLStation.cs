@@ -1,5 +1,6 @@
 using System;
 using IBL.BO;
+using System.Collections.Generic;
 
 namespace IBL
 {
@@ -14,8 +15,8 @@ namespace IBL
             st.ChargeSlots = s.ChargeSlots;
             data.AddStation(st);
         }
-        IEnumerable<Station> PrintListStation(){
-
+        public IEnumerable<IDAL.DO.Station> PrintListStation(){
+            return data.PrintListStation();
         }
     }
 }

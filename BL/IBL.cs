@@ -16,12 +16,12 @@ namespace IBL
         void SendDrone(int idDrone, int idStation);
         void ReleasDrone(int id); 
         string PrintById(int Id, int num);
-        IEnumerable<Station> PrintListStation();
-        IEnumerable<Drone> PrintListDrone();
-        IEnumerable<Customer> PrintListCustomer();
-        IEnumerable<Parcel> PrintListParcel();
-        IEnumerable<Parcel> PrintListParcelDrone();
-        IEnumerable<Station> PrintListStationCharge();
+        IEnumerable<IDAL.DO.Station> PrintListStation();
+        IEnumerable<IDAL.DO.Drone> PrintListDrone();
+        IEnumerable<IDAL.DO.Customer> PrintListCustomer();
+        IEnumerable<IDAL.DO.Parcel> PrintListParcel();
+        IEnumerable<IDAL.DO.Parcel> PrintListParcelDrone();
+        IEnumerable<IDAL.DO.Station> PrintListStationCharge();
         double[] DroneElectricityUse();
     }
 }

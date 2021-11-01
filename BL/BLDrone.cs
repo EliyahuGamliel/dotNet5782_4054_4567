@@ -1,5 +1,6 @@
 using System;
 using IBL.BO;
+using System.Collections.Generic;
 
 namespace IBL
 {
@@ -16,13 +17,13 @@ namespace IBL
         public void SendDrone(int idDrone, int idStation){
 
         }
-        void ReleasDrone(int id){
+        public void ReleasDrone(int id){
 
         }
-        IEnumerable<Drone> PrintListDrone(){
-
+        public IEnumerable<IDAL.DO.Drone> PrintListDrone(){
+            return data.PrintListDrone();
         }
-        double[] DroneElectricityUse(){
+        public double[] DroneElectricityUse(){
 
         }
     }
