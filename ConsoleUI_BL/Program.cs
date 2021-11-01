@@ -5,14 +5,14 @@ namespace ConsoleUI
 {
     class Program
     {
-        static IBL.IBL data;
+        static IBL.IBL logic;
 
         /// <summary>
         /// The main function
         /// </summary>
         static void Main(string[] args)
         {
-            data = new IBL.BL();
+            logic = new IBL.BL();
             MainMenu();
         }
 
@@ -133,9 +133,9 @@ namespace ConsoleUI
                     Double.TryParse(Console.ReadLine(), out latitude);
                     location.Longitude = longitude;
                     location.Lattitude = latitude;
-                    Console.WriteLine("Enter ChargeSlots: ");
+                    Console.WriteLine("Enter Charge Slots: ");
                     Int32.TryParse(Console.ReadLine(), out chargeslots);
-                    data.AddStation(id, name1, location, chargeslots);
+                    logic.AddStation(id, name1, location, chargeslots);
                     break;
                 
                 //For adding a drone
@@ -152,7 +152,7 @@ namespace ConsoleUI
                     Int32.TryParse(Console.ReadLine(), out ds);
                     Console.WriteLine("Enter battery: ");
                     Double.TryParse(Console.ReadLine(), out battery);
-                    data.AddDrone(id, model, maxw, ds, battery);
+                    logic.AddDrone(id, model, maxw, ds, battery);
                     break;
 
                 //For adding a customer
@@ -167,7 +167,7 @@ namespace ConsoleUI
                     Double.TryParse(Console.ReadLine(), out longitude);
                     Console.WriteLine("Enter the lattitude: ");
                     Double.TryParse(Console.ReadLine(), out latitude);
-                    data.AddCustomer(id, name, phone, longitude, latitude);
+                    logic.AddCustomer(id, name, phone, longitude, latitude);
                     break;
 
                 //For adding a parcel
@@ -185,7 +185,7 @@ namespace ConsoleUI
                     Int32.TryParse(Console.ReadLine(), out pr);
                     Console.WriteLine("Enter droneId: ");
                     Int32.TryParse(Console.ReadLine(), out droneId);
-                    data.AddParcel(id, senderId, targetId, wh, pr, droneId);
+                    logic.AddParcel(id, senderId, targetId, wh, pr, droneId);
                     break;
             }
         }
@@ -203,21 +203,21 @@ namespace ConsoleUI
                 case 1:
                     Console.WriteLine("Enter Id of Parcel: ");
                     Int32.TryParse(Console.ReadLine(), out id);
-                    data.AssignDroneParcel(id);
+                    logic.AssignDroneParcel(id);
                     break;
                 
                 //For collection of a parcel by the drone
                 case 2:
                     Console.WriteLine("Enter Id of Parcel: ");
                     Int32.TryParse(Console.ReadLine(), out id);
-                    data.PickUpDroneParcel(id);
+                    logic.PickUpDroneParcel(id);
                     break;
 
                 //For delivering a parcel to the customer
                 case 3:
                     Console.WriteLine("Enter Id of Parcel: ");
                     Int32.TryParse(Console.ReadLine(), out id);
-                    data.DeliverParcelCustomer(id);
+                    logic.DeliverParcelCustomer(id);
                     break;
 
                 //For sending a drone for charging at a base station
@@ -227,14 +227,14 @@ namespace ConsoleUI
                     Int32.TryParse(Console.ReadLine(), out id);
                     Console.WriteLine("Enter Id of Station: ");
                     Int32.TryParse(Console.ReadLine(), out idStation);
-                    data.SendDrone(id, idStation);
+                    logic.SendDrone(id, idStation);
                     break;
                 
                 //For releasing a drone from charging at a base station
                 case 5:
                     Console.WriteLine("Enter Id of Drone: ");
                     Int32.TryParse(Console.ReadLine(), out id);
-                    data.ReleasDrone(id);
+                    logic.ReleasDrone(id);
                     break;
             }
         }
@@ -244,7 +244,7 @@ namespace ConsoleUI
             int ID;
             Console.WriteLine("Enter the Id: ");
             Int32.TryParse(Console.ReadLine(), out ID);
-            Console.WriteLine(data.PrintById(ID, num));
+            Console.WriteLine(logic.PrintById(ID, num));
         }
 
         /// <summary>
@@ -256,37 +256,37 @@ namespace ConsoleUI
             {
                 //For displaying a list of base stations
                 case 1:
-                    foreach (var item in data.PrintListStation())
+                    foreach (var item in logic.PrintListStation())
                         Console.WriteLine(item.ToString());
                     break;
                 
                 //For displaying a list of drones
                 case 2:
-                    foreach (var item in data.PrintListDrone())
+                    foreach (var item in logic.PrintListDrone())
                         Console.WriteLine(item.ToString());
                     break;
                 
                 //For displaying a list of customer
                 case 3:
-                    foreach (var item in data.PrintListCustomer())
+                    foreach (var item in logic.PrintListCustomer())
                         Console.WriteLine(item.ToString());
                     break;
 
                 //For displaying a list of parcels
                 case 4:
-                    foreach (var item in data.PrintListParcel())
+                    foreach (var item in logic.PrintListParcel())
                         Console.WriteLine(item.ToString());
                     break;
                 
                 //To display a list of parcels that have not yet been associated with a drone
                 case 5:
-                    foreach (var item in data.PrintListParcelDrone())
+                    foreach (var item in logic.PrintListParcelDrone())
                         Console.WriteLine(item.ToString());
                     break;
 
                 //For displaying base stations with available charging stations
                 case 6:
-                    foreach (var item in data.PrintListStationCharge())
+                    foreach (var item in logic.PrintListStationCharge())
                         Console.WriteLine(item.ToString());
                     break;
             }
