@@ -5,7 +5,7 @@ namespace IBL
 {
     public class BL : IBL
     {
-        public void AddStation(int Id, int Name, double Longitude, double Lattitude, int ChargeSlots){
+        public void AddStation(int Id, int Name, Location loca, int ChargeSlots){
 
         }
         public void AddDrone(int Id, string Model, int MaxWeight, int Status, double Battery){

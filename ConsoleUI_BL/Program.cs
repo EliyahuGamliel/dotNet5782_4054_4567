@@ -114,7 +114,8 @@ namespace ConsoleUI
         /// <param name="num">The second choice of the user</param>
         static void adding(int num) {
             int id;
-            Location location;
+            Location location = new Location();
+            double longitude, latitude;
             string name;
             switch (num)
             {
@@ -122,14 +123,16 @@ namespace ConsoleUI
                 case 1:
                     int name1;
                     int chargeslots;
-                    Console.WriteLine("Enter Id: ");
+                    Console.WriteLine("Enter Station Id: ");
                     Int32.TryParse(Console.ReadLine(), out id);
-                    Console.WriteLine("Enter Name: ");
+                    Console.WriteLine("Enter Station Name: ");
                     Int32.TryParse(Console.ReadLine(), out name1);
-                    Console.WriteLine("Enter Longitude: ");
-                    Double.TryParse(Console.ReadLine(), out location.Longitude);
-                    Console.WriteLine("Enter Latitude: ");
-                    Double.TryParse(Console.ReadLine(), out location.Lattitude);
+                    Console.WriteLine("Enter Station Longitude: ");
+                    Double.TryParse(Console.ReadLine(), out longitude);
+                    Console.WriteLine("Enter Station Latitude: ");
+                    Double.TryParse(Console.ReadLine(), out latitude);
+                    location.Longitude = longitude;
+                    location.Lattitude = latitude;
                     Console.WriteLine("Enter ChargeSlots: ");
                     Int32.TryParse(Console.ReadLine(), out chargeslots);
                     data.AddStation(id, name1, location, chargeslots);
