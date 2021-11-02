@@ -123,7 +123,7 @@ namespace ConsoleUI
                 case 1:
                     Station s = new Station();
                     Console.WriteLine("Enter Station Id: ");
-                    //Int32.TryParse(Console.ReadLine(), out s.Id);
+                    Int32.TryParse(Console.ReadLine(), out s.Id);
                     Console.WriteLine("Enter Station Name: ");
                     //Int32.TryParse(Console.ReadLine(), out name1);
                     Console.WriteLine("Enter Station Longitude: ");
@@ -134,6 +134,7 @@ namespace ConsoleUI
                     location.Lattitude = latitude;
                     Console.WriteLine("Enter Charge Slots: ");
                     Int32.TryParse(Console.ReadLine(), out chargeslots);
+        
                     logic.AddStation(s);
                     break;
                 

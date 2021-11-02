@@ -22,7 +22,7 @@ namespace IDAL
                    int id_object = (int)(typeof(T).GetProperty("Id").GetValue(item, null));
                    if (id_object == ID)
                         return;
-                   throw new Exception("The ID number already exists");
+                   throw new Exception("The ID number doesn't exist");
                 }
             }
 
