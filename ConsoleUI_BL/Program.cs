@@ -185,42 +185,54 @@ namespace ConsoleUI
             int id;
             switch (num)
             {
-                //For associating a parcel with a drone
+                //
                 case 1:
                     Console.WriteLine("Enter Id of Drone: ");
-                    Int32.TryParse(Console.ReadLine(), out id);
+                    id = GetInt();
                     logic.AssignDroneParcel(id);
                     break;
                 
-                //For collection of a parcel by the drone
+                //
                 case 2:
                     Console.WriteLine("Enter Id of Parcel: ");
-                    Int32.TryParse(Console.ReadLine(), out id);
+                    id = GetInt();
                     logic.PickUpDroneParcel(id);
                     break;
 
-                //For delivering a parcel to the customer
+                //
                 case 3:
                     Console.WriteLine("Enter Id of Parcel: ");
-                    Int32.TryParse(Console.ReadLine(), out id);
+                    id = GetInt();
                     logic.DeliverParcelCustomer(id);
                     break;
 
-                //For sending a drone for charging at a base station
+                //
                 case 4:
                     int idStation;
                     Console.WriteLine("Enter Id of Drone: ");
-                    Int32.TryParse(Console.ReadLine(), out id);
+                    id = GetInt();
                     Console.WriteLine("Enter Id of Station: ");
-                    Int32.TryParse(Console.ReadLine(), out idStation);
+                    idStation = GetInt();
                     logic.SendDrone(id, idStation);
                     break;
                 
-                //For releasing a drone from charging at a base station
+                //
                 case 5:
                     Console.WriteLine("Enter Id of Drone: ");
-                    Int32.TryParse(Console.ReadLine(), out id);
+                    id = GetInt();;
                     logic.ReleasDrone(id);
+                    break;
+                
+                //
+                case 6:
+                    break;
+
+                //
+                case 7:
+                    break;
+
+                //
+                case 8:
                     break;
             }
         }
