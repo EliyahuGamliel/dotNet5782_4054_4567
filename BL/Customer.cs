@@ -8,7 +8,7 @@ namespace IBL
         /// <summary>
         /// Defining the "Customer" class
         /// </summary>
-        public struct Customer
+        public class Customer
         {
             public int Id { get; set; }
             public string Name { get; set; }

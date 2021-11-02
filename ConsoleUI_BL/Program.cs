@@ -3,7 +3,7 @@ using IBL.BO;
 
 namespace ConsoleUI
 {
-    class Program
+    partial class Program
     {
         static IBL.IBL logic;
 
@@ -15,40 +15,6 @@ namespace ConsoleUI
             logic = new IBL.BL();
             MainMenu();
         }
-
-        /// <summary>
-        /// keep getting numbers till it gets a legal one
-        /// </summary>
-        /// <returns> an legal int </returns>
-        static int GetInt()
-        {
-            int num;
-            Console.WriteLine("Enter Station Id: ");
-            bool error = Int32.TryParse(Console.ReadLine(), out num);
-            while(!error)
-            {
-                Console.WriteLine("you didnt enter an int, please try again");
-                error = Int32.TryParse(Console.ReadLine(), out num);
-            }
-            return num;
-        }
-        /// <summary>
-        /// keep getting numbers till it gets a legal one
-        /// </summary>
-        /// <returns>a legal double</returns>
-        static double GetDouble()
-        {
-            double num;
-            Console.WriteLine("Enter Station Id: ");
-            bool error = Double.TryParse(Console.ReadLine(), out num);
-            while (!error)
-            {
-                Console.WriteLine("you didnt enter a double, please try again");
-                error = Double.TryParse(Console.ReadLine(), out num);
-            }
-            return num;
-        }
-
 
         /// <summary>
         /// The MainMenu
@@ -63,7 +29,7 @@ namespace ConsoleUI
                 Console.WriteLine("Enter 3 to show by Id");
                 Console.WriteLine("Enter 4 for the list");
                 Console.WriteLine("Enter 5 to exit");
-                Int32.TryParse(Console.ReadLine(), out choice);
+                choice = GetInt();
                 FirstMenu(choice);
             } while (choice != 5);   
         }
@@ -83,6 +49,8 @@ namespace ConsoleUI
                     break;
 
                 case 2:
+                    Console.WriteLine("Enter 1 for update drone's name");
+                    Console.WriteLine("Enter 1 for assigning a parcel to a drone");
                     Console.WriteLine("Enter 1 for assigning a parcel to a drone");
                     Console.WriteLine("Enter 2 for picking up a parcel");
                     Console.WriteLine("Enter 3 for dropping a parcel to a customer");
@@ -111,7 +79,7 @@ namespace ConsoleUI
                     return;
             }
             int secondChoice;
-            Int32.TryParse(Console.ReadLine(), out secondChoice);
+            secondChoice = GetInt();
             SecondMenu(choice, secondChoice);
         }
         
@@ -147,28 +115,22 @@ namespace ConsoleUI
         /// </summary>
         /// <param name="num">The second choice of the user</param>
         static void adding(int num) {
-            int id;
-            Location location = new Location();
-            double longitude, latitude;
-            string name;
             switch (num)
             {
                 //For adding a station
                 case 1:
                     Station s = new Station();
                     Console.WriteLine("Enter Station Id: ");
-                    Int32.TryParse(Console.ReadLine(), out s.Id);
+                    s.Id = GetInt();
                     Console.WriteLine("Enter Station Name: ");
-                    //Int32.TryParse(Console.ReadLine(), out name1);
+                    s.Name = GetInt();
                     Console.WriteLine("Enter Station Longitude: ");
-                    //Double.TryParse(Console.ReadLine(), out longitude);
+                    s.Location.Longitude = GetDouble();
                     Console.WriteLine("Enter Station Latitude: ");
-                    //Double.TryParse(Console.ReadLine(), out latitude);
-                    location.Longitude = longitude;
-                    location.Lattitude = latitude;
+                    s.Location.Lattitude = GetDouble();
                     Console.WriteLine("Enter Charge Slots: ");
-                    Int32.TryParse(Console.ReadLine(), out chargeslots);
-        
+                    s.ChargeSlots = GetInt();
+                    s.DCharge.Clear();
                     logic.AddStation(s);
                     break;
                 
@@ -176,11 +138,11 @@ namespace ConsoleUI
                 case 2:
                     Drone d = new Drone();
                     Console.WriteLine("Enter Id: ");
-                    Int32.TryParse(Console.ReadLine(), out id);
-                    Console.WriteLine("Enter Model: ");
-                    string model = Console.ReadLine();
+                    d.Id = GetInt();
                     Console.WriteLine("Enter the number of maxWeight: \n0) Light\n1) Medium\n2) Heavy");
-                    Int32.TryParse(Console.ReadLine(), out maxw);
+                    d.MaxWeight = (WeightCategories)GetInt();
+                    Console.WriteLine("Enter Id of Station to charge the Drone: ");
+                    d. = Console.ReadLine();
                     logic.AddDrone(d);
                     break;
 
@@ -188,34 +150,26 @@ namespace ConsoleUI
                 case 3:
                     Customer c = new Customer();
                     Console.WriteLine("Enter the id: ");
-                    Int32.TryParse(Console.ReadLine(), out id);
+                    c.Id = GetInt();
                     Console.WriteLine("Enter the name: ");
-                    name = Console.ReadLine();
+                    c.Name = Console.ReadLine();
                     Console.WriteLine("Enter the phone: ");
-                    string phone = Console.ReadLine();
-                    Console.WriteLine("Enter the longitude: ");
-                    Double.TryParse(Console.ReadLine(), out longitude);
-                    Console.WriteLine("Enter the lattitude: ");
-                    Double.TryParse(Console.ReadLine(), out latitude);
+                    c.Phone = Console.ReadLine(); //Check
                     logic.AddCustomer(c);
                     break;
 
                 //For adding a parcel
                 case 4:
                     Parcel p = new Parcel();
-                    int senderId, targetId, wh, pr, droneId;
-                    Console.WriteLine("Enter Id: ");
-                    Int32.TryParse(Console.ReadLine(), out id);
                     Console.WriteLine("Enter senderId: ");
-                    Int32.TryParse(Console.ReadLine(), out senderId);
+                    p.SenderId = GetInt();
                     Console.WriteLine("Enter targetId: ");
-                    Int32.TryParse(Console.ReadLine(), out targetId);
+                    p.TargetId = GetInt();
                     Console.WriteLine("Enter the number of weight: \n0) Light\n1) Medium\n2) Heavy");
-                    Int32.TryParse(Console.ReadLine(), out wh);
+                    p.Weight = (WeightCategories)GetInt();
                     Console.WriteLine("Enter the number of priority: \n0) Normal\n1) Fast\n2) Emergency");
-                    Int32.TryParse(Console.ReadLine(), out pr);
-                    Console.WriteLine("Enter droneId: ");
-                    Int32.TryParse(Console.ReadLine(), out droneId);
+                    p.Priority = (Priorities)GetInt();
+                    p.Drone = new Drone();
                     logic.AddParcel(p);
                     break;
             }
@@ -232,7 +186,7 @@ namespace ConsoleUI
             {
                 //For associating a parcel with a drone
                 case 1:
-                    Console.WriteLine("Enter Id of Parcel: ");
+                    Console.WriteLine("Enter Id of Drone: ");
                     Int32.TryParse(Console.ReadLine(), out id);
                     logic.AssignDroneParcel(id);
                     break;
@@ -272,9 +226,8 @@ namespace ConsoleUI
 
         
         static void status(int num) {
-            int ID;
             Console.WriteLine("Enter the Id: ");
-            Int32.TryParse(Console.ReadLine(), out ID);
+            int ID = GetInt();
             Console.WriteLine(logic.PrintById(ID, num));
         }
 

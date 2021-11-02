@@ -7,7 +7,7 @@ namespace IBL
         /// <summary>
         /// Defining the "Customer" class
         /// </summary>
-        public struct DroneCharge
+        public class DroneCharge
         {
             public int Id { get; set; }
             public Double Battery { get; set; }

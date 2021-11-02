@@ -7,7 +7,7 @@ namespace IBL
         /// <summary>
         /// Defining the "Parcel" class
         /// </summary>
-        public struct ParcelList
+        public class ParcelList
         {
             public int Id { get; set; }
             public int SenderId { get; set; }

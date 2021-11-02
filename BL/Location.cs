@@ -7,7 +7,7 @@ namespace IBL
         /// <summary>
         /// Defining the "Customer" class
         /// </summary>
-        public struct Location
+        public class Location
         {
             public double Longitude { get; set; }
             public double Lattitude{ get; set; }

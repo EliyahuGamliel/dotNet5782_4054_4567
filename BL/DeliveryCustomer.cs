@@ -7,7 +7,7 @@ namespace IBL
         /// <summary>
         /// Defining the "Customer" class
         /// </summary>
-        public struct DeliveryInCustomer
+        public class DeliveryInCustomer
         {
             public int Id { get; set; }
             public WeightCategories Weight { get; set; }
