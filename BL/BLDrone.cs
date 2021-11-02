@@ -8,6 +8,10 @@ namespace IBL
     {
         
         public void AddDrone(Drone d){
+            Random rand = new Random();
+            d.Battery = rand.Next(20,41);
+            d.Status = DroneStatuses.Maintenance;
+            d.CLocation = ;
             IDAL.DO.Drone dr = new IDAL.DO.Drone();
             dr.Id = d.Id;
             dr.Model = d.Model;
