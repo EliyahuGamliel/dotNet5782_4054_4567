@@ -16,6 +16,31 @@ namespace ConsoleUI
             MainMenu();
         }
 
+
+        static int GetInt()
+        {
+            int num;
+            Console.WriteLine("Enter Station Id: ");
+            bool error = Int32.TryParse(Console.ReadLine(), out num);
+            while(!error)
+            {
+                error = Int32.TryParse(Console.ReadLine(), out num);
+            }
+            return num;
+        }
+        static double GetDouble()
+        {
+            double num;
+            Console.WriteLine("Enter Station Id: ");
+            bool error = Double.TryParse(Console.ReadLine(), out num);
+            while (!error)
+            {
+                error = Double.TryParse(Console.ReadLine(), out num);
+            }
+            return num;
+        }
+
+
         /// <summary>
         /// The MainMenu
         /// </summary>
