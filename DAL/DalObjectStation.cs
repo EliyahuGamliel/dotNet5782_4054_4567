@@ -6,6 +6,8 @@ namespace DalObject
 {
     public partial class DalObject : IDAL.IDAL
     {
+        MyException exp = new MyException();
+
         /// <summary>
         /// Add a station at the request of the user to the list
         /// </summary>
@@ -15,6 +17,7 @@ namespace DalObject
         /// <param name="Lattitude">Lattitude of station</param>
         /// <param name="ChargeSlots">Number of available charging stations</param>
         public void AddStation(Station s) {
+            exp.Check_Add_ID<Station>(DataSource.stations, s.Id);
             DataSource.stations.Add(s);
         }
 
