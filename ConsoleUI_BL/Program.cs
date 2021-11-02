@@ -50,12 +50,13 @@ namespace ConsoleUI
 
                 case 2:
                     Console.WriteLine("Enter 1 for update drone's name");
-                    Console.WriteLine("Enter 1 for assigning a parcel to a drone");
-                    Console.WriteLine("Enter 1 for assigning a parcel to a drone");
-                    Console.WriteLine("Enter 2 for picking up a parcel");
-                    Console.WriteLine("Enter 3 for dropping a parcel to a customer");
+                    Console.WriteLine("Enter 2 for updae station's data");
+                    Console.WriteLine("Enter 3 for update customer's data");
                     Console.WriteLine("Enter 4 for sending a drone to the station for a battery charge");
                     Console.WriteLine("Enter 5 for releasing a drone from charging");
+                    Console.WriteLine("Enter 6 for assig");
+                    Console.WriteLine("Enter 7 for picking up a parcel");
+                    Console.WriteLine("Enter 8 for delivery a parcel by drone");
                     break;
 
                 case 3:
@@ -169,7 +170,7 @@ namespace ConsoleUI
                     p.Weight = (WeightCategories)GetInt();
                     Console.WriteLine("Enter the number of priority: \n0) Normal\n1) Fast\n2) Emergency");
                     p.Priority = (Priorities)GetInt();
-                    p.Drone = new Drone();
+                    p.Drone = null;
                     logic.AddParcel(p);
                     break;
             }
