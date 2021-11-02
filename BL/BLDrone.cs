@@ -24,7 +24,7 @@ namespace IBL
             return data.PrintListDrone();
         }
         public double[] DroneElectricityUse(){
-
+            return data.DroneElectricityUse();
         }
     }
 }
