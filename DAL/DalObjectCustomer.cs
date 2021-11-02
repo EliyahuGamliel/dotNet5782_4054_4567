@@ -22,7 +22,7 @@ namespace DalObject
         /// prints the customers
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Customer> PrintListCustomer() {
+        public IEnumerable<Customer> GetCustomers() {
             return DataSource.customers;
         }
     }

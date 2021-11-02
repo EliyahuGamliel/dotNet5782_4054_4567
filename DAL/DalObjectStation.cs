@@ -25,8 +25,8 @@ namespace DalObject
         /// prints the stations
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Station> PrintListStation() {
-            return DataSource.stations.ToArray();
+        public IEnumerable<Station> GetStations() {
+            return DataSource.stations;
         }
         
         /// <summary>

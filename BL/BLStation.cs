@@ -16,7 +16,7 @@ namespace IBL
             data.AddStation(st);
         }
         public IEnumerable<IDAL.DO.Station> PrintListStation(){
-            return data.PrintListStation();
+            return data.GetStations();
         }
     }
 }

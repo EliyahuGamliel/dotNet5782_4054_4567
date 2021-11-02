@@ -10,7 +10,7 @@ namespace IBL
 
         }
         public IEnumerable<IDAL.DO.Customer> PrintListCustomer(){
-            return data.PrintListCustomer();
+            return data.GetCustomers();
         }
     }
 }

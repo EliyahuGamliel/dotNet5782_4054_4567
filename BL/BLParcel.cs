@@ -12,7 +12,7 @@ namespace IBL
             return 1;
         }
         public IEnumerable<IDAL.DO.Parcel> PrintListParcel(){
-            return data.PrintListParcel();
+            return data.GetParcels();
         }
     }
 } 

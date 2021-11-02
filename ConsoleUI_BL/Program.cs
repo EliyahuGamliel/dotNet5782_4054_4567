@@ -137,13 +137,14 @@ namespace ConsoleUI
                 
                 //For adding a drone
                 case 2:
+                    int idStation;
                     Drone d = new Drone();
                     Console.WriteLine("Enter Id: ");
                     d.Id = GetInt();
                     Console.WriteLine("Enter the number of maxWeight: \n0) Light\n1) Medium\n2) Heavy");
                     d.MaxWeight = (WeightCategories)GetInt();
                     Console.WriteLine("Enter Id of Station to charge the Drone: ");
-                    d. = Console.ReadLine();
+                    idStation = GetInt();
                     logic.AddDrone(d);
                     break;
 

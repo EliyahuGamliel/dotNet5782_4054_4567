@@ -17,10 +17,10 @@ namespace IDAL
         void SendDrone(int idDrone, int idStation);
         void ReleasDrone(int id); 
         string PrintById(int Id, int num);
-        IEnumerable<Station> PrintListStation();
-        IEnumerable<Drone> PrintListDrone();
-        IEnumerable<Customer> PrintListCustomer();
-        IEnumerable<Parcel> PrintListParcel();
+        IEnumerable<Station> GetStations();
+        IEnumerable<Drone> GetDrones();
+        IEnumerable<Customer> GetCustomers();
+        IEnumerable<Parcel> GetParcels();
         IEnumerable<Parcel> PrintListParcelDrone();
         IEnumerable<Station> PrintListStationCharge();
         double[] DroneElectricityUse();

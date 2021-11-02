@@ -60,7 +60,7 @@ namespace DalObject
         /// prints the drones
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Drone> PrintListDrone() {
+        public IEnumerable<Drone> GetDrones() {
             return DataSource.drones;
         }
         

@@ -49,7 +49,7 @@ namespace DalObject
         /// prints the parcels
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Parcel> PrintListParcel() {
+        public IEnumerable<Parcel> GetParcels() {
             return DataSource.parcels;
         }
 
