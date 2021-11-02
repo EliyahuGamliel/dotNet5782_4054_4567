@@ -16,7 +16,10 @@ namespace ConsoleUI
             MainMenu();
         }
 
-
+        /// <summary>
+        /// keep getting numbers till it gets a legal one
+        /// </summary>
+        /// <returns> an legal int </returns>
         static int GetInt()
         {
             int num;
@@ -28,6 +31,10 @@ namespace ConsoleUI
             }
             return num;
         }
+        /// <summary>
+        /// keep getting numbers till it gets a legal one
+        /// </summary>
+        /// <returns>a legal double</returns>
         static double GetDouble()
         {
             double num;
