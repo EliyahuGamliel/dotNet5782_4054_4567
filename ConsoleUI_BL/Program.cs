@@ -145,6 +145,8 @@ namespace ConsoleUI
                     d.MaxWeight = (WeightCategories)GetInt();
                     Console.WriteLine("Enter Id of Station to charge the Drone: ");
                     idStation = GetInt();
+                    Console.WriteLine("Enter model of Drone: ");
+                    d.Model = Console.ReadLine();
                     System.Console.WriteLine(logic.AddDrone(d, idStation)); 
                     break;
 
