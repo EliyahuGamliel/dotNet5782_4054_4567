@@ -21,6 +21,7 @@ namespace DalObject
         }
 
         public string GetCustomerById(int Id) {
+            exp.Check_Update_or_Get_By_ID<Customer>(DataSource.customers, Id);
             Customer c = DataSource.customers.Find(cu => Id == cu.Id);
             return c.ToString();
         }

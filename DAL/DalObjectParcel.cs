@@ -17,6 +17,7 @@ namespace DalObject
         /// <param name="droneId">droneId of parcel</param>
         /// <returns></returns>
         public int AddParcel(Parcel p) {
+            exp.Check_Add_ID<Parcel>(DataSource.parcels, p.Id);
             DataSource.Config.Number_ID += 1;
             DataSource.parcels.Add(p);
             return DataSource.Config.Number_ID;
@@ -46,6 +47,7 @@ namespace DalObject
         }
         
         public string GetParcelById(int Id) {
+            exp.Check_Update_or_Get_By_ID<Parcel>(DataSource.parcels, Id);
             Parcel p = DataSource.parcels.Find(pa => Id == pa.Id);
             return p.ToString();
         }

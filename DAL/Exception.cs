@@ -16,7 +16,7 @@ namespace IDAL
                 }
             }
 
-            public void Check_Update_ID <T>(List<T> list, int ID)
+            public void Check_Update_or_Get_By_ID <T>(List<T> list, int ID)
             {
                 foreach (var item in list) {
                    int id_object = (int)(typeof(T).GetProperty("Id").GetValue(item, null));

@@ -23,6 +23,7 @@ namespace DalObject
         }
 
         public string GetStationById(int Id) {
+            exp.Check_Update_or_Get_By_ID<Station>(DataSource.stations, Id);
             Station s = DataSource.stations.Find(st => Id == st.Id);
             return s.ToString();
         }

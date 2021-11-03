@@ -59,6 +59,7 @@ namespace DalObject
         }
 
         public string GetDroneById(int Id) {
+            exp.Check_Update_or_Get_By_ID<Drone>(DataSource.drones, Id);
             Drone d = DataSource.drones.Find(dr => Id == dr.Id);
             return d.ToString();
         }
