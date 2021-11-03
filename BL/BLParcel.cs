@@ -8,10 +8,9 @@ namespace IBL
     {   
         public int AddParcel(Parcel p){
             IDAL.DO.Parcel pa = new IDAL.DO.Parcel();
-            data.AddParcel(pa);
-            return 1;
+            return data.AddParcel(pa);;
         }
-        public IEnumerable<IDAL.DO.Parcel> PrintListParcel(){
+        public IEnumerable<IDAL.DO.Parcel> GetParcels(){
             return data.GetParcels();
         }
     }

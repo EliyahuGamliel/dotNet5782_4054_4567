@@ -16,7 +16,7 @@ namespace IBL
         void SendDrone(int idDrone, int idStation);
         void ReleasDrone(int id); 
         string PrintById(int Id, int num);
-        IEnumerable<IDAL.DO.Station> PrintListStation();
+        IEnumerable<IDAL.DO.Station> GetStations();
         IEnumerable<IDAL.DO.Drone> PrintListDrone();
         IEnumerable<IDAL.DO.Customer> PrintListCustomer();
         IEnumerable<IDAL.DO.Parcel> PrintListParcel();

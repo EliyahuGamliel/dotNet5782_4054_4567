@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using IBL.BO;
 
 namespace ConsoleUI
@@ -54,7 +55,7 @@ namespace ConsoleUI
                     Console.WriteLine("Enter 3 for update customer's data");
                     Console.WriteLine("Enter 4 for sending a drone to the station for a battery charge");
                     Console.WriteLine("Enter 5 for releasing a drone from charging");
-                    Console.WriteLine("Enter 6 for assig");
+                    Console.WriteLine("Enter 6 for assign a parcel to a drone");
                     Console.WriteLine("Enter 7 for picking up a parcel");
                     Console.WriteLine("Enter 8 for delivery a parcel by drone");
                     break;
@@ -254,7 +255,7 @@ namespace ConsoleUI
             {
                 //For displaying a list of base stations
                 case 1:
-                    foreach (var item in logic.PrintListStation())
+                    foreach (var item in logic.GetStations())
                         Console.WriteLine(item.ToString());
                     break;
                 

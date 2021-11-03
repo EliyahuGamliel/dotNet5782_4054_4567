@@ -15,8 +15,9 @@ namespace IBL
             st.ChargeSlots = s.ChargeSlots;
             data.AddStation(st);
         }
-        public IEnumerable<IDAL.DO.Station> PrintListStation(){
-            return data.GetStations();
+        public IEnumerable<Station> GetStations(){
+            return (IEnumerable<Station>)(data.GetStations());
         }
+
     }
 }
