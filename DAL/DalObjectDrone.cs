@@ -14,8 +14,10 @@ namespace DalObject
         /// <param name="MaxWeight">MaxWeight of drone</param>
         /// <param name="Status">Status of drone</param>
         /// <param name="Battery">Battery of drone</param>
-        public void AddDrone(Drone d) {
+        public string AddDrone(Drone d) {
+            exp.Check_Add_ID<Drone>(DataSource.drones, d.Id);
             DataSource.drones.Add(d);
+            return "The addition was successful";
         }
 
         /// <summary>

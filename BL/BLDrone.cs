@@ -8,7 +8,7 @@ namespace IBL
     {
         Random rand = new Random();
         
-        public void AddDrone(Drone d, int idStation) {
+        public string AddDrone(Drone d, int idStation) {
             List<IDAL.DO.Station> stations = (List<IDAL.DO.Station>)data.GetStations();
             IDAL.DO.Station s = stations.Find(pa => idStation == pa.Id);
             d.Battery = rand.Next(20,41);
@@ -19,7 +19,7 @@ namespace IBL
             dr.Id = d.Id;
             dr.Model = d.Model;
             dr.MaxWeight = (IDAL.DO.WeightCategories)((int)d.MaxWeight);
-            data.AddDrone(dr);
+            return data.AddDrone(dr);
         }
 
         public void UpdateDrone(int id, int name) {

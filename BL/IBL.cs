@@ -6,10 +6,10 @@ namespace IBL
 {
     public interface IBL
     {
-        void AddStation(Station s);
-        void AddDrone(Drone d, int idStation);
+        string AddStation(Station s);
+        string AddDrone(Drone d, int idStation);
         int AddParcel(Parcel p);
-        void AddCustomer(Customer c);
+        string AddCustomer(Customer c);
         void UpdateDrone(int id, int name);
         void UpdateCustomer(int id, string nameCustomer, string phoneCustomer);
         void UpdateStation(int id, int nameStation, int chargeSlots);

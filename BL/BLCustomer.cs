@@ -6,12 +6,12 @@ namespace IBL
 {
     public partial class BL : IBL
     {
-        public void AddCustomer(Customer c){
+        public string AddCustomer(Customer c){
             IDAL.DO.Customer cu = new IDAL.DO.Customer();
             cu.Id = c.Id;
             cu.Name = c.Name;
             cu.Phone = c.Phone;
-            data.AddCustomer(cu);
+            return data.AddCustomer(cu);
         }
         public void UpdateCustomer(int id, string nameCustomer, string phoneCustomer) {
             

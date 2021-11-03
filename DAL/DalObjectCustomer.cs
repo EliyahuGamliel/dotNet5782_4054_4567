@@ -14,8 +14,10 @@ namespace DalObject
         /// <param name="Phone"> phone of customer</param>
         /// <param name="Longitude">Longitude of customer</param>
         /// <param name="Lattitude">Lattitude of customer</param>
-        public void AddCustomer(Customer c) {
+        public string AddCustomer(Customer c) {
+            exp.Check_Add_ID<Customer>(DataSource.customers, c.Id);
             DataSource.customers.Add(c);
+            return "The addition was successful";
         }
 
         public string GetCustomerById(int Id) {

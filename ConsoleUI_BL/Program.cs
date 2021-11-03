@@ -132,7 +132,7 @@ namespace ConsoleUI
                     Console.WriteLine("Enter Charge Slots: ");
                     s.ChargeSlots = GetInt();
                     s.DCharge.Clear();
-                    logic.AddStation(s);
+                    System.Console.WriteLine(logic.AddStation(s)); 
                     break;
                 
                 //For adding a drone
@@ -145,7 +145,7 @@ namespace ConsoleUI
                     d.MaxWeight = (WeightCategories)GetInt();
                     Console.WriteLine("Enter Id of Station to charge the Drone: ");
                     idStation = GetInt();
-                    logic.AddDrone(d, idStation);
+                    System.Console.WriteLine(logic.AddDrone(d, idStation)); 
                     break;
 
                 //For adding a customer
@@ -157,7 +157,7 @@ namespace ConsoleUI
                     c.Name = Console.ReadLine();
                     Console.WriteLine("Enter the phone: ");
                     c.Phone = GetStringInt();
-                    logic.AddCustomer(c);
+                    System.Console.WriteLine(logic.AddCustomer(c)); 
                     break;
 
                 //For adding a parcel
@@ -171,7 +171,7 @@ namespace ConsoleUI
                     p.Weight = (WeightCategories)GetInt();
                     Console.WriteLine("Enter the number of priority: \n0) Normal\n1) Fast\n2) Emergency");
                     p.Priority = (Priorities)GetInt();
-                    logic.AddParcel(p);
+                    System.Console.WriteLine(logic.AddParcel(p)); 
                     break;
             }
         }
