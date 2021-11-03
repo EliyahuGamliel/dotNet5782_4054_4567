@@ -56,6 +56,11 @@ namespace DalObject
             DataSource.stations[index] = s;
         }
 
+        public string GetDroneById(int Id) {
+            Drone d = DataSource.drones.Find(dr => Id == dr.Id);
+            return d.ToString();
+        }
+
         /// <summary>
         /// prints the drones
         /// </summary>

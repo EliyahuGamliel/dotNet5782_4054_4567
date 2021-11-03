@@ -160,37 +160,5 @@ namespace DalObject
             index = DataSource.drones.IndexOf(d);
             DataSource.drones[index] = d;
         }
-
-        /// <summary>
-        /// Prints the item
-        /// </summary>
-        /// <param name="Id">the id of the item</param>
-        /// <param name="num">the number of what needs to be printed</param>
-        /// <returns></returns>
-        public string PrintById(int Id, int num) {
-            switch (num)
-            {
-                //For print a selected station
-                case 1:
-                    Station s = DataSource.stations.Find(st => Id == st.Id);
-                    return s.ToString();
-
-                //For print a selected drone	
-                case 2:
-                    Drone d = DataSource.drones.Find(dr => Id == dr.Id);
-                    return d.ToString();
-
-                //For print a selected customer	
-                case 3:
-                    Customer c = DataSource.customers.Find(cu => Id == cu.Id);
-                    return c.ToString();
-
-                //For print a selected parcel	
-                case 4:
-                    Parcel p = DataSource.parcels.Find(pa => Id == pa.Id);
-                    return p.ToString();
-            }
-            return " ";
-        }
     }
 }

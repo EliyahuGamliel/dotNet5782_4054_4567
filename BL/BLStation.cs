@@ -15,9 +15,21 @@ namespace IBL
             st.ChargeSlots = s.ChargeSlots;
             data.AddStation(st);
         }
-        public IEnumerable<Station> GetStations(){
-            return (IEnumerable<Station>)(data.GetStations());
+        
+        public void UpdateStation(int id, int name, int chargeSlots) {
+    
         }
 
+        public string GetStationById(int Id) {
+            return data.GetStationById(Id);
+        }
+        
+        public IEnumerable<Station> GetStations(){
+            return (List<Station>)(data.GetStations());
+        }
+
+        public IEnumerable<Station> GetStationCharge(){
+            return (IEnumerable<Station>)data.GetStationCharge();
+        }
     }
 }

@@ -126,9 +126,8 @@ namespace ConsoleUI
                     s.Id = GetInt();
                     Console.WriteLine("Enter Station Name: ");
                     s.Name = GetInt();
-                    Console.WriteLine("Enter Station Longitude: ");
+                    Console.WriteLine("Enter Station Location - (Longitude and Latitude): ");
                     s.Location.Longitude = GetDouble();
-                    Console.WriteLine("Enter Station Latitude: ");
                     s.Location.Lattitude = GetDouble();
                     Console.WriteLine("Enter Charge Slots: ");
                     s.ChargeSlots = GetInt();
@@ -146,7 +145,7 @@ namespace ConsoleUI
                     d.MaxWeight = (WeightCategories)GetInt();
                     Console.WriteLine("Enter Id of Station to charge the Drone: ");
                     idStation = GetInt();
-                    logic.AddDrone(d);
+                    logic.AddDrone(d, idStation);
                     break;
 
                 //For adding a customer
@@ -157,7 +156,7 @@ namespace ConsoleUI
                     Console.WriteLine("Enter the name: ");
                     c.Name = Console.ReadLine();
                     Console.WriteLine("Enter the phone: ");
-                    c.Phone = Console.ReadLine(); //Check
+                    c.Phone = GetStringInt();
                     logic.AddCustomer(c);
                     break;
 
@@ -172,7 +171,6 @@ namespace ConsoleUI
                     p.Weight = (WeightCategories)GetInt();
                     Console.WriteLine("Enter the number of priority: \n0) Normal\n1) Fast\n2) Emergency");
                     p.Priority = (Priorities)GetInt();
-                    p.Drone = null;
                     logic.AddParcel(p);
                     break;
             }
@@ -191,50 +189,68 @@ namespace ConsoleUI
                 case 1:
                     Console.WriteLine("Enter Id of Drone: ");
                     id = GetInt();
-                    logic.AssignDroneParcel(id);
+                    Console.WriteLine("Enter new name to Drone: ");
+                    int nameDrone = GetInt();
+                    logic.UpdateDrone(id ,nameDrone);
                     break;
                 
                 //
                 case 2:
-                    Console.WriteLine("Enter Id of Parcel: ");
+                    Console.WriteLine("Enter Id of Station: ");
                     id = GetInt();
-                    logic.PickUpDroneParcel(id);
+                    Console.WriteLine("Enter a new name to Station: ");
+                    int nameStation = GetInt();
+                    Console.WriteLine("Enter a total amount of charge slots: ");
+                    int chargeSlots = GetInt();
+                    logic.UpdateStation(id, nameStation, chargeSlots);
                     break;
 
                 //
                 case 3:
-                    Console.WriteLine("Enter Id of Parcel: ");
+                    Console.WriteLine("Enter Id of Customer: ");
                     id = GetInt();
-                    logic.DeliverParcelCustomer(id);
+                    Console.WriteLine("Enter a new name to Customer: ");
+                    string nameCustomer = Console.ReadLine();
+                    Console.WriteLine("Enter a new phone to Customer: ");
+                    string phoneCustomer = GetStringInt();
+                    logic.UpdateCustomer(id, nameCustomer, phoneCustomer);
                     break;
 
                 //
                 case 4:
-                    int idStation;
                     Console.WriteLine("Enter Id of Drone: ");
                     id = GetInt();
-                    Console.WriteLine("Enter Id of Station: ");
-                    idStation = GetInt();
-                    logic.SendDrone(id, idStation);
+                    logic.SendDrone(id);
                     break;
                 
                 //
                 case 5:
                     Console.WriteLine("Enter Id of Drone: ");
-                    id = GetInt();;
-                    logic.ReleasDrone(id);
+                    id = GetInt();
+                    Console.WriteLine("Enter How long was the drone charging: ");
+                    double time = GetDouble();
+                    logic.ReleasDrone(id, time);
                     break;
                 
                 //
                 case 6:
+                    Console.WriteLine("Enter Id of Drone: ");
+                    id = GetInt();
+                    logic.AssignDroneParcel(id);
                     break;
 
                 //
                 case 7:
+                    Console.WriteLine("Enter Id of Drone: ");
+                    id = GetInt();
+                    logic.PickUpDroneParcel(id);
                     break;
 
                 //
                 case 8:
+                    Console.WriteLine("Enter Id of Drone: ");
+                    id = GetInt();
+                    logic.DeliverParcelCustomer(id);
                     break;
             }
         }
@@ -243,7 +259,28 @@ namespace ConsoleUI
         static void status(int num) {
             Console.WriteLine("Enter the Id: ");
             int ID = GetInt();
-            Console.WriteLine(logic.PrintById(ID, num));
+            switch (num)
+            {
+                //
+                case 1:
+                    Console.WriteLine(logic.GetStationById(ID));
+                    break;
+                
+                //
+                case 2:
+                    Console.WriteLine(logic.GetDroneById(ID));
+                    break;
+                
+                //
+                case 3:
+                    Console.WriteLine(logic.GetCustomerById(ID));
+                    break;
+
+                //
+                case 4:
+                    Console.WriteLine(logic.GetParcelById(ID));
+                    break;
+            }
         }
 
         /// <summary>
@@ -261,31 +298,31 @@ namespace ConsoleUI
                 
                 //For displaying a list of drones
                 case 2:
-                    foreach (var item in logic.PrintListDrone())
+                    foreach (var item in logic.GetDrones())
                         Console.WriteLine(item.ToString());
                     break;
                 
                 //For displaying a list of customer
                 case 3:
-                    foreach (var item in logic.PrintListCustomer())
+                    foreach (var item in logic.GetCustomers())
                         Console.WriteLine(item.ToString());
                     break;
 
                 //For displaying a list of parcels
                 case 4:
-                    foreach (var item in logic.PrintListParcel())
+                    foreach (var item in logic.GetParcels())
                         Console.WriteLine(item.ToString());
                     break;
                 
                 //To display a list of parcels that have not yet been associated with a drone
                 case 5:
-                    foreach (var item in logic.PrintListParcelDrone())
+                    foreach (var item in logic.GetParcelDrone())
                         Console.WriteLine(item.ToString());
                     break;
 
                 //For displaying base stations with available charging stations
                 case 6:
-                    foreach (var item in logic.PrintListStationCharge())
+                    foreach (var item in logic.GetStationCharge())
                         Console.WriteLine(item.ToString());
                     break;
             }

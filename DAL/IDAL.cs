@@ -16,13 +16,16 @@ namespace IDAL
         void DeliverParcelCustomer(int id);
         void SendDrone(int idDrone, int idStation);
         void ReleasDrone(int id); 
-        string PrintById(int Id, int num);
+        string GetCustomerById(int Id);
+        string GetDroneById(int Id);
+        string GetParcelById(int Id);
+        string GetStationById(int Id);
         IEnumerable<Station> GetStations();
         IEnumerable<Drone> GetDrones();
         IEnumerable<Customer> GetCustomers();
         IEnumerable<Parcel> GetParcels();
-        IEnumerable<Parcel> PrintListParcelDrone();
-        IEnumerable<Station> PrintListStationCharge();
+        IEnumerable<Parcel> GetParcelDrone();
+        IEnumerable<Station> GetStationCharge();
         double[] DroneElectricityUse();
     }
 }

@@ -21,6 +21,11 @@ namespace DalObject
             DataSource.stations.Add(s);
         }
 
+        public string GetStationById(int Id) {
+            Station s = DataSource.stations.Find(st => Id == st.Id);
+            return s.ToString();
+        }
+
         /// <summary>
         /// prints the stations
         /// </summary>
@@ -33,7 +38,7 @@ namespace DalObject
         /// prints all the stations with avaliable charging slots
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Station> PrintListStationCharge() {
+        public IEnumerable<Station> GetStationCharge() {
             return DataSource.stations.FindAll(st => 0 != st.ChargeSlots);
         }
     }

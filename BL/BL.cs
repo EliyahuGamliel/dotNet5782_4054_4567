@@ -6,9 +6,15 @@ namespace IBL
 {
     public partial class BL : IBL
     {
-        static IDAL.IDAL data;
+        IDAL.IDAL data;
+        internal static List<Drone> drones = new List<Drone>();
+
+        public BL()
+        {
+            IDAL.IDAL data = new DalObject.DalObject();
+        }
         
-        public void AssignDroneParcel(int DroneId, int ParcelId){
+        public void AssignDroneParcel(int DroneId){
 
         }
         public void PickUpDroneParcel(int id){
@@ -16,16 +22,6 @@ namespace IBL
         }
         public void DeliverParcelCustomer(int id){
 
-        }
-        public string PrintById(int Id, int num){
-            return data.PrintById(Id, num);
-        }
-        
-        public IEnumerable<IDAL.DO.Parcel> PrintListParcelDrone(){
-            return data.PrintListParcelDrone();
-        }
-        public IEnumerable<IDAL.DO.Station> PrintListStationCharge(){
-            return data.PrintListStationCharge();
         }
     }
 }

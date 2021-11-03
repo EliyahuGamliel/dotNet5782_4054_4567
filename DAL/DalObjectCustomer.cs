@@ -18,6 +18,11 @@ namespace DalObject
             DataSource.customers.Add(c);
         }
 
+        public string GetCustomerById(int Id) {
+            Customer c = DataSource.customers.Find(cu => Id == cu.Id);
+            return c.ToString();
+        }
+
         /// <summary>
         /// prints the customers
         /// </summary>

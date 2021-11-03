@@ -37,5 +37,20 @@ namespace ConsoleUI
             }
             return num;
         }
+
+    
+        static string GetStringInt()
+        {
+            string num = Console.ReadLine();
+            int check;
+            bool error = Int32.TryParse(num, out check);
+            while (!error)
+            {
+                Console.WriteLine("You didnt enter a double, please try again");
+                num = Console.ReadLine();
+                error = Int32.TryParse(num, out check);
+            }
+            return num;
+        }
     }
 }

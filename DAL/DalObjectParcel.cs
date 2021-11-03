@@ -45,6 +45,11 @@ namespace DalObject
             DataSource.parcels[index] = p;
         }
         
+        public string GetParcelById(int Id) {
+            Parcel p = DataSource.parcels.Find(pa => Id == pa.Id);
+            return p.ToString();
+        }
+
         /// <summary>
         /// prints the parcels
         /// </summary>
@@ -57,7 +62,7 @@ namespace DalObject
         /// prints all the parcels that dont have a drone
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Parcel> PrintListParcelDrone() {
+        public IEnumerable<Parcel> GetParcelDrone() {
             return DataSource.parcels.FindAll(pa => 0 == pa.DroneId);
         }
         

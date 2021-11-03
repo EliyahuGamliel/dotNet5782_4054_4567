@@ -7,21 +7,29 @@ namespace IBL
     public interface IBL
     {
         void AddStation(Station s);
-        void AddDrone(Drone d);
+        void AddDrone(Drone d, int idStation);
         int AddParcel(Parcel p);
         void AddCustomer(Customer c);
-        void AssignDroneParcel(int DroneId, int ParcelId);
+        void UpdateDrone(int id, int name);
+        void UpdateCustomer(int id, string nameCustomer, string phoneCustomer);
+        void UpdateStation(int id, int nameStation, int chargeSlots);
+        void UpdateParcel(int id, int name);
+        void AssignDroneParcel(int DroneId);
         void PickUpDroneParcel(int id);
         void DeliverParcelCustomer(int id);
-        void SendDrone(int idDrone, int idStation);
-        void ReleasDrone(int id); 
-        string PrintById(int Id, int num);
-        IEnumerable<IDAL.DO.Station> GetStations();
-        IEnumerable<IDAL.DO.Drone> PrintListDrone();
-        IEnumerable<IDAL.DO.Customer> PrintListCustomer();
-        IEnumerable<IDAL.DO.Parcel> PrintListParcel();
-        IEnumerable<IDAL.DO.Parcel> PrintListParcelDrone();
-        IEnumerable<IDAL.DO.Station> PrintListStationCharge();
+        void SendDrone(int idDrone);
+        void ReleasDrone(int id, double time); 
+        string GetParcelById(int Id);
+        string GetDroneById(int Id);
+        string GetCustomerById(int Id);
+        string GetStationById(int Id);
+
+        IEnumerable<Station> GetStations();
+        IEnumerable<Drone> GetDrones();
+        IEnumerable<Customer> GetCustomers();
+        IEnumerable<Parcel> GetParcels();
+        IEnumerable<Parcel> GetParcelDrone();
+        IEnumerable<Station> GetStationCharge();
         double[] DroneElectricityUse();
     }
 }
