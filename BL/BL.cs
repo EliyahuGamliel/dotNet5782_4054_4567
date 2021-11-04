@@ -6,12 +6,12 @@ namespace IBL
 {
     public partial class BL : IBL
     {
-        IDAL.IDAL data;
+        IDAL.IDal data;
         internal static List<Drone> drones = new List<Drone>();
 
         public BL()
         {
-            IDAL.IDAL data = new DalObject.DalObject();
+            IDAL.IDal data = new DalObject.DalObject();
         }
         
         public void AssignDroneParcel(int DroneId){

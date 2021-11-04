@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace DalObject
 {
-    public partial class DalObject : IDAL.IDAL
+    public partial class DalObject : IDAL.IDal
     {
         /// <summary>
         /// Add a customer at the request of the user to the list

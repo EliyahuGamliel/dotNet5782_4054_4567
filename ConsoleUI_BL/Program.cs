@@ -28,7 +28,7 @@ namespace ConsoleUI
                 Console.WriteLine("Enter 1 for adding");
                 Console.WriteLine("Enter 2 for update");
                 Console.WriteLine("Enter 3 to show by Id");
-                Console.WriteLine("Enter 4 for the list");
+                Console.WriteLine("Enter 4 for print list");
                 Console.WriteLine("Enter 5 to exit");
                 choice = GetInt();
                 FirstMenu(choice);

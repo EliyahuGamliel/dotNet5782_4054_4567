@@ -117,7 +117,7 @@ namespace DalObject
         }
     }
 
-    public partial class DalObject : IDAL.IDAL
+    public partial class DalObject : IDAL.IDal
     {
         /// <summary>
         /// uses the function Initialize() in order to initialise the data

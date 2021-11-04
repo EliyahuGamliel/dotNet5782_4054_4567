@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace IDAL
 {
-    public interface IDAL
+    public interface IDal
     { 
         double DistancePrint(double lat1, double lon1, char letter, int id);
         string AddStation(Station s);
