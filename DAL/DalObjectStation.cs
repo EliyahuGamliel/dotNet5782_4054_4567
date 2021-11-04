@@ -6,8 +6,6 @@ namespace DalObject
 {
     public partial class DalObject : IDAL.IDal
     {
-        MyException exp = new MyException();
-
         /// <summary>
         /// Add a station at the request of the user to the list
         /// </summary>

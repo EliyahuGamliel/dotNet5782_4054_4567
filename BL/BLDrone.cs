@@ -26,11 +26,16 @@ namespace IBL
             return;
         }
 
-        public void SendDrone(int idDrone){
+        public void SendDrone(int idDrone) {
+            Drone d = drones.Find(dr => idDrone == dr.Id);
+            exp.Drone_Can_Send_To_Charge(GetStations(), d);
             return;
         }
 
         public void ReleasDrone(int id, double time){
+            Drone d = drones.Find(dr => id == dr.Id);
+            if (d.Status != DroneStatuses.Available)
+
             return;
         }
 
@@ -39,7 +44,8 @@ namespace IBL
         }
         
         public IEnumerable<Drone> GetDrones(){
-            return (List<Drone>)data.GetDrones();
+            return drones;
+            //return (List<Drone>)data.GetDrones();
         }
         public double[] DroneElectricityUse(){
             return data.DroneElectricityUse();

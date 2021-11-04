@@ -42,6 +42,7 @@ namespace IBL
                 s.Name = item.Name;
                 s.Location.Lattitude = item.Lattitude;
                 s.Location.Longitude = item.Longitude;
+
             }
             return station;
         }
