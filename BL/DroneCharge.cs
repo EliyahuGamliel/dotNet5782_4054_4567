@@ -10,7 +10,7 @@ namespace IBL
         public class DroneCharge
         {
             public int Id { get; set; }
-            public Double Battery { get; set; }
+            public double Battery { get; set; }
             
             /// <summary><returns>
             /// The function returns a string to print on all entity data

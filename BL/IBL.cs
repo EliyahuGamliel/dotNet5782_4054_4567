@@ -32,5 +32,6 @@ namespace IBL
         IEnumerable<Station> GetStationCharge();
         double[] DroneElectricityUse();
         IEnumerable<Station> CastingStation(IEnumerable<IDAL.DO.Station> st);
+        void Drone_Can_Send_To_Charge(IEnumerable<IDAL.DO.Station> list, Drone d);
     }
 }

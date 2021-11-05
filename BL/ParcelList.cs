@@ -14,7 +14,7 @@ namespace IBL
             public int TargetId { get; set; }
             public WeightCategories Weight { get; set; }
             public Priorities Priority { get; set; }
-            public Statuses Statis { get; set; }
+            public Statuses Status { get; set; }
 
             /// <summary><returns>
             /// The function returns a string to print on all entity data

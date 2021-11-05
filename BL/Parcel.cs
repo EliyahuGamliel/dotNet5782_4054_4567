@@ -10,8 +10,8 @@ namespace IBL
         public class Parcel
         {
             public int Id { get; set; }
-            public int SenderId { get; set; }
-            public int TargetId { get; set; }
+            public CustomerInParcel Sender { get; set; }
+            public CustomerInParcel Target { get; set; }
             public Drone Drone { get; set; }
             public WeightCategories Weight { get; set; }
             public Priorities Priority { get; set; }
@@ -24,7 +24,7 @@ namespace IBL
             /// The function returns a string to print on all entity data
             /// </returns></summary>
             public override string ToString() 
-            { return $"Id: {Id}\nSenderId: {SenderId}\nTargetId: {TargetId}\nWeight: {Weight}\nDrone: {Drone.ToString()}Priority: {Priority}\nRequested: {Requested}\nScheduled: {Scheduled}\nPickedUp: {PickedUp}\nDelivered:{Delivered}\n"; }
+            { return $"Id: {Id}\nSenderId: {Sender}\nTargetId: {Target}\nWeight: {Weight}\nDrone: {Drone.ToString()}Priority: {Priority}\nRequested: {Requested}\nScheduled: {Scheduled}\nPickedUp: {PickedUp}\nDelivered:{Delivered}\n"; }
         }
     }
 }

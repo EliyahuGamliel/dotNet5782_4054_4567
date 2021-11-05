@@ -9,7 +9,7 @@ namespace IBL
         Random rand = new Random();
         
         public string AddDrone(Drone d, int idStation) {
-            List<IDAL.DO.Station> stations = (List<IDAL.DO.Station>)data.GetStations();
+            List<IDAL.DO.Station> stations = data.GetStations();
             IDAL.DO.Station s = stations.Find(pa => idStation == pa.Id);
             d.Battery = rand.Next(20,41);
             d.Status = DroneStatuses.Maintenance;
@@ -33,7 +33,7 @@ namespace IBL
         }
 
         public void ReleasDrone(int id, double time){
-            Drone d = drones.Find(dr => id == dr.Id);
+            
             if (d.Status != DroneStatuses.Available)
 
             return;
@@ -43,8 +43,8 @@ namespace IBL
             return data.GetDroneById(Id);
         }
         
-        public IEnumerable<Drone> GetDrones(){
-            return drones;
+        public IEnumerable<IDAL.DO.Drone> GetDrones(){
+            return data.GetDrones();
             //return (List<Drone>)data.GetDrones();
         }
         public double[] DroneElectricityUse(){

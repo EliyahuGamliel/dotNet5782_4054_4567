@@ -14,8 +14,8 @@ namespace IBL
             public string Name { get; set; }
             public string Phone { get; set; }
             public Location Location { get; set; }
-            public List<DeliveryInCustomer> FromCustomer { get; set; }
-            public List<DeliveryInCustomer> ForCustomer { get; set; }
+            public List<ParcelInCustomer> FromCustomer { get; set; }
+            public List<ParcelInCustomer> ForCustomer { get; set; }
 
             /// <summary><returns>
             /// The function returns a string to print on all entity data

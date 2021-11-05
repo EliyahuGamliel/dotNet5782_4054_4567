@@ -7,8 +7,8 @@ namespace IBL
     public partial class BL : IBL
     {
         IDAL.IDal data;
-        internal static List<Drone> drones = new List<Drone>();
-
+        List<DroneList> drones = new List<DroneList>();
+        MyException exp = new MyException();
         public BL()
         {
             IDAL.IDal data = new DalObject.DalObject();

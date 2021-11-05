@@ -24,7 +24,5 @@ namespace IBL
                     throw new Exception("The Drone cann't send to charge");
             }
         }
-        
-
     }
 }
