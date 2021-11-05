@@ -7,19 +7,18 @@ namespace IBL
         /// <summary>
         /// Defining the "Customer" class
         /// </summary>
-        public class DeliveryInCustomer
+        public class DroneInParcel
         {
             public int Id { get; set; }
-            public WeightCategories Weight { get; set; }
-            public Priorities Priority { get; set; }
-            public Statuses Status { get; set; }
-            public CustomerDelivery CDelivery { get; set; }
+            public double Battery { get; set; }
+            public Location CLocation { get; set; }
             
+
             /// <summary><returns>
             /// The function returns a string to print on all entity data
             /// </returns></summary>
             public override string ToString() 
-            { return $"Id: {Id}\nWeight: {Weight}\nPriority: {Priority}\nStatus: {Status}\n"; } //to fix
+            { return $"Id: {Id}\nBattery: {Battery}ֿֿ\n"; } //to fix
         }
     }
 }

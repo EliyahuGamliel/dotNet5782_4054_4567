@@ -7,7 +7,7 @@ namespace IBL
         /// <summary>
         /// Defining the "Customer" class
         /// </summary>
-        public class CustomerDelivery
+        public class CustomerInParcel
         {
             public int Id { get; set; }
             public string Name { get; set; }
