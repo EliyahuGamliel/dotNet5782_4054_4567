@@ -5,28 +5,46 @@ namespace IDAL
 {
     namespace DO
     {
-        public class MyException
+        [Serializable]
+        public class IdExistException : Exception
         {
-            public void Check_Add_ID <T>(List<T> list, int ID)
+            public int id { get; private set;}
+            public IdExistException(int ID)
             {
-                foreach (var item in list) {
-                   int id_object = (int)(typeof(T).GetProperty("Id").GetValue(item, null));
-                   if (id_object == ID)
-                        throw new Exception("The ID number already exists");
-                }
+                this.id = ID;
             }
-
-            public void Check_Update_or_Get_By_ID <T>(List<T> list, int ID)
+            public override string ToString()
             {
-                foreach (var item in list) {
-                   int id_object = (int)(typeof(T).GetProperty("Id").GetValue(item, null));
-                   if (id_object == ID)
-                        return;
-                   throw new Exception("The ID number doesn't exist");
-                }
+                return "IdExistException: The ID " + id + " already exist\n";
             }
+        }
 
-            
+        [Serializable]
+        public class IdNotExistException : Exception
+        {
+            public int id { get; private set;}
+            public IdNotExistException(int ID)
+            {
+                this.id = ID;
+            }
+            public override string ToString()
+            {
+                return "IdNotExistException: The ID " + id + " doesn't exist\n";
+            }
+        }
+
+        [Serializable]
+        public class PhoneExistException : Exception
+        {
+            public string phone { get; private set;}
+            public PhoneExistException(string Phone)
+            {
+                this.phone = Phone;
+            }
+            public override string ToString()
+            {
+                return "PhoneExistException: The Phone " + phone + " exist\n";
+            }
         }
     }
 }

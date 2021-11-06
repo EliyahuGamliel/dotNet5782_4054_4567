@@ -8,33 +8,56 @@ namespace IBL
     {
         Random rand = new Random();
         
-        public string AddDrone(Drone d, int idStation) {
-            List<IDAL.DO.Station> stations = data.GetStations();
-            IDAL.DO.Station s = stations.Find(pa => idStation == pa.Id);
-            d.Battery = rand.Next(20,41);
-            d.Status = DroneStatuses.Maintenance;
-            d.CLocation.Lattitude = s.Lattitude;
-            d.CLocation.Longitude = s.Longitude;
-            IDAL.DO.Drone dr = new IDAL.DO.Drone();
-            dr.Id = d.Id;
-            dr.Model = d.Model;
-            dr.MaxWeight = (IDAL.DO.WeightCategories)((int)d.MaxWeight);
-            return data.AddDrone(dr);
+        public string AddDrone(DroneList d, int idStation) {
+            try
+            {
+                List<IDAL.DO.Station> stations = data.GetStations();
+                IDAL.DO.Station s = stations.Find(pa => idStation == pa.Id);
+                d.Battery = rand.Next(20,41);
+                d.Status = DroneStatuses.Maintenance;
+                d.CLocation.Lattitude = s.Lattitude;
+                d.CLocation.Longitude = s.Longitude;
+                d.ParcelId = 0;
+                IDAL.DO.Drone dr = new IDAL.DO.Drone();
+                dr.Id = d.Id;
+                dr.Model = d.Model;
+                dr.MaxWeight = (IDAL.DO.WeightCategories)((int)d.MaxWeight);
+                data.AddDrone(dr);
+                dronesList.Add(d);
+                return "The addition was successful";
+            }
+            catch (IDAL.DO.IdExistException exp)
+            {
+                throw exp;
+            }
         }
 
-        public void UpdateDrone(int id, int name) {
-            return;
+        public string UpdateDrone(int id, string model) {
+            try
+            {
+                List<IDAL.DO.Drone> list_d = data.GetDrones();
+                CheckNotExistId(list_d, id);
+                IDAL.DO.Drone d = list_d.Find(dr => id == dr.Id);
+                int index = list_d.IndexOf(d);
+                d.Model = model;
+                data.UpdateDrone(d, index);
+                //Drone d = dronesList.Find(dr => id.)
+                //IDAL.DO.Drone d = drones.Find(dr => idStation == pa.Id);
+                return "The addition was successful";
+            }
+            catch (IDAL.DO.IdNotExistException exp)
+            {
+                throw exp;
+            }
         }
 
         public void SendDrone(int idDrone) {
-            Drone d = drones.Find(dr => idDrone == dr.Id);
-            exp.Drone_Can_Send_To_Charge(GetStations(), d);
+            DroneList d = dronesList.Find(dr => idDrone == dr.Id);
             return;
         }
 
         public void ReleasDrone(int id, double time){
             
-            if (d.Status != DroneStatuses.Available)
 
             return;
         }

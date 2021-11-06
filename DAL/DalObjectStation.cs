@@ -14,14 +14,19 @@ namespace DalObject
         /// <param name="Longitude">Longitude of station</param>
         /// <param name="Lattitude">Lattitude of station</param>
         /// <param name="ChargeSlots">Number of available charging stations</param>
-        public string AddStation(Station s) {
-            exp.Check_Add_ID<Station>(DataSource.stations, s.Id);
+        public void AddStation(Station s) {
+            CheckExistId(DataSource.stations, s.Id);
             DataSource.stations.Add(s);
-            return "The addition was successful";
+        }
+
+        public void UpdateStation(Station s, int index)
+        {
+            CheckNotExistId(DataSource.stations, s.Id);
+            DataSource.stations[index] = s;
         }
 
         public string GetStationById(int Id) {
-            exp.Check_Update_or_Get_By_ID<Station>(DataSource.stations, Id);
+            CheckNotExistId(DataSource.stations, Id);
             Station s = DataSource.stations.Find(st => Id == st.Id);
             return s.ToString();
         }
@@ -30,7 +35,7 @@ namespace DalObject
         /// prints the stations
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Station> GetStations() {
+        public List<Station> GetStations() {
             return DataSource.stations;
         }
         

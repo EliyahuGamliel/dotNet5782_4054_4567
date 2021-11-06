@@ -7,8 +7,8 @@ namespace IBL
     public interface IBL
     {
         string AddStation(Station s);
-        string AddDrone(Drone d, int idStation);
-        int AddParcel(Parcel p);
+        string AddDrone(DroneList d, int idStation);
+        int AddParcel(Parcel p, int SenderId, int TargetId);
         string AddCustomer(Customer c);
         void UpdateDrone(int id, int name);
         void UpdateCustomer(int id, string nameCustomer, string phoneCustomer);

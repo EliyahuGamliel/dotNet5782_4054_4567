@@ -10,8 +10,8 @@ namespace DalObject
         /// uses the function Initialize() in order to initialise the data
         /// </summary>
         public DalObject() { DataSource.Initialize(); }
-        MyException exp = new MyException();
 
+/*
         /// <summary>
         /// prints the distance between a given point and a customer/station
         /// </summary>
@@ -34,6 +34,7 @@ namespace DalObject
 			}
             return dis;
         }
+        */
 
         /// <summary>
         /// the function takes care of delivering the parcel to the customer
@@ -47,6 +48,34 @@ namespace DalObject
             Drone d = DataSource.drones.Find(dr => p.DroneId == dr.Id);
             index = DataSource.drones.IndexOf(d);
             DataSource.drones[index] = d;
+        }
+
+        public void CheckExistId <T>(List<T> list, int id)
+        {
+            foreach (var item in list) {
+                int id_object = (int)(typeof(T).GetProperty("Id").GetValue(item, null));
+                if (id_object == id)
+                    throw new IdExistException(id);   
+            }
+        }
+
+        public void CheckNotExistId <T>(List<T> list, int id)
+        {
+            foreach (var item in list) {
+                int id_object = (int)(typeof(T).GetProperty("Id").GetValue(item, null));
+                if (id_object == id)
+                    return;          
+            }
+            throw new IdNotExistException(id);   
+        }
+
+        public void CheckNotExistPhone <T>(List<T> list, string phone)
+        {
+            foreach (var item in list) {
+                string phone_object = (string)(typeof(T).GetProperty("Phone").GetValue(item, null));
+                if (phone_object == phone)
+                    throw new PhoneExistException(phone);         
+            }
         }
     }
 }

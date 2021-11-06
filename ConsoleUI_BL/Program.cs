@@ -138,23 +138,26 @@ namespace ConsoleUI
                 //For adding a drone
                 case 2:
                     int idStation;
-                    Drone d = new Drone();
+                    DroneList d = new DroneList();
                     Console.WriteLine("Enter Id: ");
                     d.Id = GetInt();
+                    Console.WriteLine("Enter model of Drone: ");
+                    d.Model = Console.ReadLine();
                     Console.WriteLine("Enter the number of maxWeight: \n0) Light\n1) Medium\n2) Heavy");
                     d.MaxWeight = (WeightCategories)GetInt();
                     Console.WriteLine("Enter Id of Station to charge the Drone: ");
                     idStation = GetInt();
-                    Console.WriteLine("Enter model of Drone: ");
-                    d.Model = Console.ReadLine();
                     System.Console.WriteLine(logic.AddDrone(d, idStation)); 
                     break;
 
                 //For adding a customer
                 case 3:
                     Customer c = new Customer();
-                    Console.WriteLine("Enter the id: ");
+                    Console.WriteLine("Enter the Id: ");
                     c.Id = GetInt();
+                    Console.WriteLine("Enter Customer Location - (Longitude and Latitude): ");
+                    c.Location.Longitude = GetDouble();
+                    c.Location.Lattitude = GetDouble();
                     Console.WriteLine("Enter the name: ");
                     c.Name = Console.ReadLine();
                     Console.WriteLine("Enter the phone: ");
@@ -166,14 +169,14 @@ namespace ConsoleUI
                 case 4:
                     Parcel p = new Parcel();
                     Console.WriteLine("Enter senderId: ");
-                    p.SenderId = GetInt();
+                    int SenderId = GetInt();
                     Console.WriteLine("Enter targetId: ");
-                    p.TargetId = GetInt();
+                    int TargetId = GetInt();
                     Console.WriteLine("Enter the number of weight: \n0) Light\n1) Medium\n2) Heavy");
                     p.Weight = (WeightCategories)GetInt();
                     Console.WriteLine("Enter the number of priority: \n0) Normal\n1) Fast\n2) Emergency");
                     p.Priority = (Priorities)GetInt();
-                    System.Console.WriteLine(logic.AddParcel(p)); 
+                    System.Console.WriteLine(logic.AddParcel(p, SenderId, TargetId)); 
                     break;
             }
         }
@@ -191,7 +194,7 @@ namespace ConsoleUI
                 case 1:
                     Console.WriteLine("Enter Id of Drone: ");
                     id = GetInt();
-                    Console.WriteLine("Enter new name to Drone: ");
+                    Console.WriteLine("Enter new Model to Drone: ");
                     int nameDrone = GetInt();
                     logic.UpdateDrone(id ,nameDrone);
                     break;

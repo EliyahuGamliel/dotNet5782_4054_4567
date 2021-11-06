@@ -6,18 +6,35 @@ namespace IBL
 {
     public partial class BL : IBL
     {   
-        public int AddParcel(Parcel p){
-            p.Drone = null;
-            p.Scheduled = new DateTime(0,0,0,0,0,0);
-            p.PickedUp = new DateTime(0,0,0,0,0,0);
-            p.Delivered = new DateTime(0,0,0,0,0,0);
-            p.Requested = DateTime.Now;
-            IDAL.DO.Parcel pa = new IDAL.DO.Parcel();
-            pa.SenderId = p.SenderId;
-            pa.TargetId = p.TargetId;
-            pa.Weight = (IDAL.DO.WeightCategories)(int)p.Weight;
-            pa.Priority = (IDAL.DO.Priorities)(int)p.Priority;
-            return data.AddParcel(pa);
+        public string AddParcel(Parcel p, int SenderId, int TargetId){
+            try
+            {
+                p.Drone = null;
+                p.Scheduled = new DateTime(0,0,0,0,0,0);
+                p.PickedUp = new DateTime(0,0,0,0,0,0);
+                p.Delivered = new DateTime(0,0,0,0,0,0);
+                p.Requested = DateTime.Now;
+                IDAL.DO.Parcel pa = new IDAL.DO.Parcel();
+                pa.SenderId = SenderId;
+                pa.TargetId = TargetId;
+                pa.Weight = (IDAL.DO.WeightCategories)(int)p.Weight;
+                pa.Priority = (IDAL.DO.Priorities)(int)p.Priority;
+                pa.PickedUp = new DateTime(0,0,0,0,0,0);
+                pa.Scheduled = new DateTime(0,0,0,0,0,0);
+                pa.Delivered = new DateTime(0,0,0,0,0,0);
+                pa.Requested = DateTime.Now;
+                pa.TargetId = TargetId;
+                pa.SenderId = SenderId;
+                pa.DroneId = -1;
+                int Id = data.AddParcel(pa);
+                return "The addition was successful";
+
+            }
+            catch (IDAL.DO.IdExistException exp)
+            {
+                throw exp;
+            }
+            
         }
         
         public void UpdateParcel(int id, int name) {

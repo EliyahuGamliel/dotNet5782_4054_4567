@@ -17,7 +17,9 @@ namespace DalObject
         /// <param name="droneId">droneId of parcel</param>
         /// <returns></returns>
         public int AddParcel(Parcel p) {
-            exp.Check_Add_ID<Parcel>(DataSource.parcels, p.Id);
+            CheckExistId(DataSource.parcels, p.Id);
+            CheckExistId(DataSource.customers, p.SenderId);
+            CheckExistId(DataSource.customers, p.TargetId);
             DataSource.Config.Number_ID += 1;
             DataSource.parcels.Add(p);
             return DataSource.Config.Number_ID;
@@ -27,7 +29,8 @@ namespace DalObject
         /// 
         /// </summary>
         /// <param name="id"></param>
-        public void AssignDroneParcel(int DroneId, int ParcelId) {
+        public void AssignDroneParcel(int DroneId, int ParcelId) {// to fix checking
+            CheckNotExistId(DataSource.parcels, ParcelId);
             Parcel p = DataSource.parcels.Find(pa => ParcelId == pa.Id);
             int index = DataSource.parcels.IndexOf(p);
             p.DroneId = DroneId;
@@ -40,6 +43,7 @@ namespace DalObject
         /// </summary>
         /// <param name="id"></param>
         public void PickUpDroneParcel(int id) {
+            CheckNotExistId(DataSource.parcels, id);
             Parcel p = DataSource.parcels.Find(pa => id == pa.Id);
             int index = DataSource.parcels.IndexOf(p);
             p.PickedUp = DateTime.Now;
@@ -47,7 +51,7 @@ namespace DalObject
         }
         
         public string GetParcelById(int Id) {
-            exp.Check_Update_or_Get_By_ID<Parcel>(DataSource.parcels, Id);
+            CheckNotExistId(DataSource.parcels, Id);
             Parcel p = DataSource.parcels.Find(pa => Id == pa.Id);
             return p.ToString();
         }

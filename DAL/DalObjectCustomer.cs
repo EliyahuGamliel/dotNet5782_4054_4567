@@ -14,14 +14,23 @@ namespace DalObject
         /// <param name="Phone"> phone of customer</param>
         /// <param name="Longitude">Longitude of customer</param>
         /// <param name="Lattitude">Lattitude of customer</param>
-        public string AddCustomer(Customer c) {
-            exp.Check_Add_ID<Customer>(DataSource.customers, c.Id);
+        public void AddCustomer(Customer c) {
+            CheckExistId(DataSource.customers, c.Id);
             DataSource.customers.Add(c);
-            return "The addition was successful";
         }
 
+        public void UpdateCustomer(int Id, string Name, string Phone)
+        {
+            CheckNotExistId(DataSource.customers, Id);
+            CheckNotExistPhone(DataSource.customers, Phone);
+            Customer c = DataSource.customers.Find(cu => Id == cu.Id);
+            int index = DataSource.customers.IndexOf(c);
+            c.Name = Name;
+            c.Phone = Phone;
+            DataSource.customers[index] = c;
+        }
         public string GetCustomerById(int Id) {
-            exp.Check_Update_or_Get_By_ID<Customer>(DataSource.customers, Id);
+            CheckNotExistId(DataSource.customers, Id);
             Customer c = DataSource.customers.Find(cu => Id == cu.Id);
             return c.ToString();
         }

@@ -6,11 +6,14 @@ namespace IDAL
 {
     public interface IDal
     { 
-        double DistancePrint(double lat1, double lon1, char letter, int id);
-        string AddStation(Station s);
-        string AddDrone(Drone d);
+        //double DistancePrint(double lat1, double lon1, char letter, int id);
+        void AddStation(Station s);
+        void AddDrone(Drone d);
         int AddParcel(Parcel p);
-        string AddCustomer(Customer c);
+        void AddCustomer(Customer c);
+        void UpdateDrone(int Id, string Model);
+        void UpdateStation(int Id, string Model);
+        void UpdateCustomer(int Id, string Name, string Phone);
         void AssignDroneParcel(int DroneId, int ParcelId);
         void PickUpDroneParcel(int id);
         void DeliverParcelCustomer(int id);
@@ -20,7 +23,7 @@ namespace IDAL
         string GetDroneById(int Id);
         string GetParcelById(int Id);
         string GetStationById(int Id);
-        IEnumerable<Station> GetStations();
+        List<Station> GetStations();
         IEnumerable<Drone> GetDrones();
         IEnumerable<Customer> GetCustomers();
         IEnumerable<Parcel> GetParcels();

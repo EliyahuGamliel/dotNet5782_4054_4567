@@ -14,10 +14,15 @@ namespace DalObject
         /// <param name="MaxWeight">MaxWeight of drone</param>
         /// <param name="Status">Status of drone</param>
         /// <param name="Battery">Battery of drone</param>
-        public string AddDrone(Drone d) {
-            exp.Check_Add_ID<Drone>(DataSource.drones, d.Id);
+        public void AddDrone(Drone d) {
+            CheckExistId(DataSource.drones, d.Id);
             DataSource.drones.Add(d);
-            return "The addition was successful";
+        }
+
+        public void UpdateDrone(Drone d, int index)
+        {
+            CheckNotExistId(DataSource.drones, d.Id);
+            DataSource.drones[index] = d;
         }
 
         /// <summary>
@@ -59,7 +64,7 @@ namespace DalObject
         }
 
         public string GetDroneById(int Id) {
-            exp.Check_Update_or_Get_By_ID<Drone>(DataSource.drones, Id);
+            CheckNotExistId(DataSource.drones, Id);
             Drone d = DataSource.drones.Find(dr => Id == dr.Id);
             return d.ToString();
         }
