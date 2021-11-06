@@ -9,6 +9,8 @@ namespace IBL
         public string AddParcel(Parcel p, int SenderId, int TargetId){
             try
             {
+                if (SenderId == TargetId)
+                    throw new SameCustomerException(TargetId);
                 p.Drone = null;
                 p.Scheduled = new DateTime(0,0,0,0,0,0);
                 p.PickedUp = new DateTime(0,0,0,0,0,0);
@@ -30,9 +32,13 @@ namespace IBL
                 return "The addition was successful";
 
             }
-            catch (IDAL.DO.IdExistException exp)
+            catch (IDAL.DO.IdExistException)
             {
-                throw exp;
+                throw new IdExistException(p.Id);
+            }
+            catch (IDAL.DO.IdNotExistException)
+            {
+                throw new IdNotExistException(p.Id); //
             }
             
         }

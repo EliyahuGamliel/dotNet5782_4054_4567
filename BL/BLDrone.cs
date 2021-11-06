@@ -26,9 +26,9 @@ namespace IBL
                 dronesList.Add(d);
                 return "The addition was successful";
             }
-            catch (IDAL.DO.IdExistException exp)
+            catch (IDAL.DO.IdExistException)
             {
-                throw exp;
+                throw new IdExistException(d.Id);
             }
         }
 

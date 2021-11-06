@@ -19,14 +19,10 @@ namespace DalObject
             DataSource.customers.Add(c);
         }
 
-        public void UpdateCustomer(int Id, string Name, string Phone)
+        public void UpdateCustomer(Customer c, int index)
         {
-            CheckNotExistId(DataSource.customers, Id);
-            CheckNotExistPhone(DataSource.customers, Phone);
-            Customer c = DataSource.customers.Find(cu => Id == cu.Id);
-            int index = DataSource.customers.IndexOf(c);
-            c.Name = Name;
-            c.Phone = Phone;
+            CheckNotExistId(DataSource.customers, c.Id);
+            CheckNotExistPhone(DataSource.customers, c.Phone);
             DataSource.customers[index] = c;
         }
         public string GetCustomerById(int Id) {

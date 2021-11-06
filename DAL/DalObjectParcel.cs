@@ -18,8 +18,8 @@ namespace DalObject
         /// <returns></returns>
         public int AddParcel(Parcel p) {
             CheckExistId(DataSource.parcels, p.Id);
-            CheckExistId(DataSource.customers, p.SenderId);
-            CheckExistId(DataSource.customers, p.TargetId);
+            CheckNotExistId(DataSource.customers, p.SenderId);
+            CheckNotExistId(DataSource.customers, p.TargetId);
             DataSource.Config.Number_ID += 1;
             DataSource.parcels.Add(p);
             return DataSource.Config.Number_ID;

@@ -23,7 +23,7 @@ namespace IBL
 
         }
 
-        public void CheckExistId <T>(List<T> list, int id)
+        public void CheckExistId <T>(IEnumerable<T> list, int id)
         {
             foreach (var item in list) {
                 int id_object = (int)(typeof(T).GetProperty("Id").GetValue(item, null));
@@ -32,7 +32,7 @@ namespace IBL
             }
         }
 
-        public void CheckNotExistId <T>(List<T> list, int id)
+        public void CheckNotExistId <T>(IEnumerable<T> list, int id)
         {
             foreach (var item in list) {
                 int id_object = (int)(typeof(T).GetProperty("Id").GetValue(item, null));
@@ -42,7 +42,7 @@ namespace IBL
             throw new IdNotExistException(id);   
         }
 
-        public void CheckNotExistPhone <T>(List<T> list, string phone)
+        public void CheckNotExistPhone <T>(IEnumerable<T> list, string phone)
         {
             foreach (var item in list) {
                 string phone_object = (string)(typeof(T).GetProperty("Phone").GetValue(item, null));

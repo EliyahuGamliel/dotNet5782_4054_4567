@@ -18,9 +18,9 @@ namespace IBL
                 data.AddStation(st);
                 return "The addition was successful";
             }
-            catch (IDAL.DO.IdExistException exp)
+            catch (IDAL.DO.IdExistException)
             {
-                throw exp;
+                throw new IdExistException(s.Id);
             }     
         }
         
@@ -40,9 +40,9 @@ namespace IBL
                 data.UpdateStation(s, index);
                 return "The update was successful";
             }
-            catch (IDAL.DO.IdNotExistException exp)
+            catch (IDAL.DO.IdNotExistException)
             {
-                throw;
+                throw new IdNotExistException(id);
             }
             
         

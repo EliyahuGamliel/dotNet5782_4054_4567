@@ -49,6 +49,21 @@ namespace IBL
                 return "PhoneExistException: The Phone " + phone + " exist\n";
             }
         }
+
+        [Serializable]
+        public class SameCustomerException : Exception
+        {
+            public int id { get; private set;}
+            public SameCustomerException(int id)
+            {
+                this.id = id;
+            }
+            public override string ToString()
+            {
+                return "SameCustomersException: The TargetId is like the SenderID (" + id + ")\n";
+            }
+        }
+
         public class MyException
         {
             public void Drone_Can_Send_To_Charge(IEnumerable<IDAL.DO.Station> list, Drone d)

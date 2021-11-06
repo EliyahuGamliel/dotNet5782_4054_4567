@@ -13,29 +13,36 @@ namespace IBL
                 cu.Id = c.Id;
                 cu.Name = c.Name;
                 cu.Phone = c.Phone;
-                cu.Lattitude = c.Location.Lattitude; //
-                cu.Longitude = c.Location.Longitude; //
+                cu.Lattitude = c.Location.Lattitude;
+                cu.Longitude = c.Location.Longitude;
                 data.AddCustomer(cu); 
                 return "The addition was successful";
             }
-            catch (IDAL.DO.IdExistException exp)
+            catch (IDAL.DO.IdExistException)
             {
-                throw exp;
+                throw new IdExistException(c.Id);
             }     
         }
         public string UpdateCustomer(int id, string nameCustomer, string phoneCustomer) {
             try
             {
-                data.UpdateCustomer(id, nameCustomer, phoneCustomer); 
-                return "The update was successful";
+                List<IDAL.DO.Customer> list_c = data.GetCustomers();
+                CheckNotExistId(list_c, id);
+                IDAL.DO.Customer c = list_c.Find(cu => id == cu.Id);
+                int index = list_c.IndexOf(c);
+                c.Name = nameCustomer;
+                c.Phone = phoneCustomer;
+                data.UpdateCustomer(c,index);
+                return "The update was successful"; 
+
             }
-            catch (IDAL.DO.IdExistException exp)
+            catch (IDAL.DO.IdNotExistException)
             {
-                throw exp;
+                throw new IdNotExistException(id);
             }
-            catch (IDAL.DO.PhoneExistException exp)
+            catch (IDAL.DO.PhoneExistException)
             {
-                throw exp;
+                throw new PhoneExistException(phoneCustomer);
             }
         }
 
