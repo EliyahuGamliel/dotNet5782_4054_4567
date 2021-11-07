@@ -35,7 +35,7 @@ namespace DalObject
         /// prints the stations
         /// </summary>
         /// <returns></returns>
-        public List<Station> GetStations() {
+        public IEnumerable<Station> GetStations() {
             return DataSource.stations;
         }
         

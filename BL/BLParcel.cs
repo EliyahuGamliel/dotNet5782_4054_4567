@@ -51,12 +51,12 @@ namespace IBL
             return data.GetParcelById(Id);
         }
 
-        public IEnumerable<Parcel> GetParcels(){
-            return (IEnumerable<Parcel>)data.GetParcels();
+        public IEnumerable<IDAL.DO.Parcel> GetParcels(){
+            return data.GetParcels();
         }
 
-        public IEnumerable<Parcel> GetParcelDrone(){
-            return (IEnumerable<Parcel>)data.GetParcelDrone();
+        public IEnumerable<IDAL.DO.Parcel> GetParcelDrone(){
+            return data.GetParcelDrone();
         }
     }
 } 

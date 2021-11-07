@@ -27,7 +27,7 @@ namespace IBL
         public string UpdateStation(int id, int name, int chargeSlots) {
             try
             {
-                List<IDAL.DO.Station> list_s = data.GetStations();
+                List<IDAL.DO.Station> list_s = (List<IDAL.DO.Station>)data.GetStations();
                 CheckNotExistId(list_s, id);
                 IDAL.DO.Station s = list_s.Find(st => id == st.Id);
                 int index = list_s.IndexOf(s);
@@ -52,7 +52,7 @@ namespace IBL
             return data.GetStationById(Id);
         }
         
-        public List<IDAL.DO.Station> GetStations(){
+        public IEnumerable<IDAL.DO.Station> GetStations(){
             return data.GetStations();
         }
 

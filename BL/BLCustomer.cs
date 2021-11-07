@@ -26,7 +26,7 @@ namespace IBL
         public string UpdateCustomer(int id, string nameCustomer, string phoneCustomer) {
             try
             {
-                List<IDAL.DO.Customer> list_c = data.GetCustomers();
+                List<IDAL.DO.Customer> list_c = (List<IDAL.DO.Customer>)data.GetCustomers();
                 CheckNotExistId(list_c, id);
                 IDAL.DO.Customer c = list_c.Find(cu => id == cu.Id);
                 int index = list_c.IndexOf(c);
@@ -50,8 +50,8 @@ namespace IBL
             return data.GetCustomerById(Id);
         }
 
-        public IEnumerable<Customer> GetCustomers(){
-            return (IEnumerable<Customer>)data.GetCustomers();
+        public IEnumerable<IDAL.DO.Customer> GetCustomers(){
+            return data.GetCustomers();
         }
     }
 }

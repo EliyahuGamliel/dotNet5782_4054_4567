@@ -23,7 +23,7 @@ namespace IDAL
         string GetDroneById(int Id);
         string GetParcelById(int Id);
         string GetStationById(int Id);
-        List<Station> GetStations();
+        IEnumerable<Station> GetStations();
         IEnumerable<Drone> GetDrones();
         IEnumerable<Customer> GetCustomers();
         IEnumerable<Parcel> GetParcels();

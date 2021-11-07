@@ -11,7 +11,7 @@ namespace IBL
         public string AddDrone(DroneList d, int idStation) {
             try
             {
-                List<IDAL.DO.Station> stations = data.GetStations();
+                List<IDAL.DO.Station> stations = (List<IDAL.DO.Station>)data.GetStations();
                 IDAL.DO.Station s = stations.Find(pa => idStation == pa.Id);
                 d.Battery = rand.Next(20,41);
                 d.Status = DroneStatuses.Maintenance;
@@ -35,7 +35,7 @@ namespace IBL
         public string UpdateDrone(int id, string model) {
             try
             {
-                List<IDAL.DO.Drone> list_d = data.GetDrones();
+                List<IDAL.DO.Drone> list_d = (List<IDAL.DO.Drone>)data.GetDrones();
                 CheckNotExistId(list_d, id);
                 IDAL.DO.Drone d = list_d.Find(dr => id == dr.Id);
                 int index = list_d.IndexOf(d);
