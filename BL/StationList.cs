@@ -19,7 +19,7 @@ namespace IBL
             /// The function returns a string to print on all entity data
             /// </returns></summary>
             public override string ToString() 
-            { return $"Id: {Id}\nName: {Name}\nLocation: {ChargeSlots}\nChargeSlots: {ChargeSlotsCatched}\n"; }  //to fix    
+            { return $"Id: {Id}\nName: {Name}\nCharge Slots Avaliable: {ChargeSlots}\nCharge Slots Catched: {ChargeSlotsCatched}\n"; }   
         }
     }
 }

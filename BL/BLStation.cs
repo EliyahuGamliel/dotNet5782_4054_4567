@@ -49,8 +49,23 @@ namespace IBL
             return data.GetStationById(Id).ToString();
         }
         
-        public IEnumerable<IDAL.DO.Station> GetStations(){
-            return data.GetStations();
+        public IEnumerable<StationList> GetStations(){
+            IEnumerable<IDAL.DO.Station> list_s = data.GetStations();
+            List<StationList> station = new List<StationList>();
+            foreach (var item in list_s)
+            {
+                StationList sl = new StationList();
+                sl.Id = item.Id;
+                sl.Name = item.Name;
+                sl.ChargeSlots = item.ChargeSlots;
+                sl.ChargeSlotsCatched = 0;
+                //sl.Location
+                foreach (var item2 in dronesList)
+                    if (item.Lattitude == item2.CLocation.Lattitude && item.Longitude == item2.CLocation.Longitude)
+                        sl.ChargeSlotsCatched += 1;
+                station.Add(sl);
+            }
+            return station;
         }
 
         public IEnumerable<IDAL.DO.Station> GetStationCharge(){

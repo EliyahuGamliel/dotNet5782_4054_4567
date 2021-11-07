@@ -24,8 +24,8 @@ namespace IBL
         string GetCustomerById(int Id);
         string GetStationById(int Id);
 
-        IEnumerable<IDAL.DO.Station> GetStations();
-        IEnumerable<IDAL.DO.Drone> GetDrones();
+        IEnumerable<StationList> GetStations();
+        IEnumerable<DroneList> GetDrones();
         IEnumerable<IDAL.DO.Customer> GetCustomers();
         IEnumerable<IDAL.DO.Parcel> GetParcels();
         IEnumerable<IDAL.DO.Parcel> GetParcelDrone();

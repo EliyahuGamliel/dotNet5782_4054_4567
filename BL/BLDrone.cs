@@ -60,9 +60,8 @@ namespace IBL
             return data.GetDroneById(Id).ToString();
         }
         
-        public IEnumerable<IDAL.DO.Drone> GetDrones(){
-            return data.GetDrones();
-            //return (List<Drone>)data.GetDrones();
+        public IEnumerable<DroneList> GetDrones(){
+            return dronesList;
         }
         public double[] DroneElectricityUse(){
             return data.DroneElectricityUse();

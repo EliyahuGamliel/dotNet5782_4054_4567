@@ -299,7 +299,7 @@ namespace ConsoleUI
         /// The function allows you to view a selected list
         /// </summary>
         /// <param name="num">The second choice of the user</param>
-        /*
+        
         static void lists(int num) {
             switch (num)
             {
@@ -316,7 +316,7 @@ namespace ConsoleUI
                     break;
                 
                 //For displaying a list of customer
-                case 3:
+             /*   case 3:
                     foreach (var item in logic.GetCustomers())
                         Console.WriteLine(item.ToString());
                     break;
@@ -338,8 +338,8 @@ namespace ConsoleUI
                     foreach (var item in logic.GetStationCharge())
                         Console.WriteLine(item.ToString());
                     break;
-            }
-           
-        } */ 
+            */
+            }  
+        } 
     }
 }
