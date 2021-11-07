@@ -10,7 +10,7 @@ namespace IBL
         List<DroneList> dronesList = new List<DroneList>();
         public BL()
         {
-            IDAL.IDal data = new DalObject.DalObject();
+            data = new DalObject.DalObject();
         }
         
         public void AssignDroneParcel(int DroneId){
