@@ -53,7 +53,7 @@ namespace ConsoleUI
 
                     case 2:
                         Console.WriteLine("Enter 1 for update drone's name");
-                        Console.WriteLine("Enter 2 for updae station's data");
+                        Console.WriteLine("Enter 2 for update station's data");
                         Console.WriteLine("Enter 3 for update customer's data");
                         Console.WriteLine("Enter 4 for sending a drone to the station for a battery charge");
                         Console.WriteLine("Enter 5 for releasing a drone from charging");
@@ -203,7 +203,7 @@ namespace ConsoleUI
                     id = GetInt();
                     Console.WriteLine("Enter new Model to Drone: ");
                     string modelDrone = Console.ReadLine();
-                    logic.UpdateDrone(id ,modelDrone);
+                    System.Console.WriteLine(logic.UpdateDrone(id ,modelDrone));
                     break;
                 
                 //
@@ -228,7 +228,6 @@ namespace ConsoleUI
                             }
                         }
                     }
-
                     Console.WriteLine("Enter a total amount of charge slots: ");
                     input = Console.ReadLine();
                     if (input != "")
@@ -247,7 +246,7 @@ namespace ConsoleUI
                             }
                         }
                     }
-                    logic.UpdateStation(id, nameStation, chargeSlots);
+                    System.Console.WriteLine(logic.UpdateStation(id, nameStation, chargeSlots));
                     break;
 
                 //
@@ -258,7 +257,7 @@ namespace ConsoleUI
                     string nameCustomer = Console.ReadLine();
                     Console.WriteLine("Enter a new phone to Customer: ");
                     string phoneCustomer = GetStringInt();
-                    logic.UpdateCustomer(id, nameCustomer, phoneCustomer);
+                    System.Console.WriteLine(logic.UpdateCustomer(id, nameCustomer, phoneCustomer));
                     break;
 
                 //

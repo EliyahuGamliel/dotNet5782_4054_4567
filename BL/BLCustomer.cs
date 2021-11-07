@@ -29,7 +29,7 @@ namespace IBL
                 IDAL.DO.Customer c = data.GetCustomerById(id);
                 c.Name = nameCustomer;
                 c.Phone = phoneCustomer;
-                data.UpdateCustomer(c,id);
+                data.UpdateCustomer(c);
                 return "The update was successful"; 
 
             }

@@ -19,10 +19,10 @@ namespace DalObject
             DataSource.drones.Add(d);
         }
 
-        public void UpdateDrone(Drone d, int id)
+        public void UpdateDrone(Drone d)
         {
             CheckNotExistId(DataSource.drones, d.Id);
-            Drone dr = DataSource.drones.Find(dro => id == d.Id);
+            Drone dr = DataSource.drones.Find(dro => dro.Id == d.Id);
             int index = DataSource.drones.IndexOf(dr);
             DataSource.drones[index] = d;
         }

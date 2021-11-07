@@ -11,9 +11,9 @@ namespace IDAL
         void AddDrone(Drone d);
         int AddParcel(Parcel p);
         void AddCustomer(Customer c);
-        void UpdateDrone(Drone d, int id);
-        void UpdateStation(Station s, int id);
-        void UpdateCustomer(Customer c, int id);
+        void UpdateDrone(Drone d);
+        void UpdateStation(Station s);
+        void UpdateCustomer(Customer c);
         void AssignDroneParcel(int DroneId, int ParcelId);
         void PickUpDroneParcel(int id);
         void DeliverParcelCustomer(int id);

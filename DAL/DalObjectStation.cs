@@ -19,10 +19,10 @@ namespace DalObject
             DataSource.stations.Add(s);
         }
 
-        public void UpdateStation(Station s, int id)
+        public void UpdateStation(Station s)
         {
             CheckNotExistId(DataSource.stations, s.Id);
-            Station st = DataSource.stations.Find(sta => id == s.Id);
+            Station st = DataSource.stations.Find(sta => sta.Id == s.Id);
             int index = DataSource.stations.IndexOf(st);
             DataSource.stations[index] = s;
         }

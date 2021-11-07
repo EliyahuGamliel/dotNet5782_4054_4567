@@ -29,7 +29,7 @@ namespace IBL
                 pa.SenderId = SenderId;
                 pa.DroneId = -1;
                 int Id = data.AddParcel(pa);
-                return "The addition was successful";
+                return "The addition was successful\n";
 
             }
             catch (IDAL.DO.IdExistException)

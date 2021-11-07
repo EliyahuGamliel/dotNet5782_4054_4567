@@ -16,7 +16,7 @@ namespace IBL
                 st.Lattitude = s.Location.Lattitude;
                 st.ChargeSlots = s.ChargeSlots;
                 data.AddStation(st);
-                return "The addition was successful";
+                return "The addition was successful\n";
             }
             catch (IDAL.DO.IdExistException)
             {
@@ -38,8 +38,8 @@ namespace IBL
                             amount_avalible -= 1;
                     s.ChargeSlots = amount_avalible;
                 }
-                data.UpdateStation(s, id);
-                return "The update was successful";
+                data.UpdateStation(s);
+                return "The update was successful\n";
             }
             catch (IDAL.DO.IdNotExistException)
             {

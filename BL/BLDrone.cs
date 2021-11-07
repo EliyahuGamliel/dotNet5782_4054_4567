@@ -23,7 +23,7 @@ namespace IBL
                 dr.MaxWeight = (IDAL.DO.WeightCategories)((int)d.MaxWeight);
                 data.AddDrone(dr);
                 dronesList.Add(d);
-                return "The addition was successful";
+                return "The addition was successful\n";
             }
             catch (IDAL.DO.IdExistException)
             {
@@ -36,8 +36,8 @@ namespace IBL
             {
                 IDAL.DO.Drone d = data.GetDroneById(id);
                 d.Model = model;
-                data.UpdateDrone(d, id);
-                return "The addition was successful";
+                data.UpdateDrone(d);
+                return "The update was successful\n";
             }
             catch (IDAL.DO.IdNotExistException exp)
             {
