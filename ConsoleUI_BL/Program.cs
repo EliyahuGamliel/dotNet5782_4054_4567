@@ -88,7 +88,7 @@ namespace ConsoleUI
             }
             catch (Exception e)
             {
-                Console.WriteLine("Ho no! {0} happend", e);
+                Console.WriteLine("Ho no! {0}", e);
             }
         }
         
@@ -114,7 +114,7 @@ namespace ConsoleUI
                     break;
 
                 case 4:
-                    //lists(secondChoice);
+                    lists(secondChoice);
                     break;
             }
         }
@@ -208,12 +208,45 @@ namespace ConsoleUI
                 
                 //
                 case 2:
+                    bool success;
+                    int nameStation = -1;
+                    int chargeSlots = -1;
                     Console.WriteLine("Enter Id of Station: ");
                     id = GetInt();
                     Console.WriteLine("Enter a new name to Station: ");
-                    int nameStation = GetInt();
+                    string input = Console.ReadLine();
+                    if (input != "") {
+                        success = int.TryParse(input, out nameStation);
+                        while (!success) {
+                            Console.WriteLine("you didnt enter an int, please try again");
+                            input = Console.ReadLine();
+                            if (input != "")
+                                success = int.TryParse(input, out nameStation);
+                            else {
+                                nameStation = -1;
+                                break;
+                            }
+                        }
+                    }
+
                     Console.WriteLine("Enter a total amount of charge slots: ");
-                    int chargeSlots = GetInt();
+                    input = Console.ReadLine();
+                    if (input != "")
+                    {
+                        success = int.TryParse(input, out chargeSlots);
+                        while (!success)
+                        {
+                            Console.WriteLine("you didnt enter an int, please try again");
+                            input = Console.ReadLine();
+                            if (input != "")
+                                success = int.TryParse(input, out chargeSlots);
+                            else
+                            {
+                                chargeSlots = -1;
+                                break;
+                            }
+                        }
+                    }
                     logic.UpdateStation(id, nameStation, chargeSlots);
                     break;
 

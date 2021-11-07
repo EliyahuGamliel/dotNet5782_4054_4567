@@ -28,12 +28,16 @@ namespace IBL
             try
             {
                 IDAL.DO.Station s = data.GetStationById(id);
-                s.Name = name;
-                int amount_avalible = chargeSlots;
-                foreach (var item in dronesList)
-                    if (item.CLocation.Longitude == s.Longitude && item.CLocation.Lattitude == s.Lattitude)
-                        amount_avalible -= 1;
-                s.ChargeSlots = amount_avalible;
+                if (name != -1)
+                    s.Name = name;
+                if (chargeSlots != -1)
+                {
+                    int amount_avalible = chargeSlots;
+                    foreach (var item in dronesList)
+                        if (item.CLocation.Longitude == s.Longitude && item.CLocation.Lattitude == s.Lattitude)
+                            amount_avalible -= 1;
+                    s.ChargeSlots = amount_avalible;
+                }
                 data.UpdateStation(s, id);
                 return "The update was successful";
             }
