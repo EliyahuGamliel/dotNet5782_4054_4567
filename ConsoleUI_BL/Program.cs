@@ -40,49 +40,58 @@ namespace ConsoleUI
         /// <param name="choice">The first choice of the user</param>
         static void FirstMenu(int choice)
         {
-            switch (choice)
+            try
             {
-                case 1:
-                    Console.WriteLine("Enter 1 for adding a station");
-                    Console.WriteLine("Enter 2 for adding a drone");
-                    Console.WriteLine("Enter 3 for adding a customer");
-                    Console.WriteLine("Enter 4 for adding a parcel");
-                    break;
 
-                case 2:
-                    Console.WriteLine("Enter 1 for update drone's name");
-                    Console.WriteLine("Enter 2 for updae station's data");
-                    Console.WriteLine("Enter 3 for update customer's data");
-                    Console.WriteLine("Enter 4 for sending a drone to the station for a battery charge");
-                    Console.WriteLine("Enter 5 for releasing a drone from charging");
-                    Console.WriteLine("Enter 6 for assign a parcel to a drone");
-                    Console.WriteLine("Enter 7 for picking up a parcel");
-                    Console.WriteLine("Enter 8 for delivery a parcel by drone");
-                    break;
 
-                case 3:
-                    Console.WriteLine("Enter 1 for station status");
-                    Console.WriteLine("Enter 2 for drone status");
-                    Console.WriteLine("Enter 3 for customer status");
-                    Console.WriteLine("Enter 4 for parcel status");
-                    break;
+                switch (choice)
+                {
+                    case 1:
+                        Console.WriteLine("Enter 1 for adding a station");
+                        Console.WriteLine("Enter 2 for adding a drone");
+                        Console.WriteLine("Enter 3 for adding a customer");
+                        Console.WriteLine("Enter 4 for adding a parcel");
+                        break;
 
-                case 4:
-                    Console.WriteLine("Enter 1 for the stations's list");
-                    Console.WriteLine("Enter 2 for drones's list");
-                    Console.WriteLine("Enter 3 for customers's list");
-                    Console.WriteLine("Enter 4 for the parcel's list");
-                    Console.WriteLine("Enter 5 for the list of parcels that hadn't been assigned to a drone");
-                    Console.WriteLine("Enter 6 for the list of stations that have sper place for charging");
-                    break;
-                    
-                case 5:
-                    Console.WriteLine("Bye Bye!");
-                    return;
+                    case 2:
+                        Console.WriteLine("Enter 1 for update drone's name");
+                        Console.WriteLine("Enter 2 for updae station's data");
+                        Console.WriteLine("Enter 3 for update customer's data");
+                        Console.WriteLine("Enter 4 for sending a drone to the station for a battery charge");
+                        Console.WriteLine("Enter 5 for releasing a drone from charging");
+                        Console.WriteLine("Enter 6 for assign a parcel to a drone");
+                        Console.WriteLine("Enter 7 for picking up a parcel");
+                        Console.WriteLine("Enter 8 for delivery a parcel by drone");
+                        break;
+
+                    case 3:
+                        Console.WriteLine("Enter 1 for station status");
+                        Console.WriteLine("Enter 2 for drone status");
+                        Console.WriteLine("Enter 3 for customer status");
+                        Console.WriteLine("Enter 4 for parcel status");
+                        break;
+
+                    case 4:
+                        Console.WriteLine("Enter 1 for the stations's list");
+                        Console.WriteLine("Enter 2 for drones's list");
+                        Console.WriteLine("Enter 3 for customers's list");
+                        Console.WriteLine("Enter 4 for the parcel's list");
+                        Console.WriteLine("Enter 5 for the list of parcels that hadn't been assigned to a drone");
+                        Console.WriteLine("Enter 6 for the list of stations that have sper place for charging");
+                        break;
+
+                    case 5:
+                        Console.WriteLine("Bye Bye!");
+                        return;
+                }
+                int secondChoice;
+                secondChoice = GetInt();
+                SecondMenu(choice, secondChoice);
             }
-            int secondChoice;
-            secondChoice = GetInt();
-            SecondMenu(choice, secondChoice);
+            catch (Exception e)
+            {
+                Console.WriteLine("ho no! {0} happend", e);
+            }
         }
         
         /// <summary>
