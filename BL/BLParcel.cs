@@ -48,7 +48,7 @@ namespace IBL
         }
 
         public string GetParcelById(int Id) {
-            return data.GetParcelById(Id);
+            return data.GetParcelById(Id).ToString();
         }
 
         public IEnumerable<IDAL.DO.Parcel> GetParcels(){

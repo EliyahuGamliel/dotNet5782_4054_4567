@@ -27,17 +27,14 @@ namespace IBL
         public string UpdateStation(int id, int name, int chargeSlots) {
             try
             {
-                List<IDAL.DO.Station> list_s = (List<IDAL.DO.Station>)data.GetStations();
-                CheckNotExistId(list_s, id);
-                IDAL.DO.Station s = list_s.Find(st => id == st.Id);
-                int index = list_s.IndexOf(s);
+                IDAL.DO.Station s = data.GetStationById(id);
                 s.Name = name;
                 int amount_avalible = chargeSlots;
                 foreach (var item in dronesList)
                     if (item.CLocation.Longitude == s.Longitude && item.CLocation.Lattitude == s.Lattitude)
                         amount_avalible -= 1;
                 s.ChargeSlots = amount_avalible;
-                data.UpdateStation(s, index);
+                data.UpdateStation(s, id);
                 return "The update was successful";
             }
             catch (IDAL.DO.IdNotExistException)
@@ -49,7 +46,7 @@ namespace IBL
         }
 
         public string GetStationById(int Id) {
-            return data.GetStationById(Id);
+            return data.GetStationById(Id).ToString();
         }
         
         public IEnumerable<IDAL.DO.Station> GetStations(){

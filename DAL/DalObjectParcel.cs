@@ -50,10 +50,10 @@ namespace DalObject
             DataSource.parcels[index] = p;
         }
         
-        public string GetParcelById(int Id) {
+        public Parcel GetParcelById(int Id) {
             CheckNotExistId(DataSource.parcels, Id);
             Parcel p = DataSource.parcels.Find(pa => Id == pa.Id);
-            return p.ToString();
+            return p;
         }
 
         /// <summary>

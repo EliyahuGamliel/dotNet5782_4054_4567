@@ -11,8 +11,7 @@ namespace IBL
         public string AddDrone(DroneList d, int idStation) {
             try
             {
-                List<IDAL.DO.Station> stations = (List<IDAL.DO.Station>)data.GetStations();
-                IDAL.DO.Station s = stations.Find(pa => idStation == pa.Id);
+                IDAL.DO.Station s = data.GetStationById(idStation);
                 d.Battery = rand.Next(20,41);
                 d.Status = DroneStatuses.Maintenance;
                 d.CLocation.Lattitude = s.Lattitude;
@@ -35,14 +34,9 @@ namespace IBL
         public string UpdateDrone(int id, string model) {
             try
             {
-                List<IDAL.DO.Drone> list_d = (List<IDAL.DO.Drone>)data.GetDrones();
-                CheckNotExistId(list_d, id);
-                IDAL.DO.Drone d = list_d.Find(dr => id == dr.Id);
-                int index = list_d.IndexOf(d);
+                IDAL.DO.Drone d = data.GetDroneById(id);
                 d.Model = model;
-                data.UpdateDrone(d, index);
-                //Drone d = dronesList.Find(dr => id.)
-                //IDAL.DO.Drone d = drones.Find(dr => idStation == pa.Id);
+                data.UpdateDrone(d, id);
                 return "The addition was successful";
             }
             catch (IDAL.DO.IdNotExistException exp)
@@ -63,7 +57,7 @@ namespace IBL
         }
 
         public string GetDroneById(int Id) {
-            return data.GetDroneById(Id);
+            return data.GetDroneById(Id).ToString();
         }
         
         public IEnumerable<IDAL.DO.Drone> GetDrones(){

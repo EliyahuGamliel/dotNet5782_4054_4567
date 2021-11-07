@@ -42,8 +42,6 @@ namespace ConsoleUI
         {
             try
             {
-
-
                 switch (choice)
                 {
                     case 1:
@@ -90,7 +88,7 @@ namespace ConsoleUI
             }
             catch (Exception e)
             {
-                Console.WriteLine("ho no! {0} happend", e);
+                Console.WriteLine("Ho no! {0} happend", e);
             }
         }
         
@@ -116,7 +114,7 @@ namespace ConsoleUI
                     break;
 
                 case 4:
-                    lists(secondChoice);
+                    //lists(secondChoice);
                     break;
             }
         }
@@ -301,6 +299,7 @@ namespace ConsoleUI
         /// The function allows you to view a selected list
         /// </summary>
         /// <param name="num">The second choice of the user</param>
+        /*
         static void lists(int num) {
             switch (num)
             {
@@ -339,8 +338,8 @@ namespace ConsoleUI
                     foreach (var item in logic.GetStationCharge())
                         Console.WriteLine(item.ToString());
                     break;
-                
             }
-        }    
+           
+        } */ 
     }
 }

@@ -19,9 +19,11 @@ namespace DalObject
             DataSource.drones.Add(d);
         }
 
-        public void UpdateDrone(Drone d, int index)
+        public void UpdateDrone(Drone d, int id)
         {
             CheckNotExistId(DataSource.drones, d.Id);
+            Drone dr = DataSource.drones.Find(dro => id == d.Id);
+            int index = DataSource.drones.IndexOf(dr);
             DataSource.drones[index] = d;
         }
 
@@ -63,10 +65,10 @@ namespace DalObject
             DataSource.stations[index] = s;
         }
 
-        public string GetDroneById(int Id) {
+        public Drone GetDroneById(int Id) {
             CheckNotExistId(DataSource.drones, Id);
             Drone d = DataSource.drones.Find(dr => Id == dr.Id);
-            return d.ToString();
+            return d;
         }
 
         /// <summary>
