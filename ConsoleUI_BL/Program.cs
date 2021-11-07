@@ -195,8 +195,8 @@ namespace ConsoleUI
                     Console.WriteLine("Enter Id of Drone: ");
                     id = GetInt();
                     Console.WriteLine("Enter new Model to Drone: ");
-                    int nameDrone = GetInt();
-                    logic.UpdateDrone(id ,nameDrone);
+                    string modelDrone = Console.ReadLine();
+                    logic.UpdateDrone(id ,modelDrone);
                     break;
                 
                 //
@@ -330,6 +330,7 @@ namespace ConsoleUI
                     foreach (var item in logic.GetStationCharge())
                         Console.WriteLine(item.ToString());
                     break;
+                
             }
         }    
     }
