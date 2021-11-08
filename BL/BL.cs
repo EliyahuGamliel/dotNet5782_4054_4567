@@ -31,20 +31,19 @@ namespace IBL
                 dl.Model = item.Model;
                 if (true)
                 {
-                    
+                    dl
+                    break;
                 }
-                else {
+                else
+                {
                     dl.Status = (DroneStatuses)rand.Next(0,2);
-
-                    if (dl.Status == DroneStatuses.Maintenance)
-                    {
+                    if (dl.Status == DroneStatuses.Maintenance) {
                         int counter = 0;
                         IEnumerable<IDAL.DO.Station> list_s = data.GetStations();
                         foreach (var itemStation in list_s)
                             counter += 1;
                         int s = rand.Next(0, counter);
-                        foreach (var itemStation in list_s)
-                        {
+                        foreach (var itemStation in list_s) {
                             if (s == 0) {
                                 dl.CLocation.Longitude = itemStation.Longitude;
                                 dl.CLocation.Lattitude = itemStation.Lattitude;
