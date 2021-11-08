@@ -45,8 +45,6 @@ namespace IBL
             {
                 throw new IdNotExistException(id);
             }
-            
-        
         }
 
         public string GetStationById(int Id) {
@@ -79,8 +77,22 @@ namespace IBL
             return station;
         }
 
-        public IEnumerable<IDAL.DO.Station> GetStationCharge(){ //
-            return data.GetStationCharge();
+        public IEnumerable<StationList> GetStationCharge(){
+            IEnumerable<IDAL.DO.Station> list_sC = data.GetStationCharge();
+            List<StationList> station = new List<StationList>();
+            foreach (var item in list_sC)
+            {
+                StationList sl = new StationList();
+                sl.Id = item.Id;
+                sl.Name = item.Name;
+                sl.ChargeSlots = item.ChargeSlots;
+                sl.ChargeSlotsCatched = 0;
+                foreach (var item2 in dronesList)
+                    if (item.Lattitude == item2.CLocation.Lattitude && item.Longitude == item2.CLocation.Longitude)
+                        sl.ChargeSlotsCatched += 1;
+                station.Add(sl);
+            }
+            return station;
         }
     }
 }

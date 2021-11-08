@@ -39,9 +39,9 @@ namespace IBL
                 data.UpdateDrone(d);
                 return "The update was successful\n";
             }
-            catch (IDAL.DO.IdNotExistException exp)
+            catch (IDAL.DO.IdNotExistException)
             {
-                throw exp;
+                throw new IdNotExistException(id);
             }
         }
 
@@ -57,7 +57,15 @@ namespace IBL
         }
 
         public string GetDroneById(int Id) {
-            return data.GetDroneById(Id).ToString();
+            try
+            {
+                return data.GetDroneById(Id).ToString();
+            }
+            catch (IDAL.DO.IdNotExistException)
+            {
+                throw new IdNotExistException(Id);
+            }
+            
         }
         
         public IEnumerable<DroneList> GetDrones(){

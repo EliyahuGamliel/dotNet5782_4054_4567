@@ -77,8 +77,28 @@ namespace IBL
             return parcel;
         }
 
-        public IEnumerable<IDAL.DO.Parcel> GetParcelDrone(){ //
-            return data.GetParcelDrone();
+        public IEnumerable<ParcelList> GetParcelDrone(){
+            IEnumerable<IDAL.DO.Parcel> list_pD = data.GetParcelDrone();
+            List<ParcelList> parcel = new List<ParcelList>();
+            foreach (var item in list_pD)
+            {
+                ParcelList pa = new ParcelList();
+                pa.Id = item.Id;
+                pa.Priority = (Priorities)(int)item.Priority;
+                pa.SenderId = item.SenderId;
+                pa.TargetId = item.TargetId;
+                pa.Weight = (WeightCategories)(int)item.Weight;
+                if (DateTime.Compare(item.Requested, item.Scheduled) > 0)
+                        pa.Status = Statuses.Created;
+                else if (DateTime.Compare(item.Scheduled, item.PickedUp) > 0)
+                        pa.Status = Statuses.Associated;
+                else if (DateTime.Compare(item.PickedUp, item.Delivered) > 0)
+                        pa.Status = Statuses.Collected;
+                else if (DateTime.Compare(item.Delivered, item.PickedUp) > 0)
+                        pa.Status = Statuses.Provided;
+                parcel.Add(pa);
+            }
+            return parcel;
         }
     }
 } 

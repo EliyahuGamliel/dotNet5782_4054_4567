@@ -45,7 +45,14 @@ namespace IBL
         }
 
         public string GetCustomerById(int Id) {
-            return data.GetCustomerById(Id).ToString();
+            try
+            {
+                return data.GetCustomerById(Id).ToString(); 
+            }
+            catch (IDAL.DO.IdNotExistException)
+            {
+                throw new IdNotExistException(Id);
+            }
         }
 
         public IEnumerable<CustomerList> GetCustomers(){

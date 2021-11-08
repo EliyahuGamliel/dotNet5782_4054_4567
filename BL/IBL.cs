@@ -26,8 +26,8 @@ namespace IBL
         IEnumerable<DroneList> GetDrones();
         IEnumerable<CustomerList> GetCustomers();
         IEnumerable<ParcelList> GetParcels();
-        IEnumerable<IDAL.DO.Parcel> GetParcelDrone();
-        IEnumerable<IDAL.DO.Station> GetStationCharge();
+        IEnumerable<ParcelList> GetParcelDrone();
+        IEnumerable<StationList> GetStationCharge();
         double[] DroneElectricityUse();
     }
 }

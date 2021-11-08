@@ -381,19 +381,18 @@ namespace ConsoleUI
                     foreach (var item in logic.GetParcels())
                         Console.WriteLine(item.ToString());
                     break;
-            /*   
+
                 //To display a list of parcels that have not yet been associated with a drone
                 case 5:
                     foreach (var item in logic.GetParcelDrone())
                         Console.WriteLine(item.ToString());
                     break;
-
+                    
                 //For displaying base stations with available charging stations
                 case 6:
                     foreach (var item in logic.GetStationCharge())
                         Console.WriteLine(item.ToString());
                     break;
-            */
             }  
         } 
     }
