@@ -44,10 +44,52 @@ namespace IBL
             }
         }
 
-        public string GetCustomerById(int Id) {
+        public Customer GetCustomerById(int Id) {
             try
             {
-                return data.GetCustomerById(Id).ToString(); 
+                IDAL.DO.Customer c = data.GetCustomerById(Id); 
+                Customer cu = new Customer();
+                cu.Id = c.Id;
+                cu.Name = c.Name;
+                cu.Phone = c.Phone;
+                cu.Location.Longitude = c.Longitude;
+                cu.Location.Lattitude = c.Lattitude;
+                foreach (var item in data.GetParcels())
+                {
+                    if (item.TargetId == cu.Id)
+                    {
+                        ParcelInCustomer pc = new ParcelInCustomer();
+                        pc.Id = item.Id;
+                        pc.Priority = (Priorities)(int)item.Priority;
+                        pc.Weight = (WeightCategories)(int)item.Weight;
+                        pc.Status = (Statuses)ReturnStatus(item);
+
+                        CustomerInParcel cp = new CustomerInParcel();
+                        cp.Id = item.SenderId;
+                        IDAL.DO.Customer c_help = data.GetCustomerById(Id); 
+                        cp.Name = c_help.Name;
+                        pc.CParcel = cp;
+
+                        cu.ForCustomer.Add(pc);
+                    }
+                    else if (item.SenderId == cu.Id)
+                    {
+                        ParcelInCustomer pc = new ParcelInCustomer();
+                        pc.Id = item.Id;
+                        pc.Priority = (Priorities)(int)item.Priority;
+                        pc.Weight = (WeightCategories)(int)item.Weight;
+                        pc.Status = (Statuses)ReturnStatus(item);
+
+                        CustomerInParcel cp = new CustomerInParcel();
+                        cp.Id = item.TargetId;
+                        IDAL.DO.Customer c_help = data.GetCustomerById(Id); 
+                        cp.Name = c_help.Name;
+                        pc.CParcel = cp;
+
+                        cu.FromCustomer.Add(pc);
+                    }
+                } 
+                return cu;
             }
             catch (IDAL.DO.IdNotExistException)
             {

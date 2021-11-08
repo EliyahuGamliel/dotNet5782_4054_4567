@@ -64,6 +64,7 @@ namespace IBL
             }
         }
 
+/*
         public class MyException
         {
             public void Drone_Can_Send_To_Charge(IEnumerable<IDAL.DO.Station> list, Drone d)
@@ -79,5 +80,6 @@ namespace IBL
                     throw new Exception("The Drone cann't send to charge");
             }
         }
+        */
     }
 }

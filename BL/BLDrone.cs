@@ -56,10 +56,47 @@ namespace IBL
             return;
         }
 
-        public string GetDroneById(int Id) {
+        public Drone GetDroneById(int Id) {
             try
             {
-                return data.GetDroneById(Id).ToString();
+                IDAL.DO.Drone d = data.GetDroneById(Id);
+                Drone dr = new Drone();
+                dr.Id = d.Id;
+                dr.MaxWeight = (WeightCategories)(int)d.MaxWeight;
+                dr.Model = d.Model;
+                DroneList dl = dronesList.Find(drl => drl.Id == dr.Id);
+                dr.Status = dl.Status;
+                dr.Battery = dl.Battery;
+                dr.CLocation = dl.CLocation;
+                ParcelTransfer pt = new ParcelTransfer();
+                foreach (var itemParcels in data.GetParcels()) {
+                    if (itemParcels.Id == dl.ParcelId) {
+                        pt.Id = itemParcels.Id;
+                        pt.Priority = (Priorities)(int)itemParcels.Priority;
+                            pt.Weight = (WeightCategories)(int)itemParcels.Weight;
+                        pt.Status = false;
+                        if (DateTime.Compare(itemParcels.PickedUp, itemParcels.Scheduled) > 0)
+                            pt.Status = true;
+
+                        CustomerInParcel cp = new CustomerInParcel();
+                        cp.Id = itemParcels.TargetId;
+                        IDAL.DO.Customer c_help = data.GetCustomerById(cp.Id); 
+                        cp.Name = c_help.Name;
+                        pt.Recipient = cp;
+                        pt.Destination_Location.Lattitude = c_help.Lattitude;
+                        pt.Destination_Location.Longitude = c_help.Longitude;
+
+                        cp.Id = itemParcels.SenderId;
+                        c_help = data.GetCustomerById(cp.Id); 
+                        cp.Name = c_help.Name;
+                        pt.Sender = cp;
+                        pt.Collection_Location.Lattitude = c_help.Lattitude;
+                        pt.Collection_Location.Longitude = c_help.Longitude;
+
+                        pt.Transport_Distance = DistanceTo(pt.Collection_Location, pt.Destination_Location);
+                    }
+                }
+                return dr;
             }
             catch (IDAL.DO.IdNotExistException)
             {

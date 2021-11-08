@@ -18,10 +18,12 @@ namespace IBL
         void DeliverParcelCustomer(int id);
         void SendDrone(int idDrone);
         void ReleasDrone(int id, double time); 
-        string GetParcelById(int Id);
-        string GetDroneById(int Id);
-        string GetCustomerById(int Id);
-        string GetStationById(int Id);
+        Parcel GetParcelById(int Id);
+        Drone GetDroneById(int Id);
+        Customer GetCustomerById(int Id);
+        Station GetStationById(int Id);
+        int ReturnStatus(IDAL.DO.Parcel p);
+        double DistanceTo(Location l1, Location l2);
         IEnumerable<StationList> GetStations();
         IEnumerable<DroneList> GetDrones();
         IEnumerable<CustomerList> GetCustomers();

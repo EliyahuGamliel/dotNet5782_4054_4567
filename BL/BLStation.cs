@@ -47,10 +47,25 @@ namespace IBL
             }
         }
 
-        public string GetStationById(int Id) {
+        public Station GetStationById(int Id) {
             try
             {
-                return data.GetStationById(Id).ToString();
+                IDAL.DO.Station s = data.GetStationById(Id);
+                Station st = new Station();
+                st.Id = s.Id;
+                st.Name = s.Name;
+                st.ChargeSlots = s.ChargeSlots;
+                st.Location.Longitude = s.Longitude;
+                st.Location.Lattitude = s.Lattitude;
+                foreach (var item in dronesList) {
+                    if (item.CLocation == st.Location) {
+                        DroneCharge dc = new DroneCharge();
+                        dc.Id = item.Id;
+                        dc.Battery = item.Battery;
+                        st.DCharge.Add(dc);
+                    }
+                }
+                return st;
             }
             catch (IDAL.DO.IdNotExistException)
             {

@@ -19,7 +19,7 @@ namespace IBL
             /// The function returns a string to print on all entity data
             /// </returns></summary>
             public override string ToString() 
-            { return $"Id: {Id}\nWeight: {Weight}\nPriority: {Priority}\nStatus: {Status}\n"; } //to fix
+            { return $"    Id: {Id}\n    Weight: {Weight}\n    Priority: {Priority}\n    Status: {Status}\n    Customer In Parcel: {CParcel.ToString()}"; }
         }
     }
 }

@@ -14,7 +14,7 @@ namespace IBL
             public WeightCategories MaxWeight { get; set; }
             public double Battery { get; set; }
             public DroneStatuses Status{ get; set; }
-            public ParcelTransfer DTransfer { get; set; }
+            public ParcelTransfer PTransfer { get; set; }
             public Location CLocation { get; set; }
             
 
@@ -22,7 +22,7 @@ namespace IBL
             /// The function returns a string to print on all entity data
             /// </returns></summary>
             public override string ToString() 
-            { return $"Id: {Id}\nBattery: {Battery}ֿֿ\n"; } //to fix
+            { return $"Id: {Id}\nBattery: {Battery}ֿֿ\nModel: {Model}\nStatus: {Status}\nMaxWeight: {MaxWeight}\nLocation {CLocation.ToString()}Parcel In Transfer: {PTransfer.ToString()}"; }
         }
     }
 }

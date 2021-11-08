@@ -42,10 +42,32 @@ namespace IBL
             
         }
 
-        public string GetParcelById(int Id) {
+        public Parcel GetParcelById(int Id) {
             try
             {
-                return data.GetParcelById(Id).ToString();
+                IDAL.DO.Parcel p = data.GetParcelById(Id);
+                Parcel pa = new Parcel();
+                pa.Id = p.Id;
+                pa.PickedUp = p.PickedUp;
+                pa.Priority = (Priorities)(int)p.Priority;
+                pa.Requested = p.Requested;
+                pa.Scheduled = p.Scheduled;
+                pa.Weight = (WeightCategories)(int)p.Weight;
+                pa.Delivered = p.Delivered;
+                pa.Drone = GetDroneById(p.DroneId);
+
+                CustomerInParcel cp = new CustomerInParcel();
+                cp.Id = p.TargetId;
+                IDAL.DO.Customer c_help = data.GetCustomerById(cp.Id); 
+                cp.Name = c_help.Name;
+                pa.Target = cp;
+                
+                cp.Id = p.SenderId;
+                c_help = data.GetCustomerById(cp.Id); 
+                cp.Name = c_help.Name;
+                pa.Sender = cp;
+            
+                return pa;
             }
             catch (IDAL.DO.IdNotExistException)
             {
@@ -64,14 +86,7 @@ namespace IBL
                 pa.SenderId = item.SenderId;
                 pa.TargetId = item.TargetId;
                 pa.Weight = (WeightCategories)(int)item.Weight;
-                if (DateTime.Compare(item.Requested, item.Scheduled) > 0)
-                        pa.Status = Statuses.Created;
-                else if (DateTime.Compare(item.Scheduled, item.PickedUp) > 0)
-                        pa.Status = Statuses.Associated;
-                else if (DateTime.Compare(item.PickedUp, item.Delivered) > 0)
-                        pa.Status = Statuses.Collected;
-                else if (DateTime.Compare(item.Delivered, item.PickedUp) > 0)
-                        pa.Status = Statuses.Provided;
+                pa.Status = (Statuses)ReturnStatus(item);
                 parcel.Add(pa);
             }
             return parcel;
@@ -88,14 +103,7 @@ namespace IBL
                 pa.SenderId = item.SenderId;
                 pa.TargetId = item.TargetId;
                 pa.Weight = (WeightCategories)(int)item.Weight;
-                if (DateTime.Compare(item.Requested, item.Scheduled) > 0)
-                        pa.Status = Statuses.Created;
-                else if (DateTime.Compare(item.Scheduled, item.PickedUp) > 0)
-                        pa.Status = Statuses.Associated;
-                else if (DateTime.Compare(item.PickedUp, item.Delivered) > 0)
-                        pa.Status = Statuses.Collected;
-                else if (DateTime.Compare(item.Delivered, item.PickedUp) > 0)
-                        pa.Status = Statuses.Provided;
+                pa.Status = (Statuses)ReturnStatus(item);
                 parcel.Add(pa);
             }
             return parcel;

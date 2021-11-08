@@ -22,7 +22,13 @@ namespace IBL
             /// The function returns a string to print on all entity data
             /// </returns></summary>
             public override string ToString() 
-            { return $"Id: {Id}\nName: {Name}\nLocation: {Location.ToString()}ChargeSlots: {ChargeSlots}\n"; }  //to fix    
+            { 
+                string str = $"\nId: {Id}\nName: {Name}\nLocation: {Location.ToString()}Charge Slots: {ChargeSlots}\nDrones in Charging: ";
+                foreach (var item in DCharge)
+                    str += item.ToString();
+                str += $"\n";
+                return str;
+            }
         }
     }
 }
