@@ -31,7 +31,7 @@ namespace IBL
                     c.Name = nameCustomer;
                 if (phoneCustomer != "")
                     c.Phone = phoneCustomer;
-                data.UpdateCustomer(c);
+                data.UpdateCustomer(c, phoneCustomer);
                 return "The update was successful\n"; 
             }
             catch (IDAL.DO.IdNotExistException)
