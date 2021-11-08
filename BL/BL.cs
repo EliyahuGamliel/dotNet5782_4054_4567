@@ -8,9 +8,57 @@ namespace IBL
     {
         IDAL.IDal data;
         List<DroneList> dronesList = new List<DroneList>();
-        public BL()
-        {
+        double Avaliable;
+        double WeightLight;
+        double WeightMedium;
+        double WeightHeavy;
+        double ChargingRate;
+        public BL() {
             data = new DalObject.DalObject();
+            double[] arr = new double[5]; 
+            arr = data.DroneElectricityUse();
+            Avaliable = arr[0];
+            WeightLight = arr[1];
+            WeightMedium = arr[2];
+            WeightHeavy = arr[3];
+            ChargingRate = arr[4];
+            IEnumerable<IDAL.DO.Drone> list_d = data.GetDrones();
+            foreach (var item in list_d)
+            {
+                DroneList dl = new DroneList();
+                dl.Id = item.Id;
+                dl.MaxWeight = (WeightCategories)(int)item.MaxWeight;
+                dl.Model = item.Model;
+                if (true)
+                {
+                    
+                }
+                else {
+                    dl.Status = (DroneStatuses)rand.Next(0,2);
+
+                    if (dl.Status == DroneStatuses.Maintenance)
+                    {
+                        int counter = 0;
+                        IEnumerable<IDAL.DO.Station> list_s = data.GetStations();
+                        foreach (var itemStation in list_s)
+                            counter += 1;
+                        int s = rand.Next(0, counter);
+                        foreach (var itemStation in list_s)
+                        {
+                            if (s == 0) {
+                                dl.CLocation.Longitude = itemStation.Longitude;
+                                dl.CLocation.Lattitude = itemStation.Lattitude;
+                                UpdateStation(itemStation.Id, itemStation.Name, itemStation.ChargeSlots - 1);
+                                break;
+                            }
+                            s -= 1;
+                        }
+                    }
+                    else {
+
+                    }
+                }
+            }
         }
         
         public void AssignDroneParcel(int DroneId){
