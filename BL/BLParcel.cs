@@ -30,7 +30,6 @@ namespace IBL
                 pa.DroneId = -1;
                 int Id = data.AddParcel(pa);
                 return "The addition was successful\n";
-
             }
             catch (IDAL.DO.IdExistException)
             {
@@ -42,13 +41,16 @@ namespace IBL
             }
             
         }
-        
-        public void UpdateParcel(int id, int name) {
-    
-        }
 
         public string GetParcelById(int Id) {
-            return data.GetParcelById(Id).ToString();
+            try
+            {
+                return data.GetParcelById(Id).ToString();
+            }
+            catch (IDAL.DO.IdNotExistException)
+            {
+                throw new IdNotExistException(Id);
+            }
         }
 
         public IEnumerable<ParcelList> GetParcels(){
@@ -57,35 +59,25 @@ namespace IBL
             foreach (var item in list_p)
             {
                 ParcelList pa = new ParcelList();
-                /*
-                cu.Id = item.Id;
-                cu.Name = item.Name;
-                cu.Phone = item.Phone;
-                cu.ParcelsGet = 0;
-                cu.ParcelsInTheWay = 0;  
-                cu.ParcelsOnlySend = 0;
-                cu.ParcelsSent = 0;
-                IEnumerable<IDAL.DO.Parcel> list_p = data.GetParcels();
-                foreach (var itemParcel in list_p)
-                {
-                    if (itemParcel.SenderId == cu.Id) {
-                        if (DateTime.Compare(itemParcel.Requested, itemParcel.Scheduled) > 0)
-                            cu.ParcelsOnlySend += 1;
-                        else if (DateTime.Compare(itemParcel.Scheduled, itemParcel.PickedUp) > 0 || DateTime.Compare(itemParcel.PickedUp, itemParcel.Delivered) > 0)
-                            cu.ParcelsInTheWay += 1;
-                        else if (DateTime.Compare(itemParcel.Delivered, itemParcel.PickedUp) > 0)
-                            cu.ParcelsSent += 1;
-                    }
-                    if (itemParcel.TargetId == cu.Id && DateTime.Compare(itemParcel.Delivered, itemParcel.PickedUp) > 0)
-                        cu.ParcelsGet += 1;
-                }
-                customer.Add(cu);
-                */
+                pa.Id = item.Id;
+                pa.Priority = (Priorities)(int)item.Priority;
+                pa.SenderId = item.SenderId;
+                pa.TargetId = item.TargetId;
+                pa.Weight = (WeightCategories)(int)item.Weight;
+                if (DateTime.Compare(item.Requested, item.Scheduled) > 0)
+                        pa.Status = Statuses.Created;
+                else if (DateTime.Compare(item.Scheduled, item.PickedUp) > 0)
+                        pa.Status = Statuses.Associated;
+                else if (DateTime.Compare(item.PickedUp, item.Delivered) > 0)
+                        pa.Status = Statuses.Collected;
+                else if (DateTime.Compare(item.Delivered, item.PickedUp) > 0)
+                        pa.Status = Statuses.Provided;
+                parcel.Add(pa);
             }
             return parcel;
         }
 
-        public IEnumerable<IDAL.DO.Parcel> GetParcelDrone(){
+        public IEnumerable<IDAL.DO.Parcel> GetParcelDrone(){ //
             return data.GetParcelDrone();
         }
     }

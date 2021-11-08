@@ -46,7 +46,7 @@ namespace ConsoleUI
             bool error = Int32.TryParse(num, out check);
             while (!error)
             {
-                Console.WriteLine("You didnt enter a double, please try again");
+                Console.WriteLine("You didnt enter a number only, please try again");
                 num = Console.ReadLine();
                 error = Int32.TryParse(num, out check);
             }

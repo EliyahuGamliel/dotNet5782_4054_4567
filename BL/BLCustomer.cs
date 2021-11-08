@@ -16,7 +16,7 @@ namespace IBL
                 cu.Lattitude = c.Location.Lattitude;
                 cu.Longitude = c.Location.Longitude;
                 data.AddCustomer(cu); 
-                return "The addition was successful";
+                return "The addition was successful\n";
             }
             catch (IDAL.DO.IdExistException)
             {
@@ -27,11 +27,12 @@ namespace IBL
             try
             {
                 IDAL.DO.Customer c = data.GetCustomerById(id);
-                c.Name = nameCustomer;
-                c.Phone = phoneCustomer;
+                if (nameCustomer != "")
+                    c.Name = nameCustomer;
+                if (phoneCustomer != "")
+                    c.Phone = phoneCustomer;
                 data.UpdateCustomer(c);
-                return "The update was successful"; 
-
+                return "The update was successful\n"; 
             }
             catch (IDAL.DO.IdNotExistException)
             {

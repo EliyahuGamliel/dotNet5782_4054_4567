@@ -20,7 +20,7 @@ namespace IBL
             /// The function returns a string to print on all entity data
             /// </returns></summary>
             public override string ToString() 
-            { return $"Id: {Id}\nSenderId: {SenderId}\nTargetId: {TargetId}\nWeight: {Weight}\nPriority: {Priority}\n"; } //to fix
+            { return $"Id: {Id}\nSenderId: {SenderId}\nTargetId: {TargetId}\nWeight: {Weight}\nPriority: {Priority}\nStatus: {Status}\n"; }
         }
     }
 }

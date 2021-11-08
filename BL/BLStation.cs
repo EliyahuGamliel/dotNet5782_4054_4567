@@ -50,7 +50,14 @@ namespace IBL
         }
 
         public string GetStationById(int Id) {
-            return data.GetStationById(Id).ToString();
+            try
+            {
+                return data.GetStationById(Id).ToString();
+            }
+            catch (IDAL.DO.IdNotExistException)
+            {
+                throw new IdNotExistException(Id);
+            }
         }
         
         public IEnumerable<StationList> GetStations(){
@@ -72,23 +79,8 @@ namespace IBL
             return station;
         }
 
-        public IEnumerable<IDAL.DO.Station> GetStationCharge(){
+        public IEnumerable<IDAL.DO.Station> GetStationCharge(){ //
             return data.GetStationCharge();
         }
-
-        // public IEnumerable<Station> CastingStation(IEnumerable<IDAL.DO.Station> st) {
-        //     List<Station> station = new List<Station>();
-        //     foreach (var item in st)
-        //     {
-        //         Station s = new Station();
-        //         s.ChargeSlots = item.ChargeSlots;
-        //         s.Id = item.Id;
-        //         s.Name = item.Name;
-        //         s.Location.Lattitude = item.Lattitude;
-        //         s.Location.Longitude = item.Longitude;
-
-        //     }
-        //     return station;
-        // }
     }
 }

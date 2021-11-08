@@ -13,7 +13,6 @@ namespace IBL
         string UpdateDrone(int id, string model);
         string UpdateCustomer(int id, string nameCustomer, string phoneCustomer);
         string UpdateStation(int id, int name, int chargeSlots);
-        void UpdateParcel(int id, int name);
         void AssignDroneParcel(int DroneId);
         void PickUpDroneParcel(int id);
         void DeliverParcelCustomer(int id);
@@ -23,7 +22,6 @@ namespace IBL
         string GetDroneById(int Id);
         string GetCustomerById(int Id);
         string GetStationById(int Id);
-
         IEnumerable<StationList> GetStations();
         IEnumerable<DroneList> GetDrones();
         IEnumerable<CustomerList> GetCustomers();
@@ -31,7 +29,5 @@ namespace IBL
         IEnumerable<IDAL.DO.Parcel> GetParcelDrone();
         IEnumerable<IDAL.DO.Station> GetStationCharge();
         double[] DroneElectricityUse();
-        //IEnumerable<Station> CastingStation(IEnumerable<IDAL.DO.Station> st);
-        //void Drone_Can_Send_To_Charge(IEnumerable<IDAL.DO.Station> list, Drone d);
     }
 }

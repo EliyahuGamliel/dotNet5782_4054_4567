@@ -195,6 +195,8 @@ namespace ConsoleUI
         static void update(int num)
         {
             int id;
+            string input;
+            bool success;
             switch (num)
             {
                 //
@@ -208,13 +210,12 @@ namespace ConsoleUI
                 
                 //
                 case 2:
-                    bool success;
                     int nameStation = -1;
                     int chargeSlots = -1;
                     Console.WriteLine("Enter Id of Station: ");
                     id = GetInt();
                     Console.WriteLine("Enter a new name to Station: ");
-                    string input = Console.ReadLine();
+                    input = Console.ReadLine();
                     if (input != "") {
                         success = int.TryParse(input, out nameStation);
                         while (!success) {
@@ -256,7 +257,29 @@ namespace ConsoleUI
                     Console.WriteLine("Enter a new name to Customer: ");
                     string nameCustomer = Console.ReadLine();
                     Console.WriteLine("Enter a new phone to Customer: ");
-                    string phoneCustomer = GetStringInt();
+                    string phoneCustomer = "";
+                    int p;
+                    input = Console.ReadLine();
+                    if (input != "")
+                    {
+                        success = Int32.TryParse(input, out p);
+                        while (!success)
+                        {
+                            Console.WriteLine("you didnt enter an number only, please try again");
+                            input = Console.ReadLine();
+                            if (input != "")
+                                success = int.TryParse(input, out p);
+                            else
+                            {
+                                phoneCustomer = "";
+                                break;
+                            }
+                        }
+                        if (success)
+                            phoneCustomer = p.ToString();
+                    }
+                    else
+                        phoneCustomer = "";
                     System.Console.WriteLine(logic.UpdateCustomer(id, nameCustomer, phoneCustomer));
                     break;
 
@@ -352,13 +375,13 @@ namespace ConsoleUI
                     foreach (var item in logic.GetCustomers())
                         Console.WriteLine(item.ToString());
                     break;
-            /*
+            
                 //For displaying a list of parcels
                 case 4:
                     foreach (var item in logic.GetParcels())
                         Console.WriteLine(item.ToString());
                     break;
-                
+            /*   
                 //To display a list of parcels that have not yet been associated with a drone
                 case 5:
                     foreach (var item in logic.GetParcelDrone())

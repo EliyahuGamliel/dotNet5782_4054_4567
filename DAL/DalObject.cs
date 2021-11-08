@@ -11,31 +11,6 @@ namespace DalObject
         /// </summary>
         public DalObject() { DataSource.Initialize(); }
 
-/*
-        /// <summary>
-        /// prints the distance between a given point and a customer/station
-        /// </summary>
-        /// <param name="lat1">the lattitude of place number 1</param>
-        /// <param name="lon1">the longitude of place number 1</param>
-        /// <param name="letter">if the user wants to check the distance from a station or a customer</param>
-        /// <param name="id">the id of the customer/station</param>
-        /// <returns></returns>
-        public double DistancePrint(double lat1, double lon1, char letter, int id) {
-            double dis;
-            if (letter == 'c') {
-                Customer c = DataSource.customers.Find(cu => id == cu.Id);
-                int index = DataSource.customers.IndexOf(c);
-                dis = DataSource.customers[index].DistanceTo(lat1, lon1, DataSource.customers[index].Lattitude, DataSource.customers[index].Longitude);///the sis between the customers
-			}
-            else {
-                Station s = DataSource.stations.Find(st => id == st.Id);
-                int index = DataSource.stations.IndexOf(s);
-                dis = DataSource.stations[index].DistanceTo(lat1, lon1, DataSource.stations[index].Lattitude, DataSource.stations[index].Longitude);///the dis between the customer and the station
-			}
-            return dis;
-        }
-        */
-
         /// <summary>
         /// the function takes care of delivering the parcel to the customer
         /// </summary>
@@ -73,8 +48,10 @@ namespace DalObject
         {
             foreach (var item in list) {
                 string phone_object = (string)(typeof(T).GetProperty("Phone").GetValue(item, null));
-                if (phone_object == phone)
-                    throw new PhoneExistException(phone);         
+                if (phone_object == phone) {
+                    System.Console.WriteLine(phone_object); //
+                    throw new PhoneExistException(phone);
+                }         
             }
         }
     }
