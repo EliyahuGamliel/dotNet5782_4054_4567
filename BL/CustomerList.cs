@@ -22,7 +22,7 @@ namespace IBL
             /// The function returns a string to print on all entity data
             /// </returns></summary>
             public override string ToString() 
-            { return $"Id: {Id}\nName: {Name}\nPhone: {Phone}\nThe amount of Parcels shipped and arrived: {ParcelsSent}ֿ\nThe amount of Parcels shipped and on the way: {ParcelsInTheWay}\nThe amount of Parcels sent and not yet delivered: {ParcelsSent}ֿ\nThe amount of Parcels received: {ParcelsGet}\n"; } //to fix
+            { return $"Id: {Id}\nName: {Name}\nPhone: {Phone}\nThe amount of Parcels shipped and arrived: {ParcelsSent}\nThe amount of Parcels shipped and on the way: {ParcelsInTheWay}\nThe amount of Parcels sent and not yet delivered: {ParcelsOnlySend}\nThe amount of Parcels received: {ParcelsGet}\n"; } //to fix
         }
     }
 }
