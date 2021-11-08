@@ -76,19 +76,19 @@ namespace IBL
             return data.GetStationCharge();
         }
 
-        public IEnumerable<Station> CastingStation(IEnumerable<IDAL.DO.Station> st) {
-            List<Station> station = new List<Station>();
-            foreach (var item in st)
-            {
-                Station s = new Station();
-                s.ChargeSlots = item.ChargeSlots;
-                s.Id = item.Id;
-                s.Name = item.Name;
-                s.Location.Lattitude = item.Lattitude;
-                s.Location.Longitude = item.Longitude;
+        // public IEnumerable<Station> CastingStation(IEnumerable<IDAL.DO.Station> st) {
+        //     List<Station> station = new List<Station>();
+        //     foreach (var item in st)
+        //     {
+        //         Station s = new Station();
+        //         s.ChargeSlots = item.ChargeSlots;
+        //         s.Id = item.Id;
+        //         s.Name = item.Name;
+        //         s.Location.Lattitude = item.Lattitude;
+        //         s.Location.Longitude = item.Longitude;
 
-            }
-            return station;
-        }
+        //     }
+        //     return station;
+        // }
     }
 }

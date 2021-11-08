@@ -348,11 +348,11 @@ namespace ConsoleUI
                     break;
                 
                 //For displaying a list of customer
-             /*   case 3:
+                case 3:
                     foreach (var item in logic.GetCustomers())
                         Console.WriteLine(item.ToString());
                     break;
-
+            /*
                 //For displaying a list of parcels
                 case 4:
                     foreach (var item in logic.GetParcels())

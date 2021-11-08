@@ -47,8 +47,36 @@ namespace IBL
             return data.GetCustomerById(Id).ToString();
         }
 
-        public IEnumerable<IDAL.DO.Customer> GetCustomers(){
-            return data.GetCustomers();
+        public IEnumerable<CustomerList> GetCustomers(){
+            IEnumerable<IDAL.DO.Customer> list_s = data.GetCustomers();
+            List<CustomerList> customer = new List<CustomerList>();
+            foreach (var item in list_s)
+            {
+                CustomerList cu = new CustomerList();
+                cu.Id = item.Id;
+                cu.Name = item.Name;
+                cu.Phone = item.Phone;
+                cu.ParcelsGet = 0;
+                cu.ParcelsInTheWay = 0;  
+                cu.ParcelsOnlySend = 0;
+                cu.ParcelsSent = 0;
+                IEnumerable<IDAL.DO.Parcel> list_p = data.GetParcels();
+                foreach (var itemParcel in list_p)
+                {
+                    if (itemParcel.SenderId == cu.Id) {
+                        if (DateTime.Compare(itemParcel.Requested, itemParcel.Scheduled) > 0)
+                            cu.ParcelsOnlySend += 1;
+                        else if (DateTime.Compare(itemParcel.Scheduled, itemParcel.PickedUp) > 0 || DateTime.Compare(itemParcel.PickedUp, itemParcel.Delivered) > 0)
+                            cu.ParcelsInTheWay += 1;
+                        else if (DateTime.Compare(itemParcel.Delivered, itemParcel.PickedUp) > 0)
+                            cu.ParcelsSent += 1;
+                    }
+                    if (itemParcel.TargetId == cu.Id && DateTime.Compare(itemParcel.Delivered, itemParcel.PickedUp) > 0)
+                        cu.ParcelsGet += 1;
+                }
+                customer.Add(cu);
+            }
+            return customer;
         }
     }
 }
