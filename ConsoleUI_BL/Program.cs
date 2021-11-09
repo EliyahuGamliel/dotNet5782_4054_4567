@@ -42,6 +42,7 @@ namespace ConsoleUI
         {
             try
             {
+                bool help = true;
                 switch (choice)
                 {
                     case 1:
@@ -81,10 +82,17 @@ namespace ConsoleUI
                     case 5:
                         Console.WriteLine("Bye Bye!");
                         return;
+                    
+                    default:
+                        Console.WriteLine("Enter only numbers between 1-5!\n");
+                        help = false;
+                        break;
                 }
-                int secondChoice;
-                secondChoice = GetInt();
-                SecondMenu(choice, secondChoice);
+                if (help) {
+                    int secondChoice;
+                    secondChoice = GetInt();
+                    SecondMenu(choice, secondChoice);
+                }
             }
             catch (Exception e)
             {
@@ -184,6 +192,10 @@ namespace ConsoleUI
                     Console.WriteLine("Enter the number of priority: \n0) Normal\n1) Fast\n2) Emergency");
                     p.Priority = (Priorities)GetInt();
                     System.Console.WriteLine(logic.AddParcel(p, SenderId, TargetId)); 
+                    break;
+
+                default: 
+                    System.Console.WriteLine("Enter only numbers between 1-4!\n");
                     break;
             }
         }
@@ -319,6 +331,10 @@ namespace ConsoleUI
                     id = GetInt();
                     logic.DeliverParcelCustomer(id);
                     break;
+
+                default: 
+                    System.Console.WriteLine("Enter only numbers between 1-8!\n");
+                    break;
             }
         }
 
@@ -346,6 +362,10 @@ namespace ConsoleUI
                 //
                 case 4:
                     Console.WriteLine(logic.GetParcelById(ID));
+                    break;
+
+                default: 
+                    System.Console.WriteLine("Enter only numbers between 1-4!\n");
                     break;
             }
         }
@@ -392,6 +412,10 @@ namespace ConsoleUI
                 case 6:
                     foreach (var item in logic.GetStationCharge())
                         Console.WriteLine(item.ToString());
+                    break;
+
+                default: 
+                    System.Console.WriteLine("Enter only numbers between 1-6!\n");
                     break;
             }  
         } 

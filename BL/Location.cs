@@ -16,7 +16,7 @@ namespace IBL
             /// The function returns a string to print on all entity data
             /// </returns></summary>
             public override string ToString() 
-            { return $"\n    Longitude: {Longitude_Bonus(Longitude)}\n    Lattitude: {Lattitude_Bonus(Lattitude)}\n"; }
+            { return $"\n      Longitude: {Longitude_Bonus(Longitude)}\n      Lattitude: {Lattitude_Bonus(Lattitude)}\n"; }
 
             /// <summary>
             /// The function gets a longitube and turns it into a longitube at base 60

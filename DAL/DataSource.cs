@@ -102,6 +102,8 @@ namespace DalObject
                 p.Weight = (WeightCategories)(r.Next(0, 3));
                 p.Id = i;
                 p.Requested = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
+                while (DateTime.Compare(DateTime.Now, p.Requested) <= 0)
+                            p.Requested = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
                 foreach (var item in drones)
                 {
                     bool check = true;
@@ -112,7 +114,8 @@ namespace DalObject
                     if (item.MaxWeight >= p.Weight && check) {
                         p.DroneId = item.Id;
                         p.Scheduled = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
-                        while (DateTime.Compare(p.Scheduled, p.Requested) <= 0)
+                        DateTime time = DateTime.Now;
+                        while (DateTime.Compare(p.Scheduled, p.Requested) <= 0 || DateTime.Compare(time, p.Scheduled) <= 0)
                             p.Scheduled = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
                         break;
                     }

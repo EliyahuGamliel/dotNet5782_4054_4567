@@ -15,15 +15,15 @@ namespace IBL
             public double Battery { get; set; }
             public DroneStatuses Status{ get; set; }
             public Location CLocation { get; set; }
-            public int ParcelId { get; set;}
+            public int ParcelId  { get; set;}
             
-            public DroneList() { this.CLocation = new Location(); }
+            public DroneList() { this.CLocation = new Location(); ParcelId = -1;}
 
             /// <summary><returns>
             /// The function returns a string to print on all entity data
             /// </returns></summary>
             public override string ToString() 
-            { return $"Id: {Id}\nBattery: {Battery}ֿֿ\n"; } //to fix
+            { return $"Id: {Id}\nBattery: {Battery}\nModel: {Model}\nMaxWeight: {MaxWeight}\nStatus: {Status}\nParcelId: {ParcelId}\nCurrent Location: {CLocation}" ; }
         }
     }
 }
