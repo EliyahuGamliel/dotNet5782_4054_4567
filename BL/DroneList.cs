@@ -17,6 +17,7 @@ namespace IBL
             public Location CLocation { get; set; }
             public int ParcelId { get; set;}
             
+            public DroneList() { this.CLocation = new Location(); }
 
             /// <summary><returns>
             /// The function returns a string to print on all entity data

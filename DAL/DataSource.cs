@@ -77,26 +77,6 @@ namespace DalObject
                 customers.Add(c);
             }
 
-            ///Parcel
-            l = r.Next(10, 1001);
-            for (int i = 0; i < l; ++i) {
-                Parcel p = new Parcel();
-                p.Weight = (WeightCategories)(r.Next(0, 3));
-                p.Id = i;
-                p.Requested = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
-                int ind = r.Next(0, customers.Count);
-                p.TargetId = customers[ind].Id;
-                ind = r.Next(0, customers.Count);
-                //so that the sender and the target won't be the same customer
-                while (p.TargetId == customers[ind].Id) {
-                    ind = r.Next(0, customers.Count);
-                }
-                p.SenderId = customers[ind].Id;
-                p.DroneId = 0;
-                p.Priority = (Priorities)(r.Next(0, 3));
-                parcels.Add(p);
-            }
-
             //Drones
             l = r.Next(5, 11);
             for (int i = 0; i < l; ++i) {
@@ -113,6 +93,41 @@ namespace DalObject
                 d.Model = ("Mark" + i);
                 d.MaxWeight = (WeightCategories)(r.Next(0, 3));
                 drones.Add(d);
+            }
+
+            ///Parcel
+            l = r.Next(10, 1001);
+            for (int i = 0; i < l; ++i) {
+                Parcel p = new Parcel();
+                p.Weight = (WeightCategories)(r.Next(0, 3));
+                p.Id = i;
+                p.Requested = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
+                foreach (var item in drones)
+                {
+                    bool check = true;
+                    for (int j = 0; j < i; j++)
+                        if (parcels[j].DroneId == item.Id)
+                            check = false;
+
+                    if (item.MaxWeight >= p.Weight && check) {
+                        p.DroneId = item.Id;
+                        p.Scheduled = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
+                        while (DateTime.Compare(p.Scheduled, p.Requested) <= 0)
+                            p.Scheduled = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
+                        break;
+                    }
+                }
+                int ind = r.Next(0, customers.Count);
+                p.TargetId = customers[ind].Id;
+                ind = r.Next(0, customers.Count);
+                //so that the sender and the target won't be the same customer
+                while (p.TargetId == customers[ind].Id) {
+                    ind = r.Next(0, customers.Count);
+                }
+                p.SenderId = customers[ind].Id;
+                p.DroneId = 0;
+                p.Priority = (Priorities)(r.Next(0, 3));
+                parcels.Add(p);
             }
         }
     }

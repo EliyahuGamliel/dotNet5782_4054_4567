@@ -30,8 +30,7 @@ namespace IBL
                 IDAL.DO.Station s = data.GetStationById(id);
                 if (name != -1)
                     s.Name = name;
-                if (chargeSlots != -1)
-                {
+                if (chargeSlots != -1) {
                     int amount_avalible = chargeSlots;
                     foreach (var item in dronesList)
                         if (item.CLocation.Longitude == s.Longitude && item.CLocation.Lattitude == s.Lattitude)
@@ -83,7 +82,6 @@ namespace IBL
                 sl.Name = item.Name;
                 sl.ChargeSlots = item.ChargeSlots;
                 sl.ChargeSlotsCatched = 0;
-                //sl.Location
                 foreach (var item2 in dronesList)
                     if (item.Lattitude == item2.CLocation.Lattitude && item.Longitude == item2.CLocation.Longitude)
                         sl.ChargeSlotsCatched += 1;

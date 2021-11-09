@@ -15,6 +15,7 @@ namespace IBL
         double ChargingRate;
         public BL() {
             data = new DalObject.DalObject();
+
             double[] arr = new double[5]; 
             arr = data.DroneElectricityUse();
             Avaliable = arr[0];
@@ -22,19 +23,40 @@ namespace IBL
             WeightMedium = arr[2];
             WeightHeavy = arr[3];
             ChargingRate = arr[4];
+            
+            bool help = true;
             IEnumerable<IDAL.DO.Drone> list_d = data.GetDrones();
             foreach (var item in list_d)
             {
+                double min_battery = 5;
                 DroneList dl = new DroneList();
                 dl.Id = item.Id;
                 dl.MaxWeight = (WeightCategories)(int)item.MaxWeight;
                 dl.Model = item.Model;
-                if (true)
-                {
-                    dl
-                    break;
+                IEnumerable<IDAL.DO.Parcel> list_p = data.GetParcels();
+                foreach (var itemParcel in list_p) {
+                    if (itemParcel.DroneId == dl.Id && DateTime.Compare(itemParcel.Scheduled, itemParcel.Delivered) > 0) {
+                        dl.Status = DroneStatuses.Delivery;
+
+                        if (DateTime.Compare(itemParcel.PickedUp, itemParcel.Delivered) > 0) {
+                            
+                        }
+                        else {
+                            IDAL.DO.Customer c = data.GetCustomerById(itemParcel.SenderId);
+                            dl.CLocation.Lattitude = c.Lattitude;
+                            dl.CLocation.Longitude = c.Longitude;
+                        }
+                        IDAL.DO.Customer cu = data.GetCustomerById(itemParcel.TargetId);
+                        Location l = new Location();
+                        l.Lattitude = cu.Lattitude;
+                        l.Longitude = cu.Longitude;
+                        min_battery = ReturnBattery((int)itemParcel.Weight, DistanceTo(dl.CLocation, l)) + ReturnBattery(3, DistanceTo(dl.CLocation, ReturnCloseStation(data.GetStations(), l)));
+                        dl.Battery = rand.NextDouble() * (100 - min_battery) + min_battery;
+                        help = false;
+                    }
                 }
-                else
+                
+                if (help)
                 {
                     dl.Status = (DroneStatuses)rand.Next(0,2);
                     if (dl.Status == DroneStatuses.Maintenance) {
@@ -52,9 +74,26 @@ namespace IBL
                             }
                             s -= 1;
                         }
+                        dl.Battery = rand.NextDouble() * (20);
                     }
                     else {
-
+                        int counter = 0;
+                        IEnumerable<CustomerList> list_c = GetCustomers();
+                        foreach (var itemCustomer in list_c)
+                            if (itemCustomer.ParcelsGet > 0)
+                                counter += 1;
+                        int s = rand.Next(0, counter);
+                        foreach (var itemCustomer in list_c) {
+                            if (s == 0) {
+                                Customer c = GetCustomerById(itemCustomer.Id);
+                                dl.CLocation = c.Location;
+                                break;
+                            }
+                            if (itemCustomer.ParcelsGet > 0)
+                                s -= 1;
+                        }
+                        min_battery = ReturnBattery(3, DistanceTo(dl.CLocation, ReturnCloseStation(data.GetStations(), dl.CLocation)));
+                        dl.Battery = rand.NextDouble() * (100 - min_battery) + min_battery;
                     }
                 }
             }
@@ -70,7 +109,7 @@ namespace IBL
 
         }
 
-        public int ReturnStatus(IDAL.DO.Parcel p){
+        public int ReturnStatus(IDAL.DO.Parcel p)  {
             if (DateTime.Compare(p.Requested, p.Scheduled) > 0)
                 return (int)Statuses.Created;
             else if (DateTime.Compare(p.Scheduled, p.PickedUp) > 0)
@@ -78,6 +117,32 @@ namespace IBL
             else if (DateTime.Compare(p.PickedUp, p.Delivered) > 0)
                 return (int)Statuses.Collected;
             return (int)Statuses.Provided;
+        }
+
+        public double ReturnBattery(int w, double distance) {
+            if (w == 0)
+                return distance * WeightLight;
+            else if (w == 1)
+                return distance * WeightMedium;
+            else if (w == 2)
+                return distance * WeightHeavy;
+            return distance * Avaliable;
+        }
+
+        public Location ReturnCloseStation(IEnumerable<IDAL.DO.Station> s, Location drone) {
+            Location l = new Location();
+            Location locationStation = new Location();
+            bool help = false;
+            foreach (var item in s)
+            {
+                locationStation.Longitude = item.Longitude;
+                locationStation.Lattitude = item.Lattitude;
+                if (!help || DistanceTo(locationStation, drone) < DistanceTo(l, drone)) {
+                    help = true;
+                    l = locationStation;
+                }
+            }
+            return l;
         }
 
         public double DistanceTo(Location l1, Location l2) {

@@ -13,6 +13,7 @@ namespace IBL
             public double Battery { get; set; }
             public Location CLocation { get; set; }
             
+            public DroneInParcel() { this.CLocation = new Location(); }
 
             /// <summary><returns>
             /// The function returns a string to print on all entity data

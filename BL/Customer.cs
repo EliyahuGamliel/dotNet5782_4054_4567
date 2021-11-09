@@ -17,7 +17,7 @@ namespace IBL
             public List<ParcelInCustomer> FromCustomer { get; set; }
             public List<ParcelInCustomer> ForCustomer { get; set; }
 
-            public Customer() { FromCustomer = new List<ParcelInCustomer>(); ForCustomer = new List<ParcelInCustomer>(); }
+            public Customer() { FromCustomer = new List<ParcelInCustomer>(); ForCustomer = new List<ParcelInCustomer>(); this.Location = new Location(); }
 
             /// <summary><returns>
             /// The function returns a string to print on all entity data

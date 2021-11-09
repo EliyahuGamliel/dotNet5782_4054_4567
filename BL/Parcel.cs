@@ -20,6 +20,8 @@ namespace IBL
             public DateTime PickedUp{ get; set; }
             public DateTime Delivered{ get; set; }
 
+            public Parcel() { this.Sender = new CustomerInParcel(); this.Target = new CustomerInParcel(); this.Drone = new Drone(); }
+
             /// <summary><returns>
             /// The function returns a string to print on all entity data
             /// </returns></summary>
