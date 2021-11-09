@@ -15,10 +15,10 @@ namespace DalObject
         internal class Config
         {
             public static int Number_ID = 0;
-            public static double Avaliable = 1;
-            public static double WeightLight = 2;
-            public static double WeightMedium = 4;
-            public static double WeightHeavy = 5.5;
+            public static double Avaliable = 0.000001;
+            public static double WeightLight = 0.000002;
+            public static double WeightMedium = 0.000004;
+            public static double WeightHeavy = 0.0000055;
             public static double ChargingRate = 30;
         }
 
@@ -125,7 +125,6 @@ namespace DalObject
                     ind = r.Next(0, customers.Count);
                 }
                 p.SenderId = customers[ind].Id;
-                p.DroneId = 0;
                 p.Priority = (Priorities)(r.Next(0, 3));
                 parcels.Add(p);
             }

@@ -53,6 +53,7 @@ namespace IBL
                         min_battery = ReturnBattery((int)itemParcel.Weight, DistanceTo(dl.CLocation, l)) + ReturnBattery(3, DistanceTo(dl.CLocation, ReturnCloseStation(data.GetStations(), l)));
                         dl.Battery = rand.NextDouble() * (100 - min_battery) + min_battery;
                         help = false;
+                        break;
                     }
                 }
                 
@@ -96,6 +97,7 @@ namespace IBL
                         dl.Battery = rand.NextDouble() * (100 - min_battery) + min_battery;
                     }
                 }
+                dronesList.Add(dl);
             }
         }
         
