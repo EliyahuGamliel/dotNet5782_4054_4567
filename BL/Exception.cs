@@ -64,22 +64,13 @@ namespace IBL
             }
         }
 
-/*
-        public class MyException
+        [Serializable]
+        public class DroneCannotSend : Exception
         {
-            public void Drone_Can_Send_To_Charge(IEnumerable<IDAL.DO.Station> list, Drone d)
+            public override string ToString()
             {
-                double close_dis = -1;
-                IDAL.DO.Station s;
-                foreach (var item in list) {
-                    if ((close_dis == -1 || item.DistanceTo(d.CLocation.Lattitude, d.CLocation.Longitude, item.Lattitude, item.Longitude) < close_dis)  && item.ChargeSlots > 0)
-                        s = item;
-                        close_dis = item.DistanceTo(d.CLocation.Lattitude, d.CLocation.Longitude, item.Lattitude, item.Longitude);
-                }
-                if (d.Status != DroneStatuses.Available)
-                    throw new Exception("The Drone cann't send to charge");
+                return "DroneCannotSend: The Drone cann't send to charge\n";
             }
         }
-        */
     }
 }

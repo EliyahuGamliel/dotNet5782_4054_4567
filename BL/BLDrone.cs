@@ -45,15 +45,60 @@ namespace IBL
             }
         }
 
-        public void SendDrone(int idDrone) {
-            DroneList d = dronesList.Find(dr => idDrone == dr.Id);
-            return;
+        public String SendDrone(int idDrone) {
+            try
+            {
+                CheckExistId(dronesList, idDrone);
+                DroneList d = dronesList.Find(dr => idDrone == dr.Id);
+                int index = dronesList.IndexOf(d);
+                double battery = CheckDroneCannotSend(data.GetStations(), d);
+                d.Status = DroneStatuses.Maintenance;
+                IDAL.DO.Station st = new IDAL.DO.Station();
+                st = ReturnCloseStation(data.GetStations(), d.CLocation);
+                d.CLocation.Lattitude = st.Lattitude;
+                d.CLocation.Longitude = st.Longitude;
+                d.Battery = d.Battery - battery;
+                dronesList[index] = d;
+                UpdateStation(st.Id, -1, st.ChargeSlots - 1);
+                IDAL.DO.DroneCharge dc = new IDAL.DO.DroneCharge();
+                dc.DroneId = d.Id;
+                dc.StationId = st.Id;
+                data.AddDroneCharge(dc);
+                return "The update was successful\n";
+            }
+            catch (IDAL.DO.IdExistException)
+            {
+                throw new IdNotExistException(idDrone);
+            }
         }
 
-        public void ReleasDrone(int id, double time){
-            
+        public String ReleasDrone(int idDrone, double time){
+            try
+            {
+                CheckExistId(dronesList, idDrone);
+                DroneList d = dronesList.Find(dr => idDrone == dr.Id);
+                int index = dronesList.IndexOf(d);
+                //CheckDroneCannotRelese(data.GetStations(), d);
+                d.Status = DroneStatuses.Available;
+                d.Battery = d.Battery + time * ChargingRate;
+                if (d.Battery > 100)
+                    d.Battery = 100;
+                dronesList[index] = d;
 
-            return;
+                IDAL.DO.Station st = new IDAL.DO.Station();
+                st = ReturnCloseStation(data.GetStations(), d.CLocation);
+                UpdateStation(st.Id, -1, st.ChargeSlots + 1);
+
+                IDAL.DO.DroneCharge dc = new IDAL.DO.DroneCharge();
+                dc.DroneId = d.Id;
+                dc.StationId = st.Id;
+                data.DeleteDroneCharge(dc);
+                return "The update was successful\n";
+            }
+            catch (IDAL.DO.IdExistException)
+            {
+                throw new IdNotExistException(idDrone);
+            }
         }
 
         public Drone GetDroneById(int Id) {

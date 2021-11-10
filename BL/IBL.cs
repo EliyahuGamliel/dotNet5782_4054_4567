@@ -16,8 +16,8 @@ namespace IBL
         void AssignDroneParcel(int DroneId);
         void PickUpDroneParcel(int id);
         void DeliverParcelCustomer(int id);
-        void SendDrone(int idDrone);
-        void ReleasDrone(int id, double time); 
+        string SendDrone(int idDrone);
+        string ReleasDrone(int id, double time); 
         Parcel GetParcelById(int Id);
         Drone GetDroneById(int Id);
         Customer GetCustomerById(int Id);

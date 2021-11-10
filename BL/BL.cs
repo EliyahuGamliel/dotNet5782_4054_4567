@@ -35,11 +35,13 @@ namespace IBL
                 dl.Model = item.Model;
                 IEnumerable<IDAL.DO.Parcel> list_p = data.GetParcels();
                 foreach (var itemParcel in list_p) {
-                    if (itemParcel.DroneId == dl.Id && DateTime.Compare(itemParcel.Scheduled, itemParcel.Delivered) > 0) {
+                    if (itemParcel.DroneId == dl.Id && (ReturnStatus(itemParcel) == 1 || ReturnStatus(itemParcel) == 2)) {
                         dl.Status = DroneStatuses.Delivery;
                         dl.ParcelId = itemParcel.Id;
                         if (DateTime.Compare(itemParcel.PickedUp, itemParcel.Delivered) > 0) {
-                            
+                            Customer c = GetCustomerById(itemParcel.SenderId);
+                            dl.CLocation.Longitude = ReturnCloseStation(data.GetStations(), c.Location).Longitude;
+                            dl.CLocation.Lattitude = ReturnCloseStation(data.GetStations(), c.Location).Lattitude;
                         }
                         else {
                             IDAL.DO.Customer c = data.GetCustomerById(itemParcel.SenderId);
@@ -47,10 +49,14 @@ namespace IBL
                             dl.CLocation.Longitude = c.Longitude;
                         }
                         IDAL.DO.Customer cu = data.GetCustomerById(itemParcel.TargetId);
-                        Location l = new Location();
-                        l.Lattitude = cu.Lattitude;
-                        l.Longitude = cu.Longitude;
-                        min_battery = ReturnBattery((int)itemParcel.Weight, DistanceTo(dl.CLocation, l)) + ReturnBattery(3, DistanceTo(dl.CLocation, ReturnCloseStation(data.GetStations(), l)));
+                        Location l1 = new Location();
+                        l1.Lattitude = cu.Lattitude;
+                        l1.Longitude = cu.Longitude;
+                        
+                        Location l2 = new Location();
+                        l2.Lattitude = ReturnCloseStation(data.GetStations(), l1).Lattitude;
+                        l2.Longitude = ReturnCloseStation(data.GetStations(), l1).Longitude;
+                        min_battery = ReturnBattery((int)itemParcel.Weight, DistanceTo(dl.CLocation, l1)) + ReturnBattery(3, DistanceTo(dl.CLocation, l2));
                         dl.Battery = rand.NextDouble() + rand.Next((int)min_battery + 1, 100);
                         if (dl.Battery > 100)
                             dl.Battery = 100;
@@ -95,7 +101,10 @@ namespace IBL
                             if (itemCustomer.ParcelsGet > 0)
                                 s -= 1;
                         }
-                        min_battery = ReturnBattery(3, DistanceTo(dl.CLocation, ReturnCloseStation(data.GetStations(), dl.CLocation)));
+                        Location l = new Location();
+                        l.Lattitude = ReturnCloseStation(data.GetStations(), dl.CLocation).Lattitude;
+                        l.Longitude = ReturnCloseStation(data.GetStations(), dl.CLocation).Longitude;
+                        min_battery = ReturnBattery(3, DistanceTo(dl.CLocation, l));
                         dl.Battery = rand.NextDouble() + rand.Next((int)min_battery + 1, 100);
                         if (dl.Battery > 100)
                             dl.Battery = 100;
@@ -108,9 +117,11 @@ namespace IBL
         public void AssignDroneParcel(int DroneId){
 
         }
+        
         public void PickUpDroneParcel(int id){
 
         }
+
         public void DeliverParcelCustomer(int id){
 
         }
@@ -135,20 +146,25 @@ namespace IBL
             return distance * Avaliable;
         }
 
-        public Location ReturnCloseStation(IEnumerable<IDAL.DO.Station> s, Location drone) {
-            Location l = new Location();
-            Location locationStation = new Location();
+        public IDAL.DO.Station ReturnCloseStation(IEnumerable<IDAL.DO.Station> s, Location drone) {
+            Location l1 = new Location();
+            Location l2 = new Location();
+            IDAL.DO.Station st  = new IDAL.DO.Station();
             bool help = false;
             foreach (var item in s)
             {
-                locationStation.Longitude = item.Longitude;
-                locationStation.Lattitude = item.Lattitude;
-                if (!help || DistanceTo(locationStation, drone) < DistanceTo(l, drone)) {
+                l1.Longitude = item.Longitude;
+                l1.Lattitude = item.Lattitude;
+                l2.Longitude = item.Longitude;
+                l2.Lattitude = item.Lattitude;
+                if (!help || DistanceTo(l1, drone) < DistanceTo(l2, drone)) {
                     help = true;
-                    l = locationStation;
+                    st = item;
+                    l2.Longitude = st.Longitude;
+                    l2.Lattitude = st.Lattitude;
                 }
             }
-            return l;
+            return st;
         }
 
         public double DistanceTo(Location l1, Location l2) {
@@ -189,6 +205,30 @@ namespace IBL
                 if (phone_object == phone)
                     throw new PhoneExistException(phone);         
             }
+        }
+
+        public double CheckDroneCannotSend <T>(IEnumerable<T> list, DroneList dl)
+        {
+            Location l = new Location();
+            Location locationStation = new Location();
+            bool help = false;
+            foreach (var item in list)
+            {
+                int chargeSlots_object = (int)(typeof(T).GetProperty("chargeSlots").GetValue(item, null));
+                locationStation.Longitude = (double)(typeof(T).GetProperty("Longitude").GetValue(item, null));
+                locationStation.Lattitude = (double)(typeof(T).GetProperty("Lattitude").GetValue(item, null));
+                if ((!help || DistanceTo(locationStation, dl.CLocation) < DistanceTo(l, dl.CLocation)) && chargeSlots_object > 0) {
+                    help = true;
+                    l = locationStation;
+                }
+            }
+            double dis = DistanceTo(dl.CLocation, l);
+            double battery = ReturnBattery(3, dis);
+            if (dl.Status == DroneStatuses.Available && dl.Battery < battery)
+            {
+                throw new DroneCannotSend();     
+            }
+            return battery;
         }
     }
 }
