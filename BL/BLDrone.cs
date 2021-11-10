@@ -78,22 +78,25 @@ namespace IBL
                         if (DateTime.Compare(itemParcels.PickedUp, itemParcels.Scheduled) > 0)
                             pt.Status = true;
 
-                        CustomerInParcel cp = new CustomerInParcel();
-                        cp.Id = itemParcels.TargetId;
-                        IDAL.DO.Customer c_help = data.GetCustomerById(cp.Id); 
-                        cp.Name = c_help.Name;
-                        pt.Recipient = cp;
+                        CustomerInParcel cp1 = new CustomerInParcel();
+                        cp1.Id = itemParcels.TargetId;
+                        IDAL.DO.Customer c_help = data.GetCustomerById(cp1.Id); 
+                        cp1.Name = c_help.Name;
+                        pt.Recipient = cp1;
                         pt.Destination_Location.Lattitude = c_help.Lattitude;
                         pt.Destination_Location.Longitude = c_help.Longitude;
 
-                        cp.Id = itemParcels.SenderId;
-                        c_help = data.GetCustomerById(cp.Id); 
-                        cp.Name = c_help.Name;
-                        pt.Sender = cp;
+                        CustomerInParcel cp2 = new CustomerInParcel();
+                        cp2.Id = itemParcels.SenderId;
+                        c_help = data.GetCustomerById(cp2.Id); 
+                        cp2.Name = c_help.Name;
+                        pt.Sender = cp2;
                         pt.Collection_Location.Lattitude = c_help.Lattitude;
                         pt.Collection_Location.Longitude = c_help.Longitude;
 
                         pt.Transport_Distance = DistanceTo(pt.Collection_Location, pt.Destination_Location);
+
+                        dr.PTransfer = pt;
                     }
                 }
                 return dr;

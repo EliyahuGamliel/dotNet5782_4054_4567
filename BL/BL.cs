@@ -37,7 +37,7 @@ namespace IBL
                 foreach (var itemParcel in list_p) {
                     if (itemParcel.DroneId == dl.Id && DateTime.Compare(itemParcel.Scheduled, itemParcel.Delivered) > 0) {
                         dl.Status = DroneStatuses.Delivery;
-
+                        dl.ParcelId = itemParcel.Id;
                         if (DateTime.Compare(itemParcel.PickedUp, itemParcel.Delivered) > 0) {
                             
                         }
@@ -51,7 +51,9 @@ namespace IBL
                         l.Lattitude = cu.Lattitude;
                         l.Longitude = cu.Longitude;
                         min_battery = ReturnBattery((int)itemParcel.Weight, DistanceTo(dl.CLocation, l)) + ReturnBattery(3, DistanceTo(dl.CLocation, ReturnCloseStation(data.GetStations(), l)));
-                        dl.Battery = rand.NextDouble() * (100 - min_battery) + min_battery;
+                        dl.Battery = rand.NextDouble() + rand.Next((int)min_battery + 1, 100);
+                        if (dl.Battery > 100)
+                            dl.Battery = 100;
                         help = false;
                         break;
                     }
@@ -75,7 +77,7 @@ namespace IBL
                             }
                             s -= 1;
                         }
-                        dl.Battery = rand.NextDouble() * (20);
+                        dl.Battery = rand.NextDouble() + rand.Next(0,20);
                     }
                     else {
                         int counter = 0;
@@ -94,7 +96,9 @@ namespace IBL
                                 s -= 1;
                         }
                         min_battery = ReturnBattery(3, DistanceTo(dl.CLocation, ReturnCloseStation(data.GetStations(), dl.CLocation)));
-                        dl.Battery = rand.NextDouble() * (100 - min_battery) + min_battery;
+                        dl.Battery = rand.NextDouble() + rand.Next((int)min_battery + 1, 100);
+                        if (dl.Battery > 100)
+                            dl.Battery = 100;
                     }
                 }
                 dronesList.Add(dl);

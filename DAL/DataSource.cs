@@ -14,7 +14,7 @@ namespace DalObject
 
         internal class Config
         {
-            public static int Number_ID = 0;
+            public static int Number_ID = 1;
             public static double Avaliable = 0.000001;
             public static double WeightLight = 0.000002;
             public static double WeightMedium = 0.000004;
@@ -100,14 +100,15 @@ namespace DalObject
             for (int i = 0; i < l; ++i) {
                 Parcel p = new Parcel();
                 p.Weight = (WeightCategories)(r.Next(0, 3));
-                p.Id = i;
+                p.Id = Config.Number_ID;
+                Config.Number_ID += 1;
                 p.Requested = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
                 while (DateTime.Compare(DateTime.Now, p.Requested) <= 0)
                             p.Requested = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
                 foreach (var item in drones)
                 {
                     bool check = true;
-                    for (int j = 0; j < i; j++)
+                    for (int j = 0; j < i && check; j++)
                         if (parcels[j].DroneId == item.Id)
                             check = false;
 

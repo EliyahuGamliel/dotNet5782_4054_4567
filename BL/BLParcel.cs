@@ -56,16 +56,17 @@ namespace IBL
                 pa.Delivered = p.Delivered;
                 pa.Drone = GetDroneById(p.DroneId);
 
-                CustomerInParcel cp = new CustomerInParcel();
-                cp.Id = p.TargetId;
-                IDAL.DO.Customer c_help = data.GetCustomerById(cp.Id); 
-                cp.Name = c_help.Name;
-                pa.Target = cp;
-                
-                cp.Id = p.SenderId;
-                c_help = data.GetCustomerById(cp.Id); 
-                cp.Name = c_help.Name;
-                pa.Sender = cp;
+                CustomerInParcel cp1 = new CustomerInParcel();
+                cp1.Id = p.TargetId;
+                IDAL.DO.Customer c_help = data.GetCustomerById(cp1.Id); 
+                cp1.Name = c_help.Name;
+                pa.Target = cp1;
+
+                CustomerInParcel cp2 = new CustomerInParcel();
+                cp2.Id = p.SenderId;
+                c_help = data.GetCustomerById(cp2.Id); 
+                cp2.Name = c_help.Name;
+                pa.Sender = cp2;
             
                 return pa;
             }
