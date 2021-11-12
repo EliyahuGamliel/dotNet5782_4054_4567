@@ -109,15 +109,25 @@ namespace DalObject
                 {
                     bool check = true;
                     for (int j = 0; j < i && check; j++)
-                        if (parcels[j].DroneId == item.Id)
+                        if (parcels[j].DroneId == item.Id && DateTime.Compare(p.PickedUp, p.Delivered) > 0)
                             check = false;
 
                     if (item.MaxWeight >= p.Weight && check) {
                         p.DroneId = item.Id;
                         p.Scheduled = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
-                        DateTime time = DateTime.Now;
-                        while (DateTime.Compare(p.Scheduled, p.Requested) <= 0 || DateTime.Compare(time, p.Scheduled) <= 0)
+                        while (DateTime.Compare(p.Scheduled, p.Requested) <= 0 || DateTime.Compare(DateTime.Now, p.Scheduled) <= 0)
                             p.Scheduled = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
+                        int rand = r.Next(0,3);
+                        if (rand > 1) {
+                            p.PickedUp = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
+                            while (DateTime.Compare(p.PickedUp, p.Scheduled) <= 0 || DateTime.Compare(DateTime.Now, p.PickedUp) <= 0)
+                                p.PickedUp = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
+                            if (rand == 2) {
+                                p.Delivered = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
+                                while (DateTime.Compare(p.Delivered, p.PickedUp) <= 0 || DateTime.Compare(DateTime.Now, p.Delivered) <= 0)
+                                    p.Delivered = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
+                            }
+                        }
                         break;
                     }
                 }

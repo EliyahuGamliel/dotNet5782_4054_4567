@@ -115,7 +115,31 @@ namespace IBL
         }
         
         public void AssignDroneParcel(int DroneId){
-
+            try
+            {
+                Drone d = GetDroneById(DroneId);
+                IDAL.DO.Parcel p_choose = new IDAL.DO.Parcel();
+                IEnumerable<IDAL.DO.Parcel> list_p = data.GetParcels();
+                p_choose = list_p.GetEnumerator().Current;
+                foreach (var item in list_p) {
+                    if (ReturnStatus(item) == 0 && p_choose.Priority < item.Priority)
+                        p_choose = item;
+                    else if (ReturnStatus(item) == 0 && p_choose.Priority == item.Priority) {
+                        if (p_choose.Weight < item.Weight && (int)item.Weight <= (int)d.MaxWeight)
+                            p_choose = item;
+                        else if (p_choose.Weight < item.Weight && (int)item.Weight == (int)d.MaxWeight){
+                            if (true)
+                            {
+                                
+                            }
+                        }
+                    }
+                }
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
         }
         
         public void PickUpDroneParcel(int id){
