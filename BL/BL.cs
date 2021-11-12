@@ -143,11 +143,42 @@ namespace IBL
         }
         
         public void PickUpDroneParcel(int id){
-
+            try
+            {
+                DroneList d = dronesList.Find(dr => dr.Id == id);
+                Drone d_help = GetDroneById(id);
+                int index = dronesList.IndexOf(d);
+                IDAL.DO.Parcel p = data.GetParcelById(d.ParcelId);
+                if (ReturnStatus(p) == 1)
+                {
+                    p.PickedUp = DateTime.Now;
+                    double battery = d.Battery - ReturnBattery(3, DistanceTo(d.CLocation, d_help.PTransfer.Collection_Location));
+                    d.Battery -= battery;
+                    d.CLocation = d_help.PTransfer.Collection_Location;
+                    dronesList[index] = d;
+                    data.UpdateParcel(p);
+                }
+            }
+            catch (System.Exception)
+            { 
+                throw;
+            }
         }
 
         public void DeliverParcelCustomer(int id){
-
+            try
+            {
+                Drone d = GetDroneById(id);
+                IDAL.DO.Parcel p = data.GetParcelById(d.PTransfer.Id);
+                if (ReturnStatus(p) == 2)
+                {
+                    
+                }
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
         }
 
         public int ReturnStatus(IDAL.DO.Parcel p)  {

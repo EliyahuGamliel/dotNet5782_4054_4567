@@ -15,6 +15,7 @@ namespace IDAL
         void UpdateDrone(Drone d);
         void UpdateStation(Station s);
         void UpdateCustomer(Customer c, string phone);
+        void UpdateParcel(Parcel p);
         void DeleteDroneCharge(DroneCharge d);
         Customer GetCustomerById(int Id);
         Drone GetDroneById(int Id);

@@ -15,6 +15,13 @@ namespace DalObject
             DataSource.parcels.Add(p);
             return DataSource.Config.Number_ID;
         }
+
+        public void UpdateParcel(Parcel p){
+            Parcel pa = DataSource.parcels.Find(par => par.Id == p.Id);
+            int index = DataSource.parcels.IndexOf(pa);
+            DataSource.parcels[index] = p;
+        }
+
         
         public Parcel GetParcelById(int Id) {
             CheckNotExistId(DataSource.parcels, Id);

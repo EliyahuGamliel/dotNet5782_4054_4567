@@ -15,16 +15,6 @@ namespace DalObject
         /// the function takes care of delivering the parcel to the customer
         /// </summary>
         /// <param name="id">the id of the parcel that needs to be delivered</param>
-        public void DeliverParcelCustomer(int id) {
-            Parcel p = DataSource.parcels.Find(pa => id == pa.Id);
-            int index = DataSource.parcels.IndexOf(p);
-            p.Delivered = DateTime.Now;
-            DataSource.parcels[index] = p;
-            Drone d = DataSource.drones.Find(dr => p.DroneId == dr.Id);
-            index = DataSource.drones.IndexOf(d);
-            DataSource.drones[index] = d;
-        }
-
         public void CheckExistId <T>(List<T> list, int id)
         {
             foreach (var item in list) {
