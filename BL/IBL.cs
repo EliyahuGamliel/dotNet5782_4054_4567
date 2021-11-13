@@ -13,9 +13,10 @@ namespace IBL
         string UpdateDrone(int id, string model);
         string UpdateCustomer(int id, string nameCustomer, string phoneCustomer);
         string UpdateStation(int id, int name, int chargeSlots);
-        void AssignDroneParcel(int DroneId);
-        void PickUpDroneParcel(int id);
-        void DeliverParcelCustomer(int id);
+        string AssignDroneParcel(int DroneId);
+        IDAL.DO.Parcel CompressParcels(IDAL.DO.Parcel p1, IDAL.DO.Parcel p2, DroneList d);
+        string PickUpDroneParcel(int id);
+        string DeliverParcelCustomer(int id);
         string SendDrone(int idDrone);
         string ReleasDrone(int id, double time); 
         Parcel GetParcelById(int Id);

@@ -41,7 +41,7 @@ namespace IBL
                     if (itemParcel.DroneId == dl.Id && (ReturnStatus(itemParcel) == 1 || ReturnStatus(itemParcel) == 2)) {
                         dl.Status = DroneStatuses.Delivery;
                         dl.ParcelId = itemParcel.Id;
-                        if (ReturnStatus(itemParcel) == 2) {
+                        if (ReturnStatus(itemParcel) == 1) {
                             Customer c = GetCustomerById(itemParcel.SenderId);
                             dl.CLocation.Longitude = ReturnCloseStation(data.GetStations(), c.Location).Longitude;
                             dl.CLocation.Lattitude = ReturnCloseStation(data.GetStations(), c.Location).Lattitude;
@@ -119,35 +119,65 @@ namespace IBL
             }
         }
         
-        public void AssignDroneParcel(int DroneId){
+        public string AssignDroneParcel(int DroneId){
             try
             {
-                Drone d = GetDroneById(DroneId);
+                DroneList d = dronesList.Find(dr => dr.Id == DroneId);
+                int index = dronesList.IndexOf(d);
+
                 IDAL.DO.Parcel p_choose = new IDAL.DO.Parcel();
                 IEnumerable<IDAL.DO.Parcel> list_p = data.GetParcels();
-                p_choose = list_p.GetEnumerator().Current;
+
+                bool first = true;
                 foreach (var item in list_p) {
-                    if (ReturnStatus(item) == 0 && p_choose.Priority < item.Priority)
-                        p_choose = item;
-                    else if (ReturnStatus(item) == 0 && p_choose.Priority == item.Priority) {
-                        if (p_choose.Weight < item.Weight && (int)item.Weight <= (int)d.MaxWeight)
+                    Customer c_sender = GetCustomerById(item.SenderId);
+                    Customer c_target = GetCustomerById(item.TargetId);
+                    IDAL.DO.Station s_close = ReturnCloseStation(data.GetStations(), c_target.Location);
+                    Location l_s = new Location();
+                    l_s.Lattitude = s_close.Lattitude;
+                    l_s.Longitude = s_close.Longitude;
+                    if (d.Battery >= (ReturnBattery(3, DistanceTo(d.CLocation, c_sender.Location)) + ReturnBattery((int)item.Weight, DistanceTo(c_sender.Location, c_target.Location)) + ReturnBattery(3, DistanceTo(c_target.Location, l_s))))
+                    {
+                        if (first && ReturnStatus(item) == 0)
                             p_choose = item;
-                        else if (p_choose.Weight < item.Weight && (int)item.Weight == (int)d.MaxWeight){
-                            if (true)
-                            {
-                                
-                            }
-                        }
+                        else if (ReturnStatus(item) == 0)
+                            p_choose = CompressParcels(p_choose, item, d);
                     }
+                    
                 }
+                d.Status = DroneStatuses.Delivery;
+                d.ParcelId = -1;
+                dronesList[index] = d;
+                p_choose.Scheduled = DateTime.Now;
+                p_choose.DroneId = d.Id;
+                data.UpdateParcel(p_choose);
+                return "The update was successful\n";
             }
             catch (System.Exception)
             {
                 throw;
             }
         }
+
+        public IDAL.DO.Parcel CompressParcels(IDAL.DO.Parcel p1, IDAL.DO.Parcel p2, DroneList d) {
+            Customer c1 = GetCustomerById(p1.SenderId);
+            Customer c2 = GetCustomerById(p2.SenderId);
+            if (p1.Priority > p2.Priority)
+                return p1;
+            if (p2.Priority > p1.Priority)
+                return p2;
+            if (p1.Weight > p2.Weight && (int)p1.Weight <= (int)d.MaxWeight)
+                return p1;
+            if (p2.Weight > p1.Weight && (int)p2.Weight <= (int)d.MaxWeight)
+                return p2;
+            if (DistanceTo(d.CLocation, c1.Location) > DistanceTo(d.CLocation, c2.Location))
+                return p1;
+            if (DistanceTo(d.CLocation, c2.Location) > DistanceTo(d.CLocation, c1.Location))
+                return p2;
+            return p1;
+        }
         
-        public void PickUpDroneParcel(int id){
+        public string PickUpDroneParcel(int id){
             try
             {
                 DroneList d = dronesList.Find(dr => dr.Id == id);
@@ -157,12 +187,13 @@ namespace IBL
                 if (ReturnStatus(p) == 1)
                 {
                     p.PickedUp = DateTime.Now;
-                    double battery = d.Battery - ReturnBattery(3, DistanceTo(d.CLocation, d_help.PTransfer.Collection_Location));
+                    double battery = ReturnBattery(3, DistanceTo(d.CLocation, d_help.PTransfer.Collection_Location));
                     d.Battery -= battery;
                     d.CLocation = d_help.PTransfer.Collection_Location;
                     dronesList[index] = d;
                     data.UpdateParcel(p);
                 }
+                return "The update was successful\n";
             }
             catch (System.Exception)
             { 
@@ -170,15 +201,24 @@ namespace IBL
             }
         }
 
-        public void DeliverParcelCustomer(int id){
+        public string DeliverParcelCustomer(int id){
             try
             {
-                Drone d = GetDroneById(id);
-                IDAL.DO.Parcel p = data.GetParcelById(d.PTransfer.Id);
+                DroneList d = dronesList.Find(dr => dr.Id == id);
+                Drone d_help = GetDroneById(id);
+                int index = dronesList.IndexOf(d);
+                IDAL.DO.Parcel p = data.GetParcelById(d.ParcelId);
                 if (ReturnStatus(p) == 2)
                 {
-                    
+                    p.Delivered = DateTime.Now;
+                    double battery = ReturnBattery(3, DistanceTo(d.CLocation, d_help.PTransfer.Destination_Location));
+                    d.Status = DroneStatuses.Available;
+                    d.Battery -= battery;
+                    d.CLocation = d_help.PTransfer.Destination_Location;
+                    dronesList[index] = d;
+                    data.UpdateParcel(p);
                 }
+                return "The update was successful\n";
             }
             catch (System.Exception)
             {

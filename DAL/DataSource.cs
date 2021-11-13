@@ -15,10 +15,10 @@ namespace DalObject
         internal class Config
         {
             public static int Number_ID = 1;
-            public static double Avaliable = 0.000001;
-            public static double WeightLight = 0.000002;
-            public static double WeightMedium = 0.000004;
-            public static double WeightHeavy = 0.0000055;
+            public static double Avaliable = 0.001;
+            public static double WeightLight = 0.0025;
+            public static double WeightMedium = 0.004;
+            public static double WeightHeavy = 0.0055;
             public static double ChargingRate = 30;
         }
 
@@ -120,7 +120,7 @@ namespace DalObject
                             p.Scheduled = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
                         
                         int rand = r.Next(0,3);
-                        if (rand > 1) {
+                        if (rand > 0) {
                             p.PickedUp = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
                             while (DateTime.Compare(p.PickedUp, p.Scheduled) <= 0 || DateTime.Compare(DateTime.Now, p.PickedUp) <= 0)
                                 p.PickedUp = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));

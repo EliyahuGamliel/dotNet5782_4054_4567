@@ -108,12 +108,12 @@ namespace IBL
         public Drone GetDroneById(int Id) {
             try
             {
-                IDAL.DO.Drone d = data.GetDroneById(Id);
+                //IDAL.DO.Drone d = data.GetDroneById(Id);
                 Drone dr = new Drone();
-                dr.Id = d.Id;
-                dr.MaxWeight = (WeightCategories)(int)d.MaxWeight;
-                dr.Model = d.Model;
-                DroneList dl = dronesList.Find(drl => drl.Id == dr.Id);
+                DroneList dl = dronesList.Find(d => d.Id == Id);
+                dr.Id = dl.Id;
+                dr.MaxWeight = dl.MaxWeight;
+                dr.Model = dr.Model;
                 dr.Status = dl.Status;
                 dr.Battery = dl.Battery;
                 dr.CLocation = dl.CLocation;

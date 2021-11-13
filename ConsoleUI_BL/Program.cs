@@ -299,7 +299,7 @@ namespace ConsoleUI
                 case 4:
                     Console.WriteLine("Enter Id of Drone: ");
                     id = GetInt();
-                    logic.SendDrone(id);
+                    System.Console.WriteLine(logic.SendDrone(id));
                     break;
                 
                 //
@@ -308,28 +308,28 @@ namespace ConsoleUI
                     id = GetInt();
                     Console.WriteLine("Enter How long was the drone charging: ");
                     double time = GetDouble();
-                    logic.ReleasDrone(id, time);
+                    System.Console.WriteLine(logic.ReleasDrone(id, time));
                     break;
                 
                 //
                 case 6:
                     Console.WriteLine("Enter Id of Drone: ");
                     id = GetInt();
-                    logic.AssignDroneParcel(id);
+                    System.Console.WriteLine(logic.AssignDroneParcel(id));
                     break;
 
                 //
                 case 7:
                     Console.WriteLine("Enter Id of Drone: ");
                     id = GetInt();
-                    logic.PickUpDroneParcel(id);
+                    System.Console.WriteLine(logic.PickUpDroneParcel(id));
                     break;
 
                 //
                 case 8:
                     Console.WriteLine("Enter Id of Drone: ");
                     id = GetInt();
-                    logic.DeliverParcelCustomer(id);
+                    System.Console.WriteLine(logic.DeliverParcelCustomer(id));
                     break;
 
                 default: 

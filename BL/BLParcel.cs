@@ -16,11 +16,7 @@ namespace IBL
                 pa.TargetId = TargetId;
                 pa.Weight = (IDAL.DO.WeightCategories)(int)p.Weight;
                 pa.Priority = (IDAL.DO.Priorities)(int)p.Priority;
-                //pa.PickedUp = new DateTime(0,0,0,0,0,0);
-                //pa.Scheduled = new DateTime(0,0,0,0,0,0);
-                //pa.Delivered = new DateTime(0,0,0,0,0,0);
                 pa.Requested = DateTime.Now;
-                pa.DroneId = -1;
                 int Id = data.AddParcel(pa);
                 return $"The next number parcel: {Id}\n";
             }
