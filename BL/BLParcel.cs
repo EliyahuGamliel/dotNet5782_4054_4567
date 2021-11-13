@@ -11,25 +11,18 @@ namespace IBL
             {
                 if (SenderId == TargetId)
                     throw new SameCustomerException(TargetId);
-                p.Drone = null;
-                p.Scheduled = new DateTime(0,0,0,0,0,0);
-                p.PickedUp = new DateTime(0,0,0,0,0,0);
-                p.Delivered = new DateTime(0,0,0,0,0,0);
-                p.Requested = DateTime.Now;
                 IDAL.DO.Parcel pa = new IDAL.DO.Parcel();
                 pa.SenderId = SenderId;
                 pa.TargetId = TargetId;
                 pa.Weight = (IDAL.DO.WeightCategories)(int)p.Weight;
                 pa.Priority = (IDAL.DO.Priorities)(int)p.Priority;
-                pa.PickedUp = new DateTime(0,0,0,0,0,0);
-                pa.Scheduled = new DateTime(0,0,0,0,0,0);
-                pa.Delivered = new DateTime(0,0,0,0,0,0);
+                //pa.PickedUp = new DateTime(0,0,0,0,0,0);
+                //pa.Scheduled = new DateTime(0,0,0,0,0,0);
+                //pa.Delivered = new DateTime(0,0,0,0,0,0);
                 pa.Requested = DateTime.Now;
-                pa.TargetId = TargetId;
-                pa.SenderId = SenderId;
                 pa.DroneId = -1;
                 int Id = data.AddParcel(pa);
-                return "The addition was successful\n";
+                return $"The next number parcel: {Id}\n";
             }
             catch (IDAL.DO.IdExistException)
             {

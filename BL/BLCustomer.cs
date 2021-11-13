@@ -66,7 +66,7 @@ namespace IBL
 
                         CustomerInParcel cp = new CustomerInParcel();
                         cp.Id = item.SenderId;
-                        IDAL.DO.Customer c_help = data.GetCustomerById(Id); 
+                        IDAL.DO.Customer c_help = data.GetCustomerById(cp.Id); 
                         cp.Name = c_help.Name;
                         pc.CParcel = cp;
 
@@ -82,7 +82,7 @@ namespace IBL
 
                         CustomerInParcel cp = new CustomerInParcel();
                         cp.Id = item.TargetId;
-                        IDAL.DO.Customer c_help = data.GetCustomerById(Id); 
+                        IDAL.DO.Customer c_help = data.GetCustomerById(cp.Id); 
                         cp.Name = c_help.Name;
                         pc.CParcel = cp;
 

@@ -66,7 +66,7 @@ namespace DalObject
                 for (int h = 0; h < i; ++h) {
                     ph = "053758" + rid;
                     if (ph == customers[h].Phone) {
-                        //it takes a random number from 0000 to 9999 and add it to "053758"
+                        //it takes a random number from 1000 to 9999 and add it to "053758"
                         rid = r.Next();
                         h = -1;
                     }
@@ -82,15 +82,15 @@ namespace DalObject
             for (int i = 0; i < l; ++i) {
                 int rid = r.Next();
                 for (int h = 0; h < i; ++h) {
+                    //to check if the id already exists
                     if (rid == drones[h].Id) {
-                        //to check if the id already exists
-                        i -= 1;
+                        i = -1;
                         rid = r.Next();
                     }
                 }
                 Drone d = new Drone();
                 d.Id = rid;
-                d.Model = ("Mark" + i);
+                d.Model = ("Minip" + i);
                 d.MaxWeight = (WeightCategories)(r.Next(0, 3));
                 drones.Add(d);
             }
@@ -105,11 +105,12 @@ namespace DalObject
                 p.Requested = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
                 while (DateTime.Compare(DateTime.Now, p.Requested) <= 0)
                             p.Requested = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
+
                 foreach (var item in drones)
                 {
                     bool check = true;
                     for (int j = 0; j < i && check; j++)
-                        if (parcels[j].DroneId == item.Id && DateTime.Compare(p.PickedUp, p.Delivered) > 0)
+                        if (parcels[j].DroneId == item.Id && DateTime.Compare(parcels[j].Scheduled, parcels[j].Delivered) >= 0)
                             check = false;
 
                     if (item.MaxWeight >= p.Weight && check) {
@@ -117,11 +118,13 @@ namespace DalObject
                         p.Scheduled = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
                         while (DateTime.Compare(p.Scheduled, p.Requested) <= 0 || DateTime.Compare(DateTime.Now, p.Scheduled) <= 0)
                             p.Scheduled = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
+                        
                         int rand = r.Next(0,3);
                         if (rand > 1) {
                             p.PickedUp = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
                             while (DateTime.Compare(p.PickedUp, p.Scheduled) <= 0 || DateTime.Compare(DateTime.Now, p.PickedUp) <= 0)
                                 p.PickedUp = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
+
                             if (rand == 2) {
                                 p.Delivered = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
                                 while (DateTime.Compare(p.Delivered, p.PickedUp) <= 0 || DateTime.Compare(DateTime.Now, p.Delivered) <= 0)
@@ -131,6 +134,7 @@ namespace DalObject
                         break;
                     }
                 }
+
                 int ind = r.Next(0, customers.Count);
                 p.TargetId = customers[ind].Id;
                 ind = r.Next(0, customers.Count);

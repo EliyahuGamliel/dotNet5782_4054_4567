@@ -34,9 +34,13 @@ namespace IBL
         public string UpdateDrone(int id, string model) {
             try
             {
-                IDAL.DO.Drone d = data.GetDroneById(id);
+                IDAL.DO.Drone dr = data.GetDroneById(id);
+                dr.Model = model;
+                data.UpdateDrone(dr);
+                DroneList d = dronesList.Find(dro => dro.Id == id);
+                int index = dronesList.IndexOf(d);
                 d.Model = model;
-                data.UpdateDrone(d);
+                dronesList[index] = d;
                 return "The update was successful\n";
             }
             catch (IDAL.DO.IdNotExistException)
@@ -75,7 +79,7 @@ namespace IBL
         public String ReleasDrone(int idDrone, double time){
             try
             {
-                CheckExistId(dronesList, idDrone);
+                CheckNotExistId(dronesList, idDrone);
                 DroneList d = dronesList.Find(dr => idDrone == dr.Id);
                 int index = dronesList.IndexOf(d);
                 //CheckDroneCannotRelese(data.GetStations(), d);
@@ -95,7 +99,7 @@ namespace IBL
                 data.DeleteDroneCharge(dc);
                 return "The update was successful\n";
             }
-            catch (IDAL.DO.IdExistException)
+            catch (IDAL.DO.IdNotExistException)
             {
                 throw new IdNotExistException(idDrone);
             }

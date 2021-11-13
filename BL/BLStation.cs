@@ -57,7 +57,7 @@ namespace IBL
                 st.Location.Longitude = s.Longitude;
                 st.Location.Lattitude = s.Lattitude;
                 foreach (var item in dronesList) {
-                    if (item.CLocation == st.Location) {
+                    if (item.CLocation.Lattitude == st.Location.Lattitude && item.CLocation.Longitude == st.Location.Longitude) {
                         DroneCharge dc = new DroneCharge();
                         dc.Id = item.Id;
                         dc.Battery = item.Battery;

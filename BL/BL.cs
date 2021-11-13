@@ -24,38 +24,41 @@ namespace IBL
             WeightHeavy = arr[3];
             ChargingRate = arr[4];
             
-            bool help = true;
             IEnumerable<IDAL.DO.Drone> list_d = data.GetDrones();
+            //
             foreach (var item in list_d)
             {
-                double min_battery = 5;
+                bool help = true;
+                double min_battery = 0;
+
                 DroneList dl = new DroneList();
                 dl.Id = item.Id;
                 dl.MaxWeight = (WeightCategories)(int)item.MaxWeight;
                 dl.Model = item.Model;
+
                 IEnumerable<IDAL.DO.Parcel> list_p = data.GetParcels();
                 foreach (var itemParcel in list_p) {
                     if (itemParcel.DroneId == dl.Id && (ReturnStatus(itemParcel) == 1 || ReturnStatus(itemParcel) == 2)) {
                         dl.Status = DroneStatuses.Delivery;
                         dl.ParcelId = itemParcel.Id;
-                        if (DateTime.Compare(itemParcel.PickedUp, itemParcel.Delivered) > 0) {
+                        if (ReturnStatus(itemParcel) == 2) {
                             Customer c = GetCustomerById(itemParcel.SenderId);
                             dl.CLocation.Longitude = ReturnCloseStation(data.GetStations(), c.Location).Longitude;
                             dl.CLocation.Lattitude = ReturnCloseStation(data.GetStations(), c.Location).Lattitude;
                         }
                         else {
-                            IDAL.DO.Customer c = data.GetCustomerById(itemParcel.SenderId);
-                            dl.CLocation.Lattitude = c.Lattitude;
-                            dl.CLocation.Longitude = c.Longitude;
+                            Customer c = GetCustomerById(itemParcel.SenderId);
+                            dl.CLocation = c.Location;
                         }
-                        IDAL.DO.Customer cu = data.GetCustomerById(itemParcel.TargetId);
+
+                        Customer cu = GetCustomerById(itemParcel.TargetId);
                         Location l1 = new Location();
-                        l1.Lattitude = cu.Lattitude;
-                        l1.Longitude = cu.Longitude;
-                        
+                        l1 = cu.Location;
+
                         Location l2 = new Location();
                         l2.Lattitude = ReturnCloseStation(data.GetStations(), l1).Lattitude;
                         l2.Longitude = ReturnCloseStation(data.GetStations(), l1).Longitude;
+
                         min_battery = ReturnBattery((int)itemParcel.Weight, DistanceTo(dl.CLocation, l1)) + ReturnBattery(3, DistanceTo(dl.CLocation, l2));
                         dl.Battery = rand.NextDouble() + rand.Next((int)min_battery + 1, 100);
                         if (dl.Battery > 100)
@@ -85,6 +88,7 @@ namespace IBL
                         }
                         dl.Battery = rand.NextDouble() + rand.Next(0,20);
                     }
+
                     else {
                         int counter = 0;
                         IEnumerable<CustomerList> list_c = GetCustomers();
@@ -110,6 +114,7 @@ namespace IBL
                             dl.Battery = 100;
                     }
                 }
+
                 dronesList.Add(dl);
             }
         }
@@ -205,15 +210,13 @@ namespace IBL
             Location l1 = new Location();
             Location l2 = new Location();
             IDAL.DO.Station st  = new IDAL.DO.Station();
-            bool help = false;
+            bool first = false;
             foreach (var item in s)
             {
                 l1.Longitude = item.Longitude;
                 l1.Lattitude = item.Lattitude;
-                l2.Longitude = item.Longitude;
-                l2.Lattitude = item.Lattitude;
-                if (!help || DistanceTo(l1, drone) < DistanceTo(l2, drone)) {
-                    help = true;
+                if (!first || DistanceTo(l1, drone) < DistanceTo(l2, drone)) {
+                    first = true;
                     st = item;
                     l2.Longitude = st.Longitude;
                     l2.Lattitude = st.Lattitude;

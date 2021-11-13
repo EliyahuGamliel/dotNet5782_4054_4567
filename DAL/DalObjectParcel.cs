@@ -11,8 +11,9 @@ namespace DalObject
             CheckExistId(DataSource.parcels, p.Id);
             CheckNotExistId(DataSource.customers, p.SenderId);
             CheckNotExistId(DataSource.customers, p.TargetId);
-            DataSource.Config.Number_ID += 1;
+            p.Id = DataSource.Config.Number_ID;
             DataSource.parcels.Add(p);
+            DataSource.Config.Number_ID += 1;
             return DataSource.Config.Number_ID;
         }
 

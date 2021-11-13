@@ -23,7 +23,7 @@ namespace IBL
             /// The function returns a string to print on all entity data
             /// </returns></summary>
             public override string ToString() 
-            { return $"Id: {Id}\n    Battery: {Battery}\n    Model: {Model}\n    Status: {Status}\n    MaxWeight: {MaxWeight}\n    Location: {CLocation.ToString()}    Parcel In Transfer: {PTransfer.ToString()}"; }
+            { return $"Id: {Id}\n    Battery: {Math.Round(Battery, 3)}%\n    Model: {Model}\n    Status: {Status}\n    MaxWeight: {MaxWeight}\n    Location: {CLocation.ToString()}    Parcel In Transfer: {PTransfer.ToString()}"; }
         }
     }
 }
