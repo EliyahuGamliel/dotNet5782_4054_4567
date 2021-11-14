@@ -92,7 +92,7 @@ namespace IBL
         }
 
         public Drone GetDroneById(int Id) {
-            CheckExistId(dronesList, Id);
+            CheckNotExistId(dronesList, Id);
             Drone dr = new Drone();
             DroneList dl = dronesList.Find(d => d.Id == Id);           
             dr.Id = dl.Id;
