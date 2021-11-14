@@ -5,7 +5,7 @@ namespace IBL
     namespace BO
     {
         /// <summary>
-        /// Defining the "Parcel" class
+        /// Defining the "ParcelList" class
         /// </summary>
         public class ParcelList
         {

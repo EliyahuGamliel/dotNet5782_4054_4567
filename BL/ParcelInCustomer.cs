@@ -5,7 +5,7 @@ namespace IBL
     namespace BO
     {
         /// <summary>
-        /// Defining the "Customer" class
+        /// Defining the "ParcelInCustomer" class
         /// </summary>
         public class ParcelInCustomer
         {
@@ -15,6 +15,9 @@ namespace IBL
             public Statuses Status { get; set; }
             public CustomerInParcel CParcel { get; set; }
             
+            /// <summary>
+            /// Ctor of ParcelInCustomer
+            /// </summary>
             public ParcelInCustomer() { this.CParcel = new CustomerInParcel(); }
             
             /// <summary><returns>

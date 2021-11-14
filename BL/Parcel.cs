@@ -20,6 +20,9 @@ namespace IBL
             public DateTime PickedUp{ get; set; }
             public DateTime Delivered{ get; set; }
 
+            /// <summary>
+            /// Ctor of Parcel
+            /// </summary>
             public Parcel() { this.Sender = new CustomerInParcel(); this.Target = new CustomerInParcel(); this.Drone = new Drone(); }
 
             /// <summary><returns>

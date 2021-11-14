@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace IBL
 {
+    /// <summary>
+    /// Defining the "IBL" interface
+    /// </summary>
     public interface IBL
     {
         string AddStation(Station s);
@@ -31,6 +34,5 @@ namespace IBL
         IEnumerable<ParcelList> GetParcels();
         IEnumerable<ParcelList> GetParcelDrone();
         IEnumerable<StationList> GetStationCharge();
-        double[] DroneElectricityUse();
     }
 }

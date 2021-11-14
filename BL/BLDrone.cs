@@ -138,8 +138,5 @@ namespace IBL
         public IEnumerable<DroneList> GetDrones(){
             return dronesList;
         }
-        public double[] DroneElectricityUse(){
-            return data.DroneElectricityUse();
-        }
     }
 }

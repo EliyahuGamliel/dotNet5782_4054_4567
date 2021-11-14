@@ -6,7 +6,7 @@ namespace IBL
     namespace BO
     {
         /// <summary>
-        /// Defining the "Customer" class
+        /// Defining the "Station" class
         /// </summary>
         public class Station
         {
