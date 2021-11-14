@@ -5,12 +5,15 @@ using System.Collections.Generic;
 namespace IBL
 {
     public partial class BL : IBL
-    {
-        Random rand = new Random();
-        
+    { 
+        /// <summary>
+        /// If everything is fine, add a drone to the list of drones, else throw exception
+        /// </summary>
+        /// <param name="d">Object of drone to add</param>
+        /// <param name="idStation">The ID number of the station where the drone will be located</param>
+        /// <returns>Notice if the addition was successful</returns>
         public string AddDrone(DroneList d, int idStation) {
-            try
-            {
+            try {
                 IDAL.DO.Station s = data.GetStationById(idStation);
                 d.Battery = rand.Next(20,41);
                 d.Status = DroneStatuses.Maintenance;
@@ -25,15 +28,19 @@ namespace IBL
                 dronesList.Add(d);
                 return "The addition was successful\n";
             }
-            catch (IDAL.DO.IdExistException)
-            {
+            catch (IDAL.DO.IdExistException) {
                 throw new IdExistException(d.Id);
             }
         }
 
+        /// <summary>
+        /// If all is fine, update the drone in a list of drones, else throw exception
+        /// </summary>
+        /// <param name="id">The ID of the drone for updating</param>
+        /// <param name="model">The new model for the drone update</param>
+        /// <returns>Notice if the addition was successful</returns>
         public string UpdateDrone(int id, string model) {
-            try
-            {
+            try {
                 IDAL.DO.Drone dr = data.GetDroneById(id);
                 dr.Model = model;
                 data.UpdateDrone(dr);
@@ -43,12 +50,16 @@ namespace IBL
                 dronesList[index] = d;
                 return "The update was successful\n";
             }
-            catch (IDAL.DO.IdNotExistException)
-            {
+            catch (IDAL.DO.IdNotExistException) {
                 throw new IdNotExistException(id);
             }
         }
 
+        /// <summary>
+        /// If all is fine, the drone sent to the close station to charge, else throw exception
+        /// </summary>
+        /// <param name="idDrone">ID of the drone sent for charging</param>
+        /// <returns>Notice if the addition was successful</returns>
         public String SendDrone(int idDrone) {
             CheckExistId(dronesList, idDrone);
             DroneList d = dronesList.Find(dr => idDrone == dr.Id);
@@ -62,6 +73,7 @@ namespace IBL
             d.Battery = d.Battery - battery;
             dronesList[index] = d;
             UpdateStation(st.Id, -1, st.ChargeSlots - 1);
+
             IDAL.DO.DroneCharge dc = new IDAL.DO.DroneCharge();
             dc.DroneId = d.Id;
             dc.StationId = st.Id;
@@ -69,6 +81,12 @@ namespace IBL
             return "The update was successful\n";
         }
 
+        /// <summary>
+        /// If all is fine, the drone relese from the station and from the charge, else throw exception
+        /// </summary>
+        /// <param name="idDrone">ID of the drone relese from charging</param>
+        /// <param name="time">The time the drone was in charge (in hours)</param>
+        /// <returns>Notice if the addition was successful</returns>
         public String ReleasDrone(int idDrone, double time){
             CheckNotExistId(dronesList, idDrone);
             DroneList d = dronesList.Find(dr => idDrone == dr.Id);
@@ -91,6 +109,11 @@ namespace IBL
             return "The update was successful\n";
         }
 
+        /// <summary>
+        /// If all is fine, return a drone object by id, else throw exception
+        /// </summary>
+        /// <param name="Id">The id of the requested drone</param>
+        /// <returns>The object of the requested drone</returns>
         public Drone GetDroneById(int Id) {
             CheckNotExistId(dronesList, Id);
             Drone dr = new Drone();
@@ -101,16 +124,20 @@ namespace IBL
             dr.Status = dl.Status;
             dr.Battery = dl.Battery;
             dr.CLocation = dl.CLocation;
+
             ParcelTransfer pt = new ParcelTransfer();
             foreach (var itemParcels in data.GetParcels()) {
+                //If the parcel associated with the drone
                 if (itemParcels.Id == dl.ParcelId) {
                     pt.Id = itemParcels.Id;
                     pt.Priority = (Priorities)(int)itemParcels.Priority;
                     pt.Weight = (WeightCategories)(int)itemParcels.Weight;
                     pt.Status = false;
+                    //If the parcel has already been collected
                     if (DateTime.Compare(itemParcels.PickedUp, itemParcels.Scheduled) > 0)
                         pt.Status = true;
 
+                    //CustomerInParcel - The Target Customer of Parcel 
                     CustomerInParcel cp1 = new CustomerInParcel();
                     cp1.Id = itemParcels.TargetId;
                     IDAL.DO.Customer c_help = data.GetCustomerById(cp1.Id); 
@@ -119,6 +146,7 @@ namespace IBL
                     pt.Destination_Location.Lattitude = c_help.Lattitude;
                     pt.Destination_Location.Longitude = c_help.Longitude;
 
+                    //CustomerInParcel - The Sender Customer of Parcel 
                     CustomerInParcel cp2 = new CustomerInParcel();
                     cp2.Id = itemParcels.SenderId;
                     c_help = data.GetCustomerById(cp2.Id); 
@@ -135,6 +163,10 @@ namespace IBL
             return dr;
         }
         
+        /// <summary>
+        /// Returns the list of drones
+        /// </summary>
+        /// <returns>Returns the list of drones</returns>
         public IEnumerable<DroneList> GetDrones(){
             return dronesList;
         }

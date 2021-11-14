@@ -6,9 +6,14 @@ namespace IBL
 {
     public partial class BL : IBL
     {
+
+        /// <summary>
+        /// If everything is fine, add a customer to the list of customers, else throw exception
+        /// </summary>
+        /// <param name="c">Object of customer to add</param>
+        /// <returns>Notice if the addition was successful</returns>
         public string AddCustomer(Customer c){
-            try
-            {
+            try {
                 IDAL.DO.Customer cu = new IDAL.DO.Customer();
                 cu.Id = c.Id;
                 cu.Name = c.Name;
@@ -18,35 +23,45 @@ namespace IBL
                 data.AddCustomer(cu); 
                 return "The addition was successful\n";
             }
-            catch (IDAL.DO.IdExistException)
-            {
+            catch (IDAL.DO.IdExistException) {
                 throw new IdExistException(c.Id);
             }     
         }
+
+        /// <summary>
+        /// If all is fine, update the customer in a list of customers, else throw exception
+        /// </summary>
+        /// <param name="id">The ID of the customer for updating</param>
+        /// <param name="nameCustomer">If requested - the new name for the customer update</param>
+        /// <param name="phoneCustomer">If requested - the new phone for the customer update</param>
+        /// <returns>Notice if the addition was successful</returns>
         public string UpdateCustomer(int id, string nameCustomer, string phoneCustomer) {
-            try
-            {
+            try {
                 IDAL.DO.Customer c = data.GetCustomerById(id);
+                //If input is received
                 if (nameCustomer != "")
                     c.Name = nameCustomer;
+                //If input is received
                 if (phoneCustomer != "")
                     c.Phone = phoneCustomer;
                 data.UpdateCustomer(c, phoneCustomer);
                 return "The update was successful\n"; 
             }
-            catch (IDAL.DO.IdNotExistException)
-            {
+            catch (IDAL.DO.IdNotExistException) {
                 throw new IdNotExistException(id);
             }
-            catch (IDAL.DO.PhoneExistException)
-            {
+            catch (IDAL.DO.PhoneExistException) {
                 throw new PhoneExistException(phoneCustomer);
             }
         }
 
+        /// <summary>
+        /// If all is fine, return a customer object by id
+        /// </summary>
+        /// <param name="Id">The id of the requested customer</param>
+        /// <returns>The object of the requested customer</returns>
         public Customer GetCustomerById(int Id) {
-            try
-            {
+            try {
                 IDAL.DO.Customer c = data.GetCustomerById(Id); 
                 Customer cu = new Customer();
                 cu.Id = c.Id;
@@ -54,10 +69,10 @@ namespace IBL
                 cu.Phone = c.Phone;
                 cu.Location.Longitude = c.Longitude;
                 cu.Location.Lattitude = c.Lattitude;
-                foreach (var item in data.GetParcels())
-                {
-                    if (item.TargetId == cu.Id)
-                    {
+
+                foreach (var item in data.GetParcels()) {
+                    //If the customer is the target of the parcel
+                    if (item.TargetId == cu.Id) {
                         ParcelInCustomer pc = new ParcelInCustomer();
                         pc.Id = item.Id;
                         pc.Priority = (Priorities)(int)item.Priority;
@@ -72,8 +87,8 @@ namespace IBL
 
                         cu.ForCustomer.Add(pc);
                     }
-                    else if (item.SenderId == cu.Id)
-                    {
+                    //If the customer is the sender of the parcel
+                    else if (item.SenderId == cu.Id) {
                         ParcelInCustomer pc = new ParcelInCustomer();
                         pc.Id = item.Id;
                         pc.Priority = (Priorities)(int)item.Priority;
@@ -91,17 +106,19 @@ namespace IBL
                 } 
                 return cu;
             }
-            catch (IDAL.DO.IdNotExistException)
-            {
+            catch (IDAL.DO.IdNotExistException) {
                 throw new IdNotExistException(Id);
             }
         }
 
+        /// <summary>
+        /// Returns the list of customers
+        /// </summary>
+        /// <returns>Returns the list of customers</returns>
         public IEnumerable<CustomerList> GetCustomers(){
             IEnumerable<IDAL.DO.Customer> list_s = data.GetCustomers();
             List<CustomerList> customer = new List<CustomerList>();
-            foreach (var item in list_s)
-            {
+            foreach (var item in list_s) {
                 CustomerList cu = new CustomerList();
                 cu.Id = item.Id;
                 cu.Name = item.Name;
@@ -110,18 +127,20 @@ namespace IBL
                 cu.ParcelsInTheWay = 0;  
                 cu.ParcelsOnlySend = 0;
                 cu.ParcelsSent = 0;
+
                 IEnumerable<IDAL.DO.Parcel> list_p = data.GetParcels();
-                foreach (var itemParcel in list_p)
-                {
+                foreach (var itemParcel in list_p) {
+                    //If the customer is the sender
                     if (itemParcel.SenderId == cu.Id) {
-                        if (DateTime.Compare(itemParcel.Requested, itemParcel.Scheduled) > 0)
+                        if (ReturnStatus(itemParcel) == 0)
                             cu.ParcelsOnlySend += 1;
-                        else if (DateTime.Compare(itemParcel.Scheduled, itemParcel.PickedUp) > 0 || DateTime.Compare(itemParcel.PickedUp, itemParcel.Delivered) > 0)
+                        else if (ReturnStatus(itemParcel) == 1 || ReturnStatus(itemParcel) == 2)
                             cu.ParcelsInTheWay += 1;
-                        else if (DateTime.Compare(itemParcel.Delivered, itemParcel.PickedUp) > 0)
+                        else if (ReturnStatus(itemParcel) == 3)
                             cu.ParcelsSent += 1;
                     }
-                    if (itemParcel.TargetId == cu.Id && DateTime.Compare(itemParcel.Delivered, itemParcel.PickedUp) > 0)
+                    //If the customer is the target and the parcel is arrived
+                    if (itemParcel.TargetId == cu.Id && ReturnStatus(itemParcel) == 3)
                         cu.ParcelsGet += 1;
                 }
                 customer.Add(cu);

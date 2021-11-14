@@ -6,6 +6,7 @@ namespace IBL
 {
     public partial class BL : IBL
     {
+        Random rand = new Random();
         IDAL.IDal data;
         List<DroneList> dronesList = new List<DroneList>();
         double Avaliable;
@@ -59,7 +60,7 @@ namespace IBL
                         l2.Lattitude = ReturnCloseStation(data.GetStations(), l1).Lattitude;
                         l2.Longitude = ReturnCloseStation(data.GetStations(), l1).Longitude;
 
-                        min_battery = ReturnBattery((int)itemParcel.Weight, DistanceTo(dl.CLocation, l1)) + ReturnBattery(3, DistanceTo(dl.CLocation, l2));
+                        min_battery = ReturnBattery((int)itemParcel.Weight, dl.CLocation, l1) + ReturnBattery(3, dl.CLocation, l2);
                         dl.Battery = rand.NextDouble() + rand.Next((int)min_battery + 1, 100);
                         if (dl.Battery > 100)
                             dl.Battery = 100;
@@ -108,7 +109,7 @@ namespace IBL
                         Location l = new Location();
                         l.Lattitude = ReturnCloseStation(data.GetStations(), dl.CLocation).Lattitude;
                         l.Longitude = ReturnCloseStation(data.GetStations(), dl.CLocation).Longitude;
-                        min_battery = ReturnBattery(3, DistanceTo(dl.CLocation, l));
+                        min_battery = ReturnBattery(3, dl.CLocation, l);
                         dl.Battery = rand.NextDouble() + rand.Next((int)min_battery + 1, 100);
                         if (dl.Battery > 100)
                             dl.Battery = 100;
@@ -125,7 +126,7 @@ namespace IBL
 
             IDAL.DO.Parcel p_choose = new IDAL.DO.Parcel();
             IEnumerable<IDAL.DO.Parcel> list_p = data.GetParcels();
-
+            p_choose.Id = -1;
             bool first = true;
             foreach (var item in list_p) {
                 Customer c_sender = GetCustomerById(item.SenderId);
@@ -135,17 +136,19 @@ namespace IBL
                 l_s.Lattitude = s_close.Lattitude;
                 l_s.Longitude = s_close.Longitude;
 
-                if (d.Battery >= (ReturnBattery(3, DistanceTo(d.CLocation, c_sender.Location)) + ReturnBattery((int)item.Weight, DistanceTo(c_sender.Location, c_target.Location)) + ReturnBattery(3, DistanceTo(c_target.Location, l_s))))
+                double min_battery = ReturnBattery(3, d.CLocation, c_sender.Location);
+                min_battery += ReturnBattery((int)item.Weight, c_sender.Location, c_target.Location);
+                min_battery += ReturnBattery(3, c_target.Location, l_s);
+                if (d.Battery >= min_battery)
                     if (first && ReturnStatus(item) == 0)
                         p_choose = item;
                     else if (ReturnStatus(item) == 0)
                         p_choose = CompressParcels(p_choose, item, d);
             }
 
-            if (true)
-            {
-                
-            }
+            if (p_choose.Id == -1)
+                throw new DroneCannotAssigan();
+
             d.Status = DroneStatuses.Delivery;
             d.ParcelId = p_choose.Id;
             dronesList[index] = d;
@@ -182,7 +185,7 @@ namespace IBL
             IDAL.DO.Parcel p = data.GetParcelById(d.ParcelId);
             CheckDroneCannotPickUp(p);
             p.PickedUp = DateTime.Now;
-            double battery = ReturnBattery(3, DistanceTo(d.CLocation, d_help.PTransfer.Collection_Location));
+            double battery = ReturnBattery(3, d.CLocation, d_help.PTransfer.Collection_Location);
             d.Battery -= battery;
             d.CLocation = d_help.PTransfer.Collection_Location;
             dronesList[index] = d;
@@ -198,7 +201,7 @@ namespace IBL
             IDAL.DO.Parcel p = data.GetParcelById(d.ParcelId);
             CheckDroneCannotDeliver(p);
             p.Delivered = DateTime.Now;
-            double battery = ReturnBattery(3, DistanceTo(d.CLocation, d_help.PTransfer.Destination_Location));
+            double battery = ReturnBattery(3, d.CLocation, d_help.PTransfer.Destination_Location);
             d.Status = DroneStatuses.Available;
             d.Battery -= battery;
             d.CLocation = d_help.PTransfer.Destination_Location;
@@ -217,14 +220,14 @@ namespace IBL
             return (int)Statuses.Provided;
         }
 
-        public double ReturnBattery(int w, double distance) {
+        public double ReturnBattery(int w, Location l1, Location l2) {
             if (w == 0)
-                return distance * WeightLight;
+                return DistanceTo(l1, l2) * WeightLight;
             else if (w == 1)
-                return distance * WeightMedium;
+                return DistanceTo(l1, l2) * WeightMedium;
             else if (w == 2)
-                return distance * WeightHeavy;
-            return distance * Avaliable;
+                return DistanceTo(l1, l2) * WeightHeavy;
+            return DistanceTo(l1, l2) * Avaliable;
         }
 
         public IDAL.DO.Station ReturnCloseStation(IEnumerable<IDAL.DO.Station> s, Location drone) {
@@ -301,8 +304,7 @@ namespace IBL
                     l = locationStation;
                 }
             }
-            double dis = DistanceTo(dl.CLocation, l);
-            double battery = ReturnBattery(3, dis);
+            double battery = ReturnBattery(3, dl.CLocation, l);
 
             if (dl.Status != DroneStatuses.Available || dl.Battery < battery)
                 throw new DroneCannotSend();     

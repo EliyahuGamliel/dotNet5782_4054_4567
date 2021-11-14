@@ -5,17 +5,16 @@ using System.Collections.Generic;
 namespace IBL
 {
     public partial class BL : IBL
-    {   
+    { 
         /// <summary>
-        /// the function tries to add a parcel to the list
+        /// If everything is fine, add a parcel to the list of parcels, else throw exception
         /// </summary>
-        /// <param name="p"></param>
-        /// <param name="SenderId"></param>
-        /// <param name="TargetId"></param>
-        /// <returns>the number of the parcel</returns>
+        /// <param name="p">Object of parcel to add</param>
+        /// <param name="SenderId">The ID of the sender of the parcel</param>
+        /// <param name="TargetId">The ID of the target of the parcel</param>
+        /// <returns>Notice if the addition was successful</returns>
         public string AddParcel(Parcel p, int SenderId, int TargetId){
-            try
-            {
+            try {
                 if (SenderId == TargetId)
                     throw new SameCustomerException(TargetId);
                 IDAL.DO.Parcel pa = new IDAL.DO.Parcel();
@@ -27,25 +26,21 @@ namespace IBL
                 int Id = data.AddParcel(pa);
                 return $"The next number parcel: {Id}\n";
             }
-            catch (IDAL.DO.IdExistException)
-            {
+            catch (IDAL.DO.IdExistException) {
                 throw new IdExistException(p.Id);
             }
-            catch (IDAL.DO.IdNotExistException exp)
-            {
+            catch (IDAL.DO.IdNotExistException exp) {
                 throw new IdNotExistException(exp.id);
-            }
-            
+            }   
         }
         
         /// <summary>
-        /// the function returns a parcel by id
+        /// If all is fine, return a parcel object by id, else throw exception
         /// </summary>
-        /// <param name="Id"></param>
-        /// <returns>the parcel with the matching id</returns>
-        public Parcel GetParcelById(int Id) {
-            try
-            {
+        /// <param name="Id">The id of the requested parcel</param>
+        /// <returns>The object of the requested parcel</returns>
+            public Parcel GetParcelById(int Id) {
+            try {
                 IDAL.DO.Parcel p = data.GetParcelById(Id);
                 Parcel pa = new Parcel();
                 pa.Id = p.Id;
@@ -55,16 +50,18 @@ namespace IBL
                 pa.Scheduled = p.Scheduled;
                 pa.Weight = (WeightCategories)(int)p.Weight;
                 pa.Delivered = p.Delivered;
+                //If a drone is associated with a parcel
                 if (p.DroneId != 0)
                     pa.Drone = GetDroneById(p.DroneId);
                 
-
+                //CustomerInParcel - The Target Customer of Parcel 
                 CustomerInParcel cp1 = new CustomerInParcel();
                 cp1.Id = p.TargetId;
                 IDAL.DO.Customer c_help = data.GetCustomerById(cp1.Id); 
                 cp1.Name = c_help.Name;
                 pa.Target = cp1;
 
+                //CustomerInParcel - The Sender Customer of Parcel 
                 CustomerInParcel cp2 = new CustomerInParcel();
                 cp2.Id = p.SenderId;
                 c_help = data.GetCustomerById(cp2.Id); 
@@ -73,20 +70,19 @@ namespace IBL
             
                 return pa;
             }
-            catch (IDAL.DO.IdNotExistException)
-            {
+            catch (IDAL.DO.IdNotExistException) {
                 throw new IdNotExistException(Id);
             }
         }
+
         /// <summary>
-        /// returns the list of parcels as an UEnumerable
+        /// Returns the list of parcels
         /// </summary>
-        /// <returns>the list of parcels as an IEnumerable</returns>
+        /// <returns>Returns the list of parcels</returns>
         public IEnumerable<ParcelList> GetParcels(){
             IEnumerable<IDAL.DO.Parcel> list_p = data.GetParcels();
             List<ParcelList> parcel = new List<ParcelList>();
-            foreach (var item in list_p)
-            {
+            foreach (var item in list_p) {
                 ParcelList pa = new ParcelList();
                 pa.Id = item.Id;
                 pa.Priority = (Priorities)(int)item.Priority;
@@ -100,14 +96,13 @@ namespace IBL
         }
 
         /// <summary>
-        /// 
+        /// Returns a list of all unassigned parcels
         /// </summary>
-        /// <returns></returns>///////////////
+        /// <returns>Returns a list of all unassigned parcels</returns>
         public IEnumerable<ParcelList> GetParcelDrone(){
             IEnumerable<IDAL.DO.Parcel> list_pD = data.GetParcelDrone();
             List<ParcelList> parcel = new List<ParcelList>();
-            foreach (var item in list_pD)
-            {
+            foreach (var item in list_pD) {
                 ParcelList pa = new ParcelList();
                 pa.Id = item.Id;
                 pa.Priority = (Priorities)(int)item.Priority;

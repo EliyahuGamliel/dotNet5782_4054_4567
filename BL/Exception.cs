@@ -7,7 +7,7 @@ namespace IBL
     namespace BO
     {
         /// <summary>
-        /// Set up all the enums relevant to the program
+        /// If the id already exist - throw Exception
         /// </summary>
         public class IdExistException : Exception
         {
@@ -22,6 +22,9 @@ namespace IBL
             }
         }
 
+        /// <summary>
+        /// If the id doesn't exist - throw Exception
+        /// </summary>
         [Serializable]
         public class IdNotExistException : Exception
         {
@@ -36,6 +39,9 @@ namespace IBL
             }
         }
 
+        /// <summary>
+        /// If the phone already exist - throw Exception
+        /// </summary>
         [Serializable]
         public class PhoneExistException : Exception
         {
@@ -50,6 +56,9 @@ namespace IBL
             }
         }
 
+        /// <summary>
+        /// If the SenderID like the TargetID - throw Exception
+        /// </summary>
         [Serializable]
         public class SameCustomerException : Exception
         {
@@ -64,48 +73,63 @@ namespace IBL
             }
         }
 
+        /// <summary>
+        /// If the Drone can not to send to charging - throw Exception
+        /// </summary>
         [Serializable]
         public class DroneCannotSend : Exception
         {
             public override string ToString()
             {
-                return "DroneCannotSend: The Drone cann't send to charge\n";
+                return "DroneCanNotSend: The Drone cann't send to charge\n";
             }
         }
 
+        /// <summary>
+        /// If the Drone can not to relese from charging - throw Exception
+        /// </summary>
         [Serializable]
         public class DroneCannotRelese : Exception
         {
             public override string ToString()
             {
-                return "DroneCannotRelese: The Drone isn't in charge\n";
+                return "DroneCanNotRelese: The Drone isn't in charge\n";
             }
         }
 
+        /// <summary>
+        /// If the Drone can not to assign to parcel - throw Exception
+        /// </summary>
         [Serializable]
         public class DroneCannotAssigan : Exception
         {
             public override string ToString()
             {
-                return "DroneCannotAssigan: The Drone cann't send to charge\n";
+                return "DroneCanNotAssigan: The Drone cann't assign to parcel\n";
             }
         }
 
+        /// <summary>
+        /// If the Drone can not to pickup the parcel - throw Exception
+        /// </summary>
         [Serializable]
         public class DroneCannotPickUp : Exception
         {
             public override string ToString()
             {
-                return "DroneCannotPickUp: The Drone cann't pick up the parcel\n";
+                return "DroneCanNotPickUp: The Drone cann't pick up the parcel\n";
             }
         }
 
+        /// <summary>
+        /// If the Drone can not to deliver the parcel - throw Exception
+        /// </summary>
         [Serializable]
         public class DroneCannotDeliver : Exception
         {
             public override string ToString()
             {
-                return "DroneCannotDeliver: The Drone cann't deliver the parcel\n";
+                return "DroneCanNotDeliver: The Drone cann't deliver the parcel\n";
             }
         }
     }
