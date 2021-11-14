@@ -120,43 +120,41 @@ namespace IBL
         }
         
         public string AssignDroneParcel(int DroneId){
-            try
-            {
-                DroneList d = dronesList.Find(dr => dr.Id == DroneId);
-                int index = dronesList.IndexOf(d);
+            CheckExistId(dronesList, DroneId);
+            DroneList d = dronesList.Find(dr => dr.Id == DroneId);
+            int index = dronesList.IndexOf(d);
 
-                IDAL.DO.Parcel p_choose = new IDAL.DO.Parcel();
-                IEnumerable<IDAL.DO.Parcel> list_p = data.GetParcels();
+            IDAL.DO.Parcel p_choose = new IDAL.DO.Parcel();
+            IEnumerable<IDAL.DO.Parcel> list_p = data.GetParcels();
 
-                bool first = true;
-                foreach (var item in list_p) {
-                    Customer c_sender = GetCustomerById(item.SenderId);
-                    Customer c_target = GetCustomerById(item.TargetId);
-                    IDAL.DO.Station s_close = ReturnCloseStation(data.GetStations(), c_target.Location);
-                    Location l_s = new Location();
-                    l_s.Lattitude = s_close.Lattitude;
-                    l_s.Longitude = s_close.Longitude;
-                    if (d.Battery >= (ReturnBattery(3, DistanceTo(d.CLocation, c_sender.Location)) + ReturnBattery((int)item.Weight, DistanceTo(c_sender.Location, c_target.Location)) + ReturnBattery(3, DistanceTo(c_target.Location, l_s))))
-                    {
-                        if (first && ReturnStatus(item) == 0)
-                            p_choose = item;
-                        else if (ReturnStatus(item) == 0)
-                            p_choose = CompressParcels(p_choose, item, d);
-                    }
-                    
-                }
-                d.Status = DroneStatuses.Delivery;
-                d.ParcelId = -1;
-                dronesList[index] = d;
-                p_choose.Scheduled = DateTime.Now;
-                p_choose.DroneId = d.Id;
-                data.UpdateParcel(p_choose);
-                return "The update was successful\n";
+            bool first = true;
+            foreach (var item in list_p) {
+                Customer c_sender = GetCustomerById(item.SenderId);
+                Customer c_target = GetCustomerById(item.TargetId);
+                IDAL.DO.Station s_close = ReturnCloseStation(data.GetStations(), c_target.Location);
+                Location l_s = new Location();
+                l_s.Lattitude = s_close.Lattitude;
+                l_s.Longitude = s_close.Longitude;
+
+                if (d.Battery >= (ReturnBattery(3, DistanceTo(d.CLocation, c_sender.Location)) + ReturnBattery((int)item.Weight, DistanceTo(c_sender.Location, c_target.Location)) + ReturnBattery(3, DistanceTo(c_target.Location, l_s))))
+                    if (first && ReturnStatus(item) == 0)
+                        p_choose = item;
+                    else if (ReturnStatus(item) == 0)
+                        p_choose = CompressParcels(p_choose, item, d);
             }
-            catch (System.Exception)
+
+            if (true)
             {
-                throw;
+                
             }
+            d.Status = DroneStatuses.Delivery;
+            d.ParcelId = p_choose.Id;
+            dronesList[index] = d;
+            p_choose.Scheduled = DateTime.Now;
+            p_choose.DroneId = d.Id;
+
+            data.UpdateParcel(p_choose);
+            return "The update was successful\n";
         }
 
         public IDAL.DO.Parcel CompressParcels(IDAL.DO.Parcel p1, IDAL.DO.Parcel p2, DroneList d) {
@@ -178,52 +176,36 @@ namespace IBL
         }
         
         public string PickUpDroneParcel(int id){
-            try
-            {
-                DroneList d = dronesList.Find(dr => dr.Id == id);
-                Drone d_help = GetDroneById(id);
-                int index = dronesList.IndexOf(d);
-                IDAL.DO.Parcel p = data.GetParcelById(d.ParcelId);
-                if (ReturnStatus(p) == 1)
-                {
-                    p.PickedUp = DateTime.Now;
-                    double battery = ReturnBattery(3, DistanceTo(d.CLocation, d_help.PTransfer.Collection_Location));
-                    d.Battery -= battery;
-                    d.CLocation = d_help.PTransfer.Collection_Location;
-                    dronesList[index] = d;
-                    data.UpdateParcel(p);
-                }
-                return "The update was successful\n";
-            }
-            catch (System.Exception)
-            { 
-                throw;
-            }
+            CheckExistId(dronesList, id);
+            DroneList d = dronesList.Find(dr => dr.Id == id);
+            Drone d_help = GetDroneById(id);
+            int index = dronesList.IndexOf(d);
+            IDAL.DO.Parcel p = data.GetParcelById(d.ParcelId);
+            CheckDroneCannotPickUp(p);
+            p.PickedUp = DateTime.Now;
+            double battery = ReturnBattery(3, DistanceTo(d.CLocation, d_help.PTransfer.Collection_Location));
+            d.Battery -= battery;
+            d.CLocation = d_help.PTransfer.Collection_Location;
+            dronesList[index] = d;
+            data.UpdateParcel(p);
+            return "The update was successful\n";
         }
 
         public string DeliverParcelCustomer(int id){
-            try
-            {
-                DroneList d = dronesList.Find(dr => dr.Id == id);
-                Drone d_help = GetDroneById(id);
-                int index = dronesList.IndexOf(d);
-                IDAL.DO.Parcel p = data.GetParcelById(d.ParcelId);
-                if (ReturnStatus(p) == 2)
-                {
-                    p.Delivered = DateTime.Now;
-                    double battery = ReturnBattery(3, DistanceTo(d.CLocation, d_help.PTransfer.Destination_Location));
-                    d.Status = DroneStatuses.Available;
-                    d.Battery -= battery;
-                    d.CLocation = d_help.PTransfer.Destination_Location;
-                    dronesList[index] = d;
-                    data.UpdateParcel(p);
-                }
-                return "The update was successful\n";
-            }
-            catch (System.Exception)
-            {
-                throw;
-            }
+            CheckExistId(dronesList, id);
+            DroneList d = dronesList.Find(dr => dr.Id == id);
+            Drone d_help = GetDroneById(id);
+            int index = dronesList.IndexOf(d);
+            IDAL.DO.Parcel p = data.GetParcelById(d.ParcelId);
+            CheckDroneCannotDeliver(p);
+            p.Delivered = DateTime.Now;
+            double battery = ReturnBattery(3, DistanceTo(d.CLocation, d_help.PTransfer.Destination_Location));
+            d.Status = DroneStatuses.Available;
+            d.Battery -= battery;
+            d.CLocation = d_help.PTransfer.Destination_Location;
+            dronesList[index] = d;
+            data.UpdateParcel(p);
+            return "The update was successful\n";
         }
 
         public int ReturnStatus(IDAL.DO.Parcel p)  {
@@ -322,11 +304,29 @@ namespace IBL
             }
             double dis = DistanceTo(dl.CLocation, l);
             double battery = ReturnBattery(3, dis);
-            if (dl.Status == DroneStatuses.Available && dl.Battery < battery)
-            {
+
+            if (dl.Status != DroneStatuses.Available || dl.Battery < battery)
                 throw new DroneCannotSend();     
-            }
+
             return battery;
         }
+
+        public void CheckDroneCannotRelese(DroneList dl)
+        {
+            if (dl.Status != DroneStatuses.Maintenance )
+                throw new DroneCannotRelese();
+        }  
+
+        public void CheckDroneCannotPickUp(IDAL.DO.Parcel p)
+        {
+            if (ReturnStatus(p) != 1)
+                throw new DroneCannotPickUp();
+        } 
+
+        public void CheckDroneCannotDeliver(IDAL.DO.Parcel p)
+        {
+            if (ReturnStatus(p) != 2)
+                throw new DroneCannotDeliver();
+        } 
     }
 }

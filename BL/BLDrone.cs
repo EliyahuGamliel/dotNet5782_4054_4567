@@ -50,111 +50,89 @@ namespace IBL
         }
 
         public String SendDrone(int idDrone) {
-            try
-            {
-                CheckExistId(dronesList, idDrone);
-                DroneList d = dronesList.Find(dr => idDrone == dr.Id);
-                int index = dronesList.IndexOf(d);
-                double battery = CheckDroneCannotSend(data.GetStations(), d);
-                d.Status = DroneStatuses.Maintenance;
-                IDAL.DO.Station st = new IDAL.DO.Station();
-                st = ReturnCloseStation(data.GetStations(), d.CLocation);
-                d.CLocation.Lattitude = st.Lattitude;
-                d.CLocation.Longitude = st.Longitude;
-                d.Battery = d.Battery - battery;
-                dronesList[index] = d;
-                UpdateStation(st.Id, -1, st.ChargeSlots - 1);
-                IDAL.DO.DroneCharge dc = new IDAL.DO.DroneCharge();
-                dc.DroneId = d.Id;
-                dc.StationId = st.Id;
-                data.AddDroneCharge(dc);
-                return "The update was successful\n";
-            }
-            catch (IDAL.DO.IdExistException)
-            {
-                throw new IdNotExistException(idDrone);
-            }
+            CheckExistId(dronesList, idDrone);
+            DroneList d = dronesList.Find(dr => idDrone == dr.Id);
+            int index = dronesList.IndexOf(d);
+            double battery = CheckDroneCannotSend(data.GetStations(), d);
+            d.Status = DroneStatuses.Maintenance;
+            IDAL.DO.Station st = new IDAL.DO.Station();
+            st = ReturnCloseStation(data.GetStations(), d.CLocation);
+            d.CLocation.Lattitude = st.Lattitude;
+            d.CLocation.Longitude = st.Longitude;
+            d.Battery = d.Battery - battery;
+            dronesList[index] = d;
+            UpdateStation(st.Id, -1, st.ChargeSlots - 1);
+            IDAL.DO.DroneCharge dc = new IDAL.DO.DroneCharge();
+            dc.DroneId = d.Id;
+            dc.StationId = st.Id;
+            data.AddDroneCharge(dc);
+            return "The update was successful\n";
         }
 
         public String ReleasDrone(int idDrone, double time){
-            try
-            {
-                CheckNotExistId(dronesList, idDrone);
-                DroneList d = dronesList.Find(dr => idDrone == dr.Id);
-                int index = dronesList.IndexOf(d);
-                //CheckDroneCannotRelese(data.GetStations(), d);
-                d.Status = DroneStatuses.Available;
-                d.Battery = d.Battery + time * ChargingRate;
-                if (d.Battery > 100)
-                    d.Battery = 100;
-                dronesList[index] = d;
+            CheckNotExistId(dronesList, idDrone);
+            DroneList d = dronesList.Find(dr => idDrone == dr.Id);
+            int index = dronesList.IndexOf(d);
+            CheckDroneCannotRelese(d);
+            d.Status = DroneStatuses.Available;
+            d.Battery = d.Battery + time * ChargingRate;
+            if (d.Battery > 100)
+                d.Battery = 100;
+            dronesList[index] = d;
 
-                IDAL.DO.Station st = new IDAL.DO.Station();
-                st = ReturnCloseStation(data.GetStations(), d.CLocation);
-                UpdateStation(st.Id, -1, st.ChargeSlots + 1);
+            IDAL.DO.Station st = new IDAL.DO.Station();
+            st = ReturnCloseStation(data.GetStations(), d.CLocation);
+            UpdateStation(st.Id, -1, st.ChargeSlots + 1);
 
-                IDAL.DO.DroneCharge dc = new IDAL.DO.DroneCharge();
-                dc.DroneId = d.Id;
-                dc.StationId = st.Id;
-                data.DeleteDroneCharge(dc);
-                return "The update was successful\n";
-            }
-            catch (IDAL.DO.IdNotExistException)
-            {
-                throw new IdNotExistException(idDrone);
-            }
+            IDAL.DO.DroneCharge dc = new IDAL.DO.DroneCharge();
+            dc.DroneId = d.Id;
+            dc.StationId = st.Id;
+            data.DeleteDroneCharge(dc);
+            return "The update was successful\n";
         }
 
         public Drone GetDroneById(int Id) {
-            try
-            {
-                //IDAL.DO.Drone d = data.GetDroneById(Id);
-                Drone dr = new Drone();
-                DroneList dl = dronesList.Find(d => d.Id == Id);
-                dr.Id = dl.Id;
-                dr.MaxWeight = dl.MaxWeight;
-                dr.Model = dr.Model;
-                dr.Status = dl.Status;
-                dr.Battery = dl.Battery;
-                dr.CLocation = dl.CLocation;
-                ParcelTransfer pt = new ParcelTransfer();
-                foreach (var itemParcels in data.GetParcels()) {
-                    if (itemParcels.Id == dl.ParcelId) {
-                        pt.Id = itemParcels.Id;
-                        pt.Priority = (Priorities)(int)itemParcels.Priority;
-                            pt.Weight = (WeightCategories)(int)itemParcels.Weight;
-                        pt.Status = false;
-                        if (DateTime.Compare(itemParcels.PickedUp, itemParcels.Scheduled) > 0)
-                            pt.Status = true;
+            CheckExistId(dronesList, Id);
+            Drone dr = new Drone();
+            DroneList dl = dronesList.Find(d => d.Id == Id);
+            dr.Id = dl.Id;
+            dr.MaxWeight = dl.MaxWeight;
+            dr.Model = dr.Model;
+            dr.Status = dl.Status;
+            dr.Battery = dl.Battery;
+            dr.CLocation = dl.CLocation;
+            ParcelTransfer pt = new ParcelTransfer();
+            foreach (var itemParcels in data.GetParcels()) {
+                if (itemParcels.Id == dl.ParcelId) {
+                    pt.Id = itemParcels.Id;
+                    pt.Priority = (Priorities)(int)itemParcels.Priority;
+                    pt.Weight = (WeightCategories)(int)itemParcels.Weight;
+                    pt.Status = false;
+                    if (DateTime.Compare(itemParcels.PickedUp, itemParcels.Scheduled) > 0)
+                        pt.Status = true;
 
-                        CustomerInParcel cp1 = new CustomerInParcel();
-                        cp1.Id = itemParcels.TargetId;
-                        IDAL.DO.Customer c_help = data.GetCustomerById(cp1.Id); 
-                        cp1.Name = c_help.Name;
-                        pt.Recipient = cp1;
-                        pt.Destination_Location.Lattitude = c_help.Lattitude;
-                        pt.Destination_Location.Longitude = c_help.Longitude;
+                    CustomerInParcel cp1 = new CustomerInParcel();
+                    cp1.Id = itemParcels.TargetId;
+                    IDAL.DO.Customer c_help = data.GetCustomerById(cp1.Id); 
+                    cp1.Name = c_help.Name;
+                    pt.Recipient = cp1;
+                    pt.Destination_Location.Lattitude = c_help.Lattitude;
+                    pt.Destination_Location.Longitude = c_help.Longitude;
 
-                        CustomerInParcel cp2 = new CustomerInParcel();
-                        cp2.Id = itemParcels.SenderId;
-                        c_help = data.GetCustomerById(cp2.Id); 
-                        cp2.Name = c_help.Name;
-                        pt.Sender = cp2;
-                        pt.Collection_Location.Lattitude = c_help.Lattitude;
-                        pt.Collection_Location.Longitude = c_help.Longitude;
+                    CustomerInParcel cp2 = new CustomerInParcel();
+                    cp2.Id = itemParcels.SenderId;
+                    c_help = data.GetCustomerById(cp2.Id); 
+                    cp2.Name = c_help.Name;
+                    pt.Sender = cp2;
+                    pt.Collection_Location.Lattitude = c_help.Lattitude;
+                    pt.Collection_Location.Longitude = c_help.Longitude;
 
-                        pt.Transport_Distance = DistanceTo(pt.Collection_Location, pt.Destination_Location);
+                    pt.Transport_Distance = DistanceTo(pt.Collection_Location, pt.Destination_Location);
 
-                        dr.PTransfer = pt;
-                    }
+                    dr.PTransfer = pt;
                 }
-                return dr;
             }
-            catch (IDAL.DO.IdNotExistException)
-            {
-                throw new IdNotExistException(Id);
-            }
-            
+            return dr;
         }
         
         public IEnumerable<DroneList> GetDrones(){

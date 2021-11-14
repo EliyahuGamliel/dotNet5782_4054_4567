@@ -72,5 +72,41 @@ namespace IBL
                 return "DroneCannotSend: The Drone cann't send to charge\n";
             }
         }
+
+        [Serializable]
+        public class DroneCannotRelese : Exception
+        {
+            public override string ToString()
+            {
+                return "DroneCannotRelese: The Drone isn't in charge\n";
+            }
+        }
+
+        [Serializable]
+        public class DroneCannotAssigan : Exception
+        {
+            public override string ToString()
+            {
+                return "DroneCannotAssigan: The Drone cann't send to charge\n";
+            }
+        }
+
+        [Serializable]
+        public class DroneCannotPickUp : Exception
+        {
+            public override string ToString()
+            {
+                return "DroneCannotPickUp: The Drone cann't pick up the parcel\n";
+            }
+        }
+
+        [Serializable]
+        public class DroneCannotDeliver : Exception
+        {
+            public override string ToString()
+            {
+                return "DroneCannotDeliver: The Drone cann't deliver the parcel\n";
+            }
+        }
     }
 }
