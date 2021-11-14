@@ -14,6 +14,8 @@ namespace IBL
         double WeightMedium;
         double WeightHeavy;
         double ChargingRate;
+
+        //Ctor of BL
         public BL() {
             data = new DalObject.DalObject();
 
@@ -27,8 +29,7 @@ namespace IBL
             
             IEnumerable<IDAL.DO.Drone> list_d = data.GetDrones();
             //
-            foreach (var item in list_d)
-            {
+            foreach (var item in list_d) {
                 bool help = true;
                 double min_battery = 0;
 
@@ -39,19 +40,23 @@ namespace IBL
 
                 IEnumerable<IDAL.DO.Parcel> list_p = data.GetParcels();
                 foreach (var itemParcel in list_p) {
+                    //If the parcel is associated with the drone and also the parcrel in the middle of the shipment
                     if (itemParcel.DroneId == dl.Id && (ReturnStatus(itemParcel) == 1 || ReturnStatus(itemParcel) == 2)) {
                         dl.Status = DroneStatuses.Delivery;
                         dl.ParcelId = itemParcel.Id;
+                        //If the parcel was only associated
                         if (ReturnStatus(itemParcel) == 1) {
                             Customer c = GetCustomerById(itemParcel.SenderId);
                             dl.CLocation.Longitude = ReturnCloseStation(data.GetStations(), c.Location).Longitude;
                             dl.CLocation.Lattitude = ReturnCloseStation(data.GetStations(), c.Location).Lattitude;
                         }
+                        //If the parcel was also collected
                         else {
                             Customer c = GetCustomerById(itemParcel.SenderId);
                             dl.CLocation = c.Location;
                         }
-
+                        
+                        //The customer target of the parcel
                         Customer cu = GetCustomerById(itemParcel.TargetId);
                         Location l1 = new Location();
                         l1 = cu.Location;
@@ -60,23 +65,27 @@ namespace IBL
                         l2.Lattitude = ReturnCloseStation(data.GetStations(), l1).Lattitude;
                         l2.Longitude = ReturnCloseStation(data.GetStations(), l1).Longitude;
 
+                        //Minimum battery to finish the shipment
                         min_battery = ReturnBattery((int)itemParcel.Weight, dl.CLocation, l1) + ReturnBattery(3, dl.CLocation, l2);
                         dl.Battery = rand.NextDouble() + rand.Next((int)min_battery + 1, 100);
                         if (dl.Battery > 100)
                             dl.Battery = 100;
+                        //The drone is in delivery mode
                         help = false;
                         break;
                     }
                 }
-                
-                if (help)
-                {
+                //If the drone is not in delivery mode (no parcel associated with it)
+                if (help) {
+                    //The drone mode is randomized
                     dl.Status = (DroneStatuses)rand.Next(0,2);
+                    //If the situation that came out is: maintenance
                     if (dl.Status == DroneStatuses.Maintenance) {
                         int counter = 0;
                         IEnumerable<IDAL.DO.Station> list_s = data.GetStations();
                         foreach (var itemStation in list_s)
                             counter += 1;
+                        //The drone is at a random station
                         int s = rand.Next(0, counter);
                         foreach (var itemStation in list_s) {
                             if (s == 0) {
@@ -89,13 +98,14 @@ namespace IBL
                         }
                         dl.Battery = rand.NextDouble() + rand.Next(0,20);
                     }
-
+                    //If the situation that came out is: available
                     else {
                         int counter = 0;
                         IEnumerable<CustomerList> list_c = GetCustomers();
                         foreach (var itemCustomer in list_c)
                             if (itemCustomer.ParcelsGet > 0)
                                 counter += 1;
+                        //The drone is at a random customer Location
                         int s = rand.Next(0, counter);
                         foreach (var itemCustomer in list_c) {
                             if (s == 0) {
@@ -103,9 +113,11 @@ namespace IBL
                                 dl.CLocation = c.Location;
                                 break;
                             }
+                            //If the customer get least one parcel
                             if (itemCustomer.ParcelsGet > 0)
                                 s -= 1;
                         }
+
                         Location l = new Location();
                         l.Lattitude = ReturnCloseStation(data.GetStations(), dl.CLocation).Lattitude;
                         l.Longitude = ReturnCloseStation(data.GetStations(), dl.CLocation).Longitude;
@@ -119,6 +131,11 @@ namespace IBL
             }
         }
         
+        /// <summary>
+        /// /// If all is fine, the drone assign to a parcel, else throw exception
+        /// </summary>
+        /// <param name="DroneId">ID of the drone to assign a parcel</param>
+        /// <returns>Notice if the addition was successful</returns>
         public string AssignDroneParcel(int DroneId){
             CheckNotExistId(dronesList, DroneId);
             DroneList d = dronesList.Find(dr => dr.Id == DroneId);
@@ -135,17 +152,22 @@ namespace IBL
                 Location l_s = new Location();
                 l_s.Lattitude = s_close.Lattitude;
                 l_s.Longitude = s_close.Longitude;
-
+                //drone go to the coustomer sender location
                 double min_battery = ReturnBattery(3, d.CLocation, c_sender.Location);
+                //and fron there drone go to the coustomer target location
                 min_battery += ReturnBattery((int)item.Weight, c_sender.Location, c_target.Location);
+                //and fron there drone go to the close station
                 min_battery += ReturnBattery(3, c_target.Location, l_s);
                 if (d.Battery >= min_battery)
+                    //First parcel that not associated
                     if (first && ReturnStatus(item) == 0)
                         p_choose = item;
                     else if (ReturnStatus(item) == 0)
+                        //The most preferred parcel for associated
                         p_choose = CompressParcels(p_choose, item, d);
             }
 
+            //There are no matching parcels
             if (p_choose.Id == -1)
                 throw new DroneCannotAssigan();
 
@@ -159,6 +181,13 @@ namespace IBL
             return "The update was successful\n";
         }
 
+        /// <summary>
+        /// Returns the most preferred parcel for pairing
+        /// </summary>
+        /// <param name="p1">Object of parcel 1 for comparison</param>
+        /// <param name="p2">Object of parcel 2 for comparison</param>
+        /// <param name="d">Object of drone</param>
+        /// <returns>Returns the most preferred parcel</returns>
         public IDAL.DO.Parcel CompressParcels(IDAL.DO.Parcel p1, IDAL.DO.Parcel p2, DroneList d) {
             Customer c1 = GetCustomerById(p1.SenderId);
             Customer c2 = GetCustomerById(p2.SenderId);
