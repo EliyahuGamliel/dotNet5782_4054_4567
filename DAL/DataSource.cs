@@ -36,7 +36,7 @@ namespace DalObject
             l = r.Next(2, 6);
             for (int i = 0; i < l; ++i) {
                 int rid = r.Next();
-                for (int h = 0; h < i; ++h) {
+                for (int h = 0; h < i; ++h) {//i check if the random number is legal and if not i start over
                     if (rid == stations[h].Id) {
                         h = -1;
                         rid = r.Next();
@@ -56,7 +56,8 @@ namespace DalObject
             for (int i = 0; i < l; ++i) {
                 int rid = r.Next();
                 for (int h = 0; h < i; ++h) {
-                    if (rid == customers[h].Id) {
+                    if (rid == customers[h].Id)
+                    {//i check if the random number is legal and if not i start over
                         h = -1;
                         rid = r.Next();
                     }
@@ -86,7 +87,7 @@ namespace DalObject
                 int rid = r.Next();
                 for (int h = 0; h < i; ++h) {
                     //to check if the id already exists
-                    if (rid == drones[h].Id) {
+                    if (rid == drones[h].Id) {//i check if the random number is legal and if not i start over
                         i = -1;
                         rid = r.Next();
                     }
