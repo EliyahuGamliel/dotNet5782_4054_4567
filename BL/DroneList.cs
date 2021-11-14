@@ -5,7 +5,7 @@ namespace IBL
     namespace BO
     {
         /// <summary>
-        /// Defining the "Customer" class
+        /// Defining the "DroneList" class
         /// </summary>
         public class DroneList
         {
@@ -17,6 +17,9 @@ namespace IBL
             public Location CLocation { get; set; }
             public int ParcelId  { get; set;}
             
+            /// <summary>
+            /// Ctor of DroneList
+            /// </summary>
             public DroneList() { this.CLocation = new Location(); ParcelId = -1;}
 
             /// <summary><returns>

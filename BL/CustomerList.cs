@@ -6,7 +6,7 @@ namespace IBL
     namespace BO
     {
         /// <summary>
-        /// Defining the "Customer" class
+        /// Defining the "CustomerList" class
         /// </summary>
         public class CustomerList
         {

@@ -5,6 +5,9 @@ namespace IDAL
 {
     namespace DO
     {
+        /// <summary>
+        /// If the id already exist - throw Exception
+        /// </summary>
         [Serializable]
         public class IdExistException : Exception
         {
@@ -19,6 +22,9 @@ namespace IDAL
             }
         }
 
+        /// <summary>
+        /// If the id doesn't exist - throw Exception
+        /// </summary>
         [Serializable]
         public class IdNotExistException : Exception
         {
@@ -33,6 +39,9 @@ namespace IDAL
             }
         }
 
+        /// <summary>
+        /// If the phone already exist - throw Exception
+        /// </summary>
         [Serializable]
         public class PhoneExistException : Exception
         {

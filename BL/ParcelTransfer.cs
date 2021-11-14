@@ -5,7 +5,7 @@ namespace IBL
     namespace BO
     {
         /// <summary>
-        /// Defining the "Customer" class
+        /// Defining the "ParcelTransfer" class
         /// </summary>
         public class ParcelTransfer
         {
@@ -19,6 +19,9 @@ namespace IBL
             public WeightCategories Weight { get; set; }
             public bool Status { get; set; }
             
+            /// <summary>
+            /// Ctor of ParcelTransfer
+            /// </summary>
             public ParcelTransfer() { this.Collection_Location = new Location(); this.Destination_Location = new Location(); this.Sender = new CustomerInParcel();this.Recipient = new CustomerInParcel(); }
             
             /// <summary><returns>

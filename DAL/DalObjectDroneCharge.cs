@@ -4,21 +4,35 @@ using System.Collections.Generic;
 
 namespace DalObject
 {
+    /// <summary>
+    /// Class partial DalObject - All functions running on the list of dronesCharge
+    /// </summary>
     public partial class DalObject : IDAL.IDal
     {
-
+        /// <summary>
+        /// If everything is fine, add a droneCharge to the list of dronesCharge
+        /// </summary>
+        /// <param name="d">Object of droneCharge to add</param>
         public void AddDroneCharge(DroneCharge d) {
             CheckExistId(DataSource.drones, d.DroneId);
             CheckExistId(DataSource.stations, d.StationId);
             DataSource.droneCharges.Add(d);
         }
 
+        /// <summary>
+        /// If everything is fine, delete a droneCharge from the list of dronesCharge
+        /// </summary>
+        /// <param name="d">Object of droneCharge to delete</param>
         public void DeleteDroneCharge(DroneCharge d) {
             CheckNotExistId(DataSource.drones, d.DroneId);
             CheckNotExistId(DataSource.stations, d.StationId);
             DataSource.droneCharges.Remove(d);
         }
 
+        /// <summary>
+        /// Returns the list of dronesCharge
+        /// </summary>
+        /// <returns>Returns the list of dronesCharge</returns>
         public IEnumerable<DroneCharge> GetDroneCharge() {
             return DataSource.droneCharges;
         }

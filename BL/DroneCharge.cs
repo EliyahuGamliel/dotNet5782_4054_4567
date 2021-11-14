@@ -5,7 +5,7 @@ namespace IBL
     namespace BO
     {
         /// <summary>
-        /// Defining the "Customer" class
+        /// Defining the "DroneCharge" class
         /// </summary>
         public class DroneCharge
         {

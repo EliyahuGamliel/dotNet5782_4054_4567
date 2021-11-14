@@ -5,7 +5,7 @@ namespace IDAL
     namespace DO
     {
         /// <summary>
-        /// Defining the "Drone" class
+        /// Defining the "Drone" struct
         /// </summary>
        public struct Drone
         {

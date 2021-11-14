@@ -4,9 +4,11 @@ using System.Collections.Generic;
 
 namespace IDAL
 {
+    /// <summary>
+    /// Defining the "IDal" interface
+    /// </summary>
     public interface IDal
-    { 
-        //double DistancePrint(double lat1, double lon1, char letter, int id);
+    {
         void AddStation(Station s);
         void AddDrone(Drone d);
         int AddParcel(Parcel p);

@@ -114,13 +114,12 @@ namespace IBL
                             dl.Battery = 100;
                     }
                 }
-
                 dronesList.Add(dl);
             }
         }
         
         public string AssignDroneParcel(int DroneId){
-            CheckExistId(dronesList, DroneId);
+            CheckNotExistId(dronesList, DroneId);
             DroneList d = dronesList.Find(dr => dr.Id == DroneId);
             int index = dronesList.IndexOf(d);
 
@@ -176,7 +175,7 @@ namespace IBL
         }
         
         public string PickUpDroneParcel(int id){
-            CheckExistId(dronesList, id);
+            CheckNotExistId(dronesList, id);
             DroneList d = dronesList.Find(dr => dr.Id == id);
             Drone d_help = GetDroneById(id);
             int index = dronesList.IndexOf(d);
@@ -192,7 +191,7 @@ namespace IBL
         }
 
         public string DeliverParcelCustomer(int id){
-            CheckExistId(dronesList, id);
+            CheckNotExistId(dronesList, id);
             DroneList d = dronesList.Find(dr => dr.Id == id);
             Drone d_help = GetDroneById(id);
             int index = dronesList.IndexOf(d);
