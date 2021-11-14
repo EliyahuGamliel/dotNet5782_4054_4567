@@ -6,6 +6,13 @@ namespace IBL
 {
     public partial class BL : IBL
     {   
+        /// <summary>
+        /// the function tries to add a parcel to the list
+        /// </summary>
+        /// <param name="p"></param>
+        /// <param name="SenderId"></param>
+        /// <param name="TargetId"></param>
+        /// <returns>the number of the parcel</returns>
         public string AddParcel(Parcel p, int SenderId, int TargetId){
             try
             {
@@ -31,6 +38,11 @@ namespace IBL
             
         }
         
+        /// <summary>
+        /// the function returns a parcel by id
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns>the parcel with the matching id</returns>
         public Parcel GetParcelById(int Id) {
             try
             {
@@ -66,7 +78,10 @@ namespace IBL
                 throw new IdNotExistException(Id);
             }
         }
-
+        /// <summary>
+        /// returns the list of parcels as an UEnumerable
+        /// </summary>
+        /// <returns>the list of parcels as an IEnumerable</returns>
         public IEnumerable<ParcelList> GetParcels(){
             IEnumerable<IDAL.DO.Parcel> list_p = data.GetParcels();
             List<ParcelList> parcel = new List<ParcelList>();
@@ -84,6 +99,10 @@ namespace IBL
             return parcel;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>///////////////
         public IEnumerable<ParcelList> GetParcelDrone(){
             IEnumerable<IDAL.DO.Parcel> list_pD = data.GetParcelDrone();
             List<ParcelList> parcel = new List<ParcelList>();
