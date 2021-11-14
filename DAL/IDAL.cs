@@ -29,7 +29,7 @@ namespace IDAL
         IEnumerable<Parcel> GetParcels();
         IEnumerable<Parcel> GetParcelDrone();
         IEnumerable<Station> GetStationCharge();
-        //IEnumerable<DroneCharge> GetDroneCharge();
+        IEnumerable<DroneCharge> GetDroneCharge();
         double[] DroneElectricityUse();
     }
 }
