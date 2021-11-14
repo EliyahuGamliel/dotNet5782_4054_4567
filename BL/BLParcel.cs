@@ -31,9 +31,9 @@ namespace IBL
             {
                 throw new IdExistException(p.Id);
             }
-            catch (IDAL.DO.IdNotExistException)
+            catch (IDAL.DO.IdNotExistException exp)
             {
-                throw new IdNotExistException(p.Id); //
+                throw new IdNotExistException(exp.id);
             }
             
         }

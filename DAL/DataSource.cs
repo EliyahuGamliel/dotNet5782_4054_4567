@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace DalObject
 {
+    /// <summary>
+    /// All lists and data
+    /// </summary>
     public class DataSource
     {
         internal static List<Drone> drones = new List<Drone>();
@@ -11,7 +14,7 @@ namespace DalObject
         internal static List<Customer> customers = new List<Customer>();
         internal static List<Parcel> parcels = new List<Parcel>();
         internal static List<DroneCharge> droneCharges = new List<DroneCharge>();
-
+        
         internal class Config
         {
             public static int Number_ID = 1;

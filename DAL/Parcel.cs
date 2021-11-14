@@ -5,7 +5,7 @@ namespace IDAL
     namespace DO
     {
         /// <summary>
-        /// Defining the "Parcel" class
+        /// Defining the "Parcel" struct
         /// </summary>
         public struct Parcel
         {
