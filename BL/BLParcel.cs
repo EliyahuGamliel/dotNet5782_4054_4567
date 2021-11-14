@@ -43,7 +43,9 @@ namespace IBL
                 pa.Scheduled = p.Scheduled;
                 pa.Weight = (WeightCategories)(int)p.Weight;
                 pa.Delivered = p.Delivered;
-                pa.Drone = GetDroneById(p.DroneId);
+                if (p.DroneId != 0)
+                    pa.Drone = GetDroneById(p.DroneId);
+                
 
                 CustomerInParcel cp1 = new CustomerInParcel();
                 cp1.Id = p.TargetId;
