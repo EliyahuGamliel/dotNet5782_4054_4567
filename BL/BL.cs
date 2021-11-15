@@ -206,12 +206,19 @@ namespace IBL
             return p1;
         }
         
+        /// <summary>
+        /// If all is fine, the drone pick up the parcel, else throw exception
+        /// </summary>
+        /// <param name="id">ID of the drone to pickup a parcel</param>
+        /// <returns>Notice if the addition was successful</returns>        
         public string PickUpDroneParcel(int id){
             CheckNotExistId(dronesList, id);
             DroneList d = dronesList.Find(dr => dr.Id == id);
             Drone d_help = GetDroneById(id);
             int index = dronesList.IndexOf(d);
+
             IDAL.DO.Parcel p = data.GetParcelById(d.ParcelId);
+
             CheckDroneCannotPickUp(p);
             p.PickedUp = DateTime.Now;
             double battery = ReturnBattery(3, d.CLocation, d_help.PTransfer.Collection_Location);
@@ -222,11 +229,17 @@ namespace IBL
             return "The update was successful\n";
         }
 
+        /// <summary>
+        /// If all is fine, the drone deliver the parcel, else throw exception
+        /// </summary>
+        /// <param name="id">ID of the drone to deliver a parcel</param>
+        /// <returns>Notice if the addition was successful</returns>   
         public string DeliverParcelCustomer(int id){
             CheckNotExistId(dronesList, id);
             DroneList d = dronesList.Find(dr => dr.Id == id);
             Drone d_help = GetDroneById(id);
             int index = dronesList.IndexOf(d);
+
             IDAL.DO.Parcel p = data.GetParcelById(d.ParcelId);
             CheckDroneCannotDeliver(p);
             p.Delivered = DateTime.Now;
@@ -239,6 +252,11 @@ namespace IBL
             return "The update was successful\n";
         }
 
+        /// <summary>
+        /// According to calculations, returns the status of the parcel
+        /// </summary>
+        /// <param name="p">Object of parcel</param>
+        /// <returns>int of Status of parcel</returns>
         public int ReturnStatus(IDAL.DO.Parcel p)  {
             if (DateTime.Compare(p.Requested, p.Scheduled) > 0)
                 return (int)Statuses.Created;
@@ -249,6 +267,13 @@ namespace IBL
             return (int)Statuses.Provided;
         }
 
+        /// <summary>
+        /// Calculates the amount of battery consumed according to weight and distance and returns the amount
+        /// </summary>
+        /// <param name="w">The weight the drone carries in int</param>
+        /// <param name="l1">Object Location 1</param>
+        /// <param name="l2">Object Location 2</param>
+        /// <returns>Returns the amount of battery consumed</returns>
         public double ReturnBattery(int w, Location l1, Location l2) {
             if (w == 0)
                 return DistanceTo(l1, l2) * WeightLight;
@@ -256,18 +281,25 @@ namespace IBL
                 return DistanceTo(l1, l2) * WeightMedium;
             else if (w == 2)
                 return DistanceTo(l1, l2) * WeightHeavy;
+            //w==3: the drone carries nothing
             return DistanceTo(l1, l2) * Avaliable;
         }
 
+        /// <summary>
+        /// Calculate what station is closest to the drone's location and returns it
+        /// </summary>
+        /// <param name="s">list of Station</param>
+        /// <param name="drone">Object of Drone's Location</param>
+        /// <returns>Returns a station object</returns>
         public IDAL.DO.Station ReturnCloseStation(IEnumerable<IDAL.DO.Station> s, Location drone) {
             Location l1 = new Location();
             Location l2 = new Location();
             IDAL.DO.Station st  = new IDAL.DO.Station();
             bool first = false;
-            foreach (var item in s)
-            {
+            foreach (var item in s) {
                 l1.Longitude = item.Longitude;
                 l1.Lattitude = item.Lattitude;
+                //First stop or closer stop
                 if (!first || DistanceTo(l1, drone) < DistanceTo(l2, drone)) {
                     first = true;
                     st = item;
@@ -277,7 +309,12 @@ namespace IBL
             }
             return st;
         }
-
+        /// <summary>
+        /// Calculates the distance between two locations and returns it
+        /// </summary>
+        /// <param name="l1">Object Location 1</param>
+        /// <param name="l2">Object Location 2</param>
+        /// <returns>Returns the distance between two locations</returns>
         public double DistanceTo(Location l1, Location l2) {
                 double rlat1 = Math.PI * l1.Lattitude / 180;
                 double rlat2 = Math.PI * l2.Lattitude / 180;
@@ -290,6 +327,13 @@ namespace IBL
                 return Math.Round(dist * 1.609344, 2);
             }
 
+        /// <summary>
+        /// Checks if the ״id״ already exists, if there is an error return
+        /// </summary>
+        /// <param name="list">List of T-objects</param>
+        /// <param name="id">The id for check</param>
+        /// <typeparam name="T">The type of the list</typeparam>
+        /// <returns>Nothing</returns>
         public void CheckExistId <T>(IEnumerable<T> list, int id)
         {
             foreach (var item in list) {
@@ -299,6 +343,13 @@ namespace IBL
             }
         }
 
+        /// <summary>
+        /// Checks if ״id״ does not exist, if not returns error
+        /// </summary>
+        /// <param name="list">List of T-objects</param>
+        /// <param name="id">The id for check</param>
+        /// <typeparam name="T">The type of the list</typeparam>
+        /// <returns>Nothing</returns>
         public void CheckNotExistId <T>(IEnumerable<T> list, int id)
         {
             foreach (var item in list) {
@@ -309,22 +360,19 @@ namespace IBL
             throw new IdNotExistException(id);   
         }
 
-        public void CheckNotExistPhone <T>(IEnumerable<T> list, string phone)
-        {
-            foreach (var item in list) {
-                string phone_object = (string)(typeof(T).GetProperty("Phone").GetValue(item, null));
-                if (phone_object == phone)
-                    throw new PhoneExistException(phone);         
-            }
-        }
-
+        /// <summary>
+        /// Checks if the drone can to send for cahrge, if not returns error
+        /// </summary>
+        /// <param name="list">List of T-objects</param>
+        /// <param name="dl">Object of Drone</param>
+        /// <typeparam name="T">he type of the list</typeparam>
+        /// <returns>Nothing</returns>
         public double CheckDroneCannotSend <T>(IEnumerable<T> list, DroneList dl)
         {
             Location l = new Location();
             Location locationStation = new Location();
             bool help = false;
-            foreach (var item in list)
-            {
+            foreach (var item in list) {
                 int chargeSlots_object = (int)(typeof(T).GetProperty("chargeSlots").GetValue(item, null));
                 locationStation.Longitude = (double)(typeof(T).GetProperty("Longitude").GetValue(item, null));
                 locationStation.Lattitude = (double)(typeof(T).GetProperty("Lattitude").GetValue(item, null));
@@ -334,25 +382,41 @@ namespace IBL
                 }
             }
             double battery = ReturnBattery(3, dl.CLocation, l);
-
+            
+            //If the drone is not available or the drone will not be able to reach the station
             if (dl.Status != DroneStatuses.Available || dl.Battery < battery)
                 throw new DroneCannotSend();     
 
             return battery;
         }
 
+        /// <summary>
+        /// Checks if the drone can to relese from cahrge, if not returns error
+        /// </summary>
+        /// <param name="dl">Object of Drone</param>
+        /// <returns>Nothing</returns>
         public void CheckDroneCannotRelese(DroneList dl)
         {
             if (dl.Status != DroneStatuses.Maintenance )
                 throw new DroneCannotRelese();
         }  
 
+        /// <summary>
+        /// Checks if the drone can to pick up the parcel, if not returns error
+        /// </summary>
+        /// <param name="p">Object of parcel</param>
+        /// <returns>Nothing</returns>
         public void CheckDroneCannotPickUp(IDAL.DO.Parcel p)
         {
             if (ReturnStatus(p) != 1)
                 throw new DroneCannotPickUp();
         } 
 
+        /// <summary>
+        /// Checks if the drone can to deliver the parcel, if not returns error
+        /// </summary>
+        /// <param name="p">Object of parcel</param>
+        /// <returns>Nothing</returns>
         public void CheckDroneCannotDeliver(IDAL.DO.Parcel p)
         {
             if (ReturnStatus(p) != 2)
