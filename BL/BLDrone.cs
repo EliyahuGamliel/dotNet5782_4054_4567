@@ -60,8 +60,8 @@ namespace IBL
         /// </summary>
         /// <param name="idDrone">ID of the drone sent for charging</param>
         /// <returns>Notice if the addition was successful</returns>
-        public String SendDrone(int idDrone) {
-            CheckExistId(dronesList, idDrone);
+        public string SendDrone(int idDrone) {
+            CheckNotExistId(dronesList, idDrone);
             DroneList d = dronesList.Find(dr => idDrone == dr.Id);
             int index = dronesList.IndexOf(d);
             double battery = CheckDroneCannotSend(data.GetStations(), d);
@@ -73,7 +73,6 @@ namespace IBL
             d.Battery = d.Battery - battery;
             dronesList[index] = d;
             UpdateStation(st.Id, -1, st.ChargeSlots - 1);
-
             IDAL.DO.DroneCharge dc = new IDAL.DO.DroneCharge();
             dc.DroneId = d.Id;
             dc.StationId = st.Id;

@@ -247,6 +247,7 @@ namespace IBL
             d.Status = DroneStatuses.Available;
             d.Battery -= battery;
             d.CLocation = d_help.PTransfer.Destination_Location;
+            d.ParcelId = -1;
             dronesList[index] = d;
             data.UpdateParcel(p);
             return "The update was successful\n";
@@ -367,16 +368,15 @@ namespace IBL
         /// <param name="dl">Object of Drone</param>
         /// <typeparam name="T">he type of the list</typeparam>
         /// <returns>Nothing</returns>
-        public double CheckDroneCannotSend <T>(IEnumerable<T> list, DroneList dl)
+        public double CheckDroneCannotSend(IEnumerable<IDAL.DO.Station> list, DroneList dl)
         {
             Location l = new Location();
             Location locationStation = new Location();
             bool help = false;
             foreach (var item in list) {
-                int chargeSlots_object = (int)(typeof(T).GetProperty("chargeSlots").GetValue(item, null));
-                locationStation.Longitude = (double)(typeof(T).GetProperty("Longitude").GetValue(item, null));
-                locationStation.Lattitude = (double)(typeof(T).GetProperty("Lattitude").GetValue(item, null));
-                if ((!help || DistanceTo(locationStation, dl.CLocation) < DistanceTo(l, dl.CLocation)) && chargeSlots_object > 0) {
+                locationStation.Lattitude = item.Lattitude;
+                locationStation.Longitude = item.Longitude;
+                if ((!help || DistanceTo(locationStation, dl.CLocation) < DistanceTo(l, dl.CLocation)) && item.ChargeSlots > 0) {
                     help = true;
                     l = locationStation;
                 }

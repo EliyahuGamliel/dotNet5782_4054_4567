@@ -14,8 +14,6 @@ namespace DalObject
         /// </summary>
         /// <param name="d">Object of droneCharge to add</param>
         public void AddDroneCharge(DroneCharge d) {
-            CheckExistId(DataSource.drones, d.DroneId);
-            CheckExistId(DataSource.stations, d.StationId);
             DataSource.droneCharges.Add(d);
         }
 
