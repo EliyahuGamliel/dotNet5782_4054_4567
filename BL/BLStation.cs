@@ -97,8 +97,8 @@ namespace IBL
                 sl.Name = item.Name;
                 sl.ChargeSlots = item.ChargeSlots;
                 sl.ChargeSlotsCatched = 0;
-                foreach (var item2 in dronesList)
-                    if (item.Lattitude == item2.CLocation.Lattitude && item.Longitude == item2.CLocation.Longitude && item2.Status == DroneStatuses.Maintenance)
+                foreach (var item2 in data.GetDroneCharge())
+                    if (item2.StationId == sl.Id)
                         sl.ChargeSlotsCatched += 1;
                 station.Add(sl);
             }

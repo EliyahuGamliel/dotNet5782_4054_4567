@@ -105,12 +105,13 @@ namespace IBL
 
             IDAL.DO.Station st = new IDAL.DO.Station();
             st = ReturnCloseStation(data.GetStations(), d.CLocation);
-            UpdateStation(st.Id, -1, st.ChargeSlots + 1);
 
             IDAL.DO.DroneCharge dc = new IDAL.DO.DroneCharge();
             dc.DroneId = d.Id;
             dc.StationId = st.Id;
             data.DeleteDroneCharge(dc);
+
+            UpdateStation(st.Id, -1, st.ChargeSlots + 1);
             return "The update was successful\n";
         }
 
