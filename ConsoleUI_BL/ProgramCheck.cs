@@ -9,7 +9,7 @@ namespace ConsoleUI
         /// <summary>
         /// keep getting numbers till it gets a legal one
         /// </summary>
-        /// <returns> an legal int </returns>
+        /// <returns> a legal int </returns>
         static int GetInt()
         {
             int num;
@@ -38,7 +38,10 @@ namespace ConsoleUI
             return num;
         }
 
-    
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         static string GetStringInt()
         {
             string num = Console.ReadLine();
