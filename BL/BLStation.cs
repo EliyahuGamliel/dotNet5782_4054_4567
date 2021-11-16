@@ -41,8 +41,8 @@ namespace IBL
                     s.Name = name;
                 if (chargeSlots != -1) {
                     int amount_avalible = chargeSlots;
-                    foreach (var item in dronesList)
-                        if (item.CLocation.Longitude == s.Longitude && item.CLocation.Lattitude == s.Lattitude)
+                    foreach (var item in data.GetDroneCharge())
+                        if (item.StationId == s.Id)
                             amount_avalible -= 1;
                     s.ChargeSlots = amount_avalible;
                 }
@@ -98,7 +98,7 @@ namespace IBL
                 sl.ChargeSlots = item.ChargeSlots;
                 sl.ChargeSlotsCatched = 0;
                 foreach (var item2 in dronesList)
-                    if (item.Lattitude == item2.CLocation.Lattitude && item.Longitude == item2.CLocation.Longitude)
+                    if (item.Lattitude == item2.CLocation.Lattitude && item.Longitude == item2.CLocation.Longitude && item2.Status == DroneStatuses.Maintenance)
                         sl.ChargeSlotsCatched += 1;
                 station.Add(sl);
             }

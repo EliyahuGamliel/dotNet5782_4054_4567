@@ -20,12 +20,18 @@ namespace IBL
                 d.CLocation.Lattitude = s.Lattitude;
                 d.CLocation.Longitude = s.Longitude;
                 d.ParcelId = 0;
+                
                 IDAL.DO.Drone dr = new IDAL.DO.Drone();
                 dr.Id = d.Id;
                 dr.Model = d.Model;
                 dr.MaxWeight = (IDAL.DO.WeightCategories)((int)d.MaxWeight);
                 data.AddDrone(dr);
+                IDAL.DO.DroneCharge dc = new IDAL.DO.DroneCharge();
+                dc.DroneId = d.Id;
+                dc.StationId = idStation;
+                data.AddDroneCharge(dc);
                 dronesList.Add(d);
+                UpdateStation(idStation, -1, s.ChargeSlots);
                 return "The addition was successful\n";
             }
             catch (IDAL.DO.IdExistException) {
