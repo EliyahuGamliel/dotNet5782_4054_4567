@@ -4,11 +4,15 @@ using System.Collections.Generic;
 
 namespace DalObject
 {
+
     /// <summary>
     /// All lists and data
     /// </summary>
     public class DataSource
     {
+        static Random r = new Random();
+
+
         internal static List<Drone> drones = new List<Drone>();
         internal static List<Station> stations = new List<Station>();
         internal static List<Customer> customers = new List<Customer>();
@@ -29,7 +33,7 @@ namespace DalObject
         /// The function initialise the data at the beginning
         /// </summary>
         public static void Initialize() {
-            Random r = new Random();
+            
             int l;
             
             //Station

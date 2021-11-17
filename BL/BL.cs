@@ -6,7 +6,7 @@ namespace IBL
 {
     public partial class BL : IBL
     {
-        Random rand = new Random();
+        static Random rand = new Random();
         IDAL.IDal data;
         List<DroneList> dronesList = new List<DroneList>();
         double Avaliable;
