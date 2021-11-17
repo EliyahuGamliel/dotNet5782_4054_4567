@@ -14,8 +14,8 @@ namespace DalObject
         /// </summary>
         /// <param name="d">Object of drone to add</param>
         public void AddDrone(Drone d) {
-            CheckExistId(DataSource.drones, d.Id);
-            DataSource.drones.Add(d);
+            CheckExistId(DataSource.Drones, d.Id);
+            DataSource.Drones.Add(d);
         }
 
         /// <summary>
@@ -23,10 +23,10 @@ namespace DalObject
         /// </summary>
         /// <param name="d">Object of drone to update</param>
         public void UpdateDrone(Drone d) {
-            CheckNotExistId(DataSource.drones, d.Id);
-            Drone dr = DataSource.drones.Find(dro => dro.Id == d.Id);
-            int index = DataSource.drones.IndexOf(dr);
-            DataSource.drones[index] = d;
+            CheckNotExistId(DataSource.Drones, d.Id);
+            Drone dr = DataSource.Drones.Find(dro => dro.Id == d.Id);
+            int index = DataSource.Drones.IndexOf(dr);
+            DataSource.Drones[index] = d;
         }
 
         /// <summary>
@@ -35,8 +35,8 @@ namespace DalObject
         /// <param name="Id">The id of the requested drone</param>
         /// <returns>The object of the requested drone</returns>
         public Drone GetDroneById(int Id) {
-            CheckNotExistId(DataSource.drones, Id);
-            Drone d = DataSource.drones.Find(dr => Id == dr.Id);
+            CheckNotExistId(DataSource.Drones, Id);
+            Drone d = DataSource.Drones.Find(dr => Id == dr.Id);
             return d;
         }
 
@@ -45,7 +45,7 @@ namespace DalObject
         /// </summary>
         /// <returns>Returns the list of drones</returns>
         public IEnumerable<Drone> GetDrones() {
-            return DataSource.drones;
+            return DataSource.Drones;
         }
 
         /// <summary>

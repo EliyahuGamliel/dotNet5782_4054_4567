@@ -13,11 +13,11 @@ namespace DalObject
         static Random r = new Random();
 
 
-        internal static List<Drone> drones = new List<Drone>();
-        internal static List<Station> stations = new List<Station>();
-        internal static List<Customer> customers = new List<Customer>();
-        internal static List<Parcel> parcels = new List<Parcel>();
-        internal static List<DroneCharge> droneCharges = new List<DroneCharge>();
+        internal static List<Drone> Drones = new List<Drone>();
+        internal static List<Station> Stations = new List<Station>();
+        internal static List<Customer> Customers = new List<Customer>();
+        internal static List<Parcel> Parcels = new List<Parcel>();
+        internal static List<DroneCharge> DroneCharges = new List<DroneCharge>();
         
         internal class Config
         {
@@ -42,7 +42,7 @@ namespace DalObject
                 int rid = r.Next();
                 //h check if the random number is legal and if not h start over
                 for (int h = 0; h < i; ++h) {
-                    if (rid == stations[h].Id) {
+                    if (rid == Stations[h].Id) {
                         h = -1;
                         rid = r.Next();
                     }
@@ -53,7 +53,7 @@ namespace DalObject
                 s.Name = s.Id;
                 s.Longitude = r.NextDouble() + r.Next(-180, 180);
                 s.Lattitude = r.NextDouble() + r.Next(-90, 90);
-                stations.Add(s);
+                Stations.Add(s);
             }
 
             //Customer
@@ -62,7 +62,7 @@ namespace DalObject
                 int rid = r.Next();
                 for (int h = 0; h < i; ++h) {
                     //h check if the random number is legal and if not h start over
-                    if (rid == customers[h].Id)
+                    if (rid == Customers[h].Id)
                     {
                         h = -1;
                         rid = r.Next();
@@ -76,7 +76,7 @@ namespace DalObject
                 //h check if the random number is legal and if not h start over
                 for (int h = 0; h < i; ++h) {
                     ph = "053758" + rid;
-                    if (ph == customers[h].Phone) {
+                    if (ph == Customers[h].Phone) {
                         //it takes a random number from 1000 to 9999 and add it to "053758"
                         rid = r.Next();
                         h = -1;
@@ -85,7 +85,7 @@ namespace DalObject
                 c.Phone = ph;
                 c.Longitude = r.NextDouble() + r.Next(-180, 180);
                 c.Lattitude = r.NextDouble() + r.Next(-90, 90);
-                customers.Add(c);
+                Customers.Add(c);
             }
 
             //Drones
@@ -95,7 +95,7 @@ namespace DalObject
                 for (int h = 0; h < i; ++h) {
                     //to check if the id already exists
                     //h check if the random number is legal and if not h start over
-                    if (rid == drones[h].Id) {
+                    if (rid == Drones[h].Id) {
                         h = -1;
                         rid = r.Next();
                     }
@@ -104,7 +104,7 @@ namespace DalObject
                 d.Id = rid;
                 d.Model = ("Minip" + i);
                 d.MaxWeight = (WeightCategories)(r.Next(0, 3));
-                drones.Add(d);
+                Drones.Add(d);
             }
 
             //Parcel
@@ -120,12 +120,12 @@ namespace DalObject
                 while (DateTime.Compare(DateTime.Now, p.Requested) <= 0)
                             p.Requested = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
 
-                foreach (var item in drones) 
+                foreach (var item in Drones) 
                 {
                     bool check = true;
                     for (int j = 0; j < i && check; j++)
                         //If the drone is occupied by a parcel that has not yet been delivered
-                        if (parcels[j].DroneId == item.Id && DateTime.Compare(parcels[j].Scheduled, parcels[j].Delivered) >= 0)
+                        if (Parcels[j].DroneId == item.Id && DateTime.Compare(Parcels[j].Scheduled, Parcels[j].Delivered) >= 0)
                             check = false;
                     //If the drone is not in the middle of delivery and also the parcel is a normal weight for the drone
                     if (item.MaxWeight >= p.Weight && check) {
@@ -159,17 +159,17 @@ namespace DalObject
                     }
                 }
 
-                int ind = r.Next(0, customers.Count);
-                p.TargetId = customers[ind].Id;
+                int ind = r.Next(0, Customers.Count);
+                p.TargetId = Customers[ind].Id;
                 
-                ind = r.Next(0, customers.Count);
+                ind = r.Next(0, Customers.Count);
                 //so that the sender and the target won't be the same customer
-                while (p.TargetId == customers[ind].Id) {
-                    ind = r.Next(0, customers.Count);
+                while (p.TargetId == Customers[ind].Id) {
+                    ind = r.Next(0, Customers.Count);
                 }
-                p.SenderId = customers[ind].Id;
+                p.SenderId = Customers[ind].Id;
                 p.Priority = (Priorities)(r.Next(0, 3));
-                parcels.Add(p);//add all the randomized fields as a last parcel
+                Parcels.Add(p);//add all the randomized fields as a last parcel
             }
         }
     }

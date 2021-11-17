@@ -14,8 +14,8 @@ namespace DalObject
         /// </summary>
         /// <param name="s">Object of station to add</param>
         public void AddStation(Station s) {
-            CheckExistId(DataSource.stations, s.Id);
-            DataSource.stations.Add(s);
+            CheckExistId(DataSource.Stations, s.Id);
+            DataSource.Stations.Add(s);
         }
 
         /// <summary>
@@ -23,10 +23,10 @@ namespace DalObject
         /// </summary>
         /// <param name="s">Object of station to update</param>
         public void UpdateStation(Station s) {
-            CheckNotExistId(DataSource.stations, s.Id);
-            Station st = DataSource.stations.Find(sta => sta.Id == s.Id);
-            int index = DataSource.stations.IndexOf(st);
-            DataSource.stations[index] = s;
+            CheckNotExistId(DataSource.Stations, s.Id);
+            Station st = DataSource.Stations.Find(sta => sta.Id == s.Id);
+            int index = DataSource.Stations.IndexOf(st);
+            DataSource.Stations[index] = s;
         }
 
         /// <summary>
@@ -35,8 +35,8 @@ namespace DalObject
         /// <param name="Id">The id of the requested station</param>
         /// <returns>The object of the requested station</returns>
         public Station GetStationById(int Id) {
-            CheckNotExistId(DataSource.stations, Id);
-            Station s = DataSource.stations.Find(st => Id == st.Id);
+            CheckNotExistId(DataSource.Stations, Id);
+            Station s = DataSource.Stations.Find(st => Id == st.Id);
             return s;
         }
 
@@ -45,7 +45,7 @@ namespace DalObject
         /// </summary>
         /// <returns>Returns the list of stations</returns>
         public IEnumerable<Station> GetStations() {
-            return DataSource.stations;
+            return DataSource.Stations;
         }
         
         /// <summary>
@@ -53,7 +53,7 @@ namespace DalObject
         /// </summary>
         /// <returns>Returns a list of all stations that have available chargeSlots</returns>
         public IEnumerable<Station> GetStationCharge() {
-            return DataSource.stations.FindAll(st => 0 != st.ChargeSlots);
+            return DataSource.Stations.FindAll(st => 0 != st.ChargeSlots);
         }
     }
 }

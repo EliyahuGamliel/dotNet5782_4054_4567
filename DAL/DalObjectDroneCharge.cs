@@ -14,7 +14,7 @@ namespace DalObject
         /// </summary>
         /// <param name="d">Object of droneCharge to add</param>
         public void AddDroneCharge(DroneCharge d) {
-            DataSource.droneCharges.Add(d);
+            DataSource.DroneCharges.Add(d);
         }
 
         /// <summary>
@@ -22,9 +22,9 @@ namespace DalObject
         /// </summary>
         /// <param name="d">Object of droneCharge to delete</param>
         public void DeleteDroneCharge(DroneCharge d) {
-            CheckNotExistId(DataSource.drones, d.DroneId);
-            CheckNotExistId(DataSource.stations, d.StationId);
-            DataSource.droneCharges.Remove(d);
+            CheckNotExistId(DataSource.Drones, d.DroneId);
+            CheckNotExistId(DataSource.Stations, d.StationId);
+            DataSource.DroneCharges.Remove(d);
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace DalObject
         /// </summary>
         /// <returns>Returns the list of dronesCharge</returns>
         public IEnumerable<DroneCharge> GetDroneCharge() {
-            return DataSource.droneCharges;
+            return DataSource.DroneCharges;
         }
     }
 }

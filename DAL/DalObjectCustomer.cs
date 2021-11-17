@@ -14,8 +14,8 @@ namespace DalObject
         /// </summary>
         /// <param name="c">Object of customer to add</param>
         public void AddCustomer(Customer c) {
-            CheckExistId(DataSource.customers, c.Id);
-            DataSource.customers.Add(c);
+            CheckExistId(DataSource.Customers, c.Id);
+            DataSource.Customers.Add(c);
         }
 
         /// <summary>
@@ -24,12 +24,12 @@ namespace DalObject
         /// <param name="c">Object of customer to update</param>
         /// <param name="phone">Object.phone of customer to update</param>
         public void UpdateCustomer(Customer c, string phone) {
-            CheckNotExistId(DataSource.customers, c.Id);
+            CheckNotExistId(DataSource.Customers, c.Id);
             if (phone != "")
-                CheckExistPhone(DataSource.customers, phone);
-            Customer cu = DataSource.customers.Find(cus => c.Id == cus.Id);
-            int index = DataSource.customers.IndexOf(cu);
-            DataSource.customers[index] = c;
+                CheckExistPhone(DataSource.Customers, phone);
+            Customer cu = DataSource.Customers.Find(cus => c.Id == cus.Id);
+            int index = DataSource.Customers.IndexOf(cu);
+            DataSource.Customers[index] = c;
         }
         
         /// <summary>
@@ -38,8 +38,8 @@ namespace DalObject
         /// <param name="Id">The id of the requested customer</param>
         /// <returns>The object of the requested customer</returns>
         public Customer GetCustomerById(int Id) {
-            CheckNotExistId(DataSource.customers, Id);
-            Customer c = DataSource.customers.Find(cu => Id == cu.Id);
+            CheckNotExistId(DataSource.Customers, Id);
+            Customer c = DataSource.Customers.Find(cu => Id == cu.Id);
             return c;
         }
 
@@ -48,7 +48,7 @@ namespace DalObject
         /// </summary>
         /// <returns>Returns the list of customers</returns>
         public IEnumerable<Customer> GetCustomers() {
-            return DataSource.customers;
+            return DataSource.Customers;
         }
     }
 }

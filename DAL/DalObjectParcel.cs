@@ -14,11 +14,11 @@ namespace DalObject
         /// </summary>
         /// <param name="p">Object of parcel to add</param>
         public int AddParcel(Parcel p) {
-            CheckExistId(DataSource.parcels, p.Id);
-            CheckNotExistId(DataSource.customers, p.SenderId);
-            CheckNotExistId(DataSource.customers, p.TargetId);
+            CheckExistId(DataSource.Parcels, p.Id);
+            CheckNotExistId(DataSource.Parcels, p.SenderId);
+            CheckNotExistId(DataSource.Parcels, p.TargetId);
             p.Id = DataSource.Config.NumberID;
-            DataSource.parcels.Add(p);
+            DataSource.Parcels.Add(p);
             DataSource.Config.NumberID += 1;
             return DataSource.Config.NumberID;
         }
@@ -28,10 +28,10 @@ namespace DalObject
         /// </summary>
         /// <param name="p">Object of parcel to update</param>
         public void UpdateParcel(Parcel p){
-            CheckNotExistId(DataSource.parcels, p.Id);
-            Parcel pa = DataSource.parcels.Find(par => par.Id == p.Id);
-            int index = DataSource.parcels.IndexOf(pa);
-            DataSource.parcels[index] = p;
+            CheckNotExistId(DataSource.Parcels, p.Id);
+            Parcel pa = DataSource.Parcels.Find(par => par.Id == p.Id);
+            int index = DataSource.Parcels.IndexOf(pa);
+            DataSource.Parcels[index] = p;
         }
 
         /// <summary>
@@ -40,8 +40,8 @@ namespace DalObject
         /// <param name="Id">The id of the requested parcel</param>
         /// <returns>The object of the requested parcel</returns>
         public Parcel GetParcelById(int Id) {
-            CheckNotExistId(DataSource.parcels, Id);
-            Parcel p = DataSource.parcels.Find(pa => Id == pa.Id);
+            CheckNotExistId(DataSource.Parcels, Id);
+            Parcel p = DataSource.Parcels.Find(pa => Id == pa.Id);
             return p;
         }
 
@@ -50,7 +50,7 @@ namespace DalObject
         /// </summary>
         /// <returns>Returns the list of parcels</returns>
         public IEnumerable<Parcel> GetParcels() {
-            return DataSource.parcels;
+            return DataSource.Parcels;
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace DalObject
         /// </summary>
         /// <returns>Returns a list of all unassigned parcels</returns>
         public IEnumerable<Parcel> GetParcelDrone() {
-            return DataSource.parcels.FindAll(pa => 0 == pa.DroneId);
+            return DataSource.Parcels.FindAll(pa => 0 == pa.DroneId);
         }   
     }
 }
