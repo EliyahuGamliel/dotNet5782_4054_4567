@@ -52,7 +52,13 @@ namespace IBL
                 pa.Delivered = p.Delivered;
                 //If a drone is associated with a parcel
                 if (p.DroneId != 0)
-                    pa.Drone = GetDroneById(p.DroneId);
+                {
+                    pa.Drone = new DroneInParcel();
+                    Drone d = GetDroneById(p.DroneId);
+                    pa.Drone.Battery = d.Battery;
+                    pa.Drone.Id = d.Id;
+                    pa.Drone.CLocation = d.CLocation;
+                }
                 
                 //CustomerInParcel - The Target Customer of Parcel 
                 CustomerInParcel cp1 = new CustomerInParcel();

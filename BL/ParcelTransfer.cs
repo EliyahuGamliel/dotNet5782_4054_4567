@@ -19,11 +19,6 @@ namespace IBL
             public WeightCategories Weight { get; set; }
             public bool Status { get; set; }
             
-            /// <summary>
-            /// Ctor of ParcelTransfer
-            /// </summary>
-            public ParcelTransfer() { this.CollectionLocation = new Location(); this.DestinationLocation = new Location(); this.Sender = new CustomerInParcel();this.Recipient = new CustomerInParcel(); }
-            
             /// <summary><returns>
             /// The function returns a string to print on all entity data
             /// </returns></summary>

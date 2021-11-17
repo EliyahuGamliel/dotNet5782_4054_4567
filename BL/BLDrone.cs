@@ -15,6 +15,7 @@ namespace IBL
         public string AddDrone(DroneList d, int idStation) {
             try {
                 IDAL.DO.Station s = data.GetStationById(idStation);
+                d.CLocation = new Location();
                 d.Battery = rand.Next(20,41);
                 d.Status = DroneStatuses.Maintenance;
                 d.CLocation.Lattitude = s.Lattitude;
@@ -133,7 +134,7 @@ namespace IBL
             DroneList dl = dronesList.Find(d => d.Id == Id);           
             dr.Id = dl.Id;
             dr.MaxWeight = dl.MaxWeight;
-            dr.Model = dr.Model;
+            dr.Model = dl.Model;
             dr.Status = dl.Status;
             dr.Battery = dl.Battery;
             dr.CLocation = dl.CLocation;
@@ -156,6 +157,7 @@ namespace IBL
                     IDAL.DO.Customer customerhelp = data.GetCustomerById(cp1.Id); 
                     cp1.Name = customerhelp.Name;
                     pt.Recipient = cp1;
+                    pt.DestinationLocation = new Location();
                     pt.DestinationLocation.Lattitude = customerhelp.Lattitude;
                     pt.DestinationLocation.Longitude = customerhelp.Longitude;
 
@@ -165,6 +167,7 @@ namespace IBL
                     customerhelp = data.GetCustomerById(cp2.Id); 
                     cp2.Name = customerhelp.Name;
                     pt.Sender = cp2;
+                    pt.CollectionLocation = new Location();
                     pt.CollectionLocation.Lattitude = customerhelp.Lattitude;
                     pt.CollectionLocation.Longitude = customerhelp.Longitude;
 

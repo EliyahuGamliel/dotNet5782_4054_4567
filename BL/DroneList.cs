@@ -16,11 +16,6 @@ namespace IBL
             public DroneStatuses Status{ get; set; }
             public Location CLocation { get; set; }
             public int ParcelId  { get; set;}
-            
-            /// <summary>
-            /// Ctor of DroneList
-            /// </summary>
-            public DroneList() { this.CLocation = new Location(); ParcelId = -1;}
 
             /// <summary><returns>
             /// The function returns a string to print on all entity data

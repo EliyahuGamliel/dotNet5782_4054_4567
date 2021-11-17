@@ -66,8 +66,10 @@ namespace IBL
                 st.Id = s.Id;
                 st.Name = s.Name;
                 st.ChargeSlots = s.ChargeSlots;
+                st.Location = new Location();
                 st.Location.Longitude = s.Longitude;
                 st.Location.Lattitude = s.Lattitude;
+                st.DCharge = new List<DroneCharge>();
                 foreach (var item in dronesList) {
                     //if drone is in charge in this station
                     if (item.CLocation.Lattitude == st.Location.Lattitude && item.CLocation.Longitude == st.Location.Longitude && item.Status == DroneStatuses.Maintenance) {

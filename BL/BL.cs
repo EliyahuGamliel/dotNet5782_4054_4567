@@ -38,6 +38,7 @@ namespace IBL
                 double minbattery = 0;
 
                 DroneList dl = new DroneList();
+                dl.CLocation = new Location();
                 dl.Id = item.Id;
                 dl.MaxWeight = (WeightCategories)(int)item.MaxWeight;
                 dl.Model = item.Model;

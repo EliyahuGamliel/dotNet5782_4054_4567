@@ -20,13 +20,13 @@ namespace IBL
             /// <summary>
             /// Ctor of Drone
             /// </summary>
-            public Drone() { this.CLocation = new Location(); this.PTransfer = new ParcelTransfer(); }
+           // public Drone() { this.CLocation = new Location(); this.PTransfer = new ParcelTransfer(); }
 
             /// <summary><returns>
             /// The function returns a string to print on all entity data
             /// </returns></summary>
             public override string ToString() 
-            { return $"Id: {Id}\n    Battery: {Math.Round(Battery, 3)}%\n    Model: {Model}\n    Status: {Status}\n    MaxWeight: {MaxWeight}\n    Location: {CLocation}    Parcel In Transfer: {PTransfer}"; }
+            { return $"Id: {Id}\nBattery: {Math.Round(Battery, 3)}%\nModel: {Model}\nStatus: {Status}\nMaxWeight: {MaxWeight}\nLocation: {CLocation}Parcel In Transfer: {PTransfer}"; }
         }
     }
 }

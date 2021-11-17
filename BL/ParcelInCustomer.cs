@@ -15,11 +15,6 @@ namespace IBL
             public Statuses Status { get; set; }
             public CustomerInParcel CParcel { get; set; }
             
-            /// <summary>
-            /// Ctor of ParcelInCustomer
-            /// </summary>
-            public ParcelInCustomer() { this.CParcel = new CustomerInParcel(); }
-            
             /// <summary><returns>
             /// The function returns a string to print on all entity data
             /// </returns></summary>

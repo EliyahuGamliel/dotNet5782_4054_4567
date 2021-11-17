@@ -31,14 +31,14 @@ namespace ConsoleUI
             int choice;
             do
             {
-                Console.WriteLine("Enter 0 to exit");
+                Console.WriteLine("\nEnter 0 to exit");
                 Console.WriteLine("Enter 1 for adding");
                 Console.WriteLine("Enter 2 for update");
                 Console.WriteLine("Enter 3 to show by Id");
                 Console.WriteLine("Enter 4 for print list");
                 choice = GetInt();
                 FirstMenu(choice);
-            } while (choice != MenuOptions.Exit);   
+            } while ((MenuOptions)choice != MenuOptions.Exit);   
         }
         /// <summary>
         /// The first part of the menu
@@ -149,8 +149,8 @@ namespace ConsoleUI
             switch ((Adding)num)
             {
                 case Adding.Exit:
-                    return;
                     break;
+
                 //For adding a station
                 case Adding.Station:
                     Station s = new Station();
