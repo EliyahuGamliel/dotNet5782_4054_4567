@@ -10,7 +10,7 @@ namespace DalObject
     /// </summary>
     public class DataSource
     {
-        readonly static Random r = new Random();
+        readonly static Random rando = new Random();
         internal static List<Drone> Drones = new List<Drone>();
         internal static List<Station> Stations = new List<Station>();
         internal static List<Customer> Customers = new List<Customer>();
@@ -34,88 +34,88 @@ namespace DalObject
             
             int ran;
             //Station
-            ran = r.Next(2, 6);
+            ran = rando.Next(2, 6);
             for (int i = 0; i < ran; ++i) {
-                int rid = r.Next();
+                int rid = rando.Next();
                 //h check if the random number is ranegal and if not h start over
                 for (int h = 0; h < i; ++h) {
                     if (rid == Stations[h].Id) {
                         h = -1;
-                        rid = r.Next();
+                        rid = rando.Next();
                     }
                 }
                 Station adst = new Station();
-                adst.ChargeSlots = 2 + r.Next(0, 3);
+                adst.ChargeSlots = 2 + rando.Next(0, 3);
                 adst.Id = rid;
                 adst.Name = adst.Id;
-                adst.Longitude = r.NextDouble() + r.Next(-180, 180);
-                adst.Lattitude = r.NextDouble() + r.Next(-90, 90);
+                adst.Longitude = rando.NextDouble() + rando.Next(-180, 180);
+                adst.Lattitude = rando.NextDouble() + rando.Next(-90, 90);
                 Stations.Add(adst);
             }
 
             //Customer
-            ran = r.Next(10, 101);
+            ran = rando.Next(10, 101);
             for (int i = 0; i < ran; ++i) {
-                int rid = r.Next();
+                int rid = rando.Next();
                 for (int h = 0; h < i; ++h) {
                     //h check if the random number is legal and if not h start over
                     if (rid == Customers[h].Id)
                     {
                         h = -1;
-                        rid = r.Next();
+                        rid = rando.Next();
                     }
                 }
                 Customer cust = new Customer();
                 cust.Id = rid;
                 cust.Name = ("MyNameIs" + i);
                 string phone = "0537589982";
-                rid = r.Next(1000, 10000);
+                rid = rando.Next(1000, 10000);
                 //h check if the random number is legal and if not h start over
                 for (int h = 0; h < i; ++h) {
                     phone = "053758" + rid;
                     if (phone == Customers[h].Phone) {
                         //it takes a random number from 1000 to 9999 and add it to "053758"
-                        rid = r.Next();
+                        rid = rando.Next();
                         h = -1;
                     }
                 }
                 cust.Phone = phone;
-                cust.Longitude = r.NextDouble() + r.Next(-180, 180);
-                cust.Lattitude = r.NextDouble() + r.Next(-90, 90);
+                cust.Longitude = rando.NextDouble() + rando.Next(-180, 180);
+                cust.Lattitude = rando.NextDouble() + rando.Next(-90, 90);
                 Customers.Add(cust);
             }
 
             //Drones
-            ran = r.Next(5, 11);
+            ran = rando.Next(5, 11);
             for (int i = 0; i < ran; ++i) {
-                int rid = r.Next();//rid = random id
+                int rid = rando.Next();//rid = random id
                 for (int h = 0; h < i; ++h) {
                     //to check if the id already exists
                     //h check if the random number is legal and if not h start over
                     if (rid == Drones[h].Id) {
                         h = -1;
-                        rid = r.Next();
+                        rid = rando.Next();
                     }
                 }
                 Drone d = new Drone();
                 d.Id = rid;
                 d.Model = ("Minip" + i);
-                d.MaxWeight = (WeightCategories)(r.Next(0, 3));
+                d.MaxWeight = (WeightCategories)(rando.Next(0, 3));
                 Drones.Add(d);
             }
 
             //Parcel
-            ran = r.Next(10, 1001);
+            ran = rando.Next(10, 1001);
             for (int i = 0; i < ran; ++i) {
                 Parcel p = new Parcel();
-                p.Weight = (WeightCategories)(r.Next(0, 3));
+                p.Weight = (WeightCategories)(rando.Next(0, 3));
                 p.Id = Config.NumberID;
                 Config.NumberID += 1;
                 //Randomize the requested field
-                p.Requested = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
+                p.Requested = new DateTime(2021, rando.Next(10, 13), rando.Next(1, 28), rando.Next(0, 24), rando.Next(0, 60), rando.Next(0, 60));
                 //As long as the "Requested" field precedes the current time
                 while (DateTime.Compare(DateTime.Now, p.Requested) <= 0)
-                            p.Requested = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
+                            p.Requested = new DateTime(2021, rando.Next(10, 13), rando.Next(1, 28), rando.Next(0, 24), rando.Next(0, 60), rando.Next(0, 60));
 
                 foreach (var item in Drones) 
                 {
@@ -128,27 +128,27 @@ namespace DalObject
                     if (item.MaxWeight >= p.Weight && check) {
                         p.DroneId = item.Id;
                         //Randomize the "Scheduled" field
-                        p.Scheduled = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
+                        p.Scheduled = new DateTime(2021, rando.Next(10, 13), rando.Next(1, 28), rando.Next(0, 24), rando.Next(0, 60), rando.Next(0, 60));
                         //As long as the "Scheduled" field precedes the current time or As long as the "Scheduled" field precedes the "Requested" field
                         while (DateTime.Compare(p.Scheduled, p.Requested) <= 0 || DateTime.Compare(DateTime.Now, p.Scheduled) <= 0)
-                            p.Scheduled = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
+                            p.Scheduled = new DateTime(2021, rando.Next(10, 13), rando.Next(1, 28), rando.Next(0, 24), rando.Next(0, 60), rando.Next(0, 60));
                         
                         //Grill a random number that characterizes the status of the parcel (associated, collected, supplied)
-                        int rand = r.Next(0,3);
+                        int rand = rando.Next(0,3);
                         if (rand > 0) {
 
                             //Randomize the "PickedUp" field
-                            p.PickedUp = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
+                            p.PickedUp = new DateTime(2021, rando.Next(10, 13), rando.Next(1, 28), rando.Next(0, 24), rando.Next(0, 60), rando.Next(0, 60));
                             //As long as the "PickedUp" field precedes the current time or As long as the "PickedUp" field precedes the "Scheduled" field
                             while (DateTime.Compare(p.PickedUp, p.Scheduled) <= 0 || DateTime.Compare(DateTime.Now, p.PickedUp) <= 0)
-                                p.PickedUp = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
+                                p.PickedUp = new DateTime(2021, rando.Next(10, 13), rando.Next(1, 28), rando.Next(0, 24), rando.Next(0, 60), rando.Next(0, 60));
 
                             if (rand == 2) {
                                 //Randomize the "Delivered" field
-                                p.Delivered = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
+                                p.Delivered = new DateTime(2021, rando.Next(10, 13), rando.Next(1, 28), rando.Next(0, 24), rando.Next(0, 60), rando.Next(0, 60));
                                 //As long as the "Delivered" field precedes the current time or As long as the "Delivered" field precedes the "PickedUp" field
                                 while (DateTime.Compare(p.Delivered, p.PickedUp) <= 0 || DateTime.Compare(DateTime.Now, p.Delivered) <= 0)
-                                    p.Delivered = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
+                                    p.Delivered = new DateTime(2021, rando.Next(10, 13), rando.Next(1, 28), rando.Next(0, 24), rando.Next(0, 60), rando.Next(0, 60));
                             }
                         }
                         //Since a drone is found for the parcel, it is possible to exit the loop
@@ -156,16 +156,16 @@ namespace DalObject
                     }
                 }
 
-                int ind = r.Next(0, Customers.Count);
+                int ind = rando.Next(0, Customers.Count);
                 p.TargetId = Customers[ind].Id;
                 
-                ind = r.Next(0, Customers.Count);
+                ind = rando.Next(0, Customers.Count);
                 //so that the sender and the target won't be the same customer
                 while (p.TargetId == Customers[ind].Id) {
-                    ind = r.Next(0, Customers.Count);
+                    ind = rando.Next(0, Customers.Count);
                 }
                 p.SenderId = Customers[ind].Id;
-                p.Priority = (Priorities)(r.Next(0, 3));
+                p.Priority = (Priorities)(rando.Next(0, 3));
                 Parcels.Add(p);//add all the randomized fields as a last parcel
             }
         }
