@@ -47,13 +47,13 @@ namespace DalObject
                         rid = r.Next();
                     }
                 }
-                Station s = new Station();
-                s.ChargeSlots = 2 + r.Next(0, 3);
-                s.Id = rid;
-                s.Name = s.Id;
-                s.Longitude = r.NextDouble() + r.Next(-180, 180);
-                s.Lattitude = r.NextDouble() + r.Next(-90, 90);
-                Stations.Add(s);
+                Station adst = new Station();
+                adst.ChargeSlots = 2 + r.Next(0, 3);
+                adst.Id = rid;
+                adst.Name = adst.Id;
+                adst.Longitude = r.NextDouble() + r.Next(-180, 180);
+                adst.Lattitude = r.NextDouble() + r.Next(-90, 90);
+                Stations.Add(adst);
             }
 
             //Customer
@@ -91,7 +91,7 @@ namespace DalObject
             //Drones
             ran = r.Next(5, 11);
             for (int i = 0; i < ran; ++i) {
-                int rid = r.Next();
+                int rid = r.Next();//rid = random id
                 for (int h = 0; h < i; ++h) {
                     //to check if the id already exists
                     //h check if the random number is legal and if not h start over
