@@ -1,9 +1,8 @@
 using System;
 
-namespace IDAL
+namespace IDAL.DO
 {
-    namespace DO
-    {
+    
         /// <summary>
         /// Defining the "Parcel" struct
         /// </summary>
@@ -26,5 +25,5 @@ namespace IDAL
             public override string ToString() 
             { return $"Id: {Id}\nSenderld: {SenderId}\nTargetld: {TargetId}\nWeight: {Weight}\nPriority: {Priority}\nRequested: {Requested}\ndroneId: {DroneId}\nScheduled: {Scheduled}\nPickedUp: {PickedUp}\nDelivered:{Delivered}\n"; }
         }
-    }
+    
 }

@@ -1,13 +1,12 @@
 ﻿using System;
 
-namespace IDAL
+namespace IDAL.DO
 {
-    namespace DO
-    {
-        /// <summary>
-        /// Set up all the enums relevant to the program
-        /// </summary>
-        public enum WeightCategories {Light, Medium, Heavy}
-        public enum Priorities {Normal, Fast, Emergency}
-    }
+
+    /// <summary>
+    /// Set up all the enums relevant to the program
+    /// </summary>
+    public enum WeightCategories { Light, Medium, Heavy }
+    public enum Priorities { Normal, Fast, Emergency }
+
 }
