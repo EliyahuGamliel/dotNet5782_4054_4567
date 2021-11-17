@@ -21,7 +21,7 @@ namespace ConsoleUI
         enum Adding { Exit, Station, Drone, Customer, Parcel }
         enum Update { Exit, DroneModel, StationDetails, CustomerDetails, SendDrone, ReleaseDrone, AssignParcel, PickParcel, DeliverParcel }
         enum List { Exit, Stations, Drones, Customers, Parcels, UnAssignmentParcels, AvailableChargingStations }
-        enum Status { Exit, Stations, Drones, Customers, Parcels, UnAssignmentParcels, AvailableChargingStations }
+        enum Status { Exit, Stations, Drones, Customers, Parcels }
 
         /// <summary>
         /// The MainMenu
@@ -348,12 +348,11 @@ namespace ConsoleUI
             int ID = GetInt();
             switch ((Status)num)
             {
-                //
+                case Status.Exit:
+                    return;
                 case Status.Stations:
                     Console.WriteLine(logic.GetStationById(ID));
                     break;
-                
-                //
                 case Status.Drones:
                     Console.WriteLine(logic.GetDroneById(ID));
                     break;
