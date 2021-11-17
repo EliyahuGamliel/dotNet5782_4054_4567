@@ -17,6 +17,11 @@ namespace ConsoleUI
             MainMenu();
         }
 
+        enum MenuOptions { Exit, Add, Update, Status, ShowList}
+        enum Adding { Exit, Station, Drone, Customer, Parcel }
+        enum Update { Exit, DroneModel, StationDetails, CustomerDetails, SendDrone, ReleaseDrone, AssignParcel, PickParcel, DeliverParcel }
+        enum List { Exit, BaseStations, Drones, Customers, Parcels, UnAssignmentParcels, AvailableChargingStations }
+
         /// <summary>
         /// The MainMenu
         /// </summary>
@@ -43,16 +48,18 @@ namespace ConsoleUI
             try
             {
                 bool help = true;
-                switch (choice)
+                switch ((MenuOptions)choice)
                 {
-                    case 1:
+                    case MenuOptions.Add:
+                        Console.WriteLine("Enter 0 to exit");
                         Console.WriteLine("Enter 1 for adding a station");
                         Console.WriteLine("Enter 2 for adding a drone");
                         Console.WriteLine("Enter 3 for adding a customer");
                         Console.WriteLine("Enter 4 for adding a parcel");
                         break;
 
-                    case 2:
+                    case MenuOptions.Update:
+                        Console.WriteLine("Enter 0 to exit");
                         Console.WriteLine("Enter 1 for update drone's name");
                         Console.WriteLine("Enter 2 for update station's data");
                         Console.WriteLine("Enter 3 for update customer's data");
@@ -63,14 +70,16 @@ namespace ConsoleUI
                         Console.WriteLine("Enter 8 for delivery a parcel by drone");
                         break;
 
-                    case 3:
+                    case MenuOptions.Status:
+                        Console.WriteLine("Enter 0 to exit");
                         Console.WriteLine("Enter 1 for station status");
                         Console.WriteLine("Enter 2 for drone status");
                         Console.WriteLine("Enter 3 for customer status");
                         Console.WriteLine("Enter 4 for parcel status");
                         break;
 
-                    case 4:
+                    case MenuOptions.ShowList:
+                        Console.WriteLine("Enter 0 to exit");
                         Console.WriteLine("Enter 1 for the stations's list");
                         Console.WriteLine("Enter 2 for drones's list");
                         Console.WriteLine("Enter 3 for customers's list");
@@ -79,7 +88,7 @@ namespace ConsoleUI
                         Console.WriteLine("Enter 6 for the list of stations that have sper place for charging");
                         break;
 
-                    case 5:
+                    case MenuOptions.Exit:
                         Console.WriteLine("Bye Bye!");
                         return;
                     
@@ -91,6 +100,10 @@ namespace ConsoleUI
                 if (help) {
                     int secondChoice;
                     secondChoice = GetInt();
+                    if(secondChoice == 0)
+                    {
+                        return;
+                    }
                     SecondMenu(choice, secondChoice);
                 }
             }
@@ -132,10 +145,13 @@ namespace ConsoleUI
         /// </summary>
         /// <param name="num">The second choice of the user</param>
         static void adding(int num) {
-            switch (num)
+            switch ((Adding)num)
             {
+                case Adding.Exit:
+                    return;
+                    break;
                 //For adding a station
-                case 1:
+                case Adding.Station:
                     Station s = new Station();
                     Console.WriteLine("Enter Station Id: ");
                     s.Id = GetInt();
@@ -151,7 +167,7 @@ namespace ConsoleUI
                     break;
                 
                 //For adding a drone
-                case 2:
+                case Adding.Drone:
                     int idStation;
                     DroneList d = new DroneList();
                     Console.WriteLine("Enter Id: ");
@@ -166,7 +182,7 @@ namespace ConsoleUI
                     break;
 
                 //For adding a customer
-                case 3:
+                case Adding.Customer:
                     Customer c = new Customer();
                     Console.WriteLine("Enter the Id: ");
                     c.Id = GetInt();
@@ -181,7 +197,7 @@ namespace ConsoleUI
                     break;
 
                 //For adding a parcel
-                case 4:
+                case Adding.Parcel:
                     Parcel p = new Parcel();
                     Console.WriteLine("Enter senderId: ");
                     int SenderId = GetInt();
@@ -209,19 +225,19 @@ namespace ConsoleUI
             int id;
             string input;
             bool success;
-            switch (num)
+            switch ((Update)num)
             {
-                //
-                case 1:
+                case Update.Exit:
+                    return;
+                    break;
+                case Update.DroneModel:
                     Console.WriteLine("Enter Id of Drone: ");
                     id = GetInt();
                     Console.WriteLine("Enter new Model to Drone: ");
                     string modelDrone = Console.ReadLine();
                     System.Console.WriteLine(logic.UpdateDrone(id ,modelDrone));
                     break;
-                
-                //
-                case 2:
+                case Update.StationDetails:
                     int nameStation = -1;
                     int chargeSlots = -1;
                     Console.WriteLine("Enter Id of Station: ");
@@ -261,9 +277,7 @@ namespace ConsoleUI
                     }
                     System.Console.WriteLine(logic.UpdateStation(id, nameStation, chargeSlots));
                     break;
-
-                //
-                case 3:
+                case Update.CustomerDetails:
                     Console.WriteLine("Enter Id of Customer: ");
                     id = GetInt();
                     Console.WriteLine("Enter a new name to Customer: ");
@@ -294,39 +308,29 @@ namespace ConsoleUI
                         phoneCustomer = "";
                     System.Console.WriteLine(logic.UpdateCustomer(id, nameCustomer, phoneCustomer));
                     break;
-
-                //
-                case 4:
+                case Update.SendDrone:
                     Console.WriteLine("Enter Id of Drone: ");
                     id = GetInt();
                     System.Console.WriteLine(logic.SendDrone(id));
                     break;
-                
-                //
-                case 5:
+                case Update.ReleaseDrone:
                     Console.WriteLine("Enter Id of Drone: ");
                     id = GetInt();
                     Console.WriteLine("Enter How long was the drone charging: ");
                     double time = GetDouble();
                     System.Console.WriteLine(logic.ReleasDrone(id, time));
                     break;
-                
-                //
-                case 6:
+                case Update.AssignParcel:
                     Console.WriteLine("Enter Id of Drone: ");
                     id = GetInt();
                     System.Console.WriteLine(logic.AssignDroneParcel(id));
                     break;
-
-                //
-                case 7:
+                case Update.PickParcel:
                     Console.WriteLine("Enter Id of Drone: ");
                     id = GetInt();
                     System.Console.WriteLine(logic.PickUpDroneParcel(id));
                     break;
-
-                //
-                case 8:
+                case Update.DeliverParcel:
                     Console.WriteLine("Enter Id of Drone: ");
                     id = GetInt();
                     System.Console.WriteLine(logic.DeliverParcelCustomer(id));
@@ -381,37 +385,37 @@ namespace ConsoleUI
                 //For displaying a list of base stations
                 case 1:
                     foreach (var item in logic.GetStations())
-                        Console.WriteLine(item.ToString());
+                        Console.WriteLine(item);
                     break;
                 
                 //For displaying a list of drones
                 case 2:
                     foreach (var item in logic.GetDrones())
-                        Console.WriteLine(item.ToString());
+                        Console.WriteLine(item);
                     break;
                 
                 //For displaying a list of customer
                 case 3:
                     foreach (var item in logic.GetCustomers())
-                        Console.WriteLine(item.ToString());
+                        Console.WriteLine(item);
                     break;
             
                 //For displaying a list of parcels
                 case 4:
                     foreach (var item in logic.GetParcels())
-                        Console.WriteLine(item.ToString());
+                        Console.WriteLine(item);
                     break;
 
                 //To display a list of parcels that have not yet been associated with a drone
                 case 5:
                     foreach (var item in logic.GetParcelDrone())
-                        Console.WriteLine(item.ToString());
+                        Console.WriteLine(item);
                     break;
                     
                 //For displaying base stations with available charging stations
                 case 6:
                     foreach (var item in logic.GetStationCharge())
-                        Console.WriteLine(item.ToString());
+                        Console.WriteLine(item);
                     break;
 
                 default: 
