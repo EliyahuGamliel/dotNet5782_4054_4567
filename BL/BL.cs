@@ -30,20 +30,20 @@ namespace IBL
             WeightHeavy = arr[3];
             ChargingRate = arr[4];
 
-            IEnumerable<IDAL.DO.Drone> list_d = data.GetDrones();
+            IEnumerable<IDAL.DO.Drone> droneslist = data.GetDrones();
             //
-            foreach (var item in list_d)
+            foreach (var item in droneslist)
             {
                 bool help = true;
-                double min_battery = 0;
+                double minbattery = 0;
 
                 DroneList dl = new DroneList();
                 dl.Id = item.Id;
                 dl.MaxWeight = (WeightCategories)(int)item.MaxWeight;
                 dl.Model = item.Model;
 
-                IEnumerable<IDAL.DO.Parcel> list_p = data.GetParcels();
-                foreach (var itemParcel in list_p)
+                IEnumerable<IDAL.DO.Parcel> parcelslist = data.GetParcels();
+                foreach (var itemParcel in parcelslist)
                 {
                     //If the parcel is associated with the drone and also the parcrel in the middle of the shipment
                     if (itemParcel.DroneId == dl.Id && (ReturnStatus(itemParcel) == 1 || ReturnStatus(itemParcel) == 2))
@@ -53,29 +53,29 @@ namespace IBL
                         //If the parcel was only associated
                         if (ReturnStatus(itemParcel) == 1)
                         {
-                            Customer c = GetCustomerById(itemParcel.SenderId);
-                            dl.CLocation.Longitude = ReturnCloseStation(data.GetStations(), c.Location).Longitude;
-                            dl.CLocation.Lattitude = ReturnCloseStation(data.GetStations(), c.Location).Lattitude;
+                            Customer customer = GetCustomerById(itemParcel.SenderId);
+                            dl.CLocation.Longitude = ReturnCloseStation(data.GetStations(), customer.Location).Longitude;
+                            dl.CLocation.Lattitude = ReturnCloseStation(data.GetStations(), customer.Location).Lattitude;
                         }
                         //If the parcel was also collected
                         else
                         {
-                            Customer c = GetCustomerById(itemParcel.SenderId);
-                            dl.CLocation = c.Location;
+                            Customer customer = GetCustomerById(itemParcel.SenderId);
+                            dl.CLocation = customer.Location;
                         }
 
                         //The customer target of the parcel
-                        Customer cu = GetCustomerById(itemParcel.TargetId);
+                        Customer customertar = GetCustomerById(itemParcel.TargetId);
                         Location l1 = new Location();
-                        l1 = cu.Location;
+                        l1 = customertar.Location;
 
                         Location l2 = new Location();
                         l2.Lattitude = ReturnCloseStation(data.GetStations(), l1).Lattitude;
                         l2.Longitude = ReturnCloseStation(data.GetStations(), l1).Longitude;
 
                         //Minimum battery to finish the shipment
-                        min_battery = ReturnBattery((int)itemParcel.Weight, dl.CLocation, l1) + ReturnBattery(3, dl.CLocation, l2);
-                        dl.Battery = rand.NextDouble() + rand.Next((int)min_battery + 1, 100);
+                        minbattery = ReturnBattery((int)itemParcel.Weight, dl.CLocation, l1) + ReturnBattery(3, dl.CLocation, l2);
+                        dl.Battery = rand.NextDouble() + rand.Next((int)minbattery + 1, 100);
                         if (dl.Battery > 100)
                             dl.Battery = 100;
                         //The drone is in delivery mode
@@ -92,12 +92,12 @@ namespace IBL
                     if (dl.Status == DroneStatuses.Maintenance)
                     {
                         int counter = 0;
-                        IEnumerable<IDAL.DO.Station> list_s = data.GetStations();
-                        foreach (var itemStation in list_s)
+                        IEnumerable<IDAL.DO.Station> stationslist = data.GetStations();
+                        foreach (var itemStation in stationslist)
                             counter += 1;
                         //The drone is at a random station
                         int s = rand.Next(0, counter);
-                        foreach (var itemStation in list_s)
+                        foreach (var itemStation in stationslist)
                         {
                             if (s == 0)
                             {
@@ -114,13 +114,13 @@ namespace IBL
                     else
                     {
                         int counter = 0;
-                        IEnumerable<CustomerList> list_c = GetCustomers();
-                        foreach (var itemCustomer in list_c)
+                        IEnumerable<CustomerList> customerslist = GetCustomers();
+                        foreach (var itemCustomer in customerslist)
                             if (itemCustomer.ParcelsGet > 0)
                                 counter += 1;
                         //The drone is at a random customer Location
                         int s = rand.Next(0, counter);
-                        foreach (var itemCustomer in list_c)
+                        foreach (var itemCustomer in customerslist)
                         {
                             if (s == 0)
                             {
@@ -136,8 +136,8 @@ namespace IBL
                         Location l = new Location();
                         l.Lattitude = ReturnCloseStation(data.GetStations(), dl.CLocation).Lattitude;
                         l.Longitude = ReturnCloseStation(data.GetStations(), dl.CLocation).Longitude;
-                        min_battery = ReturnBattery(3, dl.CLocation, l);
-                        dl.Battery = rand.NextDouble() + rand.Next((int)min_battery + 1, 100);
+                        minbattery = ReturnBattery(3, dl.CLocation, l);
+                        dl.Battery = rand.NextDouble() + rand.Next((int)minbattery + 1, 100);
                         if (dl.Battery > 100)
                             dl.Battery = 100;
                     }
@@ -157,44 +157,44 @@ namespace IBL
             DroneList d = dronesList.Find(dr => dr.Id == DroneId);
             int index = dronesList.IndexOf(d);
 
-            IDAL.DO.Parcel p_choose = new IDAL.DO.Parcel();
-            IEnumerable<IDAL.DO.Parcel> list_p = data.GetParcels();
-            p_choose.Id = -1;
+            IDAL.DO.Parcel parcelchoose = new IDAL.DO.Parcel();
+            IEnumerable<IDAL.DO.Parcel> parcelslist = data.GetParcels();
+            parcelchoose.Id = -1;
             bool first = true;
-            foreach (var item in list_p)
+            foreach (var item in parcelslist)
             {
-                Customer c_sender = GetCustomerById(item.SenderId);
-                Customer c_target = GetCustomerById(item.TargetId);
-                IDAL.DO.Station s_close = ReturnCloseStation(data.GetStations(), c_target.Location);
-                Location l_s = new Location();
-                l_s.Lattitude = s_close.Lattitude;
-                l_s.Longitude = s_close.Longitude;
+                Customer customersender = GetCustomerById(item.SenderId);
+                Customer customertarget = GetCustomerById(item.TargetId);
+                IDAL.DO.Station stationclose = ReturnCloseStation(data.GetStations(), customertarget.Location);
+                Location stationlocation = new Location();
+                stationlocation.Lattitude = stationclose.Lattitude;
+                stationlocation.Longitude = stationclose.Longitude;
                 //drone go to the coustomer sender location
-                double min_battery = ReturnBattery(3, d.CLocation, c_sender.Location);
+                double minbattery = ReturnBattery(3, d.CLocation, customersender.Location);
                 //and fron there drone go to the coustomer target location
-                min_battery += ReturnBattery((int)item.Weight, c_sender.Location, c_target.Location);
+                minbattery += ReturnBattery((int)item.Weight, customersender.Location, customertarget.Location);
                 //and fron there drone go to the close station
-                min_battery += ReturnBattery(3, c_target.Location, l_s);
-                if (d.Battery >= min_battery)
+                minbattery += ReturnBattery(3, customertarget.Location, stationlocation);
+                if (d.Battery >= minbattery)
                     //First parcel that not associated
                     if (first && ReturnStatus(item) == 0)
-                        p_choose = item;
+                        parcelchoose = item;
                     else if (ReturnStatus(item) == 0)
                         //The most preferred parcel for associated
-                        p_choose = CompressParcels(p_choose, item, d);
+                        parcelchoose = CompressParcels(parcelchoose, item, d);
             }
 
             //There are no matching parcels
-            if (p_choose.Id == -1)
+            if (parcelchoose.Id == -1)
                 throw new DroneCannotAssigan();
 
             d.Status = DroneStatuses.Delivery;
-            d.ParcelId = p_choose.Id;
+            d.ParcelId = parcelchoose.Id;
             dronesList[index] = d;
-            p_choose.Scheduled = DateTime.Now;
-            p_choose.DroneId = d.Id;
+            parcelchoose.Scheduled = DateTime.Now;
+            parcelchoose.DroneId = d.Id;
 
-            data.UpdateParcel(p_choose);
+            data.UpdateParcel(parcelchoose);
             return "The update was successful\n";
         }
 
@@ -233,16 +233,16 @@ namespace IBL
         {
             CheckNotExistId(dronesList, id);
             DroneList d = dronesList.Find(dr => dr.Id == id);
-            Drone d_help = GetDroneById(id);
+            Drone chosendrone = GetDroneById(id);
             int index = dronesList.IndexOf(d);
 
             IDAL.DO.Parcel p = data.GetParcelById(d.ParcelId);
 
             CheckDroneCannotPickUp(p);
             p.PickedUp = DateTime.Now;
-            double battery = ReturnBattery(3, d.CLocation, d_help.PTransfer.Collection_Location);
+            double battery = ReturnBattery(3, d.CLocation, chosendrone.PTransfer.CollectionLocation);
             d.Battery -= battery;
-            d.CLocation = d_help.PTransfer.Collection_Location;
+            d.CLocation = chosendrone.PTransfer.CollectionLocation;
             dronesList[index] = d;
             data.UpdateParcel(p);
             return "The update was successful\n";
@@ -257,16 +257,16 @@ namespace IBL
         {
             CheckNotExistId(dronesList, id);
             DroneList d = dronesList.Find(dr => dr.Id == id);
-            Drone d_help = GetDroneById(id);
+            Drone chosendrone = GetDroneById(id);
             int index = dronesList.IndexOf(d);
 
             IDAL.DO.Parcel p = data.GetParcelById(d.ParcelId);
             CheckDroneCannotDeliver(p);
             p.Delivered = DateTime.Now;
-            double battery = ReturnBattery(3, d.CLocation, d_help.PTransfer.Destination_Location);
+            double battery = ReturnBattery(3, d.CLocation, chosendrone.PTransfer.DestinationLocation);
             d.Status = DroneStatuses.Available;
             d.Battery -= battery;
-            d.CLocation = d_help.PTransfer.Destination_Location;
+            d.CLocation = chosendrone.PTransfer.DestinationLocation;
             d.ParcelId = -1;
             dronesList[index] = d;
             data.UpdateParcel(p);
@@ -377,8 +377,8 @@ namespace IBL
         {
             foreach (var item in list)
             {
-                int id_object = (int)(typeof(T).GetProperty("Id").GetValue(item, null));
-                if (id_object == id)
+                int idobject = (int)(typeof(T).GetProperty("Id").GetValue(item, null));
+                if (idobject == id)
                     throw new IdExistException(id);
             }
         }
@@ -394,8 +394,8 @@ namespace IBL
         {
             foreach (var item in list)
             {
-                int id_object = (int)(typeof(T).GetProperty("Id").GetValue(item, null));
-                if (id_object == id)
+                int idobject = (int)(typeof(T).GetProperty("Id").GetValue(item, null));
+                if (idobject == id)
                     return;
             }
             throw new IdNotExistException(id);

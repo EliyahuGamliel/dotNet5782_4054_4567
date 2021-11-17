@@ -156,8 +156,8 @@ namespace IBL
                     IDAL.DO.Customer c_help = data.GetCustomerById(cp1.Id); 
                     cp1.Name = c_help.Name;
                     pt.Recipient = cp1;
-                    pt.Destination_Location.Lattitude = c_help.Lattitude;
-                    pt.Destination_Location.Longitude = c_help.Longitude;
+                    pt.DestinationLocation.Lattitude = c_help.Lattitude;
+                    pt.DestinationLocation.Longitude = c_help.Longitude;
 
                     //CustomerInParcel - The Sender Customer of Parcel 
                     CustomerInParcel cp2 = new CustomerInParcel();
@@ -165,10 +165,10 @@ namespace IBL
                     c_help = data.GetCustomerById(cp2.Id); 
                     cp2.Name = c_help.Name;
                     pt.Sender = cp2;
-                    pt.Collection_Location.Lattitude = c_help.Lattitude;
-                    pt.Collection_Location.Longitude = c_help.Longitude;
+                    pt.CollectionLocation.Lattitude = c_help.Lattitude;
+                    pt.CollectionLocation.Longitude = c_help.Longitude;
 
-                    pt.Transport_Distance = DistanceTo(pt.Collection_Location, pt.Destination_Location);
+                    pt.CollectionLocation = DistanceTo(pt.CollectionLocation, pt.DestinationLocation);
 
                     dr.PTransfer = pt;
                 }

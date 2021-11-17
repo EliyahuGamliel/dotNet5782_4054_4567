@@ -13,22 +13,22 @@ namespace IBL
             public Priorities Priority { get; set; }
             public CustomerInParcel Sender { get; set; }
             public CustomerInParcel Recipient { get; set; }
-            public Location Collection_Location { get; set; }
-            public Location Destination_Location { get; set; }
-            public double Transport_Distance { get; set; }
+            public Location CollectionLocation { get; set; }
+            public Location DestinationLocation { get; set; }
+            public double TransportDistance { get; set; }
             public WeightCategories Weight { get; set; }
             public bool Status { get; set; }
             
             /// <summary>
             /// Ctor of ParcelTransfer
             /// </summary>
-            public ParcelTransfer() { this.Collection_Location = new Location(); this.Destination_Location = new Location(); this.Sender = new CustomerInParcel();this.Recipient = new CustomerInParcel(); }
+            public ParcelTransfer() { this.CollectionLocation = new Location(); this.DestinationLocation = new Location(); this.Sender = new CustomerInParcel();this.Recipient = new CustomerInParcel(); }
             
             /// <summary><returns>
             /// The function returns a string to print on all entity data
             /// </returns></summary>
             public override string ToString() 
-            { return $"\n      Id: {Id}\n      Priority: {Priority}\n      Weight: {Weight}\n      Transport Distance: {Transport_Distance}\n      Status: {Status}\n      Collection Location: {Collection_Location}      Destination Location: {Destination_Location}      The Sender: {Sender.ToString()}      The Recipient: {Recipient.ToString()}"; }
+            { return $"\n      Id: {Id}\n      Priority: {Priority}\n      Weight: {Weight}\n      Transport Distance: {TransportDistance}\n      Status: {Status}\n      Collection Location: {CollectionLocation}      Destination Location: {DestinationLocation}      The Sender: {Sender.ToString()}      The Recipient: {Recipient.ToString()}"; }
         }
     }
 }

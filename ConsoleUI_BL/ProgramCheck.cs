@@ -39,7 +39,7 @@ namespace ConsoleUI
         }
 
         /// <summary>
-        /// 
+        /// gets a number as a string
         /// </summary>
         /// <returns></returns>
         static string GetStringInt()
