@@ -168,7 +168,7 @@ namespace IBL
                     pt.CollectionLocation.Lattitude = c_help.Lattitude;
                     pt.CollectionLocation.Longitude = c_help.Longitude;
 
-                    pt.CollectionLocation = DistanceTo(pt.CollectionLocation, pt.DestinationLocation);
+                    pt.TransportDistance = DistanceTo(pt.CollectionLocation, pt.DestinationLocation);
 
                     dr.PTransfer = pt;
                 }
