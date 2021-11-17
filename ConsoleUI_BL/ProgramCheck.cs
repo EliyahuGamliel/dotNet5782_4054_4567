@@ -10,7 +10,7 @@ namespace ConsoleUI
         /// keep getting numbers till it gets a legal one
         /// </summary>
         /// <returns> a legal int </returns>
-        static int GetInt()
+        private static int GetInt()
         {
             int num;
             bool error = Int32.TryParse(Console.ReadLine(), out num);
@@ -26,7 +26,7 @@ namespace ConsoleUI
         /// keep getting numbers till it gets a legal one
         /// </summary>
         /// <returns>a legal double</returns>
-        static double GetDouble()
+        private static double GetDouble()
         {
             double num;
             bool error = Double.TryParse(Console.ReadLine(), out num);
@@ -42,7 +42,7 @@ namespace ConsoleUI
         /// gets a number as a string
         /// </summary>
         /// <returns></returns>
-        static string GetStringInt()
+        private static string GetStringInt()
         {
             string num = Console.ReadLine();
             int check;

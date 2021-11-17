@@ -10,7 +10,7 @@ namespace DalObject
     /// </summary>
     public class DataSource
     {
-        static Random r = new Random();
+        readonly static Random r = new Random();
 
 
         internal static List<Drone> Drones = new List<Drone>();
@@ -21,11 +21,11 @@ namespace DalObject
         
         internal class Config
         {
-            public static int NumberID = 1;
-            public static double Avaliable = 0.0001;
-            public static double WeightLight = 0.00025;
-            public static double WeightMedium = 0.0004;
-            public static double WeightHeavy = 0.00055;
+            internal static int NumberID = 1;
+            internal static double Avaliable = 0.0001;
+            internal static double WeightLight = 0.00025;
+            internal static double WeightMedium = 0.0004;
+            internal static double WeightHeavy = 0.00055;
             public static double ChargingRate = 30;
         }
 
@@ -34,13 +34,13 @@ namespace DalObject
         /// </summary>
         public static void Initialize() {
             
-            int l;
+            int ran;
             
             //Station
-            l = r.Next(2, 6);
-            for (int i = 0; i < l; ++i) {
+            ran = r.Next(2, 6);
+            for (int i = 0; i < ran; ++i) {
                 int rid = r.Next();
-                //h check if the random number is legal and if not h start over
+                //h check if the random number is ranegal and if not h start over
                 for (int h = 0; h < i; ++h) {
                     if (rid == Stations[h].Id) {
                         h = -1;
@@ -57,8 +57,8 @@ namespace DalObject
             }
 
             //Customer
-            l = r.Next(10, 101);
-            for (int i = 0; i < l; ++i) {
+            ran = r.Next(10, 101);
+            for (int i = 0; i < ran; ++i) {
                 int rid = r.Next();
                 for (int h = 0; h < i; ++h) {
                     //h check if the random number is legal and if not h start over
@@ -89,8 +89,8 @@ namespace DalObject
             }
 
             //Drones
-            l = r.Next(5, 11);
-            for (int i = 0; i < l; ++i) {
+            ran = r.Next(5, 11);
+            for (int i = 0; i < ran; ++i) {
                 int rid = r.Next();
                 for (int h = 0; h < i; ++h) {
                     //to check if the id already exists
@@ -108,8 +108,8 @@ namespace DalObject
             }
 
             //Parcel
-            l = r.Next(10, 1001);
-            for (int i = 0; i < l; ++i) {
+            ran = r.Next(10, 1001);
+            for (int i = 0; i < ran; ++i) {
                 Parcel p = new Parcel();
                 p.Weight = (WeightCategories)(r.Next(0, 3));
                 p.Id = Config.NumberID;
