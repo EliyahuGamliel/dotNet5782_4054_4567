@@ -17,10 +17,10 @@ namespace DalObject
             CheckExistId(DataSource.parcels, p.Id);
             CheckNotExistId(DataSource.customers, p.SenderId);
             CheckNotExistId(DataSource.customers, p.TargetId);
-            p.Id = DataSource.Config.Number_ID;
+            p.Id = DataSource.Config.NumberID;
             DataSource.parcels.Add(p);
-            DataSource.Config.Number_ID += 1;
-            return DataSource.Config.Number_ID;
+            DataSource.Config.NumberID += 1;
+            return DataSource.Config.NumberID;
         }
 
         /// <summary>

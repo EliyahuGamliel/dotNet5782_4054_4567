@@ -17,7 +17,7 @@ namespace DalObject
         
         internal class Config
         {
-            public static int Number_ID = 1;
+            public static int NumberID = 1;
             public static double Avaliable = 0.0001;
             public static double WeightLight = 0.00025;
             public static double WeightMedium = 0.0004;
@@ -108,8 +108,8 @@ namespace DalObject
             for (int i = 0; i < l; ++i) {
                 Parcel p = new Parcel();
                 p.Weight = (WeightCategories)(r.Next(0, 3));
-                p.Id = Config.Number_ID;
-                Config.Number_ID += 1;
+                p.Id = Config.NumberID;
+                Config.NumberID += 1;
                 //Randomize the requested field
                 p.Requested = new DateTime(2021, r.Next(10, 13), r.Next(1, 28), r.Next(0, 24), r.Next(0, 60), r.Next(0, 60));
                 //As long as the "Requested" field precedes the current time
