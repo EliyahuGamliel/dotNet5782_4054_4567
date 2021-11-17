@@ -20,7 +20,7 @@ namespace ConsoleUI
         enum MenuOptions { Exit, Add, Update, Status, ShowList}
         enum Adding { Exit, Station, Drone, Customer, Parcel }
         enum Update { Exit, DroneModel, StationDetails, CustomerDetails, SendDrone, ReleaseDrone, AssignParcel, PickParcel, DeliverParcel }
-        enum List { Exit, BaseStations, Drones, Customers, Parcels, UnAssignmentParcels, AvailableChargingStations }
+        enum List { Exit, Stations, Drones, Customers, Parcels, UnAssignmentParcels, AvailableChargingStations }
 
         /// <summary>
         /// The MainMenu
@@ -229,7 +229,6 @@ namespace ConsoleUI
             {
                 case Update.Exit:
                     return;
-                    break;
                 case Update.DroneModel:
                     Console.WriteLine("Enter Id of Drone: ");
                     id = GetInt();
@@ -380,40 +379,42 @@ namespace ConsoleUI
         /// <param name="num">The second choice of the user</param>
         
         static void lists(int num) {
-            switch (num)
+            switch ((List)num)
             {
+                case List.Exit:
+                    return;
                 //For displaying a list of base stations
-                case 1:
+                case List.Stations:
                     foreach (var item in logic.GetStations())
                         Console.WriteLine(item);
                     break;
                 
                 //For displaying a list of drones
-                case 2:
+                case List.Drones:
                     foreach (var item in logic.GetDrones())
                         Console.WriteLine(item);
                     break;
                 
                 //For displaying a list of customer
-                case 3:
+                case List.Customers:
                     foreach (var item in logic.GetCustomers())
                         Console.WriteLine(item);
                     break;
             
                 //For displaying a list of parcels
-                case 4:
+                case List.Parcels:
                     foreach (var item in logic.GetParcels())
                         Console.WriteLine(item);
                     break;
 
                 //To display a list of parcels that have not yet been associated with a drone
-                case 5:
+                case List.UnAssignmentParcels:
                     foreach (var item in logic.GetParcelDrone())
                         Console.WriteLine(item);
                     break;
                     
                 //For displaying base stations with available charging stations
-                case 6:
+                case List.AvailableChargingStations:
                     foreach (var item in logic.GetStationCharge())
                         Console.WriteLine(item);
                     break;
