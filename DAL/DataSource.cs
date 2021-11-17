@@ -11,8 +11,6 @@ namespace DalObject
     public class DataSource
     {
         readonly static Random r = new Random();
-
-
         internal static List<Drone> Drones = new List<Drone>();
         internal static List<Station> Stations = new List<Station>();
         internal static List<Customer> Customers = new List<Customer>();
@@ -35,7 +33,6 @@ namespace DalObject
         public static void Initialize() {
             
             int ran;
-            
             //Station
             ran = r.Next(2, 6);
             for (int i = 0; i < ran; ++i) {
@@ -68,24 +65,24 @@ namespace DalObject
                         rid = r.Next();
                     }
                 }
-                Customer c = new Customer();
-                c.Id = rid;
-                c.Name = ("MyNameIs" + i);
-                string ph = "0537589982";
+                Customer cust = new Customer();
+                cust.Id = rid;
+                cust.Name = ("MyNameIs" + i);
+                string phone = "0537589982";
                 rid = r.Next(1000, 10000);
                 //h check if the random number is legal and if not h start over
                 for (int h = 0; h < i; ++h) {
-                    ph = "053758" + rid;
-                    if (ph == Customers[h].Phone) {
+                    phone = "053758" + rid;
+                    if (phone == Customers[h].Phone) {
                         //it takes a random number from 1000 to 9999 and add it to "053758"
                         rid = r.Next();
                         h = -1;
                     }
                 }
-                c.Phone = ph;
-                c.Longitude = r.NextDouble() + r.Next(-180, 180);
-                c.Lattitude = r.NextDouble() + r.Next(-90, 90);
-                Customers.Add(c);
+                cust.Phone = phone;
+                cust.Longitude = r.NextDouble() + r.Next(-180, 180);
+                cust.Lattitude = r.NextDouble() + r.Next(-90, 90);
+                Customers.Add(cust);
             }
 
             //Drones
