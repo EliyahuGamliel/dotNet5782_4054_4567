@@ -15,7 +15,9 @@ namespace IBL
         double WeightHeavy;
         double ChargingRate;
 
-        //Ctor of BL
+        /// <summary>
+        /// BL constructor
+        /// </summary>
         public BL()
         {
             data = new DalObject.DalObject();
