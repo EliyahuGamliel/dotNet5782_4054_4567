@@ -267,37 +267,37 @@ namespace ConsoleUI
                 //For displaying a list of base stations
                 case 1:
                     foreach (var item in data.PrintListStation())
-                        Console.WriteLine(item.ToString());
+                        Console.WriteLine(item);
                     break;
                 
                 //For displaying a list of drones
                 case 2:
                     foreach (var item in data.PrintListDrone())
-                        Console.WriteLine(item.ToString());
+                        Console.WriteLine(item);
                     break;
                 
                 //For displaying a list of customer
                 case 3:
                     foreach (var item in data.PrintListCustomer())
-                        Console.WriteLine(item.ToString());
+                        Console.WriteLine(item);
                     break;
 
                 //For displaying a list of parcels
                 case 4:
                     foreach (var item in data.PrintListParcel())
-                        Console.WriteLine(item.ToString());
+                        Console.WriteLine(item);
                     break;
                 
                 //To display a list of parcels that have not yet been associated with a drone
                 case 5:
                     foreach (var item in data.PrintListParcelDrone())
-                        Console.WriteLine(item.ToString());
+                        Console.WriteLine(item);
                     break;
 
                 //For displaying base stations with available charging stations
                 case 6:
                     foreach (var item in data.PrintListStationCharge())
-                        Console.WriteLine(item.ToString());
+                        Console.WriteLine(item);
                     break;
             }
         }    

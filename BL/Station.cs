@@ -23,9 +23,9 @@ namespace IBL
             /// </returns></summary>
             public override string ToString() 
             { 
-                string str = $"\nId: {Id}\nName: {Name}\nLocation: {Location.ToString()}Charge Slots: {ChargeSlots}\nDrones in Charging: ";
+                string str = $"\nId: {Id}\nName: {Name}\nLocation: {Location}Charge Slots: {ChargeSlots}\nDrones in Charging: ";
                 foreach (var item in DCharge)
-                    str += item.ToString();
+                    str += item;
                 str += $"\n";
                 return str;
             }

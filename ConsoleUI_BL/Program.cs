@@ -31,14 +31,14 @@ namespace ConsoleUI
             int choice;
             do
             {
+                Console.WriteLine("Enter 0 to exit");
                 Console.WriteLine("Enter 1 for adding");
                 Console.WriteLine("Enter 2 for update");
                 Console.WriteLine("Enter 3 to show by Id");
                 Console.WriteLine("Enter 4 for print list");
-                Console.WriteLine("Enter 5 to exit");
                 choice = GetInt();
                 FirstMenu(choice);
-            } while (choice != 5);   
+            } while (choice != MenuOptions.Exit);   
         }
         /// <summary>
         /// The first part of the menu
@@ -230,6 +230,7 @@ namespace ConsoleUI
             {
                 case Update.Exit:
                     return;
+
                 case Update.DroneModel:
                     Console.WriteLine("Enter Id of Drone: ");
                     id = GetInt();
@@ -237,6 +238,7 @@ namespace ConsoleUI
                     string modelDrone = Console.ReadLine();
                     System.Console.WriteLine(logic.UpdateDrone(id ,modelDrone));
                     break;
+
                 case Update.StationDetails:
                     int nameStation = -1;
                     int chargeSlots = -1;
@@ -277,6 +279,7 @@ namespace ConsoleUI
                     }
                     System.Console.WriteLine(logic.UpdateStation(id, nameStation, chargeSlots));
                     break;
+
                 case Update.CustomerDetails:
                     Console.WriteLine("Enter Id of Customer: ");
                     id = GetInt();
@@ -284,17 +287,17 @@ namespace ConsoleUI
                     string nameCustomer = Console.ReadLine();
                     Console.WriteLine("Enter a new phone to Customer: ");
                     string phoneCustomer = "";
-                    int p;
+                    int pho;
                     input = Console.ReadLine();
                     if (input != "")
                     {
-                        success = Int32.TryParse(input, out p);
+                        success = Int32.TryParse(input, out pho);
                         while (!success)
                         {
                             Console.WriteLine("you didnt enter an number only, please try again");
                             input = Console.ReadLine();
                             if (input != "")
-                                success = int.TryParse(input, out p);
+                                success = int.TryParse(input, out pho);
                             else
                             {
                                 phoneCustomer = "";
@@ -302,7 +305,9 @@ namespace ConsoleUI
                             }
                         }
                         if (success)
-                            phoneCustomer = p.ToString();
+                        {
+                            phoneCustomer = pho.ToString();
+                        }
                     }
                     else
                         phoneCustomer = "";
@@ -350,19 +355,19 @@ namespace ConsoleUI
             {
                 case Status.Exit:
                     return;
+
                 case Status.Stations:
                     Console.WriteLine(logic.GetStationById(ID));
                     break;
+
                 case Status.Drones:
                     Console.WriteLine(logic.GetDroneById(ID));
                     break;
                 
-                //
                 case Status.Customers:
                     Console.WriteLine(logic.GetCustomerById(ID));
                     break;
 
-                //
                 case Status.Parcels:
                     Console.WriteLine(logic.GetParcelById(ID));
                     break;
@@ -383,6 +388,7 @@ namespace ConsoleUI
             {
                 case List.Exit:
                     return;
+
                 //For displaying a list of base stations
                 case List.Stations:
                     foreach (var item in logic.GetStations())

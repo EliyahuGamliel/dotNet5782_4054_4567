@@ -28,7 +28,7 @@ namespace IBL
             /// The function returns a string to print on all entity data
             /// </returns></summary>
             public override string ToString() 
-            { return $"\n      Id: {Id}\n      Priority: {Priority}\n      Weight: {Weight}\n      Transport Distance: {TransportDistance}\n      Status: {Status}\n      Collection Location: {CollectionLocation}      Destination Location: {DestinationLocation}      The Sender: {Sender.ToString()}      The Recipient: {Recipient.ToString()}"; }
+            { return $"\n      Id: {Id}\n      Priority: {Priority}\n      Weight: {Weight}\n      Transport Distance: {TransportDistance}\n      Status: {Status}\n      Collection Location: {CollectionLocation}      Destination Location: {DestinationLocation}      The Sender: {Sender}      The Recipient: {Recipient}"; }
         }
     }
 }

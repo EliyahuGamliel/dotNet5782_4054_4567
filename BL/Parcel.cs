@@ -29,7 +29,7 @@ namespace IBL
             /// The function returns a string to print on all entity data
             /// </returns></summary>
             public override string ToString() 
-            { return $"Id: {Id}\nWeight: {Weight}\nPriority: {Priority}\nRequested: {Requested}\nScheduled: {Scheduled}\nPickedUp: {PickedUp}\nDelivered: {Delivered}\nDrone: \n    {Drone.ToString()}Target: {Target.ToString()}Sender: {Sender}\n"; }
+            { return $"Id: {Id}\nWeight: {Weight}\nPriority: {Priority}\nRequested: {Requested}\nScheduled: {Scheduled}\nPickedUp: {PickedUp}\nDelivered: {Delivered}\nDrone: \n    {Drone}Target: {Target}Sender: {Sender}\n"; }
         }
     }
 }

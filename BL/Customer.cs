@@ -27,12 +27,12 @@ namespace IBL
             /// </returns></summary>
             public override string ToString() 
             {
-                string str = $"Id: {Id}\nName: {Name}\nPhone: {Phone}\nLocation: {Location.ToString()}Parcels From Customer: \n";
+                string str = $"Id: {Id}\nName: {Name}\nPhone: {Phone}\nLocation: {Location}Parcels From Customer: \n";
                 foreach (var item in FromCustomer)
-                    str += item.ToString();
+                    str += item;
                 str += $"Parcels For Customer: \n";
                 foreach (var item in ForCustomer)
-                    str += item.ToString();
+                    str += item;
                 return str;
             }
         }
