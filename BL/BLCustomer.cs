@@ -128,8 +128,8 @@ namespace IBL
                 cu.ParcelsOnlySend = 0;
                 cu.ParcelsSent = 0;
 
-                IEnumerable<IDAL.DO.Parcel> list_p = data.GetParcels();
-                foreach (var itemParcel in list_p) {
+                IEnumerable<IDAL.DO.Parcel> listparcels = data.GetParcels();
+                foreach (var itemParcel in listparcels) {
                     //If the customer is the sender
                     if (itemParcel.SenderId == cu.Id) {
                         if (ReturnStatus(itemParcel) == 0)

@@ -40,11 +40,11 @@ namespace IBL
                 if (name != -1)
                     s.Name = name;
                 if (chargeSlots != -1) {
-                    int amount_avalible = chargeSlots;
+                    int amountavalible = chargeSlots;
                     foreach (var item in data.GetDroneCharge())
                         if (item.StationId == s.Id)
-                            amount_avalible -= 1;
-                    s.ChargeSlots = amount_avalible;
+                            amountavalible -= 1;
+                    s.ChargeSlots = amountavalible;
                 }
                 data.UpdateStation(s);
                 return "The update was successful\n";
@@ -111,7 +111,7 @@ namespace IBL
         /// <returns>Returns a list of all stations that have available chargeSlots</returns>
         public IEnumerable<StationList> GetStationCharge(){
             IEnumerable<IDAL.DO.Station> listcustomersC = data.GetStationCharge();
-            IEnumerable<IDAL.DO.DroneCharge> list_dC = data.GetDroneCharge();
+            IEnumerable<IDAL.DO.DroneCharge> listdronecharge = data.GetDroneCharge();
             List<StationList> station = new List<StationList>();
             foreach (var item in listcustomersC) {
                 StationList sl = new StationList();
@@ -120,7 +120,7 @@ namespace IBL
                 sl.ChargeSlots = item.ChargeSlots;
                 sl.ChargeSlotsCatched = 0;
                 //How much charging places are occupied
-                foreach (var item2 in list_dC)
+                foreach (var item2 in listdronecharge)
                     if (item.Id == item2.StationId)
                         sl.ChargeSlotsCatched += 1;
                 station.Add(sl);

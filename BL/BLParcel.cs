@@ -80,9 +80,9 @@ namespace IBL
         /// </summary>
         /// <returns>Returns the list of parcels</returns>
         public IEnumerable<ParcelList> GetParcels(){
-            IEnumerable<IDAL.DO.Parcel> list_p = data.GetParcels();
+            IEnumerable<IDAL.DO.Parcel> listparcels = data.GetParcels();
             List<ParcelList> parcel = new List<ParcelList>();
-            foreach (var item in list_p) {
+            foreach (var item in listparcels) {
                 ParcelList pa = new ParcelList();
                 pa.Id = item.Id;
                 pa.Priority = (Priorities)(int)item.Priority;
@@ -100,9 +100,9 @@ namespace IBL
         /// </summary>
         /// <returns>Returns a list of all unassigned parcels</returns>
         public IEnumerable<ParcelList> GetParcelDrone(){
-            IEnumerable<IDAL.DO.Parcel> list_pD = data.GetParcelDrone();
+            IEnumerable<IDAL.DO.Parcel> listparcelsD = data.GetParcelDrone();
             List<ParcelList> parcel = new List<ParcelList>();
-            foreach (var item in list_pD) {
+            foreach (var item in listparcelsD) {
                 ParcelList pa = new ParcelList();
                 pa.Id = item.Id;
                 pa.Priority = (Priorities)(int)item.Priority;
