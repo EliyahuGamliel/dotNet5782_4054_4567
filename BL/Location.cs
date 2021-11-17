@@ -16,14 +16,14 @@ namespace IBL
             /// The function returns a string to print on all entity data
             /// </returns></summary>
             public override string ToString() 
-            { return $"\n      Longitude: {Longitude_Bonus(Longitude)}\n      Lattitude: {Lattitude_Bonus(Lattitude)}\n"; }
+            { return $"\n      Longitude: {LongitudeBonus(Longitude)}\n      Lattitude: {LattitudeBonus(Lattitude)}\n"; }
 
             /// <summary>
             /// The function gets a longitube and turns it into a longitube at base 60
             /// </summary>
             /// <param name="num">The number to change</param>
             /// <returns>The function returns a string of a number representing base 60</returns>
-            public static string Longitude_Bonus(double num) {
+            public static string LongitudeBonus(double num) {
             char dir = 'S';
                 if (num < 0)
                     num = -num;
@@ -42,7 +42,7 @@ namespace IBL
             /// </summary>
             /// <param name="num">The number to change</param>
             /// <returns>The function returns a string of a number representing base 60</returns>
-            public static string Lattitude_Bonus(double num) {
+            public static string LattitudeBonus(double num) {
                 char dir = 'W';
                 if (num < 0)
                     num = -num;

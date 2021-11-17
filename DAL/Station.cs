@@ -18,14 +18,14 @@ namespace IDAL.DO
         /// The function returns a string to print on all entity data
         /// </returns></summary>
         public override string ToString()
-        { return $"Id: {Id}\nName: {Name}\nLongitude: {Longitude_Bonus(Longitude)}\nLattitude: {Lattitude_Bonus(Lattitude)}\nChargeSlots: {ChargeSlots}\n"; }
+        { return $"Id: {Id}\nName: {Name}\nLongitude: {LongitudeBonus(Longitude)}\nLattitude: {LattitudeBonus(Lattitude)}\nChargeSlots: {ChargeSlots}\n"; }
 
         /// <summary>
         /// The function gets a longitube and turns it into a longitube at base 60
         /// </summary>
         /// <param name="num">The number to change</param>
         /// <returns>The function returns a string of a number representing base 60</returns>
-        public static string Longitude_Bonus(double num)
+        public static string LongitudeBonus(double num)
         {///returns the longitude
             char dir = 'S';
             if (num < 0)
@@ -45,7 +45,7 @@ namespace IDAL.DO
         /// </summary>
         /// <param name="num">The number to change</param>
         /// <returns>The function returns a string of a number representing base 60</returns>
-        public static string Lattitude_Bonus(double num)
+        public static string LattitudeBonus(double num)
         {///returns the lattitude
             char dir = 'W';
             if (num < 0)
