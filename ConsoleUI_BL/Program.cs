@@ -6,7 +6,7 @@ namespace ConsoleUI
 {
     partial class Program
     {
-        static IBL.IBL logic;
+        private static IBL.IBL logic;
 
         /// <summary>
         /// The main function

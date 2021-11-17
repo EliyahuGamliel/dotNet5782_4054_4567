@@ -28,6 +28,7 @@ namespace IBL
         Station GetStationById(int Id);
         int ReturnStatus(IDAL.DO.Parcel p);
         double DistanceTo(Location l1, Location l2);
+        public int ChargeSlotsCatched(int idStation);
         IEnumerable<StationList> GetStations();
         IEnumerable<DroneList> GetDrones();
         IEnumerable<CustomerList> GetCustomers();

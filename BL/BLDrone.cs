@@ -20,18 +20,24 @@ namespace IBL
                 d.CLocation.Lattitude = s.Lattitude;
                 d.CLocation.Longitude = s.Longitude;
                 d.ParcelId = 0;
-                
+
+                CheckAddDrone(s);
+
                 IDAL.DO.Drone dr = new IDAL.DO.Drone();
                 dr.Id = d.Id;
                 dr.Model = d.Model;
                 dr.MaxWeight = (IDAL.DO.WeightCategories)((int)d.MaxWeight);
                 data.AddDrone(dr);
+                dronesList.Add(d);
+
+                int chargeSlots = ChargeSlotsCatched(idStation) + s.ChargeSlots;
+
                 IDAL.DO.DroneCharge dc = new IDAL.DO.DroneCharge();
                 dc.DroneId = d.Id;
                 dc.StationId = idStation;
                 data.AddDroneCharge(dc);
-                dronesList.Add(d);
-                UpdateStation(idStation, -1, s.ChargeSlots);
+
+                UpdateStation(idStation, -1, chargeSlots);
                 return "The addition was successful\n";
             }
             catch (IDAL.DO.IdExistException) {
@@ -105,13 +111,14 @@ namespace IBL
 
             IDAL.DO.Station st = new IDAL.DO.Station();
             st = ReturnCloseStation(data.GetStations(), d.CLocation);
+            int chargeSlots = ChargeSlotsCatched(st.Id) + st.ChargeSlots;
 
             IDAL.DO.DroneCharge dc = new IDAL.DO.DroneCharge();
             dc.DroneId = d.Id;
             dc.StationId = st.Id;
             data.DeleteDroneCharge(dc);
 
-            UpdateStation(st.Id, -1, st.ChargeSlots + 1);
+            UpdateStation(st.Id, -1, chargeSlots);
             return "The update was successful\n";
         }
 

@@ -132,5 +132,17 @@ namespace IBL
                 return "DroneCanNotDeliver: The Drone cann't deliver the parcel\n";
             }
         }
+
+        /// <summary>
+        /// If the Drone can not to add because the station is full - throw Exception
+        /// </summary>
+        [Serializable]
+        public class StationIsFull : Exception
+        {
+            public override string ToString()
+            {
+                return "StationIsFull: The Drone cann't add because the station is full\n";
+            }
+        }
     }
 }
