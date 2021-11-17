@@ -57,15 +57,15 @@ namespace IBL
                 //CustomerInParcel - The Target Customer of Parcel 
                 CustomerInParcel cp1 = new CustomerInParcel();
                 cp1.Id = p.TargetId;
-                IDAL.DO.Customer c_help = data.GetCustomerById(cp1.Id); 
-                cp1.Name = c_help.Name;
+                IDAL.DO.Customer customerhelp = data.GetCustomerById(cp1.Id); 
+                cp1.Name = customerhelp.Name;
                 pa.Target = cp1;
 
                 //CustomerInParcel - The Sender Customer of Parcel 
                 CustomerInParcel cp2 = new CustomerInParcel();
                 cp2.Id = p.SenderId;
-                c_help = data.GetCustomerById(cp2.Id); 
-                cp2.Name = c_help.Name;
+                customerhelp = data.GetCustomerById(cp2.Id); 
+                cp2.Name = customerhelp.Name;
                 pa.Sender = cp2;
             
                 return pa;

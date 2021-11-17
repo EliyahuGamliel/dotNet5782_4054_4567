@@ -54,8 +54,8 @@ namespace DalObject
         /// <returns>Nothing</returns>
         public void CheckExistPhone <T>(List<T> list, string phone) {
             foreach (var item in list) {
-                string phone_object = (string)(typeof(T).GetProperty("Phone").GetValue(item, null));
-                if (phone_object == phone) {
+                string phoneobject = (string)(typeof(T).GetProperty("Phone").GetValue(item, null));
+                if (phoneobject == phone) {
                     throw new PhoneExistException(phone);
                 }         
             }

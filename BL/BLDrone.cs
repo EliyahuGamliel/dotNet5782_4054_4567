@@ -153,20 +153,20 @@ namespace IBL
                     //CustomerInParcel - The Target Customer of Parcel 
                     CustomerInParcel cp1 = new CustomerInParcel();
                     cp1.Id = itemParcels.TargetId;
-                    IDAL.DO.Customer c_help = data.GetCustomerById(cp1.Id); 
-                    cp1.Name = c_help.Name;
+                    IDAL.DO.Customer customerhelp = data.GetCustomerById(cp1.Id); 
+                    cp1.Name = customerhelp.Name;
                     pt.Recipient = cp1;
-                    pt.DestinationLocation.Lattitude = c_help.Lattitude;
-                    pt.DestinationLocation.Longitude = c_help.Longitude;
+                    pt.DestinationLocation.Lattitude = customerhelp.Lattitude;
+                    pt.DestinationLocation.Longitude = customerhelp.Longitude;
 
                     //CustomerInParcel - The Sender Customer of Parcel 
                     CustomerInParcel cp2 = new CustomerInParcel();
                     cp2.Id = itemParcels.SenderId;
-                    c_help = data.GetCustomerById(cp2.Id); 
-                    cp2.Name = c_help.Name;
+                    customerhelp = data.GetCustomerById(cp2.Id); 
+                    cp2.Name = customerhelp.Name;
                     pt.Sender = cp2;
-                    pt.CollectionLocation.Lattitude = c_help.Lattitude;
-                    pt.CollectionLocation.Longitude = c_help.Longitude;
+                    pt.CollectionLocation.Lattitude = customerhelp.Lattitude;
+                    pt.CollectionLocation.Longitude = customerhelp.Longitude;
 
                     pt.TransportDistance = DistanceTo(pt.CollectionLocation, pt.DestinationLocation);
 

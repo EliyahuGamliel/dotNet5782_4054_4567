@@ -81,8 +81,8 @@ namespace IBL
 
                         CustomerInParcel cp = new CustomerInParcel();
                         cp.Id = item.SenderId;
-                        IDAL.DO.Customer c_help = data.GetCustomerById(cp.Id); 
-                        cp.Name = c_help.Name;
+                        IDAL.DO.Customer customerhelp = data.GetCustomerById(cp.Id); 
+                        cp.Name = customerhelp.Name;
                         pc.CParcel = cp;
 
                         cu.ForCustomer.Add(pc);
@@ -97,8 +97,8 @@ namespace IBL
 
                         CustomerInParcel cp = new CustomerInParcel();
                         cp.Id = item.TargetId;
-                        IDAL.DO.Customer c_help = data.GetCustomerById(cp.Id); 
-                        cp.Name = c_help.Name;
+                        IDAL.DO.Customer customerhelp = data.GetCustomerById(cp.Id); 
+                        cp.Name = customerhelp.Name;
                         pc.CParcel = cp;
 
                         cu.FromCustomer.Add(pc);
@@ -116,9 +116,9 @@ namespace IBL
         /// </summary>
         /// <returns>Returns the list of customers</returns>
         public IEnumerable<CustomerList> GetCustomers(){
-            IEnumerable<IDAL.DO.Customer> list_s = data.GetCustomers();
+            IEnumerable<IDAL.DO.Customer> listcustomers = data.GetCustomers();
             List<CustomerList> customer = new List<CustomerList>();
-            foreach (var item in list_s) {
+            foreach (var item in listcustomers) {
                 CustomerList cu = new CustomerList();
                 cu.Id = item.Id;
                 cu.Name = item.Name;

@@ -89,9 +89,9 @@ namespace IBL
         /// </summary>
         /// <returns>Returns the list of stations</returns>
         public IEnumerable<StationList> GetStations(){
-            IEnumerable<IDAL.DO.Station> list_s = data.GetStations();
+            IEnumerable<IDAL.DO.Station> listcustomers = data.GetStations();
             List<StationList> station = new List<StationList>();
-            foreach (var item in list_s) {
+            foreach (var item in listcustomers) {
                 StationList sl = new StationList();
                 sl.Id = item.Id;
                 sl.Name = item.Name;
@@ -110,10 +110,10 @@ namespace IBL
         /// </summary>
         /// <returns>Returns a list of all stations that have available chargeSlots</returns>
         public IEnumerable<StationList> GetStationCharge(){
-            IEnumerable<IDAL.DO.Station> list_sC = data.GetStationCharge();
+            IEnumerable<IDAL.DO.Station> listcustomersC = data.GetStationCharge();
             IEnumerable<IDAL.DO.DroneCharge> list_dC = data.GetDroneCharge();
             List<StationList> station = new List<StationList>();
-            foreach (var item in list_sC) {
+            foreach (var item in listcustomersC) {
                 StationList sl = new StationList();
                 sl.Id = item.Id;
                 sl.Name = item.Name;
