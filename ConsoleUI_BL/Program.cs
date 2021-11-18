@@ -159,7 +159,7 @@ namespace ConsoleUI_BL
                     Console.WriteLine("Enter Station Id: ");
                     s.Id = GetInt();
                     Console.WriteLine("Enter Station Name: ");
-                    s.Name = GetInt();
+                    s.Name = Console.ReadLine();
                     Console.WriteLine("Enter the longitude of the station");
                     s.Location.Longitude = GetDouble();
                     Console.WriteLine("Enter the latitude of the station");
@@ -253,7 +253,7 @@ namespace ConsoleUI_BL
                     if (input != "") {
                         success = int.TryParse(input, out nameStation);
                         while (!success) {
-                            Console.WriteLine("you didnt enter an int, please try again");
+                            Console.WriteLine("you didnt enter an int, please try again");////////////////////////////////////////gamliel - change name to string
                             input = Console.ReadLine();
                             if (input != "")
                                 success = int.TryParse(input, out nameStation);

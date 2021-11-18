@@ -47,7 +47,7 @@ namespace DalObject
                 Station adst = new Station();
                 adst.ChargeSlots = 2 + rando.Next(0, 3);
                 adst.Id = rid;
-                adst.Name = adst.Id;
+                adst.Name = adst.Id;////////////////////////change to string
                 adst.Longitude = rando.NextDouble() + rando.Next(-180, 180);
                 adst.Lattitude = rando.NextDouble() + rando.Next(-90, 90);
                 Stations.Add(adst);

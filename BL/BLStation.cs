@@ -34,7 +34,7 @@ namespace IBL
         /// <param name="name">If requested - the new name for the station update</param>
         /// <param name="chargeSlots">If requested - the number of charge slots for the station update</param>
         /// <returns>Notice if the addition was successful</returns>
-        public string UpdateStation(int id, int name, int chargeSlots) {
+        public string UpdateStation(int id, string name, int chargeSlots) {
             try {
                 IDAL.DO.Station s = data.GetStationById(id);
                 if (name != -1)
