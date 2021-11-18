@@ -41,20 +41,20 @@ namespace IBL
         /// <returns>The object of the requested parcel</returns>
             public Parcel GetParcelById(int Id) {
             try {
-                IDAL.DO.Parcel p = data.GetParcelById(Id);
+                IDAL.DO.Parcel chosenp = data.GetParcelById(Id);
                 Parcel pa = new Parcel();
-                pa.Id = p.Id;
-                pa.PickedUp = p.PickedUp;
-                pa.Priority = (Priorities)(int)p.Priority;
-                pa.Requested = p.Requested;
-                pa.Scheduled = p.Scheduled;
-                pa.Weight = (WeightCategories)(int)p.Weight;
-                pa.Delivered = p.Delivered;
+                pa.Id = chosenp.Id;
+                pa.PickedUp = chosenp.PickedUp;
+                pa.Priority = (Priorities)(int)chosenp.Priority;
+                pa.Requested = chosenp.Requested;
+                pa.Scheduled = chosenp.Scheduled;
+                pa.Weight = (WeightCategories)(int)chosenp.Weight;
+                pa.Delivered = chosenp.Delivered;
                 //If a drone is associated with a parcel
-                if (p.DroneId != 0)
+                if (chosenp.DroneId != 0)
                 {
                     pa.Drone = new DroneInParcel();
-                    Drone d = GetDroneById(p.DroneId);
+                    Drone d = GetDroneById(chosenp.DroneId);
                     pa.Drone.Battery = d.Battery;
                     pa.Drone.Id = d.Id;
                     pa.Drone.CLocation = d.CLocation;
@@ -62,14 +62,14 @@ namespace IBL
                 
                 //CustomerInParcel - The Target Customer of Parcel 
                 CustomerInParcel cp1 = new CustomerInParcel();
-                cp1.Id = p.TargetId;
+                cp1.Id = chosenp.TargetId;
                 IDAL.DO.Customer customerhelp = data.GetCustomerById(cp1.Id); 
                 cp1.Name = customerhelp.Name;
                 pa.Target = cp1;
 
                 //CustomerInParcel - The Sender Customer of Parcel 
                 CustomerInParcel cp2 = new CustomerInParcel();
-                cp2.Id = p.SenderId;
+                cp2.Id = chosenp.SenderId;
                 customerhelp = data.GetCustomerById(cp2.Id); 
                 cp2.Name = customerhelp.Name;
                 pa.Sender = cp2;
