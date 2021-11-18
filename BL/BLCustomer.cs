@@ -37,14 +37,14 @@ namespace IBL
         /// <returns>Notice if the addition was successful</returns>
         public string UpdateCustomer(int id, string nameCustomer, string phoneCustomer) {
             try {
-                IDAL.DO.Customer c = data.GetCustomerById(id);
+                IDAL.DO.Customer chosenc = data.GetCustomerById(id);
                 //If input is received
-                if (nameCustomer != "")
-                    c.Name = nameCustomer;
+                if (nameCustomer != "") 
+                    chosenc.Name = nameCustomer;
                 //If input is received
                 if (phoneCustomer != "")
-                    c.Phone = phoneCustomer;
-                data.UpdateCustomer(c, phoneCustomer);
+                    chosenc.Phone = phoneCustomer;
+                data.UpdateCustomer(chosenc, phoneCustomer);
                 return "The update was successful\n"; 
             }
             catch (IDAL.DO.IdNotExistException) {
@@ -62,16 +62,16 @@ namespace IBL
         /// <returns>The object of the requested customer</returns>
         public Customer GetCustomerById(int Id) {
             try {
-                IDAL.DO.Customer c = data.GetCustomerById(Id); 
+                IDAL.DO.Customer chosenc = data.GetCustomerById(Id); 
                 Customer cu = new Customer();
                 cu.ForCustomer = new List<ParcelInCustomer>();
                 cu.FromCustomer = new List<ParcelInCustomer>();
                 cu.Location = new Location();
-                cu.Id = c.Id;
-                cu.Name = c.Name;
-                cu.Phone = c.Phone;
-                cu.Location.Longitude = c.Longitude;
-                cu.Location.Lattitude = c.Lattitude;
+                cu.Id = chosenc.Id;
+                cu.Name = chosenc.Name;
+                cu.Phone = chosenc.Phone;
+                cu.Location.Longitude = chosenc.Longitude;
+                cu.Location.Lattitude = chosenc.Lattitude;
 
                 foreach (var item in data.GetParcels()) {
                     //If the customer is the target of the parcel
