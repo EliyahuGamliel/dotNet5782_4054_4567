@@ -22,16 +22,14 @@ namespace IBL
         {
             data = new DalObject.DalObject();
 
-            double[] arr = new double[5];
-            arr = data.DroneElectricityUse();
-            Avaliable = arr[0];
-            WeightLight = arr[1];
-            WeightMedium = arr[2];
-            WeightHeavy = arr[3];
-            ChargingRate = arr[4];
+            Avaliable = data.DroneElectricityUse()[0];
+            WeightLight = data.DroneElectricityUse()[1];
+            WeightMedium = data.DroneElectricityUse()[2];
+            WeightHeavy = data.DroneElectricityUse()[3];
+            ChargingRate = data.DroneElectricityUse()[4];
 
             IEnumerable<IDAL.DO.Drone> droneslist = data.GetDrones();
-            //
+            
             foreach (var item in droneslist)
             {
                 bool NotDel = true;
