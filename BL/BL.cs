@@ -34,7 +34,7 @@ namespace IBL
             //
             foreach (var item in droneslist)
             {
-                bool help = true;
+                bool NotDel = true;
                 double minbattery = 0;
 
                 DroneList dl = new DroneList();
@@ -67,25 +67,25 @@ namespace IBL
 
                         //The customer target of the parcel
                         Customer customertar = GetCustomerById(itemParcel.TargetId);
-                        Location l1 = new Location();
-                        l1 = customertar.Location;
+                        Location tarloc = new Location();
+                        tarloc = customertar.Location;
 
-                        Location l2 = new Location();
-                        l2.Lattitude = ReturnCloseStation(data.GetStations(), l1).Lattitude;
-                        l2.Longitude = ReturnCloseStation(data.GetStations(), l1).Longitude;
+                        Location staloc = new Location();
+                        staloc.Lattitude = ReturnCloseStation(data.GetStations(), tarloc).Lattitude;
+                        staloc.Longitude = ReturnCloseStation(data.GetStations(), tarloc).Longitude;
 
                         //Minimum battery to finish the shipment
-                        minbattery = ReturnBattery((int)itemParcel.Weight, dl.CLocation, l1) + ReturnBattery(3, dl.CLocation, l2);
+                        minbattery = ReturnBattery((int)itemParcel.Weight, dl.CLocation, tarloc) + ReturnBattery(3, dl.CLocation, staloc);
                         dl.Battery = rand.NextDouble() + rand.Next((int)minbattery + 1, 100);
                         if (dl.Battery > 100)
                             dl.Battery = 100;
                         //The drone is in delivery mode
-                        help = false;
+                        NotDel = false;
                         break;
                     }
                 }
                 //If the drone is not in delivery mode (no parcel associated with it)
-                if (help)
+                if (NotDel)
                 {
                     //The drone mode is randomized
                     dl.Status = (DroneStatuses)rand.Next(0, 2);
@@ -97,17 +97,17 @@ namespace IBL
                         foreach (var itemStation in stationslist)
                             counter += 1;
                         //The drone is at a random station
-                        int s = rand.Next(0, counter);
+                        int st = rand.Next(0, counter);
                         foreach (var itemStation in stationslist)
                         {
-                            if (s == 0)
+                            if (st == 0)
                             {
                                 dl.CLocation.Longitude = itemStation.Longitude;
                                 dl.CLocation.Lattitude = itemStation.Lattitude;
                                 UpdateStation(itemStation.Id, itemStation.Name, itemStation.ChargeSlots - 1);
                                 break;
                             }
-                            s -= 1;
+                            st -= 1;
                         }
                         dl.Battery = rand.NextDouble() + rand.Next(0, 20);
                     }
@@ -120,10 +120,10 @@ namespace IBL
                             if (itemCustomer.ParcelsGet > 0)
                                 counter += 1;
                         //The drone is at a random customer Location
-                        int s = rand.Next(0, counter);
+                        int st = rand.Next(0, counter);
                         foreach (var itemCustomer in customerslist)
                         {
-                            if (s == 0)
+                            if (st == 0)
                             {
                                 Customer c = GetCustomerById(itemCustomer.Id);
                                 dl.CLocation = c.Location;
@@ -131,7 +131,7 @@ namespace IBL
                             }
                             //If the customer get least one parcel
                             if (itemCustomer.ParcelsGet > 0)
-                                s -= 1;
+                                st -= 1;
                         }
 
                         Location l = new Location();
