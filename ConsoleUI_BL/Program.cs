@@ -49,7 +49,7 @@ namespace ConsoleUI_BL
         {
             try
             {
-                bool help = true;
+                bool legal = true;
                 switch ((MenuOptions)choice)
                 {
                     case MenuOptions.Add:
@@ -96,10 +96,10 @@ namespace ConsoleUI_BL
                     
                     default:
                         Console.WriteLine("Enter only numbers between 0-5!\n");
-                        help = false;
+                        legal = false;
                         break;
                 }
-                if (help) {
+                if (legal) {
                     int secondChoice;
                     secondChoice = GetInt();
                     if(secondChoice == 0)
