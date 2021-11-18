@@ -61,14 +61,14 @@ namespace IBL
         /// <returns>The object of the requested station</returns>
         public Station GetStationById(int Id) {
             try {
-                IDAL.DO.Station s = data.GetStationById(Id);
+                IDAL.DO.Station chosens = data.GetStationById(Id);
                 Station st = new Station();
-                st.Id = s.Id;
-                st.Name = s.Name;
-                st.ChargeSlots = s.ChargeSlots;
+                st.Id = chosens.Id;
+                st.Name = chosens.Name;
+                st.ChargeSlots = chosens.ChargeSlots;
                 st.Location = new Location();
-                st.Location.Longitude = s.Longitude;
-                st.Location.Lattitude = s.Lattitude;
+                st.Location.Longitude = chosens.Longitude;
+                st.Location.Lattitude = chosens.Lattitude;
                 st.DCharge = new List<DroneCharge>();
                 foreach (var item in dronesList) {
                     //if drone is in charge in this station
