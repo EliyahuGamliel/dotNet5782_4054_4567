@@ -32,12 +32,11 @@ namespace ConsoleUI_BL
             int choice;
             do
             {
-                Console.WriteLine("\nEnter 0 to exit");
-                Console.WriteLine("Enter 1 for adding");
+                Console.WriteLine("\nEnter 1 for adding");
                 Console.WriteLine("Enter 2 for update");
                 Console.WriteLine("Enter 3 to show by Id");
                 Console.WriteLine("Enter 4 for print list");
-                
+                Console.WriteLine("Enter 0 to exit");
                 choice = GetInt();
                 FirstMenu(choice);
             } while ((MenuOptions)choice != MenuOptions.Exit);   
@@ -96,7 +95,7 @@ namespace ConsoleUI_BL
                         return;
                     
                     default:
-                        Console.WriteLine("Enter only numbers between 0-5!\n");
+                        Console.WriteLine("Enter only numbers between 0-4!\n");
                         legal = false;
                         break;
                 }
@@ -156,6 +155,8 @@ namespace ConsoleUI_BL
                 //For adding a station
                 case Adding.Station:
                     Station s = new Station();
+                    s.Location = new Location();
+                    s.DCharge = new List<DroneCharge>();
                     Console.WriteLine("Enter Station Id: ");
                     s.Id = GetInt();
                     Console.WriteLine("Enter Station Name: ");
@@ -244,25 +245,12 @@ namespace ConsoleUI_BL
                     break;
 
                 case Update.StationDetails:
-                    int nameStation = -1;
+                    string nameStation;
                     int chargeSlots = -1;
                     Console.WriteLine("Enter Id of Station: ");
                     id = GetInt();
                     Console.WriteLine("Enter a new name to Station: ");
-                    input = Console.ReadLine();
-                    if (input != "") {
-                        success = int.TryParse(input, out nameStation);
-                        while (!success) {
-                            Console.WriteLine("you didnt enter an int, please try again");////////////////////////////////////////gamliel - change name to string
-                            input = Console.ReadLine();
-                            if (input != "")
-                                success = int.TryParse(input, out nameStation);
-                            else {
-                                nameStation = -1;
-                                break;
-                            }
-                        }
-                    }
+                    nameStation = Console.ReadLine();
                     Console.WriteLine("Enter a total amount of charge slots: ");
                     input = Console.ReadLine();
                     if (input != "")

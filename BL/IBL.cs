@@ -15,9 +15,8 @@ namespace IBL
         string AddCustomer(Customer c);
         string UpdateDrone(int id, string model);
         string UpdateCustomer(int id, string nameCustomer, string phoneCustomer);
-        string UpdateStation(int id, int name, int chargeSlots);
+        string UpdateStation(int id, string name, int chargeSlots);
         string AssignDroneParcel(int DroneId);
-        //IDAL.DO.Parcel CompressParcels(IDAL.DO.Parcel p1, IDAL.DO.Parcel p2, DroneList d);
         string PickUpDroneParcel(int id);
         string DeliverParcelCustomer(int id);
         string SendDrone(int idDrone);
@@ -26,9 +25,6 @@ namespace IBL
         Drone GetDroneById(int Id);
         Customer GetCustomerById(int Id);
         Station GetStationById(int Id);
-       // int ReturnStatus(IDAL.DO.Parcel p);
-        //double DistanceTo(Location l1, Location l2);
-        //int ChargeSlotsCatched(int idStation);
         IEnumerable<StationList> GetStations();
         IEnumerable<DroneList> GetDrones();
         IEnumerable<CustomerList> GetCustomers();

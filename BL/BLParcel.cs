@@ -18,6 +18,7 @@ namespace IBL
                 if (SenderId == TargetId)
                     throw new SameCustomerException(TargetId);
                 IDAL.DO.Parcel pa = new IDAL.DO.Parcel();
+                p.
                 pa.SenderId = SenderId;
                 pa.TargetId = TargetId;
                 pa.Weight = (IDAL.DO.WeightCategories)(int)p.Weight;

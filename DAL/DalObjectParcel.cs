@@ -15,8 +15,8 @@ namespace DalObject
         /// <param name="p">Object of parcel to add</param>
         public int AddParcel(Parcel p) {
             CheckExistId(DataSource.Parcels, p.Id);
-            CheckNotExistId(DataSource.Parcels, p.SenderId);
-            CheckNotExistId(DataSource.Parcels, p.TargetId);
+            CheckNotExistId(DataSource.Customers, p.SenderId);
+            CheckNotExistId(DataSource.Customers, p.TargetId);
             p.Id = DataSource.Config.NumberID;
             DataSource.Parcels.Add(p);
             DataSource.Config.NumberID += 1;

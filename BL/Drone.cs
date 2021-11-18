@@ -15,11 +15,6 @@ namespace IBL.BO
         public ParcelTransfer PTransfer { get; set; }
         public Location CLocation { get; set; }
 
-        /// <summary>
-        /// Ctor of Drone
-        /// </summary>
-        // public Drone() { this.CLocation = new Location(); this.PTransfer = new ParcelTransfer(); }
-
         /// <summary><returns>
         /// The function returns a string to print on all entity data
         /// </returns></summary>

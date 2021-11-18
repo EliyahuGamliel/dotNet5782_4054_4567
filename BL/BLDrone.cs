@@ -15,6 +15,7 @@ namespace IBL
         public string AddDrone(DroneList d, int idStation) {
             try {
                 IDAL.DO.Station s = data.GetStationById(idStation);
+                CheckLegelChoice((int)d.MaxWeight);
                 d.CLocation = new Location();
                 d.Battery = rand.Next(20,41);
                 d.Status = DroneStatuses.Maintenance;
@@ -38,7 +39,7 @@ namespace IBL
                 dc.StationId = idStation;
                 data.AddDroneCharge(dc);
 
-                UpdateStation(idStation, -1, chargeSlots);
+                UpdateStation(idStation, "", chargeSlots);
                 return "The addition was successful\n";
             }
             catch (IDAL.DO.IdExistException) {
@@ -85,7 +86,7 @@ namespace IBL
             d.CLocation.Longitude = st.Longitude;
             d.Battery = d.Battery - battery;
             dronesList[index] = d;
-            UpdateStation(st.Id, -1, st.ChargeSlots - 1);
+            UpdateStation(st.Id, "", st.ChargeSlots - 1);
             IDAL.DO.DroneCharge dc = new IDAL.DO.DroneCharge();
             dc.DroneId = d.Id;
             dc.StationId = st.Id;
@@ -101,6 +102,7 @@ namespace IBL
         /// <returns>Notice if the addition was successful</returns>
         public String ReleasDrone(int idDrone, double time){
             CheckNotExistId(dronesList, idDrone);
+            CheckLegalTime(time);
             DroneList d = dronesList.Find(dr => idDrone == dr.Id);
             int index = dronesList.IndexOf(d);
             CheckDroneCannotRelese(d);
@@ -119,7 +121,7 @@ namespace IBL
             dc.StationId = st.Id;
             data.DeleteDroneCharge(dc);
 
-            UpdateStation(st.Id, -1, chargeSlots);
+            UpdateStation(st.Id, "", chargeSlots);
             return "The update was successful\n";
         }
 

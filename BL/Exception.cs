@@ -38,6 +38,23 @@ namespace IBL.BO
     }
 
     /// <summary>
+    /// 
+    /// </summary>
+    [Serializable]
+    public class ChoiceNotLegal : Exception
+    {
+        public double choice { get; private set; }
+        public ChoiceNotLegal(int choice)
+        {
+            this.choice = choice;
+        }
+        public override string ToString()
+        {
+            return "ChoiceNotLegal: The choice it is not in the options (" + choice + ")\n";
+        }
+    }
+
+    /// <summary>
     /// If the phone already exist - throw Exception
     /// </summary>
     [Serializable]
@@ -92,6 +109,23 @@ namespace IBL.BO
         public override string ToString()
         {
             return "DroneCanNotRelese: The Drone isn't in charge\n";
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [Serializable]
+    public class TimeNotLegal : Exception
+    {
+        public double time { get; private set; }
+        public TimeNotLegal(double time)
+        {
+            this.time = time;
+        }
+        public override string ToString()
+        {
+            return "TimeNotLegal: The Drone cann't relese frome charging, because the time is not legal (" + time + ")\n";
         }
     }
 

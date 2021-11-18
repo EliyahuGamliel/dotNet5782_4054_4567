@@ -406,6 +406,22 @@ namespace IBL
             throw new IdNotExistException(id);
         }
 
+        private void CheckLegelChoice(int choice)
+        {
+            if (choice > 2 || choice < 0)
+                throw new ChoiceNotLegal(choice);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="time"></param>
+        private void CheckLegalTime(double time)
+        {
+            if (time<0)
+                throw new TimeNotLegal(time);
+        }
+
         /// <summary>
         /// Checks if the drone can to send for cahrge, if not returns error
         /// </summary>

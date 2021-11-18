@@ -47,7 +47,7 @@ namespace DalObject
                 Station adst = new Station();
                 adst.ChargeSlots = 2 + rando.Next(0, 3);
                 adst.Id = rid;
-                adst.Name = adst.Id;////////////////////////change to string
+                adst.Name = $"{rid}";
                 adst.Longitude = rando.NextDouble() + rando.Next(-180, 180);
                 adst.Lattitude = rando.NextDouble() + rando.Next(-90, 90);
                 Stations.Add(adst);
@@ -67,7 +67,7 @@ namespace DalObject
                 }
                 Customer cust = new Customer();
                 cust.Id = rid;
-                cust.Name = ("MyNameIs" + i);
+                cust.Name = ("Mavic Pro " + i);
                 string phone = "0537589982";
                 rid = rando.Next(1000, 10000);
                 //h check if the random number is legal and if not h start over

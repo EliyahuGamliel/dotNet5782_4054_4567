@@ -37,7 +37,7 @@ namespace IBL
         public string UpdateStation(int id, string name, int chargeSlots) {
             try {
                 IDAL.DO.Station s = data.GetStationById(id);
-                if (name != -1)
+                if (name != "")
                     s.Name = name;
                 if (chargeSlots != -1) {
                     int amountavalible = chargeSlots;
