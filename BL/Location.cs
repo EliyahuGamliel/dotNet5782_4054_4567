@@ -23,11 +23,11 @@ namespace IBL.BO
         /// <returns>The function returns a string of a number representing base 60</returns>
         public static string LongitudeBonus(double num)
         {
-            char dir = 'S';
+            char dir = 'W';
             if (num < 0)
                 num = -num;
             else
-                dir = 'N';
+                dir = 'E';
             int degrees = (int)num;
             num = num - degrees;
             int minutes = (int)(num * 60);
@@ -43,11 +43,11 @@ namespace IBL.BO
         /// <returns>The function returns a string of a number representing base 60</returns>
         public static string LattitudeBonus(double num)
         {
-            char dir = 'W';
+            char dir = 'S';
             if (num < 0)
                 num = -num;
             else
-                dir = 'E';
+                dir = 'N';
             int degrees = (int)num;
             num = num - degrees;
             int minutes = (int)(num * 60);

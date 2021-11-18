@@ -32,11 +32,12 @@ namespace ConsoleUI_BL
             int choice;
             do
             {
-                Console.WriteLine("\nEnter 1 for adding");
+                Console.WriteLine("\nEnter 0 to exit");
+                Console.WriteLine("Enter 1 for adding");
                 Console.WriteLine("Enter 2 for update");
                 Console.WriteLine("Enter 3 to show by Id");
                 Console.WriteLine("Enter 4 for print list");
-                Console.WriteLine("Enter 0 to exit");
+                
                 choice = GetInt();
                 FirstMenu(choice);
             } while ((MenuOptions)choice != MenuOptions.Exit);   
@@ -159,8 +160,9 @@ namespace ConsoleUI_BL
                     s.Id = GetInt();
                     Console.WriteLine("Enter Station Name: ");
                     s.Name = GetInt();
-                    Console.WriteLine("Enter Station Location - (Longitude and Latitude): ");
+                    Console.WriteLine("Enter the longitude of the station");
                     s.Location.Longitude = GetDouble();
+                    Console.WriteLine("Enter the latitude of the station");
                     s.Location.Lattitude = GetDouble();
                     Console.WriteLine("Enter Charge Slots: ");
                     s.ChargeSlots = GetInt();
@@ -188,8 +190,9 @@ namespace ConsoleUI_BL
                     Customer c = new Customer();
                     Console.WriteLine("Enter the Id: ");
                     c.Id = GetInt();
-                    Console.WriteLine("Enter Customer Location - (Longitude and Latitude): ");
+                    Console.WriteLine("Enter the longitude of the customer");
                     c.Location.Longitude = GetDouble();
+                    Console.WriteLine("Enter the latitude of the customer ");
                     c.Location.Lattitude = GetDouble();
                     Console.WriteLine("Enter the name: ");
                     c.Name = Console.ReadLine();
