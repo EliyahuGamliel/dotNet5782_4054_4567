@@ -1,7 +1,7 @@
 using System;
 using IBL.BO;
 
-namespace ConsoleUI
+namespace ConsoleUI_BL
 {
     partial class Program
     {

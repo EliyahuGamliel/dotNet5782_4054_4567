@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using IBL;
 using IBL.BO;
 
-namespace ConsoleUI
+namespace ConsoleUI_BL
 {
     partial class Program
     {
@@ -31,11 +32,11 @@ namespace ConsoleUI
             int choice;
             do
             {
-                Console.WriteLine("\nEnter 0 to exit");
-                Console.WriteLine("Enter 1 for adding");
+                Console.WriteLine("\nEnter 1 for adding");
                 Console.WriteLine("Enter 2 for update");
                 Console.WriteLine("Enter 3 to show by Id");
                 Console.WriteLine("Enter 4 for print list");
+                Console.WriteLine("Enter 0 to exit");
                 choice = GetInt();
                 FirstMenu(choice);
             } while ((MenuOptions)choice != MenuOptions.Exit);   
@@ -52,15 +53,14 @@ namespace ConsoleUI
                 switch ((MenuOptions)choice)
                 {
                     case MenuOptions.Add:
-                        Console.WriteLine("Enter 0 to exit");
                         Console.WriteLine("Enter 1 for adding a station");
                         Console.WriteLine("Enter 2 for adding a drone");
                         Console.WriteLine("Enter 3 for adding a customer");
                         Console.WriteLine("Enter 4 for adding a parcel");
+                        Console.WriteLine("Enter 0 to exit");
                         break;
 
                     case MenuOptions.Update:
-                        Console.WriteLine("Enter 0 to exit");
                         Console.WriteLine("Enter 1 for update drone's name");
                         Console.WriteLine("Enter 2 for update station's data");
                         Console.WriteLine("Enter 3 for update customer's data");
@@ -69,24 +69,25 @@ namespace ConsoleUI
                         Console.WriteLine("Enter 6 for assign a parcel to a drone");
                         Console.WriteLine("Enter 7 for picking up a parcel");
                         Console.WriteLine("Enter 8 for delivery a parcel by drone");
+                        Console.WriteLine("Enter 0 to exit");
                         break;
 
                     case MenuOptions.Status:
-                        Console.WriteLine("Enter 0 to exit");
                         Console.WriteLine("Enter 1 for station status");
                         Console.WriteLine("Enter 2 for drone status");
                         Console.WriteLine("Enter 3 for customer status");
                         Console.WriteLine("Enter 4 for parcel status");
+                        Console.WriteLine("Enter 0 to exit");
                         break;
 
                     case MenuOptions.ShowList:
-                        Console.WriteLine("Enter 0 to exit");
                         Console.WriteLine("Enter 1 for the stations's list");
                         Console.WriteLine("Enter 2 for drones's list");
                         Console.WriteLine("Enter 3 for customers's list");
                         Console.WriteLine("Enter 4 for the parcel's list");
                         Console.WriteLine("Enter 5 for the list of parcels that hadn't been assigned to a drone");
                         Console.WriteLine("Enter 6 for the list of stations that have sper place for charging");
+                        Console.WriteLine("Enter 0 to exit");
                         break;
 
                     case MenuOptions.Exit:
@@ -94,7 +95,7 @@ namespace ConsoleUI
                         return;
                     
                     default:
-                        Console.WriteLine("Enter only numbers between 1-5!\n");
+                        Console.WriteLine("Enter only numbers between 0-5!\n");
                         help = false;
                         break;
                 }
@@ -212,7 +213,7 @@ namespace ConsoleUI
                     break;
 
                 default: 
-                    System.Console.WriteLine("Enter only numbers between 1-4!\n");
+                    System.Console.WriteLine("Enter only numbers between 0-4!\n");
                     break;
             }
         }
@@ -342,7 +343,7 @@ namespace ConsoleUI
                     break;
 
                 default: 
-                    System.Console.WriteLine("Enter only numbers between 1-8!\n");
+                    System.Console.WriteLine("Enter only numbers between 0-8!\n");
                     break;
             }
         }
@@ -373,7 +374,7 @@ namespace ConsoleUI
                     break;
 
                 default: 
-                    System.Console.WriteLine("Enter only numbers between 1-4!\n");
+                    System.Console.WriteLine("Enter only numbers between 0-4!\n");
                     break;
             }
         }
@@ -426,7 +427,7 @@ namespace ConsoleUI
                     break;
 
                 default: 
-                    System.Console.WriteLine("Enter only numbers between 1-6!\n");
+                    System.Console.WriteLine("Enter only numbers between 0-6!\n");
                     break;
             }  
         } 

@@ -17,24 +17,19 @@ namespace IBL.BO
         public List<ParcelInCustomer> FromCustomer { get; set; }
         public List<ParcelInCustomer> ForCustomer { get; set; }
 
-        /// <summary>
-        /// Ctor of Customer
-        /// </summary>
-        public Customer() { FromCustomer = new List<ParcelInCustomer>(); ForCustomer = new List<ParcelInCustomer>(); this.Location = new Location(); }
-
-        /// <summary><returns>
-        /// The function returns a string to print on all entity data
-        /// </returns></summary>
-        public override string ToString()
-        {
-            string str = $"Id: {Id}\nName: {Name}\nPhone: {Phone}\nLocation: {Location}Parcels From Customer: \n";
-            foreach (var item in FromCustomer)
-                str += item;
-            str += $"Parcels For Customer: \n";
-            foreach (var item in ForCustomer)
-                str += item;
-            return str;
+            /// <summary><returns>
+            /// The function returns a string to print on all entity data
+            /// </returns></summary>
+            public override string ToString() 
+            {
+                string str = $"Id: {Id}\nName: {Name}\nPhone: {Phone}\nLocation: {Location}Parcels From Customer: \n";
+                foreach (var item in FromCustomer)
+                    str += item;
+                str += $"Parcels For Customer: \n";
+                foreach (var item in ForCustomer)
+                    str += item;
+                return str;
+            }
         }
     }
-
 }
