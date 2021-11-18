@@ -64,6 +64,9 @@ namespace IBL
             try {
                 IDAL.DO.Customer c = data.GetCustomerById(Id); 
                 Customer cu = new Customer();
+                cu.ForCustomer = new List<ParcelInCustomer>();
+                cu.FromCustomer = new List<ParcelInCustomer>();
+                cu.Location = new Location();
                 cu.Id = c.Id;
                 cu.Name = c.Name;
                 cu.Phone = c.Phone;
@@ -74,6 +77,7 @@ namespace IBL
                     //If the customer is the target of the parcel
                     if (item.TargetId == cu.Id) {
                         ParcelInCustomer pc = new ParcelInCustomer();
+                        pc.CParcel = new CustomerInParcel();
                         pc.Id = item.Id;
                         pc.Priority = (Priorities)(int)item.Priority;
                         pc.Weight = (WeightCategories)(int)item.Weight;
@@ -90,6 +94,7 @@ namespace IBL
                     //If the customer is the sender of the parcel
                     else if (item.SenderId == cu.Id) {
                         ParcelInCustomer pc = new ParcelInCustomer();
+                        pc.CParcel = new CustomerInParcel();
                         pc.Id = item.Id;
                         pc.Priority = (Priorities)(int)item.Priority;
                         pc.Weight = (WeightCategories)(int)item.Weight;

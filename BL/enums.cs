@@ -13,7 +13,6 @@ namespace IBL
         
         public enum Priorities {Normal, Fast, Emergency}
 
-
         public enum Statuses {Created, Associated, Collected, Provided}
     }
 }
