@@ -206,7 +206,7 @@ namespace IBL
         /// <param name="p2">Object of parcel 2 for comparison</param>
         /// <param name="d">Object of drone</param>
         /// <returns>Returns the most preferred parcel</returns>
-        public IDAL.DO.Parcel CompressParcels(IDAL.DO.Parcel p1, IDAL.DO.Parcel p2, DroneList d)
+        private IDAL.DO.Parcel CompressParcels(IDAL.DO.Parcel p1, IDAL.DO.Parcel p2, DroneList d)
         {
             Customer c1 = GetCustomerById(p1.SenderId);
             Customer c2 = GetCustomerById(p2.SenderId);
@@ -279,7 +279,7 @@ namespace IBL
         /// </summary>
         /// <param name="p">Object of parcel</param>
         /// <returns>int of Status of parcel</returns>
-        public int ReturnStatus(IDAL.DO.Parcel chosenp)
+        private int ReturnStatus(IDAL.DO.Parcel chosenp)
         {
             if (DateTime.Compare(chosenp.Requested, chosenp.Scheduled) > 0)
                 return (int)Statuses.Created;
@@ -297,7 +297,7 @@ namespace IBL
         /// <param name="l1">Object Location 1</param>
         /// <param name="l2">Object Location 2</param>
         /// <returns>Returns the amount of battery consumed</returns>
-        public double ReturnBattery(int weight, Location l1, Location l2)
+        private double ReturnBattery(int weight, Location l1, Location l2)
         {
             if (weight == 0)
                 return DistanceTo(l1, l2) * WeightLight;
@@ -315,7 +315,7 @@ namespace IBL
         /// <param name="s">list of Station</param>
         /// <param name="drone">Object of Drone's Location</param>
         /// <returns>Returns a station object</returns>
-        public IDAL.DO.Station ReturnCloseStation(IEnumerable<IDAL.DO.Station> s, Location drone)
+        private IDAL.DO.Station ReturnCloseStation(IEnumerable<IDAL.DO.Station> s, Location drone)
         {
             Location l1 = new Location();
             Location l2 = new Location();
@@ -343,7 +343,7 @@ namespace IBL
         /// <param name="l1">Object Location 1</param>
         /// <param name="l2">Object Location 2</param>
         /// <returns>Returns the distance between two locations</returns>
-        public double DistanceTo(Location l1, Location l2)
+        private double DistanceTo(Location l1, Location l2)
         {
             double rlat1 = Math.PI * l1.Lattitude / 180;
             double rlat2 = Math.PI * l2.Lattitude / 180;
@@ -356,7 +356,13 @@ namespace IBL
             return Math.Round(dist * 1.609344, 2);
         }
 
-        public int ChargeSlotsCatched(int idStation)
+
+        /// <summary>
+        /// check how much slots are taken
+        /// </summary>
+        /// <param name="idStation">id of station</param>
+        /// <returns>the number of taken slots</returns>
+        private int ChargeSlotsCatched(int idStation)
         {
             int catched = 0;
             IEnumerable<IDAL.DO.DroneCharge> listDCharge = data.GetDroneCharge();
@@ -374,7 +380,7 @@ namespace IBL
         /// <param name="id">The id for check</param>
         /// <typeparam name="T">The type of the list</typeparam>
         /// <returns>Nothing</returns>
-        public void CheckExistId<T>(IEnumerable<T> list, int id)
+        private void CheckExistId<T>(IEnumerable<T> list, int id)
         {
             foreach (var item in list)
             {
@@ -391,7 +397,7 @@ namespace IBL
         /// <param name="id">The id for check</param>
         /// <typeparam name="T">The type of the list</typeparam>
         /// <returns>Nothing</returns>
-        public void CheckNotExistId<T>(IEnumerable<T> list, int id)
+        private void CheckNotExistId<T>(IEnumerable<T> list, int id)
         {
             foreach (var item in list)
             {
@@ -409,7 +415,7 @@ namespace IBL
         /// <param name="dl">Object of Drone</param>
         /// <typeparam name="T">he type of the list</typeparam>
         /// <returns>Nothing</returns>
-        public double CheckDroneCannotSend(IEnumerable<IDAL.DO.Station> list, DroneList dl)
+        private double CheckDroneCannotSend(IEnumerable<IDAL.DO.Station> list, DroneList dl)
         {
             Location lst = new Location();
             Location locationStation = new Location();
@@ -438,7 +444,7 @@ namespace IBL
         /// </summary>
         /// <param name="dl">Object of Drone</param>
         /// <returns>Nothing</returns>
-        public void CheckDroneCannotRelese(DroneList dl)
+        private void CheckDroneCannotRelese(DroneList dl)
         {
             if (dl.Status != DroneStatuses.Maintenance)
                 throw new DroneCannotRelese();
@@ -449,7 +455,7 @@ namespace IBL
         /// </summary>
         /// <param name="p">Object of parcel</param>
         /// <returns>Nothing</returns>
-        public void CheckDroneCannotPickUp(IDAL.DO.Parcel p)
+        private void CheckDroneCannotPickUp(IDAL.DO.Parcel p)
         {
             if (ReturnStatus(p) != 1)
                 throw new DroneCannotPickUp();
@@ -460,7 +466,7 @@ namespace IBL
         /// </summary>
         /// <param name="p">Object of parcel</param>
         /// <returns>Nothing</returns>
-        public void CheckDroneCannotDeliver(IDAL.DO.Parcel p)
+        private void CheckDroneCannotDeliver(IDAL.DO.Parcel p)
         {
             if (ReturnStatus(p) != 2)
                 throw new DroneCannotDeliver();
@@ -470,7 +476,7 @@ namespace IBL
         /// Checks if the drone can to add and send to the station to charge, if not returns error
         /// </summary>
         /// <param name="s">Oblect od IDAL.DO.station</param>
-        public void CheckAddDrone(IDAL.DO.Station s)
+        private void CheckAddDrone(IDAL.DO.Station s)
         {
             if (s.ChargeSlots == 0)
                 throw new StationIsFull();

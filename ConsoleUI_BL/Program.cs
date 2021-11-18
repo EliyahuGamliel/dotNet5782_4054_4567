@@ -27,7 +27,7 @@ namespace ConsoleUI_BL
         /// <summary>
         /// The MainMenu
         /// </summary>
-        static void MainMenu()
+        private static void MainMenu()
         {
             int choice;
             do
@@ -45,7 +45,7 @@ namespace ConsoleUI_BL
         /// The first part of the menu
         /// </summary>
         /// <param name="choice">The first choice of the user</param>
-        static void FirstMenu(int choice)
+        private static void FirstMenu(int choice)
         {
             try
             {
@@ -120,7 +120,7 @@ namespace ConsoleUI_BL
         /// </summary>
         /// <param name="choice">The first choice of the user</param>
         /// <param name="secondChoice">The second choice of the user</param>
-        static void SecondMenu(int choice, int secondChoice)
+        private static void SecondMenu(int choice, int secondChoice)
         {
             switch (choice)
             {
