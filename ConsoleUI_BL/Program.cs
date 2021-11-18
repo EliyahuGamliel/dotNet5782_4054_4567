@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using IBL;
 using IBL.BO;
 
-namespace ConsoleUI
+namespace ConsoleUI_BL
 {
     partial class Program
     {
