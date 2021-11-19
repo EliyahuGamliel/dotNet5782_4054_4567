@@ -27,7 +27,7 @@ namespace IBL
                 pa.Priority = (IDAL.DO.Priorities)(int)p.Priority;
                 pa.Requested = DateTime.Now;
                 int Id = data.AddParcel(pa);
-                return $"The next number parcel: {Id}\n";
+                return $"The number of parcel: {Id-1}\n";
             }
             catch (IDAL.DO.IdExistException) {
                 throw new IdExistException(p.Id);

@@ -189,6 +189,7 @@ namespace ConsoleUI_BL
                 //For adding a customer
                 case Adding.Customer:
                     Customer c = new Customer();
+                    c.Location = new Location();
                     Console.WriteLine("Enter the Id: ");
                     c.Id = GetInt();
                     Console.WriteLine("Enter the longitude of the customer");
