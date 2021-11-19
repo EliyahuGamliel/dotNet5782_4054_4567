@@ -102,7 +102,8 @@ namespace IBL
         /// <returns>Notice if the addition was successful</returns>
         public String ReleasDrone(int idDrone, double time){
             CheckNotExistId(dronesList, idDrone);
-            CheckLegalTime(time);
+            if (time < 0)
+                throw new TimeNotLegal(time);
             DroneList d = dronesList.Find(dr => idDrone == dr.Id);
             int index = dronesList.IndexOf(d);
             CheckDroneCannotRelese(d);

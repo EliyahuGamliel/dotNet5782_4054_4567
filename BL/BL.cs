@@ -158,7 +158,7 @@ namespace IBL
 
             IDAL.DO.Parcel parcelchoose = new IDAL.DO.Parcel();
             IEnumerable<IDAL.DO.Parcel> parcelslist = data.GetParcels();
-            parcelchoose.Id = -1;
+            parcelchoose.Id = 0;
             bool first = true;
             foreach (var item in parcelslist)
             {
@@ -184,7 +184,7 @@ namespace IBL
             }
 
             //There are no matching parcels
-            if (parcelchoose.Id == -1)
+            if (parcelchoose.Id == 0 || d.ParcelId != 0)
                 throw new DroneCannotAssigan();
 
             d.Status = DroneStatuses.Delivery;
@@ -266,7 +266,7 @@ namespace IBL
             d.Status = DroneStatuses.Available;
             d.Battery -= battery;
             d.CLocation = chosendrone.PTransfer.DestinationLocation;
-            d.ParcelId = -1;
+            d.ParcelId = 0;
             dronesList[index] = d;
             data.UpdateParcel(chosenp);
             return "The update was successful\n";
@@ -410,16 +410,6 @@ namespace IBL
         {
             if (choice > 2 || choice < 0)
                 throw new ChoiceNotLegal(choice);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="time"></param>
-        private void CheckLegalTime(double time)
-        {
-            if (time<0)
-                throw new TimeNotLegal(time);
         }
 
         /// <summary>
