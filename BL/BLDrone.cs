@@ -23,7 +23,8 @@ namespace IBL
                 d.CLocation.Longitude = s.Longitude;
                 d.ParcelId = 0;
 
-                CheckAddDrone(s);
+                if (s.ChargeSlots == 0)
+                    throw new StationIsFull();
 
                 IDAL.DO.Drone dr = new IDAL.DO.Drone();
                 dr.Id = d.Id;

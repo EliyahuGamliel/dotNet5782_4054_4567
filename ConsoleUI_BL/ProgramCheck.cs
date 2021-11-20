@@ -47,7 +47,7 @@ namespace ConsoleUI_BL
             string num = Console.ReadLine();
             int check;
             bool error = true;
-            if (num.Length != 13 || num[0] != '+' || num[1] != '9' || num[2] != '7' || num[3] != '2' || num[4] != '-' || num[5] != '5') 
+            if (num.Length != 14 || num[0] != '+' || num[1] != '9' || num[2] != '7' || num[3] != '2' || num[4] != '-' || num[5] != '5') 
                 error = false;
             else 
             {
@@ -63,7 +63,7 @@ namespace ConsoleUI_BL
             {
                 Console.WriteLine("You didnt enter a valid phone, please try again (+972-5????????)");
                 num = Console.ReadLine();
-                if (num.Length != 14 || num[0] != '+' || num[1] != '9' || num[2] != '7' || num[3] != '2' || num[4] != '5') 
+                if (num.Length != 14 || num[0] != '+' || num[1] != '9' || num[2] != '7' || num[3] != '2' || num[4] != '-' || num[5] != '5') 
                     error = false;
                 else 
                 {
