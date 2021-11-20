@@ -107,7 +107,10 @@ namespace IBL
                 throw new TimeNotLegal(time);
             DroneList d = dronesList.Find(dr => idDrone == dr.Id);
             int index = dronesList.IndexOf(d);
-            CheckDroneCannotRelese(d);
+           
+            if (d.Status != DroneStatuses.Maintenance)
+                throw new DroneCannotRelese();
+
             d.Status = DroneStatuses.Available;
             d.Battery = d.Battery + time * ChargingRate;
             if (d.Battery > 100)

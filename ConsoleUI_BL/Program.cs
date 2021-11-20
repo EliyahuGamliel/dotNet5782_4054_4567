@@ -41,6 +41,7 @@ namespace ConsoleUI_BL
                 FirstMenu(choice);
             } while ((MenuOptions)choice != MenuOptions.Exit);   
         }
+        
         /// <summary>
         /// The first part of the menu
         /// </summary>
