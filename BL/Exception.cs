@@ -113,7 +113,7 @@ namespace IBL.BO
     }
 
     /// <summary>
-    /// 
+    /// if the time that the drone was in charging small than 0
     /// </summary>
     [Serializable]
     public class TimeNotLegal : Exception
@@ -173,8 +173,43 @@ namespace IBL.BO
     {
         public override string ToString()
         {
-            return "StationIsFull: The Drone cann't add because the station is full\n";
+            return "StationIsFull: The Drone cann't send/add because the station is full\n";
         }
     }
 
+    /// <summary>
+    /// if the time that the drone was in charging small than 0
+    /// </summary>
+    [Serializable]
+    public class LocationNotLegal : Exception
+    {
+        public double longitude { get; private set; }
+        public double latitude { get; private set; }
+        public LocationNotLegal(double longitude, double latitude)
+        {
+            this.longitude = longitude;
+            this.latitude = latitude;
+        }
+        public override string ToString()
+        {
+            return "LocationNotLegal: The Location doesn't exist (" + longitude +  ", " + latitude + ")\n";
+        }
+    }
+
+    /// <summary>
+    /// if the time that the drone was in charging small than 0
+    /// </summary>
+    [Serializable]
+    public class ChargeSlotsNotLegal : Exception
+    {
+        public int chargeSlots { get; private set; }
+        public ChargeSlotsNotLegal(int chargeSlots)
+        {
+            this.chargeSlots = chargeSlots;
+        }
+        public override string ToString()
+        {
+            return "TimeNotLegal: The station cann't add/update, because the chargeSlots is not legal (" + chargeSlots + ")\n";
+        }
+    }
 }

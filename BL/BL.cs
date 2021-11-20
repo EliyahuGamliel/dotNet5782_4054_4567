@@ -485,5 +485,11 @@ namespace IBL
             if (s.ChargeSlots == 0)
                 throw new StationIsFull();
         }
+
+        private void CheckLegelLocation(double Longitude, double Lattitude)
+        {
+            if (90 < Lattitude || -90 > Lattitude || 180 < Longitude || -180 > Longitude)
+                throw new LocationNotLegal(Longitude, Lattitude);
+        }
     }
 }

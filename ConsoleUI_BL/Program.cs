@@ -198,8 +198,8 @@ namespace ConsoleUI_BL
                     c.Location.Lattitude = GetDouble();
                     Console.WriteLine("Enter the name: ");
                     c.Name = Console.ReadLine();
-                    Console.WriteLine("Enter the phone: ");
-                    c.Phone = GetStringInt();
+                    Console.WriteLine("Enter the phone (+972-5????????): ");
+                    c.Phone = GetPhone();
                     System.Console.WriteLine(logic.AddCustomer(c)); 
                     break;
 
@@ -247,7 +247,7 @@ namespace ConsoleUI_BL
 
                 case Update.StationDetails:
                     string nameStation;
-                    int chargeSlots = -1;
+                    int chargeSlots = -9999;
                     Console.WriteLine("Enter Id of Station: ");
                     id = GetInt();
                     Console.WriteLine("Enter a new name to Station: ");
@@ -265,7 +265,7 @@ namespace ConsoleUI_BL
                                 success = int.TryParse(input, out chargeSlots);
                             else
                             {
-                                chargeSlots = -1;
+                                chargeSlots = -9999;
                                 break;
                             }
                         }
@@ -278,32 +278,8 @@ namespace ConsoleUI_BL
                     id = GetInt();
                     Console.WriteLine("Enter a new name to Customer: ");
                     string nameCustomer = Console.ReadLine();
-                    Console.WriteLine("Enter a new phone to Customer: ");
-                    string phoneCustomer = "";
-                    int pho;
-                    input = Console.ReadLine();
-                    if (input != "")
-                    {
-                        success = Int32.TryParse(input, out pho);
-                        while (!success)
-                        {
-                            Console.WriteLine("you didnt enter an number only, please try again");
-                            input = Console.ReadLine();
-                            if (input != "")
-                                success = int.TryParse(input, out pho);
-                            else
-                            {
-                                phoneCustomer = "";
-                                break;
-                            }
-                        }
-                        if (success)
-                        {
-                            phoneCustomer = pho.ToString();
-                        }
-                    }
-                    else
-                        phoneCustomer = "";
+                    Console.WriteLine("Enter a new phone to Customer (+972-5????????): ");
+                    string phoneCustomer = GetPhone();
                     System.Console.WriteLine(logic.UpdateCustomer(id, nameCustomer, phoneCustomer));
                     break;
                 case Update.SendDrone:

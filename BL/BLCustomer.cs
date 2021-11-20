@@ -20,6 +20,7 @@ namespace IBL
                 cu.Phone = c.Phone;
                 cu.Lattitude = c.Location.Lattitude;
                 cu.Longitude = c.Location.Longitude;
+                CheckLegelLocation(cu.Longitude, cu.Lattitude);
                 data.AddCustomer(cu); 
                 return "The addition was successful\n";
             }

@@ -42,16 +42,39 @@ namespace ConsoleUI_BL
         /// gets a number as a string
         /// </summary>
         /// <returns></returns>
-        private static string GetStringInt()
+        private static string GetPhone()
         {
             string num = Console.ReadLine();
             int check;
-            bool error = Int32.TryParse(num, out check);
+            bool error = true;
+            if (num.Length != 13 || num[0] != '+' || num[1] != '9' || num[2] != '7' || num[3] != '2' || num[4] != '-' || num[5] != '5') 
+                error = false;
+            else 
+            {
+                string output = num.Substring(num.IndexOf("+") + 5, 4);
+                error = Int32.TryParse(output, out check);
+                if (error) 
+                {
+                    output = num.Substring(num.IndexOf("+") + 9, 4); 
+                    error = Int32.TryParse(output, out check);
+                }
+            }
             while (!error)
             {
-                Console.WriteLine("You didnt enter a number only, please try again");
+                Console.WriteLine("You didnt enter a valid phone, please try again (+972-5????????)");
                 num = Console.ReadLine();
-                error = Int32.TryParse(num, out check);
+                if (num.Length != 14 || num[0] != '+' || num[1] != '9' || num[2] != '7' || num[3] != '2' || num[4] != '5') 
+                    error = false;
+                else 
+                {
+                    string output = num.Substring(num.IndexOf("+") + 6, 4);
+                    error = Int32.TryParse(output, out check);
+                    if (error) 
+                    {
+                        output = num.Substring(num.IndexOf("+") + 10, 4); 
+                        error = Int32.TryParse(output, out check);
+                    }
+                }
             }
             return num;
         }

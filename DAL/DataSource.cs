@@ -67,12 +67,12 @@ namespace DalObject
                 }
                 Customer cust = new Customer();
                 cust.Id = rid;
-                cust.Name = ("Mavic Pro " + i);
-                string phone = "0537589982";
+                cust.Name = ("Customer" + i);
+                string phone = "+972-582559635";
                 rid = rando.Next(1000, 10000);
                 //h check if the random number is legal and if not h start over
                 for (int h = 0; h < i; ++h) {
-                    phone = "053758" + rid;
+                    phone = "+972-58671" + rid;
                     if (phone == Customers[h].Phone) {
                         //it takes a random number from 1000 to 9999 and add it to "053758"
                         rid = rando.Next();

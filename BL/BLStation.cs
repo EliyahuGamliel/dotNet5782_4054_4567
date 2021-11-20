@@ -18,7 +18,10 @@ namespace IBL
                 st.Name = s.Name;
                 st.Longitude = s.Location.Longitude;
                 st.Lattitude = s.Location.Lattitude;
+                CheckLegelLocation(st.Longitude, st.Lattitude);
                 st.ChargeSlots = s.ChargeSlots;
+                if (st.ChargeSlots < 0)
+                    throw new ChargeSlotsNotLegal(st.ChargeSlots);
                 data.AddStation(st);
                 return "The addition was successful\n";
             }
@@ -39,7 +42,9 @@ namespace IBL
                 IDAL.DO.Station s = data.GetStationById(id);
                 if (name != "")
                     s.Name = name;
-                if (chargeSlots != -1) {
+                if (chargeSlots != -9999) {
+                    if (chargeSlots < 0 || ChargeSlotsCatched(id) > chargeSlots)
+                        throw new ChargeSlotsNotLegal(chargeSlots);
                     int amountavalible = chargeSlots;
                     foreach (var item in data.GetDroneCharge())
                         if (item.StationId == s.Id)
