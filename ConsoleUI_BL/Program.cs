@@ -122,21 +122,49 @@ namespace ConsoleUI_BL
         /// <param name="secondChoice">The second choice of the user</param>
         private static void SecondMenu(int choice, int secondChoice)
         {
-            switch (choice)
+            switch ((MenuOptions)choice)
             {
-                case 1:
+                case MenuOptions.Add:
+                    while (true)
+                    {
+                        if (secondChoice < 5 && secondChoice > -1)
+                            break;
+                        System.Console.WriteLine("Enter only numbers between 0-4! try again\n");
+                        secondChoice = GetInt();
+                    }
                     adding(secondChoice);
                     break;
 
-                case 2:
+                case MenuOptions.Update:
+                    while (true)
+                    {
+                        if (secondChoice < 9 && secondChoice > -1)
+                            break;
+                        System.Console.WriteLine("Enter only numbers between 0-8! try again\n");
+                        secondChoice = GetInt();
+                    }
                     update(secondChoice);
                     break;
 
-                case 3:
+                case MenuOptions.Status:
+                    while (true)
+                    {
+                        if (secondChoice < 5 && secondChoice > -1)
+                            break;
+                        System.Console.WriteLine("Enter only numbers between 0-4! try again\n");
+                        secondChoice = GetInt();
+                    }
                     status(secondChoice);
                     break;
 
-                case 4:
+                case MenuOptions.ShowList:
+                    while (true)
+                    {
+                        if (secondChoice < 6 && secondChoice > -1)
+                            break;
+                        System.Console.WriteLine("Enter only numbers between 0-6! try again\n");
+                        secondChoice = GetInt();
+                    }
                     lists(secondChoice);
                     break;
             }
@@ -216,10 +244,6 @@ namespace ConsoleUI_BL
                     p.Priority = (Priorities)GetInt();
                     System.Console.WriteLine(logic.AddParcel(p, SenderId, TargetId)); 
                     break;
-
-                default: 
-                    System.Console.WriteLine("Enter only numbers between 0-4!\n");
-                    break;
             }
         }
         
@@ -282,11 +306,13 @@ namespace ConsoleUI_BL
                     string phoneCustomer = GetPhone();
                     System.Console.WriteLine(logic.UpdateCustomer(id, nameCustomer, phoneCustomer));
                     break;
+
                 case Update.SendDrone:
                     Console.WriteLine("Enter Id of Drone: ");
                     id = GetInt();
                     System.Console.WriteLine(logic.SendDrone(id));
                     break;
+
                 case Update.ReleaseDrone:
                     Console.WriteLine("Enter Id of Drone: ");
                     id = GetInt();
@@ -294,55 +320,56 @@ namespace ConsoleUI_BL
                     double time = GetDouble();
                     System.Console.WriteLine(logic.ReleasDrone(id, time));
                     break;
+
                 case Update.AssignParcel:
                     Console.WriteLine("Enter Id of Drone: ");
                     id = GetInt();
                     System.Console.WriteLine(logic.AssignDroneParcel(id));
                     break;
+
                 case Update.PickParcel:
                     Console.WriteLine("Enter Id of Drone: ");
                     id = GetInt();
                     System.Console.WriteLine(logic.PickUpDroneParcel(id));
                     break;
+
                 case Update.DeliverParcel:
                     Console.WriteLine("Enter Id of Drone: ");
                     id = GetInt();
                     System.Console.WriteLine(logic.DeliverParcelCustomer(id));
                     break;
-
-                default: 
-                    System.Console.WriteLine("Enter only numbers between 0-8!\n");
-                    break;
             }
         }
 
-        
         static void status(int num) {
-            Console.WriteLine("Enter the Id: ");
-            int ID = GetInt();
+            int ID;
             switch ((Status)num)
             {
                 case Status.Exit:
                     return;
 
                 case Status.Stations:
+                    Console.WriteLine("Enter the Id: ");
+                    ID = GetInt();
                     Console.WriteLine(logic.GetStationById(ID));
                     break;
 
                 case Status.Drones:
+                    Console.WriteLine("Enter the Id: ");
+                    ID = GetInt();
                     Console.WriteLine(logic.GetDroneById(ID));
                     break;
                 
                 case Status.Customers:
+                    Console.WriteLine("Enter the Id: ");
+                    ID = GetInt();
                     Console.WriteLine(logic.GetCustomerById(ID));
                     break;
 
                 case Status.Parcels:
+                    Console.WriteLine("Enter the Id: ");
+                    ID = GetInt();
                     Console.WriteLine(logic.GetParcelById(ID));
-                    break;
-
-                default: 
-                    System.Console.WriteLine("Enter only numbers between 0-4!\n");
                     break;
             }
         }
@@ -393,11 +420,7 @@ namespace ConsoleUI_BL
                     foreach (var item in logic.GetStationCharge())
                         Console.WriteLine(item);
                     break;
-
-                default: 
-                    System.Console.WriteLine("Enter only numbers between 0-6!\n");
-                    break;
-            }  
+            }
         } 
     }
 }
