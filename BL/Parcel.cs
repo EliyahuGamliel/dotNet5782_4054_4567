@@ -22,6 +22,18 @@ namespace IBL.BO
         /// The function returns a string to print on all entity data
         /// </returns></summary>
         public override string ToString()
-        { return $"Id: {Id}\nWeight: {Weight}\nPriority: {Priority}\nRequested: {Requested}\nScheduled: {Scheduled}\nPickedUp: {PickedUp}\nDelivered: {Delivered}\nDrone: \n{Drone}Target: {Target}Sender: {Sender}\n"; }
+        {
+            string str =  $"Id: {Id}\nWeight: {Weight}\nPriority: {Priority}\nRequested: {Requested}\nScheduled: ";
+            if (Scheduled > DateTime.MinValue)
+                str += Scheduled;
+            str += $"\nPickedUp: ";
+            if (PickedUp > DateTime.MinValue)
+                str += PickedUp;
+            str += $"\nDelivered: ";
+            if (Delivered > DateTime.MinValue)
+                str += Delivered;
+            str += $"\nDrone: \n{Drone}Target: {Target}Sender: {Sender}\n"; 
+            return str;    
+        }
     }
 }

@@ -149,6 +149,7 @@ namespace DalObject
                                 //As long as the "Delivered" field precedes the current time or As long as the "Delivered" field precedes the "PickedUp" field
                                 while (DateTime.Compare(p.Delivered, p.PickedUp) <= 0 || DateTime.Compare(DateTime.Now, p.Delivered) <= 0)
                                     p.Delivered = new DateTime(2021, rando.Next(10, 13), rando.Next(1, 28), rando.Next(0, 24), rando.Next(0, 60), rando.Next(0, 60));
+                                p.DroneId = 0;
                             }
                         }
                         //Since a drone is found for the parcel, it is possible to exit the loop
