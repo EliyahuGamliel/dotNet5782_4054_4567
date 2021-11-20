@@ -51,11 +51,11 @@ namespace ConsoleUI_BL
                 error = false;
             else 
             {
-                string output = num.Substring(num.IndexOf("+") + 5, 4);
+                string output = num.Substring(num.IndexOf("+") + 6, 4);
                 error = Int32.TryParse(output, out check);
                 if (error) 
                 {
-                    output = num.Substring(num.IndexOf("+") + 9, 4); 
+                    output = num.Substring(num.IndexOf("+") + 10, 4); 
                     error = Int32.TryParse(output, out check);
                 }
             }
