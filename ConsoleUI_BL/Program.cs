@@ -104,9 +104,7 @@ namespace ConsoleUI_BL
                     int secondChoice;
                     secondChoice = GetInt();
                     if(secondChoice == 0)
-                    {
                         return;
-                    }
                     SecondMenu(choice, secondChoice);
                 }
             }
