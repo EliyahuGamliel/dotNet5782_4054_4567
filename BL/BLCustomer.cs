@@ -129,10 +129,6 @@ namespace IBL
                 cu.Id = item.Id;
                 cu.Name = item.Name;
                 cu.Phone = item.Phone;
-                //cu.ParcelsGet = 0;
-                //cu.ParcelsInTheWay = 0;  
-                //cu.ParcelsOnlySend = 0;
-                //cu.ParcelsSent = 0;
 
                 IEnumerable<IDAL.DO.Parcel> listparcels = data.GetParcels();
                 //If the customer is the target and the parcel is arrived
@@ -140,9 +136,7 @@ namespace IBL
 
                 //If the customer is the sender
                 cu.ParcelsOnlySend = listparcels.Where(p => ReturnStatus(p) == 0 && p.SenderId == cu.Id).Count();
-
                 cu.ParcelsInTheWay = listparcels.Where(p => (ReturnStatus(p) == 1 || ReturnStatus(p) == 2)  && p.SenderId == cu.Id).Count();
-
                 cu.ParcelsSent = listparcels.Where(p => ReturnStatus(p) == 3 && p.SenderId == cu.Id).Count();
              
                 customer.Add(cu);

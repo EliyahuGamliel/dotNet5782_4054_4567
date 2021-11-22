@@ -100,10 +100,7 @@ namespace IBL
                 sl.Id = item.Id;
                 sl.Name = item.Name;
                 sl.ChargeSlots = item.ChargeSlots;
-                sl.ChargeSlotsCatched = 0;
-                foreach (var item2 in data.GetDroneCharge())
-                    if (item2.StationId == sl.Id)
-                        sl.ChargeSlotsCatched += 1;
+                sl.ChargeSlotsCatched = ChargeSlotsCatched(sl.Id);
                 station.Add(sl);
             }
             return station;
