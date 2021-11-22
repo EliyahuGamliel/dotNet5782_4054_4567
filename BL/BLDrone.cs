@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using IBL.BO;
 using System.Collections.Generic;
 
@@ -77,6 +78,7 @@ namespace IBL
         /// <returns>Notice if the addition was successful</returns>
         public string SendDrone(int idDrone) {
             CheckNotExistId(dronesList, idDrone);
+
             DroneList d = dronesList.Find(dr => idDrone == dr.Id);
             int index = dronesList.IndexOf(d);
             double battery = CheckDroneCannotSend(data.GetStations(), d);
@@ -88,6 +90,7 @@ namespace IBL
             d.Battery = d.Battery - battery;
             dronesList[index] = d;
             UpdateStation(st.Id, "", st.ChargeSlots - 1);
+
             IDAL.DO.DroneCharge dc = new IDAL.DO.DroneCharge();
             dc.DroneId = d.Id;
             dc.StationId = st.Id;
@@ -105,6 +108,7 @@ namespace IBL
             CheckNotExistId(dronesList, idDrone);
             if (time < 0)
                 throw new TimeNotLegal(time);
+
             DroneList d = dronesList.Find(dr => idDrone == dr.Id);
             int index = dronesList.IndexOf(d);
            
@@ -147,42 +151,41 @@ namespace IBL
             dr.CLocation = dl.CLocation;
 
             ParcelTransfer pt = new ParcelTransfer();
-            foreach (var itemParcels in data.GetParcels()) {
-                //If the parcel associated with the drone
-                if (itemParcels.Id == dl.ParcelId) {
-                    pt.Id = itemParcels.Id;
-                    pt.Priority = (Priorities)(int)itemParcels.Priority;
-                    pt.Weight = (WeightCategories)(int)itemParcels.Weight;
-                    pt.Status = false;
-                    //If the parcel has already been collected
-                    if (DateTime.Compare(itemParcels.PickedUp, itemParcels.Scheduled) > 0)
-                        pt.Status = true;
+            IDAL.DO.Parcel parcel = data.GetParcels().First(p => p.Id == dl.ParcelId);
+            //If the parcel associated with the drone
+            pt.Id = parcel.Id;
+            pt.Priority = (Priorities)(int)parcel.Priority;
+            pt.Weight = (WeightCategories)(int)parcel.Weight;
+            pt.Status = false;
+            //If the parcel has already been collected
+            if (DateTime.Compare(parcel.PickedUp, parcel.Scheduled) > 0)
+                pt.Status = true;
 
-                    //CustomerInParcel - The Target Customer of Parcel 
-                    CustomerInParcel cp1 = new CustomerInParcel();
-                    cp1.Id = itemParcels.TargetId;
-                    IDAL.DO.Customer customerhelp = data.GetCustomerById(cp1.Id); 
-                    cp1.Name = customerhelp.Name;
-                    pt.Recipient = cp1;
-                    pt.DestinationLocation = new Location();
-                    pt.DestinationLocation.Lattitude = customerhelp.Lattitude;
-                    pt.DestinationLocation.Longitude = customerhelp.Longitude;
+               
+            //CustomerInParcel - The Target Customer of Parcel 
+            CustomerInParcel cp1 = new CustomerInParcel();
+            cp1.Id = parcel.TargetId;
+            IDAL.DO.Customer customerhelp = data.GetCustomerById(cp1.Id);
+            cp1.Name = customerhelp.Name;
+            pt.Recipient = cp1;
+            pt.DestinationLocation = new Location();
+            pt.DestinationLocation.Lattitude = customerhelp.Lattitude;
+            pt.DestinationLocation.Longitude = customerhelp.Longitude;
+            
+            //CustomerInParcel - The Sender Customer of Parcel 
+            CustomerInParcel cp2 = new CustomerInParcel();
+            cp2.Id = parcel.SenderId;
+            customerhelp = data.GetCustomerById(cp2.Id);
+            cp2.Name = customerhelp.Name;
+            pt.Sender = cp2;
+            pt.CollectionLocation = new Location();
+            pt.CollectionLocation.Lattitude = customerhelp.Lattitude;
+            pt.CollectionLocation.Longitude = customerhelp.Longitude;
 
-                    //CustomerInParcel - The Sender Customer of Parcel 
-                    CustomerInParcel cp2 = new CustomerInParcel();
-                    cp2.Id = itemParcels.SenderId;
-                    customerhelp = data.GetCustomerById(cp2.Id); 
-                    cp2.Name = customerhelp.Name;
-                    pt.Sender = cp2;
-                    pt.CollectionLocation = new Location();
-                    pt.CollectionLocation.Lattitude = customerhelp.Lattitude;
-                    pt.CollectionLocation.Longitude = customerhelp.Longitude;
+            pt.TransportDistance = DistanceTo(pt.CollectionLocation, pt.DestinationLocation);
 
-                    pt.TransportDistance = DistanceTo(pt.CollectionLocation, pt.DestinationLocation);
+            dr.PTransfer = pt;
 
-                    dr.PTransfer = pt;
-                }
-            }
             return dr;
         }
         

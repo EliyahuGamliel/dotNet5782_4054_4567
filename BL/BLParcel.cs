@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using IBL.BO;
 using System.Collections.Generic;
 
@@ -109,19 +110,7 @@ namespace IBL
         /// </summary>
         /// <returns>Returns a list of all unassigned parcels</returns>
         public IEnumerable<ParcelList> GetParcelDrone(){
-            IEnumerable<IDAL.DO.Parcel> listparcelsD = data.GetParcelDrone();
-            List<ParcelList> parcel = new List<ParcelList>();
-            foreach (var item in listparcelsD) {
-                ParcelList pa = new ParcelList();
-                pa.Id = item.Id;
-                pa.Priority = (Priorities)(int)item.Priority;
-                pa.SenderId = item.SenderId;
-                pa.TargetId = item.TargetId;
-                pa.Weight = (WeightCategories)(int)item.Weight;
-                pa.Status = (Statuses)ReturnStatus(item);
-                parcel.Add(pa);
-            }
-            return parcel;
+            return GetParcels().Where(pa => pa.Status == Statuses.Created);
         }
     }
 } 

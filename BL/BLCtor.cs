@@ -1,4 +1,5 @@
- using System;
+using System;
+using System.Linq;
 using IBL.BO;
 using System.Collections.Generic;
 
@@ -32,9 +33,11 @@ namespace IBL
                 dl.MaxWeight = (WeightCategories)(int)item.MaxWeight;
                 dl.Model = item.Model;
 
+
                 IEnumerable<IDAL.DO.Parcel> parcelslist = data.GetParcels();
                 foreach (var itemParcel in parcelslist)
                 {
+
                     //If the parcel is associated with the drone and also the parcrel in the middle of the shipment
                     if (itemParcel.DroneId == dl.Id && (ReturnStatus(itemParcel) == 1 || ReturnStatus(itemParcel) == 2))
                     {
@@ -81,47 +84,30 @@ namespace IBL
                     //If the situation that came out is: maintenance
                     if (dl.Status == DroneStatuses.Maintenance)
                     {
-                        int counter = 0;
-                        IEnumerable<IDAL.DO.Station> stationslist = data.GetStations();
-                        foreach (var itemStation in stationslist)
-                            counter += 1;
+                        IEnumerable<IDAL.DO.Station> stationslist = data.GetStationCharge();
+                        int counter = stationslist.Count();
                         //The drone is at a random station
-                        int st = rand.Next(0, counter);
-                        foreach (var itemStation in stationslist)
-                        {
-                            if (st == 0)
-                            {
-                                dl.CLocation.Longitude = itemStation.Longitude;
-                                dl.CLocation.Lattitude = itemStation.Lattitude;
-                                UpdateStation(itemStation.Id, itemStation.Name, itemStation.ChargeSlots - 1);
-                                break;
-                            }
-                            st -= 1;
-                        }
+                        int stIndex = rand.Next(0, counter);
+                        IDAL.DO.Station st = stationslist.ElementAt(stIndex);
+                        dl.CLocation.Longitude = st.Longitude;
+                        dl.CLocation.Lattitude = st.Lattitude;
+                        UpdateStation(st.Id, "", st.ChargeSlots - 1);
                         dl.Battery = rand.NextDouble() + rand.Next(0, 20);
+                        IDAL.DO.DroneCharge droneCharge = new IDAL.DO.DroneCharge();
+                        droneCharge.DroneId = dl.Id;
+                        droneCharge.StationId = st.Id;
+                        data.AddDroneCharge(droneCharge);
                     }
                     //If the situation that came out is: available
                     else
                     {
-                        int counter = 0;
-                        IEnumerable<CustomerList> customerslist = GetCustomers();
-                        foreach (var itemCustomer in customerslist)
-                            if (itemCustomer.ParcelsGet > 0)
-                                counter += 1;
+                        IEnumerable<CustomerList> customerslist = GetCustomers().Where(cus => cus.ParcelsGet > 0);
+                        int counter = customerslist.Count();
                         //The drone is at a random customer Location
-                        int st = rand.Next(0, counter);
-                        foreach (var itemCustomer in customerslist)
-                        {
-                            if (st == 0)
-                            {
-                                Customer c = GetCustomerById(itemCustomer.Id);
-                                dl.CLocation = c.Location;
-                                break;
-                            }
-                            //If the customer get least one parcel
-                            if (itemCustomer.ParcelsGet > 0)
-                                st -= 1;
-                        }
+                        int cuIndex = rand.Next(0, counter);
+                        CustomerList cu = customerslist.ElementAt(cuIndex);
+                        Customer c = GetCustomerById(cu.Id);
+                        dl.CLocation = c.Location;
 
                         Location lst = new Location();
                         lst.Lattitude = ReturnCloseStation(data.GetStations(), dl.CLocation).Lattitude;
