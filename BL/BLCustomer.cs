@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using IBL.BO;
 using System.Collections.Generic;
 
@@ -74,41 +75,40 @@ namespace IBL
                 cu.Location.Longitude = chosenc.Longitude;
                 cu.Location.Lattitude = chosenc.Lattitude;
 
-                foreach (var item in data.GetParcels()) {
+                foreach (var item in data.GetParcels().Where(p => p.TargetId == cu.Id)) {
                     //If the customer is the target of the parcel
-                    if (item.TargetId == cu.Id) {
-                        ParcelInCustomer pc = new ParcelInCustomer();
-                        pc.CParcel = new CustomerInParcel();
-                        pc.Id = item.Id;
-                        pc.Priority = (Priorities)(int)item.Priority;
-                        pc.Weight = (WeightCategories)(int)item.Weight;
-                        pc.Status = (Statuses)ReturnStatus(item);
+                    ParcelInCustomer pc = new ParcelInCustomer();
+                    pc.CParcel = new CustomerInParcel();
+                    pc.Id = item.Id;
+                    pc.Priority = (Priorities)(int)item.Priority;
+                    pc.Weight = (WeightCategories)(int)item.Weight;
+                    pc.Status = (Statuses)ReturnStatus(item);
 
-                        CustomerInParcel cp = new CustomerInParcel();
-                        cp.Id = item.SenderId;
-                        IDAL.DO.Customer customerhelp = data.GetCustomerById(cp.Id); 
-                        cp.Name = customerhelp.Name;
-                        pc.CParcel = cp;
+                    CustomerInParcel cp = new CustomerInParcel();
+                    cp.Id = item.SenderId;
+                    IDAL.DO.Customer customerhelp = data.GetCustomerById(cp.Id); 
+                    cp.Name = customerhelp.Name;
+                    pc.CParcel = cp;
 
-                        cu.ForCustomer.Add(pc);
-                    }
+                    cu.ForCustomer.Add(pc);
+                }
+                
+                foreach (var item in data.GetParcels().Where(p => p.SenderId == cu.Id)) {
                     //If the customer is the sender of the parcel
-                    else if (item.SenderId == cu.Id) {
-                        ParcelInCustomer pc = new ParcelInCustomer();
-                        pc.CParcel = new CustomerInParcel();
-                        pc.Id = item.Id;
-                        pc.Priority = (Priorities)(int)item.Priority;
-                        pc.Weight = (WeightCategories)(int)item.Weight;
-                        pc.Status = (Statuses)ReturnStatus(item);
+                    ParcelInCustomer pc = new ParcelInCustomer();
+                    pc.CParcel = new CustomerInParcel();
+                    pc.Id = item.Id;
+                    pc.Priority = (Priorities)(int)item.Priority;
+                    pc.Weight = (WeightCategories)(int)item.Weight;
+                    pc.Status = (Statuses)ReturnStatus(item);
 
-                        CustomerInParcel cp = new CustomerInParcel();
-                        cp.Id = item.TargetId;
-                        IDAL.DO.Customer customerhelp = data.GetCustomerById(cp.Id); 
-                        cp.Name = customerhelp.Name;
-                        pc.CParcel = cp;
+                    CustomerInParcel cp = new CustomerInParcel();
+                    cp.Id = item.TargetId;
+                    IDAL.DO.Customer customerhelp = data.GetCustomerById(cp.Id); 
+                    cp.Name = customerhelp.Name;
+                    pc.CParcel = cp;
 
-                        cu.FromCustomer.Add(pc);
-                    }
+                    cu.FromCustomer.Add(pc);
                 } 
                 return cu;
             }
@@ -129,26 +129,22 @@ namespace IBL
                 cu.Id = item.Id;
                 cu.Name = item.Name;
                 cu.Phone = item.Phone;
-                cu.ParcelsGet = 0;
-                cu.ParcelsInTheWay = 0;  
-                cu.ParcelsOnlySend = 0;
-                cu.ParcelsSent = 0;
+                //cu.ParcelsGet = 0;
+                //cu.ParcelsInTheWay = 0;  
+                //cu.ParcelsOnlySend = 0;
+                //cu.ParcelsSent = 0;
 
                 IEnumerable<IDAL.DO.Parcel> listparcels = data.GetParcels();
-                foreach (var itemParcel in listparcels) {
-                    //If the customer is the sender
-                    if (itemParcel.SenderId == cu.Id) {
-                        if (ReturnStatus(itemParcel) == 0)
-                            cu.ParcelsOnlySend += 1;
-                        else if (ReturnStatus(itemParcel) == 1 || ReturnStatus(itemParcel) == 2)
-                            cu.ParcelsInTheWay += 1;
-                        else if (ReturnStatus(itemParcel) == 3)
-                            cu.ParcelsSent += 1;
-                    }
-                    //If the customer is the target and the parcel is arrived
-                    if (itemParcel.TargetId == cu.Id && ReturnStatus(itemParcel) == 3)
-                        cu.ParcelsGet += 1;
-                }
+                //If the customer is the target and the parcel is arrived
+                cu.ParcelsGet = listparcels.Where(p => ReturnStatus(p) == 3 && p.TargetId == cu.Id).Count();
+
+                //If the customer is the sender
+                cu.ParcelsOnlySend = listparcels.Where(p => ReturnStatus(p) == 0 && p.SenderId == cu.Id).Count();
+
+                cu.ParcelsInTheWay = listparcels.Where(p => (ReturnStatus(p) == 1 || ReturnStatus(p) == 2)  && p.SenderId == cu.Id).Count();
+
+                cu.ParcelsSent = listparcels.Where(p => ReturnStatus(p) == 3 && p.SenderId == cu.Id).Count();
+             
                 customer.Add(cu);
             }
             return customer;

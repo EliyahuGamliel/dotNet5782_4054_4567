@@ -159,7 +159,7 @@ namespace ConsoleUI_BL
                 case MenuOptions.ShowList:
                     while (true)
                     {
-                        if (secondChoice < 6 && secondChoice > -1)
+                        if (secondChoice < 7 && secondChoice > -1)
                             break;
                         System.Console.WriteLine("Enter only numbers between 0-6! try again\n");
                         secondChoice = GetInt();

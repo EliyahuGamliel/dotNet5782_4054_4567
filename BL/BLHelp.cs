@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using IBL.BO;
 using System.Collections.Generic;
 
@@ -121,12 +122,7 @@ namespace IBL
         /// <returns>the number of taken slots</returns>
         private int ChargeSlotsCatched(int idStation)
         {
-            int catched = 0;
-            IEnumerable<IDAL.DO.DroneCharge> listDCharge = data.GetDroneCharge();
-            foreach (var item in listDCharge)
-                if (item.StationId == idStation)
-                    catched += 1;
-            return catched;
+            return data.GetDroneCharge().Where(dc => dc.StationId == idStation).Count();
         }
 
         /// <summary>

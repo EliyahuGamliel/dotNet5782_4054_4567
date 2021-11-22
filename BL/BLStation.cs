@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using IBL.BO;
 using System.Collections.Generic;
 
@@ -45,11 +46,7 @@ namespace IBL
                 if (chargeSlots != -9999) {
                     if (chargeSlots < 0 || ChargeSlotsCatched(id) > chargeSlots)
                         throw new ChargeSlotsNotLegal(chargeSlots);
-                    int amountavalible = chargeSlots;
-                    foreach (var item in data.GetDroneCharge())
-                        if (item.StationId == s.Id)
-                            amountavalible -= 1;
-                    s.ChargeSlots = amountavalible;
+                    s.ChargeSlots = chargeSlots - ChargeSlotsCatched(s.Id);
                 }
                 data.UpdateStation(s);
                 return "The update was successful\n";
@@ -75,9 +72,9 @@ namespace IBL
                 st.Location.Longitude = chosens.Longitude;
                 st.Location.Lattitude = chosens.Lattitude;
                 st.DCharge = new List<DroneCharge>();
-                foreach (var item in dronesList) {
+                foreach (var item in dronesList.FindAll(d => d.Status == DroneStatuses.Maintenance)) {
                     //if drone is in charge in this station
-                    if (item.CLocation.Lattitude == st.Location.Lattitude && item.CLocation.Longitude == st.Location.Longitude && item.Status == DroneStatuses.Maintenance) {
+                    if (item.CLocation.Lattitude == st.Location.Lattitude && item.CLocation.Longitude == st.Location.Longitude) {
                         DroneCharge dc = new DroneCharge();
                         dc.Id = item.Id;
                         dc.Battery = item.Battery;
@@ -117,22 +114,7 @@ namespace IBL
         /// </summary>
         /// <returns>Returns a list of all stations that have available chargeSlots</returns>
         public IEnumerable<StationList> GetStationCharge(){
-            IEnumerable<IDAL.DO.Station> listcustomersC = data.GetStationCharge();
-            IEnumerable<IDAL.DO.DroneCharge> listdronecharge = data.GetDroneCharge();
-            List<StationList> station = new List<StationList>();
-            foreach (var item in listcustomersC) {
-                StationList sl = new StationList();
-                sl.Id = item.Id;
-                sl.Name = item.Name;
-                sl.ChargeSlots = item.ChargeSlots;
-                sl.ChargeSlotsCatched = 0;
-                //How much charging places are occupied
-                foreach (var item2 in listdronecharge)
-                    if (item.Id == item2.StationId)
-                        sl.ChargeSlotsCatched += 1;
-                station.Add(sl);
-            }
-            return station;
+            return GetStations().Where(st => st.ChargeSlots > 0);
         }
     }
 }

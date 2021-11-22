@@ -93,6 +93,7 @@ namespace IBL
                         dl.CLocation.Lattitude = st.Lattitude;
                         UpdateStation(st.Id, "", st.ChargeSlots - 1);
                         dl.Battery = rand.NextDouble() + rand.Next(0, 20);
+                        
                         IDAL.DO.DroneCharge droneCharge = new IDAL.DO.DroneCharge();
                         droneCharge.DroneId = dl.Id;
                         droneCharge.StationId = st.Id;

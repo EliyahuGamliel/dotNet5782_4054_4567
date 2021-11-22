@@ -161,7 +161,6 @@ namespace IBL
             if (DateTime.Compare(parcel.PickedUp, parcel.Scheduled) > 0)
                 pt.Status = true;
 
-               
             //CustomerInParcel - The Target Customer of Parcel 
             CustomerInParcel cp1 = new CustomerInParcel();
             cp1.Id = parcel.TargetId;
