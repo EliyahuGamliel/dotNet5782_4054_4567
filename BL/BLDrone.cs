@@ -83,10 +83,9 @@ namespace IBL
             int index = dronesList.IndexOf(d);
             double battery = CheckDroneCannotSend(data.GetStations(), d);
             d.Status = DroneStatuses.Maintenance;
-            IDAL.DO.Station st = new IDAL.DO.Station();
+            Station st = new Station();
             st = ReturnCloseStation(data.GetStations(), d.CLocation);
-            d.CLocation.Lattitude = st.Lattitude;
-            d.CLocation.Longitude = st.Longitude;
+            d.CLocation = st.Location;
             d.Battery = d.Battery - battery;
             dronesList[index] = d;
             UpdateStation(st.Id, "", st.ChargeSlots - 1);
@@ -121,7 +120,7 @@ namespace IBL
                 d.Battery = 100;
             dronesList[index] = d;
 
-            IDAL.DO.Station st = new IDAL.DO.Station();
+            Station st = new Station();
             st = ReturnCloseStation(data.GetStations(), d.CLocation);
             int chargeSlots = ChargeSlotsCatched(st.Id) + st.ChargeSlots;
 

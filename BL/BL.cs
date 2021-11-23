@@ -26,37 +26,34 @@ namespace IBL
             CheckNotExistId(dronesList, DroneId);
             DroneList d = dronesList.Find(dr => dr.Id == DroneId);
             int index = dronesList.IndexOf(d);
-
-            IDAL.DO.Parcel parcelchoose = new IDAL.DO.Parcel();
-            IEnumerable<IDAL.DO.Parcel> parcelslist = data.GetParcels();
-            parcelchoose.Id = 0;
-            bool first = true;
-            foreach (var item in parcelslist)
-            {
-                Customer customersender = GetCustomerById(item.SenderId);
-                Customer customertarget = GetCustomerById(item.TargetId);
-                IDAL.DO.Station stationclose = ReturnCloseStation(data.GetStations(), customertarget.Location);
-                Location stationlocation = new Location();
-                stationlocation.Lattitude = stationclose.Lattitude;
-                stationlocation.Longitude = stationclose.Longitude;
-                //drone go to the coustomer sender location
-                double minbattery = ReturnBattery(3, d.CLocation, customersender.Location);
-                //and fron there drone go to the coustomer target location
-                minbattery += ReturnBattery((int)item.Weight, customersender.Location, customertarget.Location);
-                //and fron there drone go to the close station
-                minbattery += ReturnBattery(3, customertarget.Location, stationlocation);
-                if (d.Battery >= minbattery)
-                    //First parcel that not associated
-                    if (first && ReturnStatus(item) == 0)
-                        parcelchoose = item;
-                    else if (ReturnStatus(item) == 0)
-                        //The most preferred parcel for associated
-                        parcelchoose = CompressParcels(parcelchoose, item, d);
-            }
+            
+            //Removed all the parcels that cann't assign to the Drone
+            IEnumerable<IDAL.DO.Parcel> parcelslist = data.GetParcelDrone().Where(p => (WeightCategories)p.Weight <= d.MaxWeight);
+            parcelslist = parcelslist.Where(p => 
+                ReturnBattery(3, d.CLocation, GetCustomerById(p.SenderId).Location) +
+                ReturnBattery((int)p.Weight, GetCustomerById(p.SenderId).Location, GetCustomerById(p.TargetId).Location) +
+                ReturnBattery(3, GetCustomerById(p.TargetId).Location, ReturnCloseStation(data.GetStations(), GetCustomerById(p.TargetId).Location).Location)
+                <= d.Battery);
 
             //There are no matching parcels
-            if (parcelchoose.Id == 0 || d.ParcelId != 0)
+            if (parcelslist.Count() == 0 || d.ParcelId != 0)
                 throw new DroneCannotAssigan();
+
+            //By Priority
+            parcelslist =  parcelslist.OrderByDescending(p => p.Priority);
+            IDAL.DO.Parcel parcelchoose = parcelslist.First();
+            parcelslist = parcelslist.Where(p => p.Priority == parcelchoose.Priority);
+
+            //By Weight
+            parcelslist = parcelslist.OrderByDescending(p => p.Weight);
+            parcelchoose = parcelslist.First();
+            parcelslist = parcelslist.Where(p => p.Weight == parcelchoose.Weight);
+
+            //By Distance
+            parcelslist = parcelslist.OrderByDescending(p => DistanceTo(d.CLocation, GetCustomerById(p.SenderId).Location));
+
+            //The chosen parcel
+            parcelchoose = parcelslist.First();
 
             d.Status = DroneStatuses.Delivery;
             d.ParcelId = parcelchoose.Id;

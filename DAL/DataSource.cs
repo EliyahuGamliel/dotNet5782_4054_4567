@@ -20,10 +20,10 @@ namespace DalObject
         internal class Config
         {
             internal static int NumberID = 1;
-            internal static double Avaliable = 0.0001;
-            internal static double WeightLight = 0.00025;
-            internal static double WeightMedium = 0.0004;
-            internal static double WeightHeavy = 0.00055;
+            internal static double Avaliable = 0.0008;
+            internal static double WeightLight = 0.0012;
+            internal static double WeightMedium = 0.002;
+            internal static double WeightHeavy = 0.0035;
             public static double ChargingRate = 30;
         }
 

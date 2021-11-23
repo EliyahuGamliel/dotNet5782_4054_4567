@@ -8,32 +8,6 @@ namespace IBL
     public partial class BL
     {
         /// <summary>
-        /// Returns the most preferred parcel for pairing
-        /// </summary>
-        /// <param name="p1">Object of parcel 1 for comparison</param>
-        /// <param name="p2">Object of parcel 2 for comparison</param>
-        /// <param name="d">Object of drone</param>
-        /// <returns>Returns the most preferred parcel</returns>
-        private IDAL.DO.Parcel CompressParcels(IDAL.DO.Parcel p1, IDAL.DO.Parcel p2, DroneList d)
-        {
-            Customer c1 = GetCustomerById(p1.SenderId);
-            Customer c2 = GetCustomerById(p2.SenderId);
-            if (p1.Priority > p2.Priority)
-                return p1;
-            if (p2.Priority > p1.Priority)
-                return p2;
-            if (p1.Weight > p2.Weight && (int)p1.Weight <= (int)d.MaxWeight)
-                return p1;
-            if (p2.Weight > p1.Weight && (int)p2.Weight <= (int)d.MaxWeight)
-                return p2;
-            if (DistanceTo(d.CLocation, c1.Location) > DistanceTo(d.CLocation, c2.Location))
-                return p1;
-            if (DistanceTo(d.CLocation, c2.Location) > DistanceTo(d.CLocation, c1.Location))
-                return p2;
-            return p1;
-        }
-
-        /// <summary>
         /// According to calculations, returns the status of the parcel
         /// </summary>
         /// <param name="p">Object of parcel</param>
@@ -74,26 +48,18 @@ namespace IBL
         /// <param name="s">list of Station</param>
         /// <param name="drone">Object of Drone's Location</param>
         /// <returns>Returns a station object</returns>
-        private IDAL.DO.Station ReturnCloseStation(IEnumerable<IDAL.DO.Station> s, Location drone)
+        private Station ReturnCloseStation(IEnumerable<IDAL.DO.Station> s, Location drone)
         {
-            Location l1 = new Location();
-            Location l2 = new Location();
-            IDAL.DO.Station st = new IDAL.DO.Station();
-            bool first = false;
-            foreach (var item in s)
-            {
-                l1.Longitude = item.Longitude;
-                l1.Lattitude = item.Lattitude;
-                //First stop or closer stop
-                if (!first || DistanceTo(l1, drone) < DistanceTo(l2, drone))
-                {
-                    first = true;
-                    st = item;
-                    l2.Longitude = st.Longitude;
-                    l2.Lattitude = st.Lattitude;
-                }
-            }
-            return st;
+            IDAL.DO.Station st = s.OrderByDescending(sta => DistanceTo(ReturnLocation(sta), drone)).First();
+            return GetStationById(st.Id);
+        }
+
+        private Location ReturnLocation(IDAL.DO.Station s)
+        {
+            Location location = new Location();
+            location.Lattitude = s.Lattitude;
+            location.Longitude = s.Longitude;
+            return location;
         }
 
         /// <summary>

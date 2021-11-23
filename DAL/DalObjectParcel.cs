@@ -58,7 +58,7 @@ namespace DalObject
         /// </summary>
         /// <returns>Returns a list of all unassigned parcels</returns>
         public IEnumerable<Parcel> GetParcelDrone() {
-            return DataSource.Parcels.FindAll(pa => 0 == pa.DroneId);
+            return DataSource.Parcels.FindAll(pa => 0 == pa.DroneId && pa.Delivered == DateTime.MinValue);
         }   
     }
 }

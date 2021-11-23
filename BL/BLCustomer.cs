@@ -7,7 +7,6 @@ namespace IBL
 {
     public partial class BL : IBL
     {
-
         /// <summary>
         /// If everything is fine, add a customer to the list of customers, else throw exception
         /// </summary>
