@@ -209,7 +209,7 @@ namespace IBL.BO
         }
         public override string ToString()
         {
-            return "TimeNotLegal: The station cann't add/update, because the chargeSlots is not legal (" + chargeSlots + ")\n";
+            return "ChargeSlotsNotLegal: The station cann't add/update, because the chargeSlots is not legal (" + chargeSlots + ")\n";
         }
     }
 }
