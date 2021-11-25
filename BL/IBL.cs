@@ -60,7 +60,7 @@ namespace IBL
         /// <param name="name">If requested - the new name for the station update</param>
         /// <param name="chargeSlots">If requested - the number of charge slots for the station update</param>
         /// <returns>Notice if the addition was successful</returns>
-        string UpdateStation(int id, string name, int chargeSlots);
+        string UpdateStation(int id, string name, int? chargeSlots);
 
         /// <summary>
         /// /// If all is fine, the drone assign to a parcel, else throw exception

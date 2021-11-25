@@ -270,7 +270,8 @@ namespace ConsoleUI_BL
 
                 case Update.StationDetails:
                     string nameStation;
-                    int chargeSlots = -9999;
+                    int? chargeSlots = null;
+                    int chargeSlotsHelp;
                     Console.WriteLine("Enter Id of Station: ");
                     id = GetInt();
                     Console.WriteLine("Enter a new name to Station: ");
@@ -279,19 +280,18 @@ namespace ConsoleUI_BL
                     input = Console.ReadLine();
                     if (input != "")
                     {
-                        success = int.TryParse(input, out chargeSlots);
+                        success = int.TryParse(input, out chargeSlotsHelp);
                         while (!success)
                         {
                             Console.WriteLine("you didnt enter an int, please try again");
                             input = Console.ReadLine();
                             if (input != "")
-                                success = int.TryParse(input, out chargeSlots);
+                                success = int.TryParse(input, out chargeSlotsHelp);
                             else
-                            {
-                                chargeSlots = -9999;
                                 break;
-                            }
                         }
+                        if (success == true)
+                            chargeSlots = chargeSlotsHelp;
                     }
                     System.Console.WriteLine(logic.UpdateStation(id, nameStation, chargeSlots));
                     break;

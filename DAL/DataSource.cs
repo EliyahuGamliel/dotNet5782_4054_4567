@@ -114,7 +114,7 @@ namespace DalObject
                 //Randomize the requested field
                 p.Requested = new DateTime(2021, rando.Next(10, 13), rando.Next(1, 28), rando.Next(0, 24), rando.Next(0, 60), rando.Next(0, 60));
                 //As long as the "Requested" field precedes the current time
-                while (DateTime.Compare(DateTime.Now, p.Requested) <= 0)
+                while (DateTime.Now < p.Requested)
                             p.Requested = new DateTime(2021, rando.Next(10, 13), rando.Next(1, 28), rando.Next(0, 24), rando.Next(0, 60), rando.Next(0, 60));
 
                 foreach (var item in Drones) 
@@ -122,7 +122,7 @@ namespace DalObject
                     bool check = true;
                     for (int j = 0; j < i && check; j++)
                         //If the drone is occupied by a parcel that has not yet been delivered
-                        if (Parcels[j].DroneId == item.Id && DateTime.Compare(Parcels[j].Scheduled, Parcels[j].Delivered) >= 0)
+                        if (Parcels[j].DroneId == item.Id && Parcels[j].Delivered == null)
                             check = false;
                     //If the drone is not in the middle of delivery and also the parcel is a normal weight for the drone
                     if (item.MaxWeight >= p.Weight && check) {
@@ -130,7 +130,7 @@ namespace DalObject
                         //Randomize the "Scheduled" field
                         p.Scheduled = new DateTime(2021, rando.Next(10, 13), rando.Next(1, 28), rando.Next(0, 24), rando.Next(0, 60), rando.Next(0, 60));
                         //As long as the "Scheduled" field precedes the current time or As long as the "Scheduled" field precedes the "Requested" field
-                        while (DateTime.Compare(p.Scheduled, p.Requested) <= 0 || DateTime.Compare(DateTime.Now, p.Scheduled) <= 0)
+                        while ((p.Scheduled < p.Requested) || (DateTime.Now < p.Scheduled))
                             p.Scheduled = new DateTime(2021, rando.Next(10, 13), rando.Next(1, 28), rando.Next(0, 24), rando.Next(0, 60), rando.Next(0, 60));
                         
                         //Grill a random number that characterizes the status of the parcel (associated, collected, supplied)
@@ -140,14 +140,14 @@ namespace DalObject
                             //Randomize the "PickedUp" field
                             p.PickedUp = new DateTime(2021, rando.Next(10, 13), rando.Next(1, 28), rando.Next(0, 24), rando.Next(0, 60), rando.Next(0, 60));
                             //As long as the "PickedUp" field precedes the current time or As long as the "PickedUp" field precedes the "Scheduled" field
-                            while (DateTime.Compare(p.PickedUp, p.Scheduled) <= 0 || DateTime.Compare(DateTime.Now, p.PickedUp) <= 0)
+                            while ((p.PickedUp < p.Scheduled) || (DateTime.Now < p.PickedUp))
                                 p.PickedUp = new DateTime(2021, rando.Next(10, 13), rando.Next(1, 28), rando.Next(0, 24), rando.Next(0, 60), rando.Next(0, 60));
 
                             if (rand == 2) {
                                 //Randomize the "Delivered" field
                                 p.Delivered = new DateTime(2021, rando.Next(10, 13), rando.Next(1, 28), rando.Next(0, 24), rando.Next(0, 60), rando.Next(0, 60));
                                 //As long as the "Delivered" field precedes the current time or As long as the "Delivered" field precedes the "PickedUp" field
-                                while (DateTime.Compare(p.Delivered, p.PickedUp) <= 0 || DateTime.Compare(DateTime.Now, p.Delivered) <= 0)
+                                while ((p.Delivered < p.PickedUp) || (DateTime.Now < p.Delivered))
                                     p.Delivered = new DateTime(2021, rando.Next(10, 13), rando.Next(1, 28), rando.Next(0, 24), rando.Next(0, 60), rando.Next(0, 60));
                                 p.DroneId = 0;
                             }
