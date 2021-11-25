@@ -157,7 +157,7 @@ namespace IBL
             pt.Weight = (WeightCategories)(int)parcel.Weight;
             pt.Status = false;
             //If the parcel has already been collected
-            if (DateTime.Compare(parcel.PickedUp, parcel.Scheduled) > 0)
+            if (parcel.PickedUp != null)
                 pt.Status = true;
 
             //CustomerInParcel - The Target Customer of Parcel 

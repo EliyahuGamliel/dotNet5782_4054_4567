@@ -38,15 +38,15 @@ namespace IBL
         /// <param name="name">If requested - the new name for the station update</param>
         /// <param name="chargeSlots">If requested - the number of charge slots for the station update</param>
         /// <returns>Notice if the addition was successful</returns>
-        public string UpdateStation(int id, string name, int chargeSlots) {
+        public string UpdateStation(int id, string name, int? chargeSlots) {
             try {
                 IDAL.DO.Station s = data.GetStationById(id);
                 if (name != "")
                     s.Name = name;
-                if (chargeSlots != -9999) {
+                if (chargeSlots != null) {
                     if (chargeSlots < 0 || ChargeSlotsCatched(id) > chargeSlots)
-                        throw new ChargeSlotsNotLegal(chargeSlots);
-                    s.ChargeSlots = chargeSlots - ChargeSlotsCatched(s.Id);
+                        throw new ChargeSlotsNotLegal((int)chargeSlots);
+                    s.ChargeSlots = (int)chargeSlots - ChargeSlotsCatched(s.Id);
                 }
                 data.UpdateStation(s);
                 return "The update was successful\n";

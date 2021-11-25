@@ -14,11 +14,11 @@ namespace IBL
         /// <returns>int of Status of parcel</returns>
         private int ReturnStatus(IDAL.DO.Parcel chosenp)
         {
-            if (DateTime.Compare(chosenp.Requested, chosenp.Scheduled) > 0)
+            if (chosenp.Scheduled == null)
                 return (int)Statuses.Created;
-            else if (DateTime.Compare(chosenp.Scheduled, chosenp.PickedUp) > 0)
+            else if (chosenp.PickedUp == null)
                 return (int)Statuses.Associated;
-            else if (DateTime.Compare(chosenp.PickedUp, chosenp.Delivered) > 0)
+            else if (chosenp.Delivered == null)
                 return (int)Statuses.Collected;
             return (int)Statuses.Provided;
         }

@@ -39,12 +39,12 @@ namespace IBL
                 {
 
                     //If the parcel is associated with the drone and also the parcrel in the middle of the shipment
-                    if (itemParcel.DroneId == dl.Id && (ReturnStatus(itemParcel) == 1 || ReturnStatus(itemParcel) == 2))
+                    if (itemParcel.DroneId == dl.Id && itemParcel.Delivered == null)
                     {
                         dl.Status = DroneStatuses.Delivery;
                         dl.ParcelId = itemParcel.Id;
                         //If the parcel was only associated
-                        if (ReturnStatus(itemParcel) == 1)
+                        if (itemParcel.PickedUp == null)
                         {
                             Customer customer = GetCustomerById(itemParcel.SenderId);
                             dl.CLocation = ReturnCloseStation(data.GetStations(), customer.Location).Location;
@@ -89,13 +89,14 @@ namespace IBL
                         IDAL.DO.Station st = stationslist.ElementAt(stIndex);
                         dl.CLocation.Longitude = st.Longitude;
                         dl.CLocation.Lattitude = st.Lattitude;
-                        UpdateStation(st.Id, "", st.ChargeSlots - 1);
-                        dl.Battery = rand.NextDouble() + rand.Next(0, 20);
-                        
+
                         IDAL.DO.DroneCharge droneCharge = new IDAL.DO.DroneCharge();
                         droneCharge.DroneId = dl.Id;
                         droneCharge.StationId = st.Id;
                         data.AddDroneCharge(droneCharge);
+
+                        UpdateStation(st.Id, "", st.ChargeSlots - 1 + ChargeSlotsCatched(st.Id));
+                        dl.Battery = rand.NextDouble() + rand.Next(0, 20);
                     }
                     //If the situation that came out is: available
                     else
@@ -112,8 +113,6 @@ namespace IBL
                         lst = ReturnCloseStation(data.GetStations(), dl.CLocation).Location;
                         minbattery = ReturnBattery(3, dl.CLocation, lst);
                         dl.Battery = rand.NextDouble() + rand.Next((int)minbattery + 1, 100);
-                        if (dl.Battery > 100)
-                            dl.Battery = 100;
                     }
                 }
                 dronesList.Add(dl);
