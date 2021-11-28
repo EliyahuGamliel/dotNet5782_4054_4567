@@ -109,9 +109,20 @@ namespace IBL
         /// <summary>
         /// Returns a list of all stations that have available chargeSlots
         /// </summary>
-        /// <returns>Returns a list of all stations that have available chargeSlots</returns>
+        /// <returns>Returns a list of all stations that have availabl chargeSlots</returns>
         public IEnumerable<StationList> GetStationCharge(){
-            return GetStations().Where(st => st.ChargeSlots > 0);
+            IEnumerable<IDAL.DO.Station> listcustomers = data.GetStationByFilter(st => st.ChargeSlots > 0);
+            List<StationList> station = new List<StationList>();
+            foreach (var item in listcustomers)
+            {
+                StationList sl = new StationList();
+                sl.Id = item.Id;
+                sl.Name = item.Name;
+                sl.ChargeSlots = item.ChargeSlots;
+                sl.ChargeSlotsCatched = ChargeSlotsCatched(sl.Id);
+                station.Add(sl);
+            }
+            return station;
         }
     }
 }

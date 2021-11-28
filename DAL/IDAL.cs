@@ -132,7 +132,7 @@ namespace IDAL
         /// Returns a list of all stations that have available chargeSlots
         /// </summary>
         /// <returns>Returns a list of all stations that have available chargeSlots</returns>
-        IEnumerable<Station> GetStationCharge();
+        IEnumerable<Station> GetStationByFilter(Predicate<Station> stationList);
 
         /// <summary>
         /// Returns the list of dronesCharge

@@ -48,12 +48,9 @@ namespace DalObject
             return DataSource.Stations;
         }
         
-        /// <summary>
-        /// Returns a list of all stations that have available chargeSlots
-        /// </summary>
-        /// <returns>Returns a list of all stations that have available chargeSlots</returns>
-        public IEnumerable<Station> GetStationCharge() {
-            return DataSource.Stations.FindAll(st => 0 != st.ChargeSlots);
+        
+        public IEnumerable<Station> GetStationByFilter(Predicate<Station> stationsList) {
+            return DataSource.Stations.FindAll(stationsList);
         }
     }
 }

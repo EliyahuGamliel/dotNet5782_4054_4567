@@ -20,9 +20,16 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
+        static IBL.IBL bl;
         public MainWindow()
         {
             InitializeComponent();
+            bl = new IBL.BL();
+        }
+
+        private void ShowDronesButton_Click(object sender, RoutedEventArgs e)
+        {
+            new DroneListWindow(bl).Show();
         }
     }
 }
