@@ -126,7 +126,6 @@ namespace IBL
         /// <returns>The object of the requested station</returns>
         Station GetStationById(int Id);
 
-
         IEnumerable<StationList> GetStationByFilter(Predicate<StationList> stationList);
 
 
