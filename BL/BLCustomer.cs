@@ -116,11 +116,8 @@ namespace IBL
             }
         }
 
-        /// <summary>
-        /// Returns the list of customers
-        /// </summary>
-        /// <returns>Returns the list of customers</returns>
-        public IEnumerable<CustomerList> GetCustomers(){
+
+        public IEnumerable<CustomerList> GetCustomerByFilter(Predicate<CustomerList> customerList){
             IEnumerable<IDAL.DO.Customer> listcustomers = data.GetCustomers();
             List<CustomerList> customer = new List<CustomerList>();
             foreach (var item in listcustomers) {
@@ -140,7 +137,7 @@ namespace IBL
              
                 customer.Add(cu);
             }
-            return customer;
+            return customer.FindAll(customerList);
         }
     }
 }

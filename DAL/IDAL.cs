@@ -123,18 +123,6 @@ namespace IDAL
         IEnumerable<Parcel> GetParcels();
 
         /// <summary>
-        /// Returns a list of all unassigned parcels and delivered
-        /// </summary>
-        /// <returns>Returns a list of all unassigned parcels</returns>
-        IEnumerable<Parcel> GetParcelDrone();
-
-        /// <summary>
-        /// Returns a list of all stations that have available chargeSlots
-        /// </summary>
-        /// <returns>Returns a list of all stations that have available chargeSlots</returns>
-        IEnumerable<Station> GetStationByFilter(Predicate<Station> stationList);
-
-        /// <summary>
         /// Returns the list of dronesCharge
         /// </summary>
         /// <returns>Returns the list of dronesCharge</returns>

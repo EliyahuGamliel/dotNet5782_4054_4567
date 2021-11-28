@@ -87,34 +87,11 @@ namespace IBL
                 throw new IdNotExistException(Id);
             }
         }
-        
-        /// <summary>
-        /// Returns the list of stations
-        /// </summary>
-        /// <returns>Returns the list of stations</returns>
-        public IEnumerable<StationList> GetStations(){
-            IEnumerable<IDAL.DO.Station> listcustomers = data.GetStations();
-            List<StationList> station = new List<StationList>();
-            foreach (var item in listcustomers) {
-                StationList sl = new StationList();
-                sl.Id = item.Id;
-                sl.Name = item.Name;
-                sl.ChargeSlots = item.ChargeSlots;
-                sl.ChargeSlotsCatched = ChargeSlotsCatched(sl.Id);
-                station.Add(sl);
-            }
-            return station;
-        }
 
-        /// <summary>
-        /// Returns a list of all stations that have available chargeSlots
-        /// </summary>
-        /// <returns>Returns a list of all stations that have availabl chargeSlots</returns>
-        public IEnumerable<StationList> GetStationCharge(){
-            IEnumerable<IDAL.DO.Station> listcustomers = data.GetStationByFilter(st => st.ChargeSlots > 0);
+        public IEnumerable<StationList> GetStationByFilter(Predicate<StationList> stationList) {
+            IEnumerable<IDAL.DO.Station> liststations = data.GetStations();
             List<StationList> station = new List<StationList>();
-            foreach (var item in listcustomers)
-            {
+            foreach (var item in liststations) {
                 StationList sl = new StationList();
                 sl.Id = item.Id;
                 sl.Name = item.Name;
@@ -122,7 +99,7 @@ namespace IBL
                 sl.ChargeSlotsCatched = ChargeSlotsCatched(sl.Id);
                 station.Add(sl);
             }
-            return station;
+            return station.FindAll(stationList);
         }
     }
 }

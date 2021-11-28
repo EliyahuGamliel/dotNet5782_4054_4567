@@ -82,13 +82,12 @@ namespace IBL
                     //If the situation that came out is: maintenance
                     if (dl.Status == DroneStatuses.Maintenance)
                     {
-                        IEnumerable<IDAL.DO.Station> stationslist = data.GetStationCharge();
+                        IEnumerable<StationList> stationslist = GetStationByFilter(sta => sta.ChargeSlots > 0);
                         int counter = stationslist.Count();
                         //The drone is at a random station
                         int stIndex = rand.Next(0, counter);
-                        IDAL.DO.Station st = stationslist.ElementAt(stIndex);
-                        dl.CLocation.Longitude = st.Longitude;
-                        dl.CLocation.Lattitude = st.Lattitude;
+                        StationList st = stationslist.ElementAt(stIndex);
+                        dl.CLocation = GetStationById(st.Id).Location;
 
                         IDAL.DO.DroneCharge droneCharge = new IDAL.DO.DroneCharge();
                         droneCharge.DroneId = dl.Id;
@@ -101,7 +100,7 @@ namespace IBL
                     //If the situation that came out is: available
                     else
                     {
-                        IEnumerable<CustomerList> customerslist = GetCustomers().Where(cus => cus.ParcelsGet > 0);
+                        IEnumerable<CustomerList> customerslist = GetCustomerByFilter(cus => cus.ParcelsGet > 0);
                         int counter = customerslist.Count();
                         //The drone is at a random customer Location
                         int cuIndex = rand.Next(0, counter);

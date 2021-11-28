@@ -187,12 +187,9 @@ namespace IBL
             return dr;
         }
         
-        /// <summary>
-        /// Returns the list of drones
-        /// </summary>
-        /// <returns>Returns the list of drones</returns>
-        public IEnumerable<DroneList> GetDrones(){
-            return dronesList;
+
+        public IEnumerable<DroneList> GetDroneByFilter(Predicate<DroneList> droneList){
+            return dronesList.FindAll(droneList);
         }
     }
 }

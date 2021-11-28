@@ -386,37 +386,37 @@ namespace ConsoleUI_BL
 
                 //For displaying a list of base stations
                 case List.Stations:
-                    foreach (var item in logic.GetStations())
+                    foreach (var item in logic.GetStationByFilter(s => true))
                         Console.WriteLine(item);
                     break;
                 
                 //For displaying a list of drones
                 case List.Drones:
-                    foreach (var item in logic.GetDrones())
+                    foreach (var item in logic.GetDroneByFilter(d => true))
                         Console.WriteLine(item);
                     break;
                 
                 //For displaying a list of customer
                 case List.Customers:
-                    foreach (var item in logic.GetCustomers())
+                    foreach (var item in logic.GetCustomerByFilter(c => true))
                         Console.WriteLine(item);
                     break;
             
                 //For displaying a list of parcels
                 case List.Parcels:
-                    foreach (var item in logic.GetParcels())
+                    foreach (var item in logic.GetParcelByFilter(p => true))
                         Console.WriteLine(item);
                     break;
 
                 //To display a list of parcels that have not yet been associated with a drone
                 case List.UnAssignmentParcels:
-                    foreach (var item in logic.GetParcelDrone())
+                    foreach (var item in logic.GetParcelByFilter(p => p.Status == Statuses.Created))
                         Console.WriteLine(item);
                     break;
                     
                 //For displaying base stations with available charging stations
                 case List.AvailableChargingStations:
-                    foreach (var item in logic.GetStationCharge())
+                    foreach (var item in logic.GetStationByFilter(s => s.ChargeSlots > 0))
                         Console.WriteLine(item);
                     break;
             }

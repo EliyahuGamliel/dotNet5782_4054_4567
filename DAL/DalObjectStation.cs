@@ -47,10 +47,5 @@ namespace DalObject
         public IEnumerable<Station> GetStations() {
             return DataSource.Stations;
         }
-        
-        
-        public IEnumerable<Station> GetStationByFilter(Predicate<Station> stationsList) {
-            return DataSource.Stations.FindAll(stationsList);
-        }
     }
 }
