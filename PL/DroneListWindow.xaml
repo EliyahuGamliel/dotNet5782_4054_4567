@@ -9,7 +9,8 @@
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
-            <RowDefinition Height="400*"/>
+            <RowDefinition Height="350*"/>
+            <RowDefinition Height="50*"/>
         </Grid.RowDefinitions>
         <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
             <Grid.ColumnDefinitions>
@@ -18,10 +19,24 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="StatusSelector"/>
-            <TextBox Grid.Column="0"/>
+            <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="StatusSelector"
+                      SelectionChanged="StatusSelector_SelectionChanged"/>
+            <ComboBox Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="MaxWeightSelector"
+                      SelectionChanged="MaxWeightSelector_SelectionChanged"/>
+            <Label Grid.Column="0"/>
+            <Button Content="Click to add Drone" Grid.Column="3" Click="AddDrone_Click"/>
         </Grid>
-        <ListView x:Name="DroneListView" Grid.Row="1">
+        <Grid Name="DownGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="2" VerticalAlignment="Stretch" Width="auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions >
+            <Label Grid.Column="0"/>
+            <Button Content="Click to Exit" Grid.Column="3" Click="Exit_Click"/>
+        </Grid>
+        <ListView x:Name="DroneListView" Grid.Row="1" MouseDoubleClick="action_drone">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
