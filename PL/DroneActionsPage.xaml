@@ -20,12 +20,10 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="StatusSelector"
-                      SelectionChanged="Selector_SelectionChanged"/>
-            <ComboBox Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="MaxWeightSelector"
-                      SelectionChanged="Selector_SelectionChanged"/>
-            <Label Grid.Column="0"/>
-            <Button Content="Click to add Drone" Grid.Column="3" Click="AddDrone_Click"/>
+            <Button Name="updateDrone" Content="Click to Update the Drone" Grid.Column="0" IsEnabled="False" Click="Update_Click"/>
+            <Button Name="assignDrone" Content="Click to Assign the Drone to Parcel" Grid.Column="1" IsEnabled="False" Click="Assign_Click"/>
+            <Button Name="pickUpDrone" Content="Click to Relese fron Charging" Grid.Column="2" IsEnabled="False" Click="PickUp_Click"/>
+            <Button Name="deliverDrone" Content="Click to Deliver Parcel by the Drone" Grid.Column="3" IsEnabled="False" Click="Deliver_Click"/>
         </Grid>
         <Grid Name="DownGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="2" VerticalAlignment="Stretch" Width="auto">
             <Grid.ColumnDefinitions>
@@ -36,7 +34,8 @@
             </Grid.ColumnDefinitions >
             <Label Grid.Column="0"/>
             <Button Content="Click to Exit" Grid.Column="3" Click="Exit_Click"/>
-            <Button Name="updateDrone" Content="Click to Update" Grid.Column="0" Click="Update_Click"/>
+            <Button Name="sendDrone" Content="Click to Send the Drone to Charging" Grid.Column="0" IsEnabled="False" Click="Send_Click"/>
+            <Button Name="releseDrone" Content="Click to Relese the Drone from Charging" Grid.Column="1" IsEnabled="False" Click="Relese_Click"/>
         </Grid>
     </Grid>
 </Page>
