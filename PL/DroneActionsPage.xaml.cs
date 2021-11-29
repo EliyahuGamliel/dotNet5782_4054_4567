@@ -36,6 +36,40 @@ namespace PL
 
         private void Updata_Click(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show(blDroneAdd.UpdateDrone(droneList, idStation));
+            updataDrone.IsEnabled = "False";
+        }
+        
+        private void Assign_Click(object sender, RoutedEventArgs e)
+        {
+            DroneListView.ItemsSource = blDroneList.GetDroneByFilter(d => true);
+            StatusSelector.SelectedItem = null;
+            MaxWeightSelector.SelectedItem = null;
+        }
+        
+        private void PickUP_Click(object sender, RoutedEventArgs e)
+        {
+            DroneListView.ItemsSource = blDroneList.GetDroneByFilter(d => true);
+            StatusSelector.SelectedItem = null;
+            MaxWeightSelector.SelectedItem = null;
+        }
+        
+        private void Deliver_Click(object sender, RoutedEventArgs e)
+        {
+            DroneListView.ItemsSource = blDroneList.GetDroneByFilter(d => true);
+            StatusSelector.SelectedItem = null;
+            MaxWeightSelector.SelectedItem = null;
+        }
+        
+        private void Send_Click(object sender, RoutedEventArgs e)
+        {
+            DroneListView.ItemsSource = blDroneList.GetDroneByFilter(d => true);
+            StatusSelector.SelectedItem = null;
+            MaxWeightSelector.SelectedItem = null;
+        }
+        
+        private void Relese_Click(object sender, RoutedEventArgs e)
+        {
             DroneListView.ItemsSource = blDroneList.GetDroneByFilter(d => true);
             StatusSelector.SelectedItem = null;
             MaxWeightSelector.SelectedItem = null;
