@@ -38,7 +38,7 @@
             <Button Content="Click to Exit" Grid.Column="3" Click="Exit_Click"/>
             <Button Content="Click to Reset" Grid.Column="0" Click="Reset_Click"/>
         </Grid>
-        <ListView x:Name="DroneListView" Grid.Row="1" MouseDoubleClick="action_drone">
+        <ListView x:Name="DroneListView" Grid.Row="1" MouseDoubleClick="DroneActions">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using IBL.BO;
 
 namespace PL
 {
@@ -20,9 +21,24 @@ namespace PL
     /// </summary>
     public partial class DroneActionsPage : Page
     {
-        public DroneActionsPage()
+        static Drone dr;
+        private DroneListPage dlPage;
+        public DroneActionsPage(Drone drone, DroneListPage droneListPage)
         {
             InitializeComponent();
+            dlPage = droneListPage;
+            dr = drone;
+        }
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(dlPage);
+        }
+
+        private void Updata_Click(object sender, RoutedEventArgs e)
+        {
+            DroneListView.ItemsSource = blDroneList.GetDroneByFilter(d => true);
+            StatusSelector.SelectedItem = null;
+            MaxWeightSelector.SelectedItem = null;
         }
     }
 }
