@@ -10,6 +10,7 @@
 
     <Grid>
         <Button Content="For Drone List View Click Here" Height="200" VerticalAlignment="Top" Click="ShowDronesButton_Click" />
+        <Button Content="For Station List View Click Here" Height="200" VerticalAlignment="Center" Click="ShowStationsButton_Click" />
         <Button Content="For Exit Click Here" Height="200" VerticalAlignment="Bottom" Click="ExitButton_Click" />
         <Frame x:Name="DroneListPage" NavigationUIVisibility="Hidden" />
     </Grid>

@@ -65,7 +65,7 @@ namespace PL
         private void DroneActions(object sender, MouseButtonEventArgs e)
         {
             DroneList d = (DroneList)DroneListView.SelectedItem;
-            this.NavigationService.Navigate(new DroneActionsPage(blDroneList.GetDroneById(d.Id), this));
+            this.NavigationService.Navigate(new DroneActionsPage(blDroneList, blDroneList.GetDroneById(d.Id), this));
         }
     }
 }

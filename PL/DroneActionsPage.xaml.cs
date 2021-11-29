@@ -22,57 +22,118 @@ namespace PL
     public partial class DroneActionsPage : Page
     {
         static Drone dr;
+        static Parcel pa;
+        static IBL.IBL blDroneActions;
         private DroneListPage dlPage;
-        public DroneActionsPage(Drone drone, DroneListPage droneListPage)
+        public DroneActionsPage(IBL.IBL bl, Drone drone, DroneListPage droneListPage)
         {
             InitializeComponent();
+            blDroneActions = bl;
             dlPage = droneListPage;
             dr = drone;
-        }
-        private void Exit_Click(object sender, RoutedEventArgs e)
-        {
-            this.NavigationService.Navigate(dlPage);
+            if (dr.Status == DroneStatuses.Delivery)
+                pa = blDroneActions.GetParcelById(dr.PTransfer.Id);
+            InitializeButtons();
+            InitializeData();
         }
 
-        private void Updata_Click(object sender, RoutedEventArgs e)
+        private void InitializeData()
         {
-            MessageBox.Show(blDroneAdd.UpdateDrone(droneList, idStation));
-            updataDrone.IsEnabled = "False";
+            idDrone.Text = dr.Id.ToString();
+            modelDrone.Text = dr.Model;
+            updateDrone.IsEnabled = false;
+            batteryDrone.Text = dr.Battery.ToString();
+            maxWightDrone.Text = dr.MaxWeight.ToString();
+            statusDrone.Text = dr.Status.ToString();
+            locationDrone.Text = "\tLattitude: " + dr.CLocation.Lattitude.ToString() + "\n\tLongitude: " + dr.CLocation.Longitude.ToString();
+        }
+
+        private void InitializeButtons()
+        {
+            if (dr.Status == DroneStatuses.Delivery)
+                if (pa.PickedUp == null)
+                    pickUpDrone.IsEnabled = true;
+                else
+                    deliverDrone.IsEnabled = true;
+            else if (dr.Status == DroneStatuses.Maintenance)
+                releaseDrone.IsEnabled = true;
+            else
+            {
+                assignDrone.IsEnabled = true;
+                sendDrone.IsEnabled = true;
+            }
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            dlPage.Selector_SelectionChanged();
+            this.NavigationService.Navigate(dlPage);
+        }
+        private void GetModel(object sender, RoutedEventArgs e)
+        {
+            updateDrone.IsEnabled = true;
+        }
+        private void Update_Click(object sender, RoutedEventArgs e)
+        {
+            dr.Model = modelDrone.Text;
+            MessageBox.Show(blDroneActions.UpdateDrone(dr.Id, dr.Model));
+            updateDrone.IsEnabled = false;
         }
         
         private void Assign_Click(object sender, RoutedEventArgs e)
         {
-            DroneListView.ItemsSource = blDroneList.GetDroneByFilter(d => true);
-            StatusSelector.SelectedItem = null;
-            MaxWeightSelector.SelectedItem = null;
+            try
+            {
+                MessageBox.Show(blDroneActions.AssignDroneParcel(dr.Id));
+                assignDrone.IsEnabled = false;
+                pickUpDrone.IsEnabled = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
         
-        private void PickUP_Click(object sender, RoutedEventArgs e)
+        private void PickUp_Click(object sender, RoutedEventArgs e)
         {
-            DroneListView.ItemsSource = blDroneList.GetDroneByFilter(d => true);
-            StatusSelector.SelectedItem = null;
-            MaxWeightSelector.SelectedItem = null;
+            MessageBox.Show(blDroneActions.PickUpDroneParcel(dr.Id));
+            pickUpDrone.IsEnabled = false;
+            deliverDrone.IsEnabled = true;
         }
         
         private void Deliver_Click(object sender, RoutedEventArgs e)
         {
-            DroneListView.ItemsSource = blDroneList.GetDroneByFilter(d => true);
-            StatusSelector.SelectedItem = null;
-            MaxWeightSelector.SelectedItem = null;
+            MessageBox.Show(blDroneActions.DeliverParcelCustomer(dr.Id));
+            deliverDrone.IsEnabled = false;
+            sendDrone.IsEnabled = true;
+            assignDrone.IsEnabled = true;
         }
         
         private void Send_Click(object sender, RoutedEventArgs e)
         {
-            DroneListView.ItemsSource = blDroneList.GetDroneByFilter(d => true);
-            StatusSelector.SelectedItem = null;
-            MaxWeightSelector.SelectedItem = null;
+            try
+            {
+                MessageBox.Show(blDroneActions.SendDrone(dr.Id));
+                releaseDrone.IsEnabled = true;
+                assignDrone.IsEnabled = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            finally
+            {
+                sendDrone.IsEnabled = false;
+            }
+            
         }
         
-        private void Relese_Click(object sender, RoutedEventArgs e)
+        private void Release_Click(object sender, RoutedEventArgs e)
         {
-            DroneListView.ItemsSource = blDroneList.GetDroneByFilter(d => true);
-            StatusSelector.SelectedItem = null;
-            MaxWeightSelector.SelectedItem = null;
+            MessageBox.Show(blDroneActions.ReleasDrone(dr.Id, 1));
+            releaseDrone.IsEnabled = false;
+            assignDrone.IsEnabled = true;
+            sendDrone.IsEnabled = true;
         }
     }
 }

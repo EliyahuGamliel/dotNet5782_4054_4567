@@ -34,6 +34,11 @@ namespace PL
             this.NavigationService.Navigate(new DroneListPage(bl, this));
         }
 
+        private void ShowStationsButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new StationListPage(bl, this));
+        }
+
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             mWindow.Close();

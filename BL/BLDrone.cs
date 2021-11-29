@@ -149,41 +149,43 @@ namespace IBL
             dr.Battery = dl.Battery;
             dr.CLocation = dl.CLocation;
 
-            ParcelTransfer pt = new ParcelTransfer();
-            IDAL.DO.Parcel parcel = data.GetParcels().First(p => p.Id == dl.ParcelId);
-            //If the parcel associated with the drone
-            pt.Id = parcel.Id;
-            pt.Priority = (Priorities)(int)parcel.Priority;
-            pt.Weight = (WeightCategories)(int)parcel.Weight;
-            pt.Status = false;
-            //If the parcel has already been collected
-            if (parcel.PickedUp != null)
-                pt.Status = true;
+            if (dr.Status == DroneStatuses.Delivery)
+            {
+                ParcelTransfer pt = new ParcelTransfer();
+                IDAL.DO.Parcel parcel = data.GetParcels().First(p => p.Id == dl.ParcelId);
+                //If the parcel associated with the drone
+                pt.Id = parcel.Id;
+                pt.Priority = (Priorities)(int)parcel.Priority;
+                pt.Weight = (WeightCategories)(int)parcel.Weight;
+                pt.Status = false;
+                //If the parcel has already been collected
+                if (parcel.PickedUp != null)
+                    pt.Status = true;
 
-            //CustomerInParcel - The Target Customer of Parcel 
-            CustomerInParcel cp1 = new CustomerInParcel();
-            cp1.Id = parcel.TargetId;
-            IDAL.DO.Customer customerhelp = data.GetCustomerById(cp1.Id);
-            cp1.Name = customerhelp.Name;
-            pt.Recipient = cp1;
-            pt.DestinationLocation = new Location();
-            pt.DestinationLocation.Lattitude = customerhelp.Lattitude;
-            pt.DestinationLocation.Longitude = customerhelp.Longitude;
-            
-            //CustomerInParcel - The Sender Customer of Parcel 
-            CustomerInParcel cp2 = new CustomerInParcel();
-            cp2.Id = parcel.SenderId;
-            customerhelp = data.GetCustomerById(cp2.Id);
-            cp2.Name = customerhelp.Name;
-            pt.Sender = cp2;
-            pt.CollectionLocation = new Location();
-            pt.CollectionLocation.Lattitude = customerhelp.Lattitude;
-            pt.CollectionLocation.Longitude = customerhelp.Longitude;
+                //CustomerInParcel - The Target Customer of Parcel 
+                CustomerInParcel cp1 = new CustomerInParcel();
+                cp1.Id = parcel.TargetId;
+                IDAL.DO.Customer customerhelp = data.GetCustomerById(cp1.Id);
+                cp1.Name = customerhelp.Name;
+                pt.Recipient = cp1;
+                pt.DestinationLocation = new Location();
+                pt.DestinationLocation.Lattitude = customerhelp.Lattitude;
+                pt.DestinationLocation.Longitude = customerhelp.Longitude;
 
-            pt.TransportDistance = DistanceTo(pt.CollectionLocation, pt.DestinationLocation);
+                //CustomerInParcel - The Sender Customer of Parcel 
+                CustomerInParcel cp2 = new CustomerInParcel();
+                cp2.Id = parcel.SenderId;
+                customerhelp = data.GetCustomerById(cp2.Id);
+                cp2.Name = customerhelp.Name;
+                pt.Sender = cp2;
+                pt.CollectionLocation = new Location();
+                pt.CollectionLocation.Lattitude = customerhelp.Lattitude;
+                pt.CollectionLocation.Longitude = customerhelp.Longitude;
 
-            dr.PTransfer = pt;
+                pt.TransportDistance = DistanceTo(pt.CollectionLocation, pt.DestinationLocation);
 
+                dr.PTransfer = pt;
+            }
             return dr;
         }
         
