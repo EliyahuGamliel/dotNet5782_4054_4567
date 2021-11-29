@@ -1,0 +1,44 @@
+﻿<Page x:Class="PL.DroneAddPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PL"
+      mc:Ignorable="d" 
+      d:DesignHeight="640" d:DesignWidth="800"
+      Title="DroneAddPage">
+
+    <Grid Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100*"/>
+            <RowDefinition Height="100*"/>
+            <RowDefinition Height="50*"/>
+        </Grid.RowDefinitions>
+        <Grid Name="DownGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="2" VerticalAlignment="Stretch" Width="auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions >
+            <Button Content="Click to Cancel" Grid.Column="0" Click="Exit_Click"/>
+            <Button Content="Click to Add" Grid.Column="1" Click="Add_Click"/>
+        </Grid>
+        <StackPanel HorizontalAlignment="Left" Margin="124,87,0,0" VerticalAlignment="Top" Width="215" Height="107">
+            <TextBlock Text="Enter Id:" TextWrapping="Wrap"/>
+            <TextBox Name="idDrone" Text="" TextWrapping="Wrap" TextChanged="GetId"/>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Left" Margin="124,87,0,0" Grid.Row="1" VerticalAlignment="Top" Width="215" Height="107">
+            <TextBlock Text="Choose the maxWeight:" TextWrapping="Wrap"/>
+            <ComboBox Name="maxWeight" SelectionChanged="GetMaxWeight"/>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Left" Margin="450,87,0,0" VerticalAlignment="Top" Width="215" Height="107">
+            <TextBlock Text="Enter Model:" TextWrapping="Wrap"/>
+            <TextBox Name="modelDrone" Text="" TextWrapping="Wrap" TextChanged="GetModel"/>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Left" Margin="450,87,0,0" Grid.Row="1" VerticalAlignment="Top" Width="215" Height="107">
+            <TextBlock Text="Enter Id of Station to charging:" TextWrapping="Wrap"/>
+            <TextBox Name="idStationToChrging" Text="" TextWrapping="Wrap" TextChanged="GetIdStationToChrging"/>
+        </StackPanel>
+    </Grid>
+</Page>

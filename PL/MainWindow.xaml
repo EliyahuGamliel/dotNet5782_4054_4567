@@ -5,9 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Minip_Targil_3" Height="640" Width="800">
     <Grid>
-        <Button Content="For Drone List View Click Here"
-                Click="ShowDronesButton_Click" />
+        <Frame x:Name="MainPage" NavigationUIVisibility="Hidden" />
     </Grid>
 </Window>

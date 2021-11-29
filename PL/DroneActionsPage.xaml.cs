@@ -10,20 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using IBL.BO;
 
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for DroneWindow.xaml
+    /// Interaction logic for DroneActionsPage.xaml
     /// </summary>
-    public partial class DroneWindow : Window
+    public partial class DroneActionsPage : Page
     {
-        public DroneWindow(IBL.IBL bl)
+        public DroneActionsPage()
         {
             InitializeComponent();
-
         }
     }
 }
