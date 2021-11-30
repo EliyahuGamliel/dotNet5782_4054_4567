@@ -38,10 +38,5 @@ namespace PL
         {
             this.NavigationService.Navigate(new StationListPage(bl, this));
         }
-
-        private void ExitButton_Click(object sender, RoutedEventArgs e)
-        {
-            mWindow.Close();
-        }
     }
 }

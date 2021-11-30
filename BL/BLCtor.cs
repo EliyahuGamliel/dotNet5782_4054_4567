@@ -33,11 +33,9 @@ namespace IBL
                 dl.MaxWeight = (WeightCategories)(int)item.MaxWeight;
                 dl.Model = item.Model;
 
-
                 IEnumerable<IDAL.DO.Parcel> parcelslist = data.GetParcels();
                 foreach (var itemParcel in parcelslist)
                 {
-
                     //If the parcel is associated with the drone and also the parcrel in the middle of the shipment
                     if (itemParcel.DroneId == dl.Id && itemParcel.Delivered == null)
                     {

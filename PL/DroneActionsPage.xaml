@@ -8,40 +8,46 @@
       d:DesignHeight="640" d:DesignWidth="800"
       Title="DroneActionsPage">
     <Grid Name="MainGrid">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="350*"/>
-            <RowDefinition Height="50*"/>
-            <RowDefinition Height="50*"/>
-        </Grid.RowDefinitions>
-        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions >
+        <Grid Name="DroneListGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="350*"/>
+                <RowDefinition Height="50*"/>
+                <RowDefinition Height="50*"/>
+            </Grid.RowDefinitions>
+            <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions >
             <Grid Name="LeftGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Column="0" VerticalAlignment="Stretch" Width="auto">
-                <StackPanel HorizontalAlignment="Left" Margin="124,87,0,0" VerticalAlignment="Top" Width="215" Height="107">
+                <StackPanel HorizontalAlignment="Left" Margin="124,50,0,0" VerticalAlignment="Top" Width="215" Height="107">
                     <TextBlock FontWeight="Bold" Text="The Id of the Drone:" TextWrapping="Wrap"/>
                     <TextBlock Name="idDrone" Text="" TextWrapping="Wrap"/>
                 </StackPanel>
-                <StackPanel HorizontalAlignment="Left" Margin="124,137,0,0" VerticalAlignment="Top" Width="215" Height="107">
+                <StackPanel HorizontalAlignment="Left" Margin="124,100,0,0" VerticalAlignment="Top" Width="150" Height="107">
                     <TextBlock FontWeight="Bold" Text="The Model of the Drone:" TextWrapping="Wrap"/>
                     <TextBox Name="modelDrone" Text="" TextWrapping="Wrap" TextChanged="GetModel"/>
                 </StackPanel>
-                <StackPanel HorizontalAlignment="Left" Margin="124,187,0,0" VerticalAlignment="Top" Width="215" Height="107">
+                <StackPanel HorizontalAlignment="Left" Margin="124,150,0,0" VerticalAlignment="Top" Width="215" Height="107">
                     <TextBlock FontWeight="Bold" Text="The MaxWeight of the Drone:" TextWrapping="Wrap"/>
                     <TextBlock Name="maxWightDrone" Text="" TextWrapping="Wrap"/>
                 </StackPanel>
-                <StackPanel HorizontalAlignment="Left" Margin="124,237,0,0" VerticalAlignment="Top" Width="215" Height="107">
+                <StackPanel HorizontalAlignment="Left" Margin="124,200,0,0" VerticalAlignment="Top" Width="215" Height="107">
                     <TextBlock FontWeight="Bold" Text="The Battery of the Drone:" TextWrapping="Wrap"/>
                     <TextBlock Name="batteryDrone" Text="" TextWrapping="Wrap"/>
                 </StackPanel>
-                <StackPanel HorizontalAlignment="Left" Margin="124,287,0,0" VerticalAlignment="Top" Width="215" Height="107">
+                <StackPanel HorizontalAlignment="Left" Margin="124,250,0,0" VerticalAlignment="Top" Width="215" Height="107">
                     <TextBlock FontWeight="Bold" Text="The Status of the Drone:" TextWrapping="Wrap"/>
                     <TextBlock Name="statusDrone" Text="" TextWrapping="Wrap"/>
                 </StackPanel>
-                <StackPanel HorizontalAlignment="Left" Margin="124,337,0,0" VerticalAlignment="Top" Width="215" Height="107">
-                    <TextBlock FontWeight="Bold" Text="The current Location of the Drone:" TextWrapping="Wrap"/>
-                    <TextBlock Name="locationDrone" Text="" TextWrapping="Wrap"/>
+                <StackPanel HorizontalAlignment="Left" Margin="124,300,0,0" VerticalAlignment="Top" Width="215" Height="107">
+                    <TextBlock Name="locationDrone" TextWrapping="Wrap"><Run FontWeight="Bold" Text="The current Location of the Drone:"/></TextBlock>
+                </StackPanel>
+            </Grid>
+            <Grid Name="RightGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Column="1" VerticalAlignment="Stretch" Width="auto">
+                <StackPanel HorizontalAlignment="Left" Margin="84,50,0,0" VerticalAlignment="Top" Width="215" Height="450">
+                    <TextBlock FontWeight="Bold" Text="The parcel in Drone:" TextWrapping="Wrap"/>
+                    <TextBlock Name="parcelDrone" Text="" TextWrapping="Wrap"/>
                 </StackPanel>
             </Grid>
         </Grid>
@@ -55,9 +61,9 @@
             <Button Name="updateDrone" Content="Click to Update the Drone" Grid.Column="0" IsEnabled="False" Click="Update_Click"/>
             <Button Name="assignDrone" Content="Click to Assign the &#xa;Drone to Parcel" Grid.Column="1" IsEnabled="False" Click="Assign_Click"/>
             <Button Name="pickUpDrone" Content="Click to PickUp the &#xa;Parcel fron Customer" Grid.Column="2" IsEnabled="False" Click="PickUp_Click"/>
-            <Button Name="deliverDrone" Content="Click to Deliver &#xa;Parcel by the Drone" Grid.Column="3" IsEnabled="False" Click="Deliver_Click"/>
-        </Grid>
-        <Grid Name="DownGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="2" VerticalAlignment="Stretch" Width="auto">
+                <Button Name="deliverDrone" Content="Click to Deliver &#xa;Parcel by the Drone" Grid.Column="3" IsEnabled="False" Click="Deliver_Click"/>
+            </Grid>
+            <Grid Name="DownGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="2" VerticalAlignment="Stretch" Width="auto">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -68,6 +74,40 @@
             <Button Content="Click to Exit" Grid.Column="3" Click="Exit_Click"/>
             <Button Name="sendDrone" Content="Click to Send&#xa;the Drone to Charging" Grid.Column="0" IsEnabled="False" Click="Send_Click"/>
             <Button Name="releaseDrone" Content="Click to Release the Drone &#xa;from Charging" Grid.Column="1" IsEnabled="False" Click="Release_Click"/>
+        </Grid>
+        </Grid>
+        <Grid Name="DroneAddGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100*"/>
+                <RowDefinition Height="100*"/>
+                <RowDefinition Height="50*"/>
+            </Grid.RowDefinitions>
+            <Grid Name="Down2Grid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="2" VerticalAlignment="Stretch" Width="auto">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions >
+                <Button Content="Click to Cancel" Grid.Column="0" Click="Exit_Click"/>
+                <Button Content="Click to Add" Grid.Column="1" Click="Add_Click"/>
+            </Grid>
+            <StackPanel HorizontalAlignment="Left" Margin="124,87,0,0" VerticalAlignment="Top" Width="215" Height="107">
+                <TextBlock Text="Enter Id:" TextWrapping="Wrap"/>
+                <TextBox Name="idone" Text="" TextWrapping="Wrap" TextChanged="GetId"/>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Left" Margin="124,87,0,0" Grid.Row="1" VerticalAlignment="Top" Width="215" Height="107">
+                <TextBlock Text="Choose the maxWeight:" TextWrapping="Wrap"/>
+                <ComboBox Name="maxWeight" SelectionChanged="GetMaxWeight"/>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Left" Margin="450,87,0,0" VerticalAlignment="Top" Width="215" Height="107">
+                <TextBlock Text="Enter Model:" TextWrapping="Wrap"/>
+                <TextBox Name="moDrone" Text="" TextWrapping="Wrap" TextChanged="GetModel"/>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Left" Margin="450,87,0,0" Grid.Row="1" VerticalAlignment="Top" Width="215" Height="107">
+                <TextBlock Text="Enter Id of Station to charging:" TextWrapping="Wrap"/>
+                <TextBox Name="idStationToChrging" Text="" TextWrapping="Wrap" TextChanged="GetIdStationToChrging"/>
+            </StackPanel>
         </Grid>
     </Grid>
 </Page>

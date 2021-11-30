@@ -50,7 +50,7 @@ namespace IBL
         /// <returns>Returns a station object</returns>
         private Station ReturnCloseStation(IEnumerable<IDAL.DO.Station> s, Location drone)
         {
-            IDAL.DO.Station st = s.OrderByDescending(sta => DistanceTo(ReturnLocation(sta), drone)).First();
+            IDAL.DO.Station st = s.OrderBy(sta => DistanceTo(ReturnLocation(sta), drone)).First();
             return GetStationById(st.Id);
         }
 
@@ -135,10 +135,11 @@ namespace IBL
             {
                 locationStation.Lattitude = item.Lattitude;
                 locationStation.Longitude = item.Longitude;
-                if ((!cntsn || DistanceTo(locationStation, dl.CLocation) < DistanceTo(lst, dl.CLocation)) && item.ChargeSlots > 0)
+                if ((!cntsn || DistanceTo(locationStation, dl.CLocation) < DistanceTo(lst, dl.CLocation)))
                 {
                     cntsn = true;
-                    lst = locationStation;
+                    lst.Lattitude = locationStation.Lattitude;
+                    lst.Longitude = locationStation.Longitude;
                 }
             }
             double battery = ReturnBattery(3, dl.CLocation, lst);

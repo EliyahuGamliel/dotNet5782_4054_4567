@@ -47,7 +47,7 @@ namespace PL
 
         private void AddDrone_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new DroneAddPage(blDroneList, this));
+            this.NavigationService.Navigate(new DroneActionsPage(blDroneList, this));
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
