@@ -38,5 +38,11 @@ namespace PL
         {
             this.NavigationService.Navigate(new StationListPage(bl, this));
         }
+
+        private void Again_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            Gif.Position = new TimeSpan(0, 0, 1);
+            Gif.Play();
+        }
     }
 }

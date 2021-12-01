@@ -9,8 +9,9 @@
       Title="MainPage">
 
     <Grid>
-        <Button Content="For Drone List View Click Here" Height="200" VerticalAlignment="Top" Click="ShowDronesButton_Click" />
-        <Button Content="For Station List View Click Here" Height="200" VerticalAlignment="Center" Click="ShowStationsButton_Click" />
         <Frame x:Name="DroneListPage" NavigationUIVisibility="Hidden" />
+        <MediaElement x:Name="Gif" MediaEnded="Again_MediaEnded" VerticalAlignment="Bottom" Source="img\droneMainPage.gif" LoadedBehavior="Play" UnloadedBehavior="Manual" Margin="0,0,0,0"/>
+        <Button Content="For Drone List View Click Here" Click="ShowDronesButton_Click" Margin="0,0,0,514" />
+        <Button Content="Station List" Click="ShowStationsButton_Click" Margin="700,560,0,0" />
     </Grid>
 </Page>
