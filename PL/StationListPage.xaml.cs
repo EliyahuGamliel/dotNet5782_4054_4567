@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,7 +26,7 @@ namespace PL
         {
             InitializeComponent();
             blStationList = bl;
-            StationListView.ItemsSource = blStationList.GetStationByFilter(s => true);
+            StationListView.ItemsSource = blStationList.GetStations();
             mPage = mainPage;
         }
         private void Exit_Click(object sender, RoutedEventArgs e)
