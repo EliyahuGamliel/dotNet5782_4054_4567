@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="640" d:DesignWidth="800"
       Title="DroneActionsPage">
-    <Grid Name="MainGrid">
+    <Grid Name="MainGrid" Margin="0,4,0,-4">
         <!-- Display Page of Drone's Action -->
         <Grid Name="DroneListGrid">
             <Grid.RowDefinitions>
