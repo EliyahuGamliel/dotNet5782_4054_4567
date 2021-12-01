@@ -105,7 +105,7 @@ namespace PL
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             finally
             {
@@ -140,7 +140,7 @@ namespace PL
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             finally
             {
@@ -166,7 +166,7 @@ namespace PL
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -248,5 +248,7 @@ namespace PL
             // Clear InputBox.
             InputTextBox.Text = String.Empty;
         }
+
+       
     }
 }
