@@ -24,7 +24,7 @@ namespace PL
         private MainWindow mWindow;
         public MainPage(MainWindow mainWindow)
         {
-            
+            mainWindow.help = typeof(MainPage);
             InitializeComponent();
             bl = new IBL.BL();
             mWindow = mainWindow;
@@ -32,11 +32,13 @@ namespace PL
 
         private void ShowDronesButton_Click(object sender, RoutedEventArgs e)
         {
+            mWindow.help = typeof(DroneListPage);
             this.NavigationService.Navigate(new DroneListPage(bl, this));
         }
 
         private void ShowStationsButton_Click(object sender, RoutedEventArgs e)
         {
+            mWindow.help = typeof(StationListPage);
             this.NavigationService.Navigate(new StationListPage(bl, this));
         }
 

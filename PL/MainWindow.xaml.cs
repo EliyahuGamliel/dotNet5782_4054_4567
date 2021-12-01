@@ -21,7 +21,7 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static Type help;
+        public Type help { set; get; }
         public MainWindow()
         {
             InitializeComponent();
