@@ -204,7 +204,7 @@ namespace IBL
             else if (weight == null)
                 return dronesList.FindAll(d => (int)d.Status == status);
             else if (status == null)
-                return dronesList.FindAll(d => (int)d.MaxWeight == weight);
+                return dronesList.FindAll(d => (int)d.MaxWeight == (int)weight);
             return dronesList.FindAll(d => (int)d.Status == status && (int)d.MaxWeight == weight);   
         }
     }
