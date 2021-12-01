@@ -88,7 +88,7 @@ namespace IBL
         /// <returns>the number of taken slots</returns>
         private int ChargeSlotsCatched(int idStation)
         {
-            return data.GetDroneCharge().Where(dc => dc.StationId == idStation).Count();
+            return data.GetDroneChargeByFilter(dc => dc.StationId == idStation).Count();
         }
 
         /// <summary>

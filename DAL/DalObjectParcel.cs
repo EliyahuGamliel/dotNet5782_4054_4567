@@ -45,12 +45,9 @@ namespace DalObject
             return p;
         }
 
-        /// <summary>
-        /// Returns the list of parcela
-        /// </summary>
-        /// <returns>Returns the list of parcels</returns>
-        public IEnumerable<Parcel> GetParcels() {
-            return DataSource.Parcels;
+        
+        public IEnumerable<Parcel> GetParcelByFilter(Predicate<Parcel> parcelList) {
+            return DataSource.Parcels.FindAll(parcelList);
         }
     }
 }

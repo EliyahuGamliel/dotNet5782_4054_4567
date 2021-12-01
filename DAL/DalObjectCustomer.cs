@@ -47,8 +47,8 @@ namespace DalObject
         /// Returns the list of customers
         /// </summary>
         /// <returns>Returns the list of customers</returns>
-        public IEnumerable<Customer> GetCustomers() {
-            return DataSource.Customers;
+        public IEnumerable<Customer> GetCustomerByFilter(Predicate<Customer> cutomerList) {
+            return DataSource.Customers.FindAll(cutomerList);
         }
     }
 }

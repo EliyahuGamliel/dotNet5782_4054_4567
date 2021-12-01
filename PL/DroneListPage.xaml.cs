@@ -35,6 +35,7 @@ namespace PL
 
         public void Selector_SelectionChanged(object sender = null, SelectionChangedEventArgs e = null)
         {
+            DroneListView.ItemsSource = blDroneList.GetDroneByFilter((int?)MaxWeightSelector.SelectedItem, (int?)StatusSelector.SelectedItem);
             if (StatusSelector.SelectedItem == null && MaxWeightSelector.SelectedItem == null)
                 DroneListView.ItemsSource = blDroneList.GetDroneByFilter(d => true);
             else if (StatusSelector.SelectedItem == null)

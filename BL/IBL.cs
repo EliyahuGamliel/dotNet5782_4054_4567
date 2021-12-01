@@ -126,15 +126,42 @@ namespace IBL
         /// <returns>The object of the requested station</returns>
         Station GetStationById(int Id);
 
-        IEnumerable<StationList> GetStationByFilter(Predicate<StationList> stationList);
+        /// <summary>
+        /// Returns the list of stations
+        /// </summary>
+        /// <returns>Returns the list of stations</returns>
+        IEnumerable<StationList> GetStations();
 
+        /// <summary>
+        /// Returns the list of drones
+        /// </summary>
+        /// <returns>Returns the list of drones</returns>
+        IEnumerable<DroneList> GetDrones();
 
-        IEnumerable<DroneList> GetDroneByFilter(Predicate<DroneList> droneList);
+        /// <summary>
+        /// Returns the list of customers
+        /// </summary>
+        /// <returns>Returns the list of customers</returns>
+        IEnumerable<CustomerList> GetCustomers();
 
+        /// <summary>
+        /// Returns the list of parcels
+        /// </summary>
+        /// <returns>Returns the list of parcels</returns>
+        IEnumerable<ParcelList> GetParcels();
 
-        IEnumerable<CustomerList> GetCustomerByFilter(Predicate<CustomerList> customerList);
+        /// <summary>
+        /// Returns a list of all unassigned parcels
+        /// </summary>
+        /// <returns>Returns a list of all unassigned parcels</returns>
+        IEnumerable<ParcelList> GetParcelDrone();
 
+        /// <summary>
+        /// Returns a list of all stations that have available chargeSlots
+        /// </summary>
+        /// <returns>Returns a list of all stations that have available chargeSlots</returns>
+        IEnumerable<StationList> GetStationCharge();
 
-        IEnumerable<ParcelList> GetParcelByFilter(Predicate<ParcelList> parcelList);
+        IEnumerable<DroneList> GetDroneByFilter(int? weight, int? status);
     }
 }

@@ -28,12 +28,12 @@ namespace IBL
             int index = dronesList.IndexOf(d);
             
             //Removed all the parcels that cann't assign to the Drone
-            IEnumerable<ParcelList> parcelslist = GetParcelByFilter(p => ((WeightCategories)p.Weight <= d.MaxWeight) && 
+            IEnumerable<IDAL.DO.Parcel> parcelslist = data.GetParcelByFilter(p => ((WeightCategories)p.Weight <= d.MaxWeight) && 
                 (ReturnBattery(3, d.CLocation, GetCustomerById(p.SenderId).Location) +
                 ReturnBattery((int)p.Weight, GetCustomerById(p.SenderId).Location, GetCustomerById(p.TargetId).Location) +
                 ReturnBattery(3, GetCustomerById(p.TargetId).Location, ReturnCloseStation(data.GetStationByFilter(s => true), GetCustomerById(p.TargetId).Location).Location)
                 <= d.Battery) &&
-                p.Status == Statuses.Created);
+                p.Scheduled == null);
 
             //There are no matching parcels
             if (parcelslist.Count() == 0 || d.ParcelId != 0)
@@ -41,7 +41,7 @@ namespace IBL
 
             //By Priority
             parcelslist =  parcelslist.OrderByDescending(p => p.Priority);
-            ParcelList parcelchoose = parcelslist.First();
+            IDAL.DO.Parcel parcelchoose = parcelslist.First();
             parcelslist = parcelslist.Where(p => p.Priority == parcelchoose.Priority);
 
             //By Weight
@@ -59,11 +59,10 @@ namespace IBL
             d.ParcelId = parcelchoose.Id;
             dronesList[index] = d;
 
-            IDAL.DO.Parcel pa = data.GetParcelById(parcelchoose.Id);
-            pa.Scheduled = DateTime.Now;
-            pa.DroneId = d.Id;
+            parcelchoose.Scheduled = DateTime.Now;
+            parcelchoose.DroneId = d.Id;
 
-            data.UpdateParcel(pa);
+            data.UpdateParcel(parcelchoose);
             return "The update was successful\n";
         }
 

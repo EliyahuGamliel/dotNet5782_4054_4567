@@ -74,7 +74,7 @@ namespace IBL
                 cu.Location.Longitude = chosenc.Longitude;
                 cu.Location.Lattitude = chosenc.Lattitude;
 
-                foreach (var item in data.GetParcels().Where(p => p.TargetId == cu.Id)) {
+                foreach (var item in data.GetParcelByFilter(p => p.TargetId == cu.Id)) {
                     //If the customer is the target of the parcel
                     ParcelInCustomer pc = new ParcelInCustomer();
                     pc.CParcel = new CustomerInParcel();
@@ -92,7 +92,7 @@ namespace IBL
                     cu.ForCustomer.Add(pc);
                 }
                 
-                foreach (var item in data.GetParcels().Where(p => p.SenderId == cu.Id)) {
+                foreach (var item in data.GetParcelByFilter(p => p.SenderId == cu.Id)) {
                     //If the customer is the sender of the parcel
                     ParcelInCustomer pc = new ParcelInCustomer();
                     pc.CParcel = new CustomerInParcel();
@@ -116,17 +116,24 @@ namespace IBL
             }
         }
 
+        /// <summary>
+        /// Returns the list of customers
+        /// </summary>
+        /// <returns>Returns the list of customers</returns>
+        public IEnumerable<CustomerList> GetCustomers(){
+            return ConvertToBL(data.GetCustomerByFilter(c => true));
+        }
 
-        public IEnumerable<CustomerList> GetCustomerByFilter(Predicate<CustomerList> customerList){
-            IEnumerable<IDAL.DO.Customer> listcustomers = data.GetCustomers();
+        private IEnumerable<CustomerList> ConvertToBL(IEnumerable<IDAL.DO.Customer> listCustomers)
+        {
             List<CustomerList> customer = new List<CustomerList>();
-            foreach (var item in listcustomers) {
+            foreach (var item in listCustomers) {
                 CustomerList cu = new CustomerList();
                 cu.Id = item.Id;
                 cu.Name = item.Name;
                 cu.Phone = item.Phone;
 
-                IEnumerable<IDAL.DO.Parcel> listparcels = data.GetParcels();
+                IEnumerable<IDAL.DO.Parcel> listparcels = data.GetParcelByFilter(p => true);
                 //If the customer is the target and the parcel is arrived
                 cu.ParcelsGet = listparcels.Where(p => ReturnStatus(p) == 3 && p.TargetId == cu.Id).Count();
 
@@ -137,7 +144,7 @@ namespace IBL
              
                 customer.Add(cu);
             }
-            return customer.FindAll(customerList);
+            return customer;
         }
     }
 }
