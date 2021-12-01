@@ -151,12 +151,15 @@ namespace PL
 
         private void Release_Click(object sender, RoutedEventArgs e)
         {
-
+            
             MessageBox.Show(blDrone.ReleasDrone(dr.Id, 1));
             releaseDrone.IsEnabled = false;
             assignDrone.IsEnabled = true;
             sendDrone.IsEnabled = true;
             InitializeData();
+            PopWindow pop = new PopWindow();
+            pop.Show();
+
         }
 
         private void Add_Click(object sender, RoutedEventArgs e)
