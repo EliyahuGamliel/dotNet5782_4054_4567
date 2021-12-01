@@ -47,7 +47,6 @@ namespace PL
             dlPage = droneListPage;
             maxWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
         }
-
         private void InitializeData()
         {
             dr = blDrone.GetDroneById(dr.Id);
@@ -66,7 +65,6 @@ namespace PL
             else
                 parcelDrone.Text = "not exist";
         }
-
         private void InitializeButtons()
         {
             if (dr.Status == DroneStatuses.Delivery)

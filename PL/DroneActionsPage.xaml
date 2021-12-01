@@ -8,6 +8,7 @@
       d:DesignHeight="640" d:DesignWidth="800"
       Title="DroneActionsPage">
     <Grid Name="MainGrid">
+        <!-- Display Page of Drone's Action -->
         <Grid Name="DroneListGrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="350*"/>
@@ -76,6 +77,7 @@
             <Button Name="releaseDrone" Content="Click to Release the Drone &#xa;from Charging" Grid.Column="1" IsEnabled="False" Click="Release_Click"/>
         </Grid>
         </Grid>
+        <!-- Display Page of Drone Addition -->
         <Grid Name="DroneAddGrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="100*"/>
@@ -102,7 +104,7 @@
             </StackPanel>
             <StackPanel HorizontalAlignment="Left" Margin="450,87,0,0" VerticalAlignment="Top" Width="215" Height="107">
                 <TextBlock Text="Enter Model:" TextWrapping="Wrap"/>
-                <TextBox Name="moDrone" Text="" TextWrapping="Wrap" TextChanged="GetModel"/>
+                <TextBox Name="moDrone" Text="" TextWrapping="Wrap"/>
             </StackPanel>
             <StackPanel HorizontalAlignment="Left" Margin="450,87,0,0" Grid.Row="1" VerticalAlignment="Top" Width="215" Height="107">
                 <TextBlock Text="Enter Id of Station to charging:" TextWrapping="Wrap"/>

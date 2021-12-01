@@ -29,16 +29,8 @@ namespace PL
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            if (this.GetType().Equals(typeof(MainWindow)))
-            {
-                base.OnClosing(e);
-                e.Cancel = false;
-            }
-            else
-            {
-                base.OnClosing(e);
-                e.Cancel = true;
-            }
+            base.OnClosing(e);
+            e.Cancel = false;
         }
     }
 }
