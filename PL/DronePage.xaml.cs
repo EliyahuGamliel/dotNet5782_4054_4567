@@ -74,8 +74,7 @@ namespace PL
                     deliverDrone.IsEnabled = true;
             else if (dr.Status == DroneStatuses.Maintenance)
                 releaseDrone.IsEnabled = true;
-            else
-            {
+            else {
                 assignDrone.IsEnabled = true;
                 sendDrone.IsEnabled = true;
             }
