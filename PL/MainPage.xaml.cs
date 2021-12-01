@@ -24,6 +24,7 @@ namespace PL
         private MainWindow mWindow;
         public MainPage(MainWindow mainWindow)
         {
+            
             InitializeComponent();
             bl = new IBL.BL();
             mWindow = mainWindow;
