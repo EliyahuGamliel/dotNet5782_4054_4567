@@ -112,5 +112,18 @@
                 <TextBox Name="idStationToChrging" Text="" TextWrapping="Wrap" TextChanged="GetIdStationToChrging"/>
             </StackPanel>
         </Grid>
+        <Grid x:Name="InputBox" Visibility="Hidden">
+            <Grid Background="Black" Opacity="0.5"/>
+            <Border MinWidth="250" Background="Orange" BorderBrush="Black" BorderThickness="1.5" CornerRadius="0,45,0,45" HorizontalAlignment="Center" VerticalAlignment="Center" Height="75" Width="272">
+                <StackPanel>
+                    <TextBlock Margin="5" Text="how much time was the drone in charging?" FontWeight="Bold" FontFamily="Cambria" />
+                    <TextBox MinWidth="150" HorizontalAlignment="Center" Background="Red" VerticalAlignment="Center" x:Name="InputTextBox" TextChanged="GetTime"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button x:Name="OkButton" Margin="5" Content="OK" Background="{x:Null}" Click="OkButton_Click" Width="35"/>
+                        <Button x:Name="CancelButton" Margin="5" Content="Cancel" Background="{x:Null}" Click="CancelButton_Click" Width="50" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
     </Grid>
 </Page>

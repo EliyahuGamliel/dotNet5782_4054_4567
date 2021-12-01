@@ -151,15 +151,8 @@ namespace PL
 
         private void Release_Click(object sender, RoutedEventArgs e)
         {
-            
-            MessageBox.Show(blDrone.ReleasDrone(dr.Id, 1));
-            releaseDrone.IsEnabled = false;
-            assignDrone.IsEnabled = true;
-            sendDrone.IsEnabled = true;
-            InitializeData();
-            PopWindow pop = new PopWindow();
-            pop.Show();
-
+            InputBox.Visibility = Visibility.Visible;
+            DroneListGrid.IsEnabled = false;
         }
 
         private void Add_Click(object sender, RoutedEventArgs e)
@@ -208,6 +201,52 @@ namespace PL
                 tBox.Background = Brushes.Red;
             else
                 tBox.Background = Brushes.White;
+        }
+
+        private void GetTime(object sender, RoutedEventArgs e)
+        {
+            double num;
+            bool error = double.TryParse(InputTextBox.Text, out num);
+            if (!error)
+                InputTextBox.Background = Brushes.Red;
+            else
+                InputTextBox.Background = Brushes.White;
+        }
+
+        private void OkButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (InputTextBox.Background != Brushes.Red)
+            {
+                // Do something with the Input
+                double time = Double.Parse(InputTextBox.Text);
+                InputBox.Visibility = Visibility.Hidden;
+                DroneListGrid.IsEnabled = true;
+                // Clear InputBox.
+                InputTextBox.Text = String.Empty;
+                try
+                {
+                    MessageBox.Show(blDrone.ReleasDrone(dr.Id, time));
+                    releaseDrone.IsEnabled = false;
+                    assignDrone.IsEnabled = true;
+                    sendDrone.IsEnabled = true;
+                    InitializeData();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+            }
+            else
+                MessageBox.Show("Enter valid input (double) or Cancel!", "Valid Input", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            // NoButton Clicked! Let's hide our InputBox.
+            InputBox.Visibility = Visibility.Hidden;
+            DroneListGrid.IsEnabled = true;
+            // Clear InputBox.
+            InputTextBox.Text = String.Empty;
         }
     }
 }
