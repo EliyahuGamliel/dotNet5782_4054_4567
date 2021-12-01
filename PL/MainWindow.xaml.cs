@@ -21,6 +21,7 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
+        public Type help { set; get; }
         public MainWindow()
         {
             InitializeComponent();
@@ -29,12 +30,7 @@ namespace PL
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            if (this.GetType().Equals(typeof(MainWindow)))
-            {
-                base.OnClosing(e);
-                e.Cancel = false;
-            }
-            else
+            if (help != typeof(MainPage))
             {
                 base.OnClosing(e);
                 e.Cancel = true;

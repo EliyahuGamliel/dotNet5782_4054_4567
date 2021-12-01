@@ -35,10 +35,16 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
             <Label Grid.Column="0"/>
-            <Button Content="Click to Exit" Grid.Column="3" Click="Exit_Click"/>
-            <Button Content="Click to Reset" Grid.Column="0" Click="Reset_Click"/>
+            <Button Content="Click to Return Back" Grid.Column="3" Click="Exit_Click"/>
+            <Button Content="Click to Reset Filter" Grid.Column="0" Click="Reset_Click"/>
         </Grid>
-        <ListView x:Name="DroneListView" Grid.Row="1" MouseDoubleClick="DroneActions">
+        <MediaElement x:Name="Gif" Height="auto" HorizontalAlignment="Right"  MediaEnded="Again_MediaEnded" Source="img\droneList.gif" LoadedBehavior="Play" UnloadedBehavior="Manual" Margin="150,0,0,0" Grid.Row="1"/>
+        <ListView x:Name="DroneListView" Height="auto" MouseDoubleClick="DroneActions" Margin="0,0,565,0" Grid.Row="1">
+            <ListView.Resources>
+                <Style TargetType="GridViewColumnHeader">
+                    <Setter Property="Visibility" Value="Hidden"/>
+                </Style>
+            </ListView.Resources>
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>

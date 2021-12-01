@@ -47,11 +47,12 @@ namespace PL
 
         private void AddDrone_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new DroneActionsPage(blDroneList, this));
+            this.NavigationService.Navigate(new DronePage(blDroneList, this));
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
+            mPage.mWindow.help = typeof(MainPage);
             this.NavigationService.Navigate(mPage);
         }
 
@@ -65,7 +66,13 @@ namespace PL
         private void DroneActions(object sender, MouseButtonEventArgs e)
         {
             DroneList d = (DroneList)DroneListView.SelectedItem;
-            this.NavigationService.Navigate(new DroneActionsPage(blDroneList, blDroneList.GetDroneById(d.Id), this));
+            this.NavigationService.Navigate(new DronePage(blDroneList, blDroneList.GetDroneById(d.Id), this));
+        }
+
+        private void Again_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            Gif.Position = new TimeSpan(0, 0, 1);
+            Gif.Play();
         }
     }
 }

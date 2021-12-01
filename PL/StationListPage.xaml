@@ -13,7 +13,7 @@
             <RowDefinition Height="375*"/>
             <RowDefinition Height="75*"/>
         </Grid.RowDefinitions>
-        <ListView x:Name="StationListView" Grid.Row="0">
+        <ListView x:Name="StationListView" Grid.Row="0" Height="auto" Width="auto">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
@@ -27,7 +27,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button Content="Click to Exit" Grid.Column="3" Click="Exit_Click"/>
+            <Button Content="Click to Return Back" Grid.Column="3" Click="Exit_Click"/>
         </Grid>
     </Grid>
 </Page>
