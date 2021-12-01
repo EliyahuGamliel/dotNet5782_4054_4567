@@ -21,7 +21,7 @@ namespace PL
     public partial class MainPage : Page
     {
         static IBL.IBL bl;
-        private MainWindow mWindow;
+        public MainWindow mWindow;
         public MainPage(MainWindow mainWindow)
         {
             mainWindow.help = typeof(MainPage);

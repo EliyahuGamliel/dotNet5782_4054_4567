@@ -31,6 +31,7 @@ namespace PL
         }
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
+            mPage.mWindow.help = typeof(MainPage);
             this.NavigationService.Navigate(mPage);
         }
     }
