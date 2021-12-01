@@ -98,11 +98,7 @@ namespace IDAL
         /// <returns>The object of the requested station</returns>
         Station GetStationById(int Id);
 
-        /// <summary>
-        /// Returns the list of stations
-        /// </summary>
-        /// <returns>Returns the list of stations</returns>
-        IEnumerable<Station> GetStations();
+        IEnumerable<Station> GetStationByFilter(Predicate<Station> stationList);
 
         /// <summary>
         /// Returns the list of drones

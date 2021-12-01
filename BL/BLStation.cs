@@ -90,7 +90,7 @@ namespace IBL
         }
 
         public IEnumerable<StationList> GetStationByFilter(Predicate<StationList> stationList) {
-            IEnumerable<IDAL.DO.Station> liststations = data.GetStations();
+            IEnumerable<IDAL.DO.Station> liststations = data.GetStationByFilter(convertPredicate(stationList));
             List<StationList> station = new List<StationList>();
             foreach (var item in liststations) {
                 StationList sl = new StationList();
@@ -100,7 +100,12 @@ namespace IBL
                 sl.ChargeSlotsCatched = ChargeSlotsCatched(sl.Id);
                 station.Add(sl);
             }
-            return station.FindAll(stationList);
+            return station;
+        }
+
+        private Predicate<IDAL.DO.Station> convertPredicate(Predicate<StationList> stationList)
+        {
+            return new Predicate<IDAL.DO.Station>(y => stationList(new StationList() {Id = y.Id, Name = y.Name, ChargeSlots = y.ChargeSlots}));
         }
     }
 }

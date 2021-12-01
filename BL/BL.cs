@@ -31,7 +31,7 @@ namespace IBL
             IEnumerable<ParcelList> parcelslist = GetParcelByFilter(p => ((WeightCategories)p.Weight <= d.MaxWeight) && 
                 (ReturnBattery(3, d.CLocation, GetCustomerById(p.SenderId).Location) +
                 ReturnBattery((int)p.Weight, GetCustomerById(p.SenderId).Location, GetCustomerById(p.TargetId).Location) +
-                ReturnBattery(3, GetCustomerById(p.TargetId).Location, ReturnCloseStation(data.GetStations(), GetCustomerById(p.TargetId).Location).Location)
+                ReturnBattery(3, GetCustomerById(p.TargetId).Location, ReturnCloseStation(data.GetStationByFilter(s => true), GetCustomerById(p.TargetId).Location).Location)
                 <= d.Battery) &&
                 p.Status == Statuses.Created);
 

@@ -45,7 +45,7 @@ namespace IBL
                         if (itemParcel.PickedUp == null)
                         {
                             Customer customer = GetCustomerById(itemParcel.SenderId);
-                            dl.CLocation = ReturnCloseStation(data.GetStations(), customer.Location).Location;
+                            dl.CLocation = ReturnCloseStation(data.GetStationByFilter(s => true), customer.Location).Location;
                         }
                         //If the parcel was also collected
                         else
@@ -60,7 +60,7 @@ namespace IBL
                         tarloc = customertar.Location;
 
                         Location staloc = new Location();
-                        staloc = ReturnCloseStation(data.GetStations(), tarloc).Location;
+                        staloc = ReturnCloseStation(data.GetStationByFilter(s => true), tarloc).Location;
 
                         //Minimum battery to finish the shipment
                         minbattery = ReturnBattery((int)itemParcel.Weight, dl.CLocation, tarloc) + ReturnBattery(3, dl.CLocation, staloc);
@@ -107,7 +107,7 @@ namespace IBL
                         dl.CLocation = c.Location;
 
                         Location lst = new Location();
-                        lst = ReturnCloseStation(data.GetStations(), dl.CLocation).Location;
+                        lst = ReturnCloseStation(data.GetStationByFilter(s => true), dl.CLocation).Location;
                         minbattery = ReturnBattery(3, dl.CLocation, lst);
                         dl.Battery = rand.NextDouble() + rand.Next((int)minbattery + 1, 100);
                     }

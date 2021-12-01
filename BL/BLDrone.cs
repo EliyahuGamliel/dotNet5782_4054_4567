@@ -81,10 +81,10 @@ namespace IBL
 
             DroneList d = dronesList.Find(dr => idDrone == dr.Id);
             int index = dronesList.IndexOf(d);
-            double battery = CheckDroneCannotSend(data.GetStations().Where(s => s.ChargeSlots > 0), d);
+            double battery = CheckDroneCannotSend(data.GetStationByFilter(s => true).Where(s => s.ChargeSlots > 0), d);
             d.Status = DroneStatuses.Maintenance;
             Station st = new Station();
-            st = ReturnCloseStation(data.GetStations(), d.CLocation);
+            st = ReturnCloseStation(data.GetStationByFilter(s => true), d.CLocation);
             d.CLocation = st.Location;
             d.Battery = d.Battery - battery;
             dronesList[index] = d;
@@ -121,7 +121,7 @@ namespace IBL
             dronesList[index] = d;
 
             Station st = new Station();
-            st = ReturnCloseStation(data.GetStations(), d.CLocation);
+            st = ReturnCloseStation(data.GetStationByFilter(s => true), d.CLocation);
             int chargeSlots = ChargeSlotsCatched(st.Id) + st.ChargeSlots;
 
             IDAL.DO.DroneCharge dc = new IDAL.DO.DroneCharge();
