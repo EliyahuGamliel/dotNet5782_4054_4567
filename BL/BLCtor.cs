@@ -20,7 +20,7 @@ namespace IBL
             WeightHeavy = data.DroneElectricityUse()[3];
             ChargingRate = data.DroneElectricityUse()[4];
 
-            IEnumerable<IDAL.DO.Drone> droneslist = data.GetDrones();
+            IEnumerable<IDAL.DO.Drone> droneslist = data.GetDroneByFilter(d => true);
             
             foreach (var item in droneslist)
             {
@@ -33,7 +33,7 @@ namespace IBL
                 dl.MaxWeight = (WeightCategories)(int)item.MaxWeight;
                 dl.Model = item.Model;
 
-                IEnumerable<IDAL.DO.Parcel> parcelslist = data.GetParcels();
+                IEnumerable<IDAL.DO.Parcel> parcelslist = data.GetParcelByFilter(p => true);
                 foreach (var itemParcel in parcelslist)
                 {
                     //If the parcel is associated with the drone and also the parcrel in the middle of the shipment
@@ -45,7 +45,7 @@ namespace IBL
                         if (itemParcel.PickedUp == null)
                         {
                             Customer customer = GetCustomerById(itemParcel.SenderId);
-                            dl.CLocation = ReturnCloseStation(data.GetStations(), customer.Location).Location;
+                            dl.CLocation = ReturnCloseStation(data.GetStationByFilter(s => true), customer.Location).Location;
                         }
                         //If the parcel was also collected
                         else
@@ -60,7 +60,7 @@ namespace IBL
                         tarloc = customertar.Location;
 
                         Location staloc = new Location();
-                        staloc = ReturnCloseStation(data.GetStations(), tarloc).Location;
+                        staloc = ReturnCloseStation(data.GetStationByFilter(s => true), tarloc).Location;
 
                         //Minimum battery to finish the shipment
                         minbattery = ReturnBattery((int)itemParcel.Weight, dl.CLocation, tarloc) + ReturnBattery(3, dl.CLocation, staloc);
@@ -80,11 +80,11 @@ namespace IBL
                     //If the situation that came out is: maintenance
                     if (dl.Status == DroneStatuses.Maintenance)
                     {
-                        IEnumerable<StationList> stationslist = GetStationByFilter(sta => sta.ChargeSlots > 0);
+                        IEnumerable<IDAL.DO.Station> stationslist = data.GetStationByFilter(sta => sta.ChargeSlots > 0);
                         int counter = stationslist.Count();
                         //The drone is at a random station
                         int stIndex = rand.Next(0, counter);
-                        StationList st = stationslist.ElementAt(stIndex);
+                        IDAL.DO.Station st = stationslist.ElementAt(stIndex);
                         dl.CLocation = GetStationById(st.Id).Location;
 
                         IDAL.DO.DroneCharge droneCharge = new IDAL.DO.DroneCharge();
@@ -98,7 +98,7 @@ namespace IBL
                     //If the situation that came out is: available
                     else
                     {
-                        IEnumerable<CustomerList> customerslist = GetCustomerByFilter(cus => cus.ParcelsGet > 0);
+                        IEnumerable<CustomerList> customerslist = GetCustomers().Where(cus => cus.ParcelsGet > 0);
                         int counter = customerslist.Count();
                         //The drone is at a random customer Location
                         int cuIndex = rand.Next(0, counter);
@@ -107,7 +107,7 @@ namespace IBL
                         dl.CLocation = c.Location;
 
                         Location lst = new Location();
-                        lst = ReturnCloseStation(data.GetStations(), dl.CLocation).Location;
+                        lst = ReturnCloseStation(data.GetStationByFilter(s => true), dl.CLocation).Location;
                         minbattery = ReturnBattery(3, dl.CLocation, lst);
                         dl.Battery = rand.NextDouble() + rand.Next((int)minbattery + 1, 100);
                     }

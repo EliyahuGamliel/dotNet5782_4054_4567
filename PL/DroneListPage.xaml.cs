@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,20 +29,21 @@ namespace PL
             blDroneList = bl;
             StatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
             MaxWeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-            DroneListView.ItemsSource = blDroneList.GetDroneByFilter(d => true);
+            DroneListView.ItemsSource = blDroneList.GetDrones();
             mPage = mainPage;
         }
 
         public void Selector_SelectionChanged(object sender = null, SelectionChangedEventArgs e = null)
         {
+            //DroneListView.ItemsSource = blDroneList.GetDroneByFilter((WeightCategories)MaxWeightSelector.SelectedItem, (DroneStatuses)StatusSelector.SelectedItem);
             if (StatusSelector.SelectedItem == null && MaxWeightSelector.SelectedItem == null)
-                DroneListView.ItemsSource = blDroneList.GetDroneByFilter(d => true);
+                DroneListView.ItemsSource = blDroneList.GetDrones();
             else if (StatusSelector.SelectedItem == null)
-                DroneListView.ItemsSource = blDroneList.GetDroneByFilter(d => (int)d.MaxWeight == (int)MaxWeightSelector.SelectedItem);
+                DroneListView.ItemsSource = blDroneList.GetDroneByFilter((int)MaxWeightSelector.SelectedItem, null);
             else if (MaxWeightSelector.SelectedItem == null)
-                DroneListView.ItemsSource = blDroneList.GetDroneByFilter(d => (int)d.Status == (int)StatusSelector.SelectedItem);
+                DroneListView.ItemsSource = blDroneList.GetDroneByFilter(null, (int)StatusSelector.SelectedItem);
             else
-                DroneListView.ItemsSource = blDroneList.GetDroneByFilter(d => (int)d.Status == (int)StatusSelector.SelectedItem && (int)d.MaxWeight == (int)MaxWeightSelector.SelectedItem);   
+                DroneListView.ItemsSource = blDroneList.GetDroneByFilter((int)MaxWeightSelector.SelectedItem, (int)StatusSelector.SelectedItem);
         }
 
         private void AddDrone_Click(object sender, RoutedEventArgs e)
@@ -58,7 +59,7 @@ namespace PL
 
         private void Reset_Click(object sender, RoutedEventArgs e)
         {
-            DroneListView.ItemsSource = blDroneList.GetDroneByFilter(d => true);
+            DroneListView.ItemsSource = blDroneList.GetDrones();
             StatusSelector.SelectedItem = null;
             MaxWeightSelector.SelectedItem = null;
         }

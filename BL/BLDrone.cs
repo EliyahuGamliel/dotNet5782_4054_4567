@@ -81,10 +81,10 @@ namespace IBL
 
             DroneList d = dronesList.Find(dr => idDrone == dr.Id);
             int index = dronesList.IndexOf(d);
-            double battery = CheckDroneCannotSend(data.GetStations().Where(s => s.ChargeSlots > 0), d);
+            double battery = CheckDroneCannotSend(data.GetStationByFilter(s => true).Where(s => s.ChargeSlots > 0), d);
             d.Status = DroneStatuses.Maintenance;
             Station st = new Station();
-            st = ReturnCloseStation(data.GetStations(), d.CLocation);
+            st = ReturnCloseStation(data.GetStationByFilter(s => true), d.CLocation);
             d.CLocation = st.Location;
             d.Battery = d.Battery - battery;
             dronesList[index] = d;
@@ -121,7 +121,7 @@ namespace IBL
             dronesList[index] = d;
 
             Station st = new Station();
-            st = ReturnCloseStation(data.GetStations(), d.CLocation);
+            st = ReturnCloseStation(data.GetStationByFilter(s => true), d.CLocation);
             int chargeSlots = ChargeSlotsCatched(st.Id) + st.ChargeSlots;
 
             IDAL.DO.DroneCharge dc = new IDAL.DO.DroneCharge();
@@ -152,7 +152,7 @@ namespace IBL
             if (dr.Status == DroneStatuses.Delivery)
             {
                 ParcelTransfer pt = new ParcelTransfer();
-                IDAL.DO.Parcel parcel = data.GetParcels().First(p => p.Id == dl.ParcelId);
+                IDAL.DO.Parcel parcel = data.GetParcelByFilter(p => p.Id == dl.ParcelId).First();
                 //If the parcel associated with the drone
                 pt.Id = parcel.Id;
                 pt.Priority = (Priorities)(int)parcel.Priority;
@@ -189,9 +189,23 @@ namespace IBL
             return dr;
         }
         
+        /// <summary>
+        /// Returns the list of drones
+        /// </summary>
+        /// <returns>Returns the list of drones</returns>
+        public IEnumerable<DroneList> GetDrones(){
+            return dronesList;
+        }
 
-        public IEnumerable<DroneList> GetDroneByFilter(Predicate<DroneList> droneList){
-            return dronesList.FindAll(droneList);
+        public IEnumerable<DroneList> GetDroneByFilter(int? weight, int? status)
+        {
+            if (weight == null && status == null)
+                return dronesList;
+            else if (weight == null)
+                return dronesList.FindAll(d => (int)d.Status == status);
+            else if (status == null)
+                return dronesList.FindAll(d => (int)d.MaxWeight == (int)weight);
+            return dronesList.FindAll(d => (int)d.Status == status && (int)d.MaxWeight == weight);   
         }
     }
 }

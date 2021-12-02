@@ -85,10 +85,26 @@ namespace IBL
             }
         }
 
-        public IEnumerable<ParcelList> GetParcelByFilter(Predicate<ParcelList> parcelList){
-            IEnumerable<IDAL.DO.Parcel> listparcels = data.GetParcels();
+        /// <summary>
+        /// Returns the list of parcels
+        /// </summary>
+        /// <returns>Returns the list of parcels</returns>
+        public IEnumerable<ParcelList> GetParcels(){
+            return ConvertToBL(data.GetParcelByFilter(pa => true));
+        }
+
+        /// <summary>
+        /// Returns a list of all unassigned parcels
+        /// </summary>
+        /// <returns>Returns a list of all unassigned parcels</returns>
+        public IEnumerable<ParcelList> GetParcelDrone(){
+            return ConvertToBL(data.GetParcelByFilter(pa => pa.Scheduled == null));
+        }
+
+        private IEnumerable<ParcelList> ConvertToBL(IEnumerable<IDAL.DO.Parcel> listParcels)
+        {
             List<ParcelList> parcel = new List<ParcelList>();
-            foreach (var item in listparcels) {
+            foreach (var item in listParcels) {
                 ParcelList pa = new ParcelList();
                 pa.Id = item.Id;
                 pa.Priority = (Priorities)(int)item.Priority;
@@ -98,7 +114,7 @@ namespace IBL
                 pa.Status = (Statuses)ReturnStatus(item);
                 parcel.Add(pa);
             }
-            return parcel.FindAll(parcelList);
+            return parcel;
         }
     }
 } 

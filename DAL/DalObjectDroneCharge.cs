@@ -31,8 +31,8 @@ namespace DalObject
         /// Returns the list of dronesCharge
         /// </summary>
         /// <returns>Returns the list of dronesCharge</returns>
-        public IEnumerable<DroneCharge> GetDroneCharge() {
-            return DataSource.DroneCharges;
+        public IEnumerable<DroneCharge> GetDroneChargeByFilter(Predicate<DroneCharge> droneChargeList) {
+            return DataSource.DroneCharges.FindAll(droneChargeList);
         }
     }
 }

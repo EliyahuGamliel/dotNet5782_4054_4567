@@ -40,12 +40,9 @@ namespace DalObject
             return d;
         }
 
-        /// <summary>
-        /// Returns the list of drones
-        /// </summary>
-        /// <returns>Returns the list of drones</returns>
-        public IEnumerable<Drone> GetDrones() {
-            return DataSource.Drones;
+        
+        public IEnumerable<Drone> GetDroneByFilter(Predicate<Drone> droneList) {
+            return DataSource.Drones.FindAll(droneList);
         }
 
         /// <summary>

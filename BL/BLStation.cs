@@ -89,10 +89,26 @@ namespace IBL
             }
         }
 
-        public IEnumerable<StationList> GetStationByFilter(Predicate<StationList> stationList) {
-            IEnumerable<IDAL.DO.Station> liststations = data.GetStations();
+        /// <summary>
+        /// Returns the list of stations
+        /// </summary>
+        /// <returns>Returns the list of stations</returns>
+        public IEnumerable<StationList> GetStations(){
+            return ConvertToBL(data.GetStationByFilter(st => true));
+        }
+    
+        /// <summary>
+        /// Returns a list of all stations that have available chargeSlots
+        /// </summary>
+        /// <returns>Returns a list of all stations that have available chargeSlots</returns>
+        public IEnumerable<StationList> GetStationCharge(){
+            return ConvertToBL(data.GetStationByFilter(st => st.ChargeSlots > 0));
+        }
+
+        private IEnumerable<StationList> ConvertToBL(IEnumerable<IDAL.DO.Station> listStation)
+        {
             List<StationList> station = new List<StationList>();
-            foreach (var item in liststations) {
+            foreach (var item in listStation) {
                 StationList sl = new StationList();
                 sl.Id = item.Id;
                 sl.Name = item.Name;
@@ -100,7 +116,7 @@ namespace IBL
                 sl.ChargeSlotsCatched = ChargeSlotsCatched(sl.Id);
                 station.Add(sl);
             }
-            return station.FindAll(stationList);
+            return station;
         }
     }
 }

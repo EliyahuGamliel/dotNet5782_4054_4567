@@ -98,35 +98,16 @@ namespace IDAL
         /// <returns>The object of the requested station</returns>
         Station GetStationById(int Id);
 
-        /// <summary>
-        /// Returns the list of stations
-        /// </summary>
-        /// <returns>Returns the list of stations</returns>
-        IEnumerable<Station> GetStations();
+        IEnumerable<Station> GetStationByFilter(Predicate<Station> stationList);
 
-        /// <summary>
-        /// Returns the list of drones
-        /// </summary>
-        /// <returns>Returns the list of drones</returns>
-        IEnumerable<Drone> GetDrones();
+        IEnumerable<Drone> GetDroneByFilter(Predicate<Drone> droneList);
 
-        /// <summary>
-        /// Returns the list of customers
-        /// </summary>
-        /// <returns>Returns the list of customers</returns> 
-        IEnumerable<Customer> GetCustomers();
+        IEnumerable<Customer> GetCustomerByFilter(Predicate<Customer> cutomerList);
 
-        /// <summary>
-        /// Returns the list of parcela
-        /// </summary>
-        /// <returns>Returns the list of parcels</returns>
-        IEnumerable<Parcel> GetParcels();
+        
+        IEnumerable<Parcel> GetParcelByFilter(Predicate<Parcel> parcelList);
 
-        /// <summary>
-        /// Returns the list of dronesCharge
-        /// </summary>
-        /// <returns>Returns the list of dronesCharge</returns>
-        IEnumerable<DroneCharge> GetDroneCharge();
+        IEnumerable<DroneCharge> GetDroneChargeByFilter(Predicate<DroneCharge> droneChargeList);
 
         /// <summary>
         /// Returns an array with all fields of power consumption
