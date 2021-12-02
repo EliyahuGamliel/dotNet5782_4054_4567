@@ -21,7 +21,7 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        public Type help { set; get; }
+        internal Type help { set; get; }
         public MainWindow()
         {
             InitializeComponent();
@@ -34,6 +34,7 @@ namespace PL
             {
                 base.OnClosing(e);
                 e.Cancel = true;
+                MessageBox.Show("Cannot Close! Back to Main Page.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

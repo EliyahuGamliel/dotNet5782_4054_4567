@@ -8,7 +8,7 @@
         Title="Minip_Targil_3" Height="640" Width="800"
         Icon="/img/droneIcon.ico"
         Background="LightCyan"
-        
+        ResizeMode="CanMinimize"
         >
     <Grid>
         <Frame x:Name="MainPage" NavigationUIVisibility="Hidden" />

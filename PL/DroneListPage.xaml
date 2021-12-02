@@ -20,12 +20,25 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="StatusSelector"
+            <StackPanel Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Label FontFamily="font/#Alef" FontSize="18" Content="Drone Status:" FontWeight="Bold"/>
+                <ComboBox  Name="StatusSelector"
                       SelectionChanged="Selector_SelectionChanged"/>
-            <ComboBox Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="MaxWeightSelector"
+            </StackPanel>
+            <StackPanel Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Label FontFamily="font/#Alef" FontSize="18" Content="Drone Max Weight:" FontWeight="Bold"/>
+                <ComboBox Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="MaxWeightSelector"
                       SelectionChanged="Selector_SelectionChanged"/>
-            <Label Grid.Column="0"/>
-            <Button Content="Click to add Drone" Grid.Column="3" Click="AddDrone_Click"/>
+            </StackPanel>
+            <Label FontFamily="font/#Alef" FontSize="48" Content="IC &amp; EG" Grid.Column="0" FontWeight="Bold"/>
+            <Button Background="PowderBlue" FontFamily="font/#Alef"  FontSize="18" Content="Click to add Drone" Grid.Column="3" Click="AddDrone_Click" Margin="18,8,18,8">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="25,25,25,25"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+
         </Grid>
         <Grid Name="DownGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="2" VerticalAlignment="Stretch" Width="auto">
             <Grid.ColumnDefinitions>
@@ -35,11 +48,24 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
             <Label Grid.Column="0"/>
-            <Button Content="Click to Return Back" Grid.Column="3" Click="Exit_Click"/>
-            <Button Content="Click to Reset Filter" Grid.Column="0" Click="Reset_Click"/>
+            <Button BorderBrush="Black" Margin="10,8,10,8" Background="Red" FontFamily="font/#Alef"  FontSize="18" Content="Click to Return Back" Grid.Column="3" Click="Exit_Click">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="25,25,25,25"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button BorderBrush="Black" Margin="15,8,15,8" Background="Red" FontFamily="font/#Alef"  FontSize="18" Content="Click to Reset Filter" Grid.Column="0" Click="Reset_Click">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="25,25,25,25"/>
+                        <Setter Property="BorderThickness" Value="5"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
         </Grid>
         <MediaElement x:Name="Gif" Height="auto" HorizontalAlignment="Right"  MediaEnded="Again_MediaEnded" Source="img\droneList.gif" LoadedBehavior="Play" UnloadedBehavior="Manual" Margin="150,0,0,0" Grid.Row="1"/>
-        <ListView x:Name="DroneListView" Height="auto" MouseDoubleClick="DroneActions" Margin="0,0,565,0" Grid.Row="1">
+        <ListView Background="LightCyan" FontFamily="/font/#Alef" x:Name="DroneListView" Height="auto" MouseDoubleClick="DroneActions" Margin="0,0,570,0" Grid.Row="1">
             <ListView.Resources>
                 <Style TargetType="GridViewColumnHeader">
                     <Setter Property="Visibility" Value="Hidden"/>
@@ -51,6 +77,5 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Frame x:Name="DroneAddPage" NavigationUIVisibility="Hidden" />
     </Grid>
 </Page>
