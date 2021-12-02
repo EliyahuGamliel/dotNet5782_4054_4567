@@ -35,9 +35,9 @@ namespace PL
 
         public void Selector_SelectionChanged(object sender = null, SelectionChangedEventArgs e = null)
         {
-            //DroneListView.ItemsSource = blDroneList.GetDroneByFilter((WeightCategories)MaxWeightSelector.SelectedItem, (DroneStatuses)StatusSelector.SelectedItem);
+            DroneListView.ItemsSource = null;
             if (StatusSelector.SelectedItem == null && MaxWeightSelector.SelectedItem == null)
-                DroneListView.ItemsSource = blDroneList.GetDrones();
+                DroneListView.ItemsSource = blDroneList.GetDroneByFilter(null, null);
             else if (StatusSelector.SelectedItem == null)
                 DroneListView.ItemsSource = blDroneList.GetDroneByFilter((int)MaxWeightSelector.SelectedItem, null);
             else if (MaxWeightSelector.SelectedItem == null)
@@ -59,6 +59,7 @@ namespace PL
 
         private void Reset_Click(object sender, RoutedEventArgs e)
         {
+            DroneListView.ItemsSource = null;
             DroneListView.ItemsSource = blDroneList.GetDrones();
             StatusSelector.SelectedItem = null;
             MaxWeightSelector.SelectedItem = null;

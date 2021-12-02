@@ -10,24 +10,37 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="375*"/>
-            <RowDefinition Height="75*"/>
+            <RowDefinition Height="350*"/>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="50*"/>
         </Grid.RowDefinitions>
-        <ListView x:Name="StationListView" Grid.Row="0" Height="auto" Width="auto">
+        <Image x:Name="droneWithoutParcel" Grid.RowSpan="2" Margin="150,0,0,0" Stretch="Fill" Source="img\dronesImage.jpg"/>
+        <ListView x:Name="StationListView"  Background="LightCyan" FontFamily="/font/#Alef" Margin="0,0,565,0" Grid.RowSpan="2" Height="auto" Width="auto">
+            <ListView.Resources>
+                <Style TargetType="GridViewColumnHeader">
+                    <Setter Property="Visibility" Value="Hidden"/>
+                </Style>
+            </ListView.Resources>
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Grid Name="DownGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="1" VerticalAlignment="Stretch" Width="auto">
+        <Grid Name="DownGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="2" VerticalAlignment="Stretch" Width="auto">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button Content="Click to Return Back" Grid.Column="3" Click="Exit_Click"/>
+            <Button BorderBrush="Black" Margin="10,8,10,8" Background="Red" FontFamily="font/#Alef"  FontSize="18" Content="Click to Return Back" Grid.Column="3" Click="Exit_Click">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="25,25,25,25"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
         </Grid>
     </Grid>
 </Page>

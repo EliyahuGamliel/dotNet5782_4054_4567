@@ -61,10 +61,18 @@ namespace PL
             locationDrone.Inlines.Add(line);
             locationDrone.Inlines.Add(new Run(dr.CLocation.ToString()));
             if (dr.Status == DroneStatuses.Delivery)
+            {
+                droneWithoutParcel.Visibility = Visibility.Hidden;
+                droneWithParcel.Visibility = Visibility.Visible;
                 parcelDrone.Text = dr.PTransfer.ToString();
+            }
             else
+            {
+                droneWithParcel.Visibility = Visibility.Hidden;
                 parcelDrone.Text = "not exist";
-        }
+                droneWithoutParcel.Visibility = Visibility.Visible;
+            }
+           }
         private void InitializeButtons()
         {
             if (dr.Status == DroneStatuses.Delivery)
@@ -84,16 +92,19 @@ namespace PL
             dlPage.Selector_SelectionChanged();
             this.NavigationService.Navigate(dlPage);
         }
+
         private void GetModel(object sender, RoutedEventArgs e)
         {
             updateDrone.IsEnabled = true;
         }
+
         private void Update_Click(object sender, RoutedEventArgs e)
         {
             dr.Model = modelDrone.Text;
             MessageBox.Show(blDrone.UpdateDrone(dr.Id, dr.Model));
             updateDrone.IsEnabled = false;
         }
+
         private void Assign_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -129,6 +140,11 @@ namespace PL
             InitializeData();
         }
 
+        private void Again_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            Gif.Position = new TimeSpan(0, 0, 1);
+            Gif.Play();
+        }
         private void Send_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -159,7 +175,7 @@ namespace PL
         {
             try
             {
-                droneList.Model = modelDrone.Text;
+                droneList.Model = moDrone.Text;
                 MessageBox.Show(blDrone.AddDrone(droneList, idStation));
                 dlPage.Selector_SelectionChanged();
                 this.NavigationService.Navigate(dlPage);
@@ -185,10 +201,10 @@ namespace PL
         private void GetId(object sender, RoutedEventArgs e)
         {
             GetInt(idone);
-            if (idDrone.Background == Brushes.White)
+            if (idone.Background == Brushes.White)
             {
                 int id;
-                Int32.TryParse(idDrone.Text, out id);
+                Int32.TryParse(idone.Text, out id);
                 droneList.Id = id;
             }
         }
@@ -248,7 +264,5 @@ namespace PL
             // Clear InputBox.
             InputTextBox.Text = String.Empty;
         }
-
-       
     }
 }

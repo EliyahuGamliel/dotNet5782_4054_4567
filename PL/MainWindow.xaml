@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Minip_Targil_3" Height="640" Width="800"
         Icon="/img/droneIcon.ico"
-        Background="LightCyan"
+        Background="Cyan"
         ResizeMode="CanMinimize"
         >
     <Grid>

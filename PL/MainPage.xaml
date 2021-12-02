@@ -11,7 +11,19 @@
     <Grid>
         <Frame x:Name="DroneListPage" NavigationUIVisibility="Hidden" />
         <MediaElement x:Name="Gif" MediaEnded="Again_MediaEnded" VerticalAlignment="Bottom" Source="img\droneMainPage.gif" LoadedBehavior="Play" UnloadedBehavior="Manual" Margin="0,0,0,0"/>
-        <Button Content="For Drone List View Click Here" Click="ShowDronesButton_Click" Margin="0,0,0,514" />
-        <Button Content="Station List" Click="ShowStationsButton_Click" Margin="700,560,0,0" />
+        <Button Background="LightSkyBlue" FontFamily="/font/#Alef" FontSize="35" FontWeight="Bold" Content="For Drone List View Click Here" Click="ShowDronesButton_Click" Margin="0,0,0,514">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="0,0,50,50"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button Background="PaleTurquoise" FontFamily="/font/#Alef" Content="Station List" Click="ShowStationsButton_Click" Margin="700,580,0,0" >
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="25,0,0,0"/>
+                </Style>
+            </Button.Resources>
+        </Button>
     </Grid>
 </Page>

@@ -22,16 +22,16 @@
             </Grid.ColumnDefinitions >
             <StackPanel Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Label FontFamily="font/#Alef" FontSize="18" Content="Drone Status:" FontWeight="Bold"/>
-                <ComboBox  Name="StatusSelector"
+                <ComboBox FontFamily="font/#Alef" FontSize="18" Name="StatusSelector"
                       SelectionChanged="Selector_SelectionChanged"/>
             </StackPanel>
             <StackPanel Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Label FontFamily="font/#Alef" FontSize="18" Content="Drone Max Weight:" FontWeight="Bold"/>
-                <ComboBox Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="MaxWeightSelector"
+                <ComboBox FontFamily="font/#Alef" FontSize="18" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="MaxWeightSelector"
                       SelectionChanged="Selector_SelectionChanged"/>
             </StackPanel>
             <Label FontFamily="font/#Alef" FontSize="48" Content="IC &amp; EG" Grid.Column="0" FontWeight="Bold"/>
-            <Button Background="PowderBlue" FontFamily="font/#Alef"  FontSize="18" Content="Click to add Drone" Grid.Column="3" Click="AddDrone_Click" Margin="18,8,18,8">
+            <Button BorderBrush="Black" Background="PowderBlue" FontFamily="font/#Alef"  FontSize="18" Content="Click to add Drone" Grid.Column="3" Click="AddDrone_Click" Margin="18,8,18,8">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="25,25,25,25"/>
@@ -59,13 +59,12 @@
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="25,25,25,25"/>
-                        <Setter Property="BorderThickness" Value="5"/>
                     </Style>
                 </Button.Resources>
             </Button>
         </Grid>
         <MediaElement x:Name="Gif" Height="auto" HorizontalAlignment="Right"  MediaEnded="Again_MediaEnded" Source="img\droneList.gif" LoadedBehavior="Play" UnloadedBehavior="Manual" Margin="150,0,0,0" Grid.Row="1"/>
-        <ListView Background="LightCyan" FontFamily="/font/#Alef" x:Name="DroneListView" Height="auto" MouseDoubleClick="DroneActions" Margin="0,0,570,0" Grid.Row="1">
+        <ListView Background="LightCyan" FontFamily="/font/#Alef" x:Name="DroneListView" Height="auto" MouseDoubleClick="DroneActions" Margin="0,0,565,0" Grid.Row="1">
             <ListView.Resources>
                 <Style TargetType="GridViewColumnHeader">
                     <Setter Property="Visibility" Value="Hidden"/>
@@ -77,5 +76,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <Frame x:Name="DronePage" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Page>
