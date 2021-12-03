@@ -196,7 +196,7 @@ namespace PL
         }
 
         /// <summary>
-        /// if the deliver button has been pressed
+        /// If the deliver button has been pressed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
