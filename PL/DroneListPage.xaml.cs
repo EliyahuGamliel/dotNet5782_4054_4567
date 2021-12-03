@@ -67,6 +67,11 @@ namespace PL
             this.NavigationService.Navigate(new DronePage(blDroneList, this));
         }
 
+        /// <summary>
+        /// if the user wants to go back
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             mPage.mWindow.CurrentPageBonus = typeof(MainPage);
