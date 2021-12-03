@@ -16,6 +16,7 @@ namespace IBL
         /// <returns>Notice if the addition was successful</returns>
         string AddStation(Station s);
 
+        /// <summary>
         /// If everything is fine, add a drone to the list of drones, else throw exception
         /// </summary>
         /// <param name="d">Object of drone to add</param>
@@ -55,6 +56,7 @@ namespace IBL
         /// <returns>Notice if the addition was successful</returns>
         string UpdateCustomer(int id, string nameCustomer, string phoneCustomer);
 
+        /// <summary> updates the station
         /// </summary>
         /// <param name="id">The ID of the station for updating</param>
         /// <param name="name">If requested - the new name for the station update</param>
