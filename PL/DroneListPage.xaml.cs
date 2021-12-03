@@ -57,6 +57,11 @@ namespace PL
                 DroneListView.ItemsSource = blDroneList.GetDroneByFilter((int)MaxWeightSelector.SelectedItem, (int)StatusSelector.SelectedItem);
         }
 
+        /// <summary>
+        /// navigates to the drone adding page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddDrone_Click(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(new DronePage(blDroneList, this));
