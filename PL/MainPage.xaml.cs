@@ -42,7 +42,7 @@ namespace PL
         /// <param name="e"></param>
         private void ShowDronesButton_Click(object sender, RoutedEventArgs e)
         {
-            mWindow.CurrentPageBonus = typeof(DroneListPage);
+            mWindow.CurrentPageBonus = typeof(DroneListPage);// keeps track of the current page  - bonus
             this.NavigationService.Navigate(new DroneListPage(bl, this));
         }
 
