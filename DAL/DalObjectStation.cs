@@ -40,11 +40,11 @@ namespace DalObject
             return s;
         }
 
-        /// <summary>
-        /// returns all the stations that fit the filter
+        /// <summary> 
+        /// Returns all the stations that fit the filter
         /// </summary>
-        /// <param name="stationList"></param>
-        /// <returns>the Ienumerable to the stations</returns>
+        /// <param name="stationList">the paradicte</param>
+        /// <returns>the Ienumerable to the stations </returns>
         public IEnumerable<Station> GetStationByFilter(Predicate<Station> stationList) {
             return DataSource.Stations.FindAll(stationList);
         }
