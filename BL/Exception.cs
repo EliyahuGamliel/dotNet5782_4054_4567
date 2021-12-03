@@ -196,7 +196,7 @@ namespace IBL.BO
     }
 
     /// <summary>
-    /// if the time that the drone was in charging small than 0
+    /// If the time that the drone was in charging small than 0
     /// </summary>
     [Serializable]
     public class TimeNotLegal : Exception
