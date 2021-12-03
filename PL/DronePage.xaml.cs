@@ -29,7 +29,7 @@ namespace PL
         private DroneListPage dlPage;
 
         /// <summary>
-        /// the constuctor
+        /// The constuctor
         /// </summary>
         /// <param name="bl"></param>
         /// <param name="drone"></param>
@@ -46,6 +46,11 @@ namespace PL
             InitializeButtons();
             InitializeData();
         }
+        /// <summary>
+        /// The second constructor
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="droneListPage"></param>
         public DronePage(IBL.IBL bl, DroneListPage droneListPage)
         {
             InitializeComponent();
