@@ -24,7 +24,7 @@ namespace PL
         internal MainWindow mWindow;
 
         /// <summary>
-        /// the constructor of the main page 
+        /// The constructor of the main page 
         /// </summary>
         /// <param name="mainWindow">the main window</param>
         public MainPage(MainWindow mainWindow)
@@ -36,7 +36,7 @@ namespace PL
         }
 
         /// <summary>
-        /// when the show drone button has been pressed it navigates to the wanted page
+        /// When the show drone button has been pressed it navigates to the wanted page
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -47,7 +47,7 @@ namespace PL
         }
 
         /// <summary>
-        /// makes sure that the gif keep running over and over again
+        /// Makes sure that the gif keep running over and over again
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
