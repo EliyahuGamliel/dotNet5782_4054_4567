@@ -69,6 +69,11 @@ namespace IBL.BO
         {
             this.id = ID;
         }
+
+        /// <summary>
+        /// returns a matching string for the exption
+        /// </summary>
+        /// <returns>a printable matching string</returns>
         public override string ToString()
         {
             return "IdNotExistException: The ID " + id + " doesn't exist\n";
