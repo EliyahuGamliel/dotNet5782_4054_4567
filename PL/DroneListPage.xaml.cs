@@ -23,6 +23,12 @@ namespace PL
     {
         static IBL.IBL blDroneList;
         private MainPage mPage;
+
+        /// <summary>
+        /// the constructor
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="mainPage">the main page</param>
         public DroneListPage(IBL.IBL bl, MainPage mainPage)
         {
             InitializeComponent();
@@ -33,6 +39,11 @@ namespace PL
             mPage = mainPage;
         }
 
+        /// <summary>
+        /// if the selected choice in the combo box changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Selector_SelectionChanged(object sender = null, SelectionChangedEventArgs e = null)
         {
             DroneListView.ItemsSource = null;
@@ -53,7 +64,7 @@ namespace PL
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
-            mPage.mWindow.help = typeof(MainPage);
+            mPage.mWindow.CurrentPageBonus = typeof(MainPage);
             this.NavigationService.Navigate(mPage);
         }
 
