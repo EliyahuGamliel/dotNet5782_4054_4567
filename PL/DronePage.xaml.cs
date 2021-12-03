@@ -296,6 +296,11 @@ namespace PL
                 MessageBox.Show("Enter data in all fields!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
+        /// <summary>
+        /// send the id of the stations to getint function
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GetIdStationToChrging(object sender, RoutedEventArgs e)
         {
             GetInt(idStationToChrging);
