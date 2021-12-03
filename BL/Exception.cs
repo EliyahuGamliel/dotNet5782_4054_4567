@@ -204,7 +204,7 @@ namespace IBL.BO
         public double time { get; private set; }
 
         /// <summary>
-        /// if the time is not legal then it assigns the time
+        /// If the time is not legal then it assigns the time
         /// </summary>
         /// <param name="time">the time</param>
         public TimeNotLegal(double time)
