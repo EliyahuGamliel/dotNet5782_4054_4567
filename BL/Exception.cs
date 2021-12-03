@@ -152,7 +152,7 @@ namespace IBL.BO
         }
 
         /// <summary>
-        /// returns a matching string for the exption
+        /// Returns a matching string for the exption
         /// </summary>
         /// <returns>a printable matching string</returns>
         public override string ToString()
