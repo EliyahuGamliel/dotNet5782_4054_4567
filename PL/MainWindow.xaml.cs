@@ -21,7 +21,8 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        internal Type CurrentPageBonus { set; get; }//keeps track of the page we are at so we will know if we can close the window - bonus
+        //keeps track of the page we are at so we will know if we can close the window - bonus
+        internal Type CurrentPageBonus { set; get; }
 
         /// <summary>
         ///the constructor
