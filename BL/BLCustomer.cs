@@ -128,7 +128,7 @@ namespace IBL
         /// <summary>
         /// convert the list from idal to bl
         /// </summary>
-        /// <param name="listCustomers"></param>
+        /// <param name="listCustomers">the list we want to convert</param>
         /// <returns>the same list converted to bl</returns>
         private IEnumerable<CustomerList> ConvertToBL(IEnumerable<IDAL.DO.Customer> listCustomers)
         {

@@ -114,7 +114,11 @@ namespace IBL
             throw new IdNotExistException(id);
         }
 
-       
+       /// <summary>
+       /// checks if the id is valid and if not it throws an error
+       /// </summary>
+       /// <param name="id">the id that we want to check</param>
+       /// <exception cref="IdNotValid"></exception>
         private void CheckValidId(int id)
         {
             if (id <= 0)

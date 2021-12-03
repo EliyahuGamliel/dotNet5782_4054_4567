@@ -101,6 +101,11 @@ namespace IBL
             return ConvertToBL(data.GetParcelByFilter(pa => pa.Scheduled == null));
         }
 
+        /// <summary>
+        /// convert the list from idal to bl
+        /// </summary>
+        /// <param name="listCustomers">the list we want to convert</param>
+        /// <returns>the same list converted to bl</returns>
         private IEnumerable<ParcelList> ConvertToBL(IEnumerable<IDAL.DO.Parcel> listParcels)
         {
             List<ParcelList> parcel = new List<ParcelList>();
