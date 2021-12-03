@@ -106,6 +106,11 @@ namespace IBL
             return ConvertToBL(data.GetStationByFilter(st => st.ChargeSlots > 0));
         }
 
+        /// <summary>
+        /// convert the list from idal to bl
+        /// </summary>
+        /// <param name="listCustomers">the list we want to convert</param>
+        /// <returns>the same list converted to bl</returns>
         private IEnumerable<StationList> ConvertToBL(IEnumerable<IDAL.DO.Station> listStation)
         {
             List<StationList> station = new List<StationList>();
