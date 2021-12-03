@@ -210,7 +210,7 @@ namespace PL
         }
 
         /// <summary>
-        /// makes sure the gif is running over and over again
+        /// Makes sure the gif is running over and over again
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
