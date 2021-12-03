@@ -128,7 +128,8 @@ namespace PL
         private void GetModel(object sender, RoutedEventArgs e)
         {
             if (moDrone.Text == "")
-                moDrone.Background = Brushes.Red;//bonus
+                //bonus
+                moDrone.Background = Brushes.Red;
             else
                 moDrone.Background = Brushes.White;
         }
@@ -335,7 +336,8 @@ namespace PL
             int num;
             bool error = Int32.TryParse(tBox.Text, out num);
             if (!error)
-                tBox.Background = Brushes.Red;//bonus
+                //bonus
+                tBox.Background = Brushes.Red;
             else
                 tBox.Background = Brushes.White;
         }
@@ -350,7 +352,8 @@ namespace PL
             double num;
             bool error = double.TryParse(InputTextBox.Text, out num);
             if (!error)
-                InputTextBox.Background = Brushes.Red;//bonus
+                //bonus
+                InputTextBox.Background = Brushes.Red;
             else
                 InputTextBox.Background = Brushes.White;
         }
