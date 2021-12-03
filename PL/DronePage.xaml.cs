@@ -133,6 +133,11 @@ namespace PL
                 moDrone.Background = Brushes.White;
         }
 
+        /// <summary>
+        /// updates the model
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UpdateModel(object sender, RoutedEventArgs e)
         {
             if (modelDrone.Text == "")
@@ -141,6 +146,11 @@ namespace PL
                 updateDrone.IsEnabled = true;
         }
 
+        /// <summary>
+        /// if the update button has been pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Update_Click(object sender, RoutedEventArgs e)
         {
             dr.Model = modelDrone.Text;
@@ -148,6 +158,11 @@ namespace PL
             updateDrone.IsEnabled = false;
         }
 
+        /// <summary>
+        /// if the assign button had been pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Assign_Click(object sender, RoutedEventArgs e)
         {
             try
