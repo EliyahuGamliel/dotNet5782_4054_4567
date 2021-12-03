@@ -115,7 +115,7 @@ namespace IBL
         }
 
        /// <summary>
-       /// checks if the id is valid and if not it throws an error
+       /// Checks if the id is valid and if not it throws an error
        /// </summary>
        /// <param name="id">the id that we want to check</param>
        /// <exception cref="IdNotValid"></exception>
