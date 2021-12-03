@@ -143,7 +143,7 @@ namespace IBL.BO
         public int id { get; private set; }
 
         /// <summary>
-        /// if the the customer already exists the it assigns the id
+        /// If the the customer already exists the it assigns the id
         /// </summary>
         /// <param name="id">the id</param>
         public SameCustomerException(int id)
