@@ -38,7 +38,8 @@ namespace PL
         /// <param name="e">the closing event</param>
         protected override void OnClosing(CancelEventArgs e)
         {
-            if (CurrentPageBonus != typeof(MainPage))//checks of we are at the mainpage - bonus
+            //checks of we are at the mainpage - bonus
+            if (CurrentPageBonus != typeof(MainPage))
             {
                 base.OnClosing(e);
                 e.Cancel = true;
