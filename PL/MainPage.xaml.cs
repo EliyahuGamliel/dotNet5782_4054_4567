@@ -22,6 +22,11 @@ namespace PL
     {
         static IBL.IBL bl;
         internal MainWindow mWindow;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mainWindow"></param>
         public MainPage(MainWindow mainWindow)
         {
             mainWindow.CurrentPageBonus = typeof(MainPage);
