@@ -219,6 +219,12 @@ namespace PL
             Gif.Position = new TimeSpan(0, 0, 1);
             Gif.Play();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Send_Click(object sender, RoutedEventArgs e)
         {
             try
