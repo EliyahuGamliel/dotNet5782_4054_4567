@@ -317,7 +317,7 @@ namespace PL
         }
 
         /// <summary>
-        /// sends 
+        /// Sends the if to GetInt function
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -326,22 +326,31 @@ namespace PL
             GetInt(idone);
         }
 
+        /// <summary>
+        /// Checks if its legal, if not it changes the color of the background to red - bonus
+        /// </summary>
+        /// <param name="tBox"></param>
         private void GetInt(TextBox tBox)
         {
             int num;
             bool error = Int32.TryParse(tBox.Text, out num);
             if (!error)
-                tBox.Background = Brushes.Red;
+                tBox.Background = Brushes.Red;//bonus
             else
                 tBox.Background = Brushes.White;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GetTime(object sender, RoutedEventArgs e)
         {
             double num;
             bool error = double.TryParse(InputTextBox.Text, out num);
             if (!error)
-                InputTextBox.Background = Brushes.Red;
+                InputTextBox.Background = Brushes.Red;//bonus
             else
                 InputTextBox.Background = Brushes.White;
         }
