@@ -27,6 +27,13 @@ namespace PL
         private int idStation;
         static IBL.IBL blDrone;
         private DroneListPage dlPage;
+
+        /// <summary>
+        /// the constuctor
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="drone"></param>
+        /// <param name="droneListPage"></param>
         public DronePage(IBL.IBL bl, Drone drone, DroneListPage droneListPage)
         {
             InitializeComponent();
