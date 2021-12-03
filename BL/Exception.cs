@@ -62,7 +62,7 @@ namespace IBL.BO
         public int id { get; private set; }
 
         /// <summary>
-        /// if the id doesnt exists it assigns the id
+        /// If the id doesnt exists it assigns the id
         /// </summary>
         /// <param name="ID">the id</param>
         public IdNotExistException(int ID)
