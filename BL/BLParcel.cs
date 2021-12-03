@@ -102,7 +102,7 @@ namespace IBL
         }
 
         /// <summary>
-        /// convert the list from idal to bl
+        /// Convert the list from idal to bl
         /// </summary>
         /// <param name="listCustomers">the list we want to convert</param>
         /// <returns>the same list converted to bl</returns>
