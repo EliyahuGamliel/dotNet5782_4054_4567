@@ -116,7 +116,7 @@ namespace IBL.BO
         public string phone { get; private set; }
 
         // <summary>
-        /// if the phone number already exists then it assigns the phone number
+        /// If the phone number already exists then it assigns the phone number
         /// </summary>
         /// <param name="phone">the phone number</param>
         public PhoneExistException(string Phone)
