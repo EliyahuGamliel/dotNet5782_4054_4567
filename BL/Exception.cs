@@ -10,10 +10,20 @@ namespace IBL.BO
     public class IdExistException : Exception
     {
         public int id { get; private set; }
+
+        /// <summary>
+        /// if the the id exists it assigns the other id
+        /// </summary>
+        /// <param name="ID">the id</param>
         public IdExistException(int ID)
         {
             this.id = ID;
         }
+
+        /// <summary>
+        /// returns a matching string for the exption
+        /// </summary>
+        /// <returns>a printable matching string</returns>
         public override string ToString()
         {
             return "IdExistException: The ID " + id + " already exist\n";
@@ -23,10 +33,20 @@ namespace IBL.BO
     public class IdNotValid : Exception
     {
         public int id { get; private set; }
+
+        /// <summary>
+        /// if the id is not valid then it assigns the id
+        /// </summary>
+        /// <param name="ID">the id</param>
         public IdNotValid(int ID)
         {
             this.id = ID;
         }
+
+        /// <summary>
+        /// returns a matching string for the exption
+        /// </summary>
+        /// <returns>a printable matching string</returns>
         public override string ToString()
         {
             return "IdNotValid: The ID must be a positive number (" + id + ")\n";
@@ -40,6 +60,11 @@ namespace IBL.BO
     public class IdNotExistException : Exception
     {
         public int id { get; private set; }
+
+        /// <summary>
+        /// if the id doesnt exists it assigns the id
+        /// </summary>
+        /// <param name="ID"></param>
         public IdNotExistException(int ID)
         {
             this.id = ID;
