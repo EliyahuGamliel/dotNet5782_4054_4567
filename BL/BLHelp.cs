@@ -126,7 +126,7 @@ namespace IBL
         }
 
         /// <summary>
-        /// all the choice need to be between 0-2
+        /// All the choice need to be between 0-2
         /// </summary>
         /// <param name="choice">the choice</param>
         private void CheckLegelChoice(int choice)
