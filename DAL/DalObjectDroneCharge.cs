@@ -27,10 +27,7 @@ namespace DalObject
             DataSource.DroneCharges.Remove(d);
         }
 
-        /// <summary>
-        /// Returns the list of dronesCharge
-        /// </summary>
-        /// <returns>Returns the list of dronesCharge</returns>
+        
         public IEnumerable<DroneCharge> GetDroneChargeByFilter(Predicate<DroneCharge> droneChargeList) {
             return DataSource.DroneCharges.FindAll(droneChargeList);
         }
