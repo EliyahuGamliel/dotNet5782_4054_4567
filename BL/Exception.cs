@@ -64,7 +64,7 @@ namespace IBL.BO
         /// <summary>
         /// if the id doesnt exists it assigns the id
         /// </summary>
-        /// <param name="ID"></param>
+        /// <param name="ID">the id</param>
         public IdNotExistException(int ID)
         {
             this.id = ID;
