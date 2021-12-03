@@ -125,6 +125,11 @@ namespace IBL
             return ConvertToBL(data.GetCustomerByFilter(c => true));
         }
 
+        /// <summary>
+        /// convert the list from idal to bl
+        /// </summary>
+        /// <param name="listCustomers"></param>
+        /// <returns>the same list converted to bl</returns>
         private IEnumerable<CustomerList> ConvertToBL(IEnumerable<IDAL.DO.Customer> listCustomers)
         {
             List<CustomerList> customer = new List<CustomerList>();

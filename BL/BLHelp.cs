@@ -53,7 +53,12 @@ namespace IBL
             IDAL.DO.Station st = s.OrderBy(sta => DistanceTo(ReturnLocation(sta), drone)).First();
             return GetStationById(st.Id);
         }
-
+        
+        /// <summary>
+        /// returns the location of the station
+        /// </summary>
+        /// <param name="s">the station that we want its location</param>
+        /// <returns></returns>
         private Location ReturnLocation(IDAL.DO.Station s)
         {
             Location location = new Location();

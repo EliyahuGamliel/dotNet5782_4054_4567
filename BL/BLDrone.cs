@@ -198,6 +198,12 @@ namespace IBL
             return dronesList;
         }
 
+        /// <summary>
+        /// returns all the drones 
+        /// </summary>
+        /// <param name="weight"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
         public IEnumerable<DroneList> GetDroneByFilter(int? weight, int? status)
         {
             if (weight == null && status == null)
