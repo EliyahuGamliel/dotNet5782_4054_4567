@@ -257,7 +257,7 @@ namespace PL
         }
 
         /// <summary>
-        /// if the show stations button has been pressed
+        /// If the show stations button has been pressed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
