@@ -329,7 +329,7 @@ namespace IBL.BO
         public int chargeSlots { get; private set; }
 
         /// <summary>
-        /// if the chargeslot is not legal the it assigns the charge slots
+        /// If the chargeslot is not legal the it assigns the charge slots
         /// </summary>
         /// <param name="chargeSlots"></param>
         public ChargeSlotsNotLegal(int chargeSlots)
@@ -338,7 +338,7 @@ namespace IBL.BO
         }
 
         /// <summary>
-        /// returns a matching string for the exption
+        /// Returns a matching string for the exption
         /// </summary>
         /// <returns>a printable matching string</returns>
         public override string ToString()
