@@ -110,7 +110,7 @@ namespace PL
         }
 
         /// <summary>
-        /// if the users wants to go back
+        /// If the users wants to go back
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -121,7 +121,7 @@ namespace PL
         }
 
         /// <summary>
-        /// cahnges the backgroung according to if its legal or not - bonus
+        /// Changes the backgroung according to if its legal or not - bonus
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -134,7 +134,7 @@ namespace PL
         }
 
         /// <summary>
-        /// updates the model
+        /// Updates the model
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -147,7 +147,7 @@ namespace PL
         }
 
         /// <summary>
-        /// if the update button has been pressed
+        /// If the update button has been pressed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -159,7 +159,7 @@ namespace PL
         }
 
         /// <summary>
-        /// if the assign button had been pressed
+        /// If the assign button had been pressed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -181,6 +181,12 @@ namespace PL
                 assignDrone.IsEnabled = false;
             }
         }
+
+        /// <summary>
+        /// If the pickup button has been pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PickUp_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show(blDrone.PickUpDroneParcel(dr.Id));
@@ -189,6 +195,11 @@ namespace PL
             InitializeData();
         }
 
+        /// <summary>
+        /// if the deliver button has been pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Deliver_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show(blDrone.DeliverParcelCustomer(dr.Id));
@@ -198,6 +209,11 @@ namespace PL
             InitializeData();
         }
 
+        /// <summary>
+        /// makes sure the gif is running over and over again
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Again_MediaEnded(object sender, RoutedEventArgs e)
         {
             Gif.Position = new TimeSpan(0, 0, 1);
