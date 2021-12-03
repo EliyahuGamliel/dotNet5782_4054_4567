@@ -45,7 +45,11 @@ namespace DalObject
             return p;
         }
 
-        
+        /// <summary>
+        /// Returns all the parcels that fit the filter
+        /// </summary>
+        /// <param name="parcelList">the paradicte</param>
+        /// <returns> the Ienumerable to the parcels </returns>
         public IEnumerable<Parcel> GetParcelByFilter(Predicate<Parcel> parcelList) {
             return DataSource.Parcels.FindAll(parcelList);
         }

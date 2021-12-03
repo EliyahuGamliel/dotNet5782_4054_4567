@@ -27,7 +27,11 @@ namespace DalObject
             DataSource.DroneCharges.Remove(d);
         }
 
-        
+        /// <summary>
+        /// Returns all the drone charges that fit the filter
+        /// </summary>
+        /// <param name="droneChargeList">the paradicte</param>
+        /// <returns> the Ienumerable to the drone charges</returns>
         public IEnumerable<DroneCharge> GetDroneChargeByFilter(Predicate<DroneCharge> droneChargeList) {
             return DataSource.DroneCharges.FindAll(droneChargeList);
         }
