@@ -297,7 +297,7 @@ namespace PL
         }
 
         /// <summary>
-        /// Send the id of the stations to getint function
+        /// Send the id of the stations to GetInt function
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -306,6 +306,11 @@ namespace PL
             GetInt(idStationToChrging);
         }
 
+        /// <summary>
+        /// changes the background to transparent
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GetMaxWeight(object sender, RoutedEventArgs e)
         {
             maxWeight.Background = Brushes.Transparent;
