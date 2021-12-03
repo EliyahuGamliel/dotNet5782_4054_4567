@@ -297,7 +297,7 @@ namespace PL
         }
 
         /// <summary>
-        /// send the id of the stations to getint function
+        /// Send the id of the stations to getint function
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
