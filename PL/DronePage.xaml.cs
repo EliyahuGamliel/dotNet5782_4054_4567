@@ -221,7 +221,7 @@ namespace PL
         }
 
         /// <summary>
-        /// if the send button has been pressed
+        /// If the send button has been pressed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
