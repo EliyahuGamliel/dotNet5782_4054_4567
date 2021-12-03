@@ -246,7 +246,7 @@ namespace PL
         }
 
         /// <summary>
-        /// if the release button has been pressed
+        /// If the release button has been pressed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
