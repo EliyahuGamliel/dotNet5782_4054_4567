@@ -307,7 +307,7 @@ namespace PL
         }
 
         /// <summary>
-        /// changes the background to transparent
+        /// Changes the background to transparent
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -316,6 +316,11 @@ namespace PL
             maxWeight.Background = Brushes.Transparent;
         }
 
+        /// <summary>
+        /// sends 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GetId(object sender, RoutedEventArgs e)
         {
             GetInt(idone);
