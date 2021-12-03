@@ -121,14 +121,14 @@ namespace PL
         }
 
         /// <summary>
-        /// 
+        /// cahnges the backgroung according to if its legal or not - bonus
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void GetModel(object sender, RoutedEventArgs e)
         {
             if (moDrone.Text == "")
-                moDrone.Background = Brushes.Red;
+                moDrone.Background = Brushes.Red;//bonus
             else
                 moDrone.Background = Brushes.White;
         }
