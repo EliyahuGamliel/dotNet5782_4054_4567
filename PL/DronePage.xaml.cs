@@ -221,7 +221,7 @@ namespace PL
         }
 
         /// <summary>
-        /// 
+        /// if the send button has been pressed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -245,17 +245,32 @@ namespace PL
 
         }
 
+        /// <summary>
+        /// if the release button has been pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Release_Click(object sender, RoutedEventArgs e)
         {
             InputBox.Visibility = Visibility.Visible;
             DroneListGrid.IsEnabled = false;
         }
 
+        /// <summary>
+        /// if the show stations button has been pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ShowStationsButton_Click(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(new StationListPage(blDrone, this));
         }
 
+        /// <summary>
+        /// if the add button has been pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Add_Click(object sender, RoutedEventArgs e)
         {
             if (moDrone.Text != "" && idone.Text != "" && idStationToChrging.Text != "" && maxWeight.SelectedItem != null)
