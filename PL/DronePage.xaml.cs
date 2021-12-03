@@ -91,7 +91,7 @@ namespace PL
         }
 
         /// <summary>
-        /// init
+        /// Initialise all the buttons
         /// </summary>
         private void InitializeButtons()
         {
