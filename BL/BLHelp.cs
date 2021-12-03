@@ -168,10 +168,10 @@ namespace IBL
         }
 
         /// <summary>
-        /// 
+        /// Checks if the location is legal
         /// </summary>
-        /// <param name="Longitude"></param>
-        /// <param name="Lattitude"></param>
+        /// <param name="Longitude">the longitude</param>
+        /// <param name="Lattitude">the lattitude</param>
         private void CheckLegelLocation(double Longitude, double Lattitude)
         {
             if (90 < Lattitude || -90 > Lattitude || 180 < Longitude || -180 > Longitude)
