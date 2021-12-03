@@ -92,7 +92,7 @@ namespace PL
         }
 
         /// <summary>
-        /// 
+        /// Navigates to the drone actions page
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
