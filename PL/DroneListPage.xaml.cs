@@ -25,7 +25,7 @@ namespace PL
         private MainPage mPage;
 
         /// <summary>
-        /// the constructor
+        /// The constructor
         /// </summary>
         /// <param name="bl"></param>
         /// <param name="mainPage">the main page</param>
@@ -40,7 +40,7 @@ namespace PL
         }
 
         /// <summary>
-        /// if the selected choice in the combo box changed
+        /// If the selected choice in the combo box changed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -58,7 +58,7 @@ namespace PL
         }
 
         /// <summary>
-        /// navigates to the drone adding page
+        /// Navigates to the drone adding page
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -68,7 +68,7 @@ namespace PL
         }
 
         /// <summary>
-        /// if the user wants to go back
+        /// If the user wants to go back
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -78,6 +78,11 @@ namespace PL
             this.NavigationService.Navigate(mPage);
         }
 
+        /// <summary>
+        /// If the user clicks the reset button the it resets the filter
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Reset_Click(object sender, RoutedEventArgs e)
         {
             DroneListView.ItemsSource = null;
@@ -86,6 +91,11 @@ namespace PL
             MaxWeightSelector.SelectedItem = null;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DroneActions(object sender, MouseButtonEventArgs e)
         {
             DroneList d = (DroneList)DroneListView.SelectedItem;
