@@ -35,7 +35,7 @@ namespace IBL.BO
         public int id { get; private set; }
 
         /// <summary>
-        /// if the id is not valid then it assigns the id
+        /// If the id is not valid then it assigns the id
         /// </summary>
         /// <param name="ID">the id</param>
         public IdNotValid(int ID)
