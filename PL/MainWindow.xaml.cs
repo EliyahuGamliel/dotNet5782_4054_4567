@@ -21,16 +21,24 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        internal Type CurrentPageBonus { set; get; }//keeps track of the page we are at so we will know if we can close the window 
-        public MainWindow()//the constructor
+        internal Type CurrentPageBonus { set; get; }//keeps track of the page we are at so we will know if we can close the window - bonus
+
+        /// <summary>
+        ///the constructor
+        /// </summary>
+        public MainWindow()
         {
             InitializeComponent();
             MainPage.Content = new MainPage(this);//updates the CurrentPageBonus
         }
 
+        /// <summary>
+        /// checks if we can close the windows using CurrentPageBonus- bonus
+        /// </summary>
+        /// <param name="e">the closing event</param>
         protected override void OnClosing(CancelEventArgs e)
         {
-            if (CurrentPageBonus != typeof(MainPage))
+            if (CurrentPageBonus != typeof(MainPage))//checks of we are at the mainpage - bonus
             {
                 base.OnClosing(e);
                 e.Cancel = true;
