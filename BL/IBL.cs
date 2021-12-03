@@ -165,7 +165,7 @@ namespace IBL
         IEnumerable<StationList> GetStationCharge();
 
         /// <summary>
-        /// returns all the drones 
+        /// Returns all the drones 
         /// </summary>
         /// <param name="weight"></param>
         /// <param name="status"></param>
