@@ -87,7 +87,7 @@ namespace IBL
         }
 
         /// <summary>
-        /// check how much slots are taken
+        /// Checks how much slots are taken
         /// </summary>
         /// <param name="idStation">id of station</param>
         /// <returns>the number of taken slots</returns>
