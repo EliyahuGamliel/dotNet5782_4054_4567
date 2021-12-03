@@ -108,12 +108,23 @@ namespace PL
                 sendDrone.IsEnabled = true;
             }
         }
+
+        /// <summary>
+        /// if the users wants to go back
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             dlPage.Selector_SelectionChanged();
             this.NavigationService.Navigate(dlPage);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GetModel(object sender, RoutedEventArgs e)
         {
             if (moDrone.Text == "")
