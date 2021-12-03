@@ -102,6 +102,11 @@ namespace PL
             this.NavigationService.Navigate(new DronePage(blDroneList, blDroneList.GetDroneById(d.Id), this));
         }
 
+        /// <summary>
+        /// makes sure the gif keeps running over and over
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Again_MediaEnded(object sender, RoutedEventArgs e)
         {
             Gif.Position = new TimeSpan(0, 0, 1);
