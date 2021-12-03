@@ -341,7 +341,7 @@ namespace PL
         }
 
         /// <summary>
-        /// changes the color of the background according to if the time is legal or not
+        /// Changes the color of the background according to if the time is legal or not
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
