@@ -61,7 +61,7 @@ namespace PL
         }
 
         /// <summary>
-        /// Initialise all the data
+        /// Initialise all the data and some of the graphics
         /// </summary>
         private void InitializeData()
         {
@@ -89,6 +89,10 @@ namespace PL
                 droneWithoutParcel.Visibility = Visibility.Visible;
             }
         }
+
+        /// <summary>
+        /// init
+        /// </summary>
         private void InitializeButtons()
         {
             if (dr.Status == DroneStatuses.Delivery)
