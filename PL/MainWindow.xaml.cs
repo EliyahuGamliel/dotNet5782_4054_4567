@@ -29,7 +29,8 @@ namespace PL
         public MainWindow()
         {
             InitializeComponent();
-            MainPage.Content = new MainPage(this);//updates the CurrentPageBonus
+            //updates the CurrentPageBonus - bonus
+            MainPage.Content = new MainPage(this);
         }
 
         /// <summary>
