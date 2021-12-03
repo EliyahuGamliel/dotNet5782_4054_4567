@@ -12,7 +12,7 @@ namespace IBL.BO
         public int id { get; private set; }
 
         /// <summary>
-        /// if the the id exists it assigns the other id
+        /// If the the id exists it assigns the other id
         /// </summary>
         /// <param name="ID">the id</param>
         public IdExistException(int ID)
@@ -21,7 +21,7 @@ namespace IBL.BO
         }
 
         /// <summary>
-        /// returns a matching string for the exption
+        /// Returns a matching string for the exption
         /// </summary>
         /// <returns>a printable matching string</returns>
         public override string ToString()
