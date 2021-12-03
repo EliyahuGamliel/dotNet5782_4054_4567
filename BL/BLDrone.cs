@@ -15,6 +15,7 @@ namespace IBL
         /// <returns>Notice if the addition was successful</returns>
         public string AddDrone(DroneList d, int idStation) {
             try {
+                CheckValidId(d.Id);
                 IDAL.DO.Station s = data.GetStationById(idStation);
                 CheckLegelChoice((int)d.MaxWeight);
                 d.CLocation = new Location();

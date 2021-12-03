@@ -72,7 +72,7 @@ namespace PL
                 parcelDrone.Text = "not exist";
                 droneWithoutParcel.Visibility = Visibility.Visible;
             }
-           }
+        }
         private void InitializeButtons()
         {
             if (dr.Status == DroneStatuses.Delivery)
@@ -82,7 +82,8 @@ namespace PL
                     deliverDrone.IsEnabled = true;
             else if (dr.Status == DroneStatuses.Maintenance)
                 releaseDrone.IsEnabled = true;
-            else {
+            else
+            {
                 assignDrone.IsEnabled = true;
                 sendDrone.IsEnabled = true;
             }
@@ -95,7 +96,18 @@ namespace PL
 
         private void GetModel(object sender, RoutedEventArgs e)
         {
-            updateDrone.IsEnabled = true;
+            if (moDrone.Text == "")
+                moDrone.Background = Brushes.Red;
+            else
+                moDrone.Background = Brushes.White;
+        }
+
+        private void UpdateModel(object sender, RoutedEventArgs e)
+        {
+            if (modelDrone.Text == "")
+                updateDrone.IsEnabled = false;
+            else
+                updateDrone.IsEnabled = true;
         }
 
         private void Update_Click(object sender, RoutedEventArgs e)
@@ -171,42 +183,49 @@ namespace PL
             DroneListGrid.IsEnabled = false;
         }
 
+        private void ShowStationsButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new StationListPage(blDrone, this));
+        }
+
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (moDrone.Text != "" && idone.Text != "" && idStationToChrging.Text != "" && maxWeight.SelectedItem != null)
             {
-                droneList.Model = moDrone.Text;
-                MessageBox.Show(blDrone.AddDrone(droneList, idStation));
-                dlPage.Selector_SelectionChanged();
-                this.NavigationService.Navigate(dlPage);
+                try
+                {
+                    DroneList droneAdd = new DroneList();
+                    droneAdd.MaxWeight = (WeightCategories)(int)maxWeight.SelectedItem;
+                    Int32.TryParse(idone.Text, out idStation);
+                    droneAdd.Id = idStation;
+                    Int32.TryParse(idStationToChrging.Text, out idStation);
+                    droneAdd.Model = moDrone.Text;
+                    MessageBox.Show(blDrone.AddDrone(droneAdd, idStation));
+                    dlPage.Selector_SelectionChanged();
+                    this.NavigationService.Navigate(dlPage);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            else
+                MessageBox.Show("Enter data in all fields!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         private void GetIdStationToChrging(object sender, RoutedEventArgs e)
         {
             GetInt(idStationToChrging);
-            if (idStationToChrging.Background == Brushes.White)
-                Int32.TryParse(idStationToChrging.Text, out idStation);
         }
 
         private void GetMaxWeight(object sender, RoutedEventArgs e)
         {
-            droneList.MaxWeight = (WeightCategories)(int)maxWeight.SelectedItem;
+            maxWeight.Background = Brushes.Transparent;
         }
 
         private void GetId(object sender, RoutedEventArgs e)
         {
             GetInt(idone);
-            if (idone.Background == Brushes.White)
-            {
-                int id;
-                Int32.TryParse(idone.Text, out id);
-                droneList.Id = id;
-            }
         }
 
         private void GetInt(TextBox tBox)

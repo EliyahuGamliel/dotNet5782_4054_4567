@@ -24,7 +24,7 @@
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Left" Margin="50,118,0,0" VerticalAlignment="Top" Width="234" Height="107">
                     <TextBlock FontSize="20" FontFamily="/font/#Alef" FontWeight="Bold" Text="The Model of the Drone:" TextWrapping="Wrap"/>
-                    <TextBox  FontSize="15" FontFamily="/font/#Alef" Name="modelDrone" Text="" TextWrapping="Wrap" TextChanged="GetModel"/>
+                    <TextBox  FontSize="15" FontFamily="/font/#Alef" Name="modelDrone" Text="" TextWrapping="Wrap" TextChanged="UpdateModel"/>
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Left" Margin="50,0,0,0" VerticalAlignment="Center" Width="288" Height="107">
                     <TextBlock FontSize="20" FontFamily="/font/#Alef" FontWeight="Bold" Text="The MaxWeight of the Drone:" TextWrapping="Wrap"/>
@@ -122,7 +122,6 @@
                 </Button>
             </Grid>
         </Grid>
-
         <!-- Display Page of Drone Addition -->
         <Grid Name="DroneAddGrid">
             <Grid.RowDefinitions>
@@ -154,6 +153,13 @@
                         </Style>
                     </Button.Resources>
                 </Button>
+                <Button BorderBrush="Black" Margin="10,8,10,8" Content="Station List" Click="ShowStationsButton_Click" Background="PaleTurquoise" FontFamily="font/#Alef" FontWeight="Bold" Grid.Column="1" FontSize="16">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="25,25,25,25"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
             </Grid>
             <StackPanel HorizontalAlignment="Left" Margin="120,97,0,0" VerticalAlignment="Top" Width="294" Height="107" Grid.Row="0">
                 <TextBlock FontWeight="Bold" FontSize="20" FontFamily="/font/#Alef" Text="Enter Id:" TextWrapping="Wrap"/>
@@ -165,7 +171,7 @@
             </StackPanel>
             <StackPanel HorizontalAlignment="Left" Margin="120,179,0,0" VerticalAlignment="Top" Width="294" Height="107" Grid.Row="0">
                 <TextBlock FontWeight="Bold" FontSize="20" FontFamily="/font/#Alef" Text="Enter Model:" TextWrapping="Wrap"/>
-                <TextBox FontSize="20" FontFamily="/font/#Alef" Name="moDrone" Text="" TextWrapping="Wrap"/>
+                <TextBox FontSize="20" FontFamily="/font/#Alef" Name="moDrone" Text="" TextWrapping="Wrap" TextChanged="GetModel"/>
             </StackPanel>
             <StackPanel HorizontalAlignment="Left" Margin="120,358,0,0" VerticalAlignment="Top" Width="297" Height="108">
                 <TextBlock FontWeight="Bold" FontSize="20" FontFamily="/font/#Alef" Text="Enter Id of Station to charging:" TextWrapping="Wrap" Width="297"/>

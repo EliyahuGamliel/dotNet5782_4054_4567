@@ -21,18 +21,17 @@ namespace PL
     public partial class StationListPage : Page
     {
         static IBL.IBL blStationList;
-        private MainPage mPage;
-        public StationListPage(IBL.IBL bl, MainPage mainPage)
+        private DronePage dPage;
+        public StationListPage(IBL.IBL bl, DronePage mainPage)
         {
             InitializeComponent();
             blStationList = bl;
             StationListView.ItemsSource = blStationList.GetStations();
-            mPage = mainPage;
+            dPage = mainPage;
         }
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
-            mPage.mWindow.help = typeof(MainPage);
-            this.NavigationService.Navigate(mPage);
+            this.NavigationService.Navigate(dPage);
         }
     }
 }

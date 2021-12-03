@@ -21,7 +21,7 @@ namespace PL
     public partial class MainPage : Page
     {
         static IBL.IBL bl;
-        public MainWindow mWindow;
+        internal MainWindow mWindow;
         public MainPage(MainWindow mainWindow)
         {
             mainWindow.help = typeof(MainPage);
@@ -34,12 +34,6 @@ namespace PL
         {
             mWindow.help = typeof(DroneListPage);
             this.NavigationService.Navigate(new DroneListPage(bl, this));
-        }
-
-        private void ShowStationsButton_Click(object sender, RoutedEventArgs e)
-        {
-            mWindow.help = typeof(StationListPage);
-            this.NavigationService.Navigate(new StationListPage(bl, this));
         }
 
         private void Again_MediaEnded(object sender, RoutedEventArgs e)

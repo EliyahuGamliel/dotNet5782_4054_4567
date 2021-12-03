@@ -14,6 +14,7 @@ namespace IBL
         /// <returns>Notice if the addition was successful</returns>
         public string AddCustomer(Customer c){
             try {
+                CheckValidId(c.Id);
                 IDAL.DO.Customer cu = new IDAL.DO.Customer();
                 cu.Id = c.Id;
                 cu.Name = c.Name;

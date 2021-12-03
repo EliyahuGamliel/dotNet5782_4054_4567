@@ -109,6 +109,13 @@ namespace IBL
             throw new IdNotExistException(id);
         }
 
+       
+        private void CheckValidId(int id)
+        {
+            if (id <= 0)
+                throw new IdNotValid(id);
+        }
+
         /// <summary>
         /// all the choice need to be between 0-2
         /// </summary>

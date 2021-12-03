@@ -15,6 +15,7 @@ namespace IBL
         /// <returns>Notice if the addition was successful</returns>
         public string AddStation(Station s) {
             try {
+                CheckValidId(s.Id);
                 IDAL.DO.Station st = new IDAL.DO.Station();
                 st.Id = s.Id;
                 st.Name = s.Name;

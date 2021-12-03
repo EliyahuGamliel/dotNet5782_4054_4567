@@ -20,6 +20,19 @@ namespace IBL.BO
         }
     }
 
+    public class IdNotValid : Exception
+    {
+        public int id { get; private set; }
+        public IdNotValid(int ID)
+        {
+            this.id = ID;
+        }
+        public override string ToString()
+        {
+            return "IdNotValid: The ID must be a positive number (" + id + ")\n";
+        }
+    }
+
     /// <summary>
     /// If the id doesn't exist - throw Exception
     /// </summary>

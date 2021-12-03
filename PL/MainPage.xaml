@@ -18,12 +18,5 @@
                 </Style>
             </Button.Resources>
         </Button>
-        <Button Background="PaleTurquoise" FontFamily="/font/#Alef" Content="Station List" Click="ShowStationsButton_Click" Margin="700,580,0,0" >
-            <Button.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="25,0,0,0"/>
-                </Style>
-            </Button.Resources>
-        </Button>
     </Grid>
 </Page>
