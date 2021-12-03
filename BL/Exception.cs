@@ -89,7 +89,7 @@ namespace IBL.BO
         public double choice { get; private set; }
 
         /// <summary>
-        /// if the choice is not legal then it assigns the choice
+        /// If the choice is not legal then it assigns the choice
         /// </summary>
         /// <param name="choice">the choice</param>
         public ChoiceNotLegal(int choice)
