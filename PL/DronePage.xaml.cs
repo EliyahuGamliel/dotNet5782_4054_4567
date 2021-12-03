@@ -341,7 +341,7 @@ namespace PL
         }
 
         /// <summary>
-        /// 
+        /// changes the color of the background according to if the time is legal or not
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -355,6 +355,11 @@ namespace PL
                 InputTextBox.Background = Brushes.White;
         }
 
+        /// <summary>
+        /// If the ok button has been pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
             if (InputTextBox.Background != Brushes.Red)
@@ -382,6 +387,11 @@ namespace PL
                 MessageBox.Show("Enter valid input (double) or Cancel!", "Valid Input", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
+        /// <summary>
+        /// If the cancel bitton has been pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             // NoButton Clicked! Let's hide our InputBox.
