@@ -98,8 +98,18 @@ namespace IDAL
         /// <returns>The object of the requested station</returns>
         Station GetStationById(int Id);
 
+        /// <summary>
+        /// returns all the stations that fit the filter
+        /// </summary>
+        /// <param name="stationList"></param>
+        /// <returns>the Ienumerable to the stations</returns>
         IEnumerable<Station> GetStationByFilter(Predicate<Station> stationList);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="droneList"></param>
+        /// <returns></returns>
         IEnumerable<Drone> GetDroneByFilter(Predicate<Drone> droneList);
 
         IEnumerable<Customer> GetCustomerByFilter(Predicate<Customer> cutomerList);

@@ -162,6 +162,12 @@ namespace IBL
         /// <returns>Returns a list of all stations that have available chargeSlots</returns>
         IEnumerable<StationList> GetStationCharge();
 
+        /// <summary>
+        /// returns all the drones 
+        /// </summary>
+        /// <param name="weight"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
         IEnumerable<DroneList> GetDroneByFilter(int? weight, int? status);
     }
 }
