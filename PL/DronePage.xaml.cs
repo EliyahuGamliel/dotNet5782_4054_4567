@@ -59,6 +59,10 @@ namespace PL
             dlPage = droneListPage;
             maxWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
         }
+
+        /// <summary>
+        /// Initialise all the data
+        /// </summary>
         private void InitializeData()
         {
             dr = blDrone.GetDroneById(dr.Id);
