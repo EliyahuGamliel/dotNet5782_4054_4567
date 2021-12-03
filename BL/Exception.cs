@@ -300,7 +300,7 @@ namespace IBL.BO
         public double latitude { get; private set; }
 
         /// <summary>
-        /// if the locatiom is not legal then it assigns the location
+        /// If the locatiom is not legal then it assigns the location
         /// </summary>
         /// <param name="longitude">the longitude</param>
         /// <param name="latitude">the latitude</param>
