@@ -267,7 +267,7 @@ namespace PL
         /// <param name="e"></param>
         private void ShowStationsButton_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new StationListPage(this));
+            this.NavigationService.Navigate(new StationListPage(blDrone, this));
         }
 
         /// <summary>

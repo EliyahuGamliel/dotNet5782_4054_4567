@@ -27,12 +27,12 @@ namespace PL
         /// The ctor
         /// </summary>
         /// <param name="dronePage">Pointer to Drone Page</param>
-        public StationListPage(DronePage dronePage)
+        public StationListPage(IBL.IBL bl, DronePage dronePage)
         {
             InitializeComponent();
             blStationList = bl;
             StationListView.ItemsSource = blStationList.GetStations();
-            dPage = mainPage;
+            dPage = dronePage;
         }
 
         /// <summary>
