@@ -107,10 +107,10 @@ namespace IBL
         }
 
         /// <summary>
-        /// Convert the list from idal to bl
+        /// Convert the list from type of DAL(Station) to type of BL(StationList)
         /// </summary>
-        /// <param name="listCustomers">the list we want to convert</param>
-        /// <returns>the same list converted to bl</returns>
+        /// <param name="listCustomers">The list we want to convert</param>
+        /// <returns>The same list converted to BL(StationList)</returns>
         private IEnumerable<StationList> ConvertToBL(IEnumerable<IDAL.DO.Station> listStation)
         {
             List<StationList> station = new List<StationList>();

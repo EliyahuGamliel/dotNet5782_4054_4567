@@ -165,11 +165,11 @@ namespace IBL
         IEnumerable<StationList> GetStationCharge();
 
         /// <summary>
-        /// Returns all the drones 
+        /// Gets parameters (status and weight) for filtering and returns the drones that equal to the pararmeters
         /// </summary>
-        /// <param name="weight"></param>
-        /// <param name="status"></param>
-        /// <returns></returns>
+        /// <param name="weight">The weight value of the required drones</param>
+        /// <param name="status">The status value of the required drones</param>
+        /// <returns>Return list of drones by filter</returns>
         IEnumerable<DroneList> GetDroneByFilter(int? weight, int? status);
     }
 }

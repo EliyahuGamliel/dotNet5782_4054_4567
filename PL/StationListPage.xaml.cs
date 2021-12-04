@@ -22,13 +22,24 @@ namespace PL
     {
         static IBL.IBL blStationList;
         private DronePage dPage;
-        public StationListPage(IBL.IBL bl, DronePage mainPage)
+
+        /// <summary>
+        /// The ctor
+        /// </summary>
+        /// <param name="dronePage">Pointer to Drone Page</param>
+        public StationListPage(DronePage dronePage)
         {
             InitializeComponent();
             blStationList = bl;
             StationListView.ItemsSource = blStationList.GetStations();
             dPage = mainPage;
         }
+
+        /// <summary>
+        /// If the user wants to go back
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(dPage);

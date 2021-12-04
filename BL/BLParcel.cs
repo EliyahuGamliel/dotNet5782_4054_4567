@@ -102,10 +102,10 @@ namespace IBL
         }
 
         /// <summary>
-        /// Convert the list from idal to bl
+        /// Convert the list from type of DAL(Parcel) to type of BL(ParcelList)
         /// </summary>
-        /// <param name="listCustomers">the list we want to convert</param>
-        /// <returns>the same list converted to bl</returns>
+        /// <param name="listCustomers">The list we want to convert</param>
+        /// <returns>The same list converted to BL(ParcelList)</returns>
         private IEnumerable<ParcelList> ConvertToBL(IEnumerable<IDAL.DO.Parcel> listParcels)
         {
             List<ParcelList> parcel = new List<ParcelList>();

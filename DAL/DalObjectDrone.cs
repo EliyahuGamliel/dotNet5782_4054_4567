@@ -44,7 +44,7 @@ namespace DalObject
         /// Returns all the drones that fit the filter
         /// </summary>
         /// <param name="droneList">The paradicte to filter</param>
-        /// <returns>The Ienumerable to the drones </returns>
+        /// <returns>The Ienumerable to the drones</returns>
         public IEnumerable<Drone> GetDroneByFilter(Predicate<Drone> droneList) {
             return DataSource.Drones.FindAll(droneList);
         }

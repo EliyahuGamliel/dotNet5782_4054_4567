@@ -25,10 +25,10 @@ namespace PL
         private MainPage mPage;
 
         /// <summary>
-        /// The constructor
+        /// The ctor
         /// </summary>
-        /// <param name="bl"></param>
-        /// <param name="mainPage">the main page</param>
+        /// <param name="bl">Data Base</param>
+        /// <param name="mainPage">Pointer to the Main Page</param>
         public DroneListPage(IBL.IBL bl, MainPage mainPage)
         {
             InitializeComponent();
@@ -58,7 +58,7 @@ namespace PL
         }
 
         /// <summary>
-        /// Navigates to the drone adding page
+        /// Navigates to the "DronePage" - drone add page
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -74,12 +74,13 @@ namespace PL
         /// <param name="e"></param>
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
+            //Set the value of "CurrentPageBonus" to be "MainPage" to allow the window to close - Bonus
             mPage.mWindow.CurrentPageBonus = typeof(MainPage);
             this.NavigationService.Navigate(mPage);
         }
 
         /// <summary>
-        /// If the user clicks the reset button the it resets the filter
+        /// If the user clicks the reset button the it resets the filters
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -92,7 +93,7 @@ namespace PL
         }
 
         /// <summary>
-        /// Navigates to the drone actions page
+        /// Navigates to the "DronaPage" - drone actions page
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -103,7 +104,7 @@ namespace PL
         }
 
         /// <summary>
-        /// makes sure the gif keeps running over and over
+        /// Makes sure the gif keeps running over and over
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

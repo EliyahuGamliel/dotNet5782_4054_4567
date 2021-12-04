@@ -101,36 +101,36 @@ namespace IDAL
         /// <summary> 
         /// Returns all the stations that fit the filter
         /// </summary>
-        /// <param name="stationList">the paradicte</param>
-        /// <returns>the Ienumerable to the stations </returns>
+        /// <param name="stationList">The paradicte to filter</param>
+        /// <returns>The Ienumerable to the stations</returns>
         IEnumerable<Station> GetStationByFilter(Predicate<Station> stationList);
 
         /// <summary>
         /// Returns all the drones that fit the filter
         /// </summary>
-        /// <param name="droneList">the paradicte</param>
-        /// <returns> the Ienumerable to the drones </returns>
+        /// <param name="droneList">The paradicte to filter</param>
+        /// <returns>The Ienumerable to the drones</returns>
         IEnumerable<Drone> GetDroneByFilter(Predicate<Drone> droneList);
 
         /// <summary>
         /// Returns all the customers that fit the filter
         /// </summary>
-        /// <param name="cutomerList">the paradicte</param>
-        /// <returns> the Ienumerable to the customers </returns>
+        /// <param name="cutomerList">The paradicte to filter</param>
+        /// <returns>The Ienumerable to the customers</returns>
         IEnumerable<Customer> GetCustomerByFilter(Predicate<Customer> cutomerList);
 
         /// <summary>
         /// Returns all the parcels that fit the filter
         /// </summary>
-        /// <param name="parcelList">the paradicte</param>
-        /// <returns> the Ienumerable to the parcels </returns>
+        /// <param name="parcelList">The paradicte to filter</param>
+        /// <returns>The Ienumerable to the parcels</returns>
         IEnumerable<Parcel> GetParcelByFilter(Predicate<Parcel> parcelList);
 
         /// <summary>
         /// Returns all the drone charges that fit the filter
         /// </summary>
-        /// <param name="droneChargeList">the paradicte</param>
-        /// <returns> the Ienumerable to the drone charges</returns>
+        /// <param name="droneChargeList">The paradicte to filter</param>
+        /// <returns>The Ienumerable to the drone charges</returns>
         IEnumerable<DroneCharge> GetDroneChargeByFilter(Predicate<DroneCharge> droneChargeList);
 
         /// <summary>

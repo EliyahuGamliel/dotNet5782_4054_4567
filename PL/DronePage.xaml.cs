@@ -29,11 +29,11 @@ namespace PL
         private DroneListPage dlPage;
 
         /// <summary>
-        /// The constuctor
+        /// The first ctor (Drone Actions)
         /// </summary>
-        /// <param name="bl"></param>
-        /// <param name="drone"></param>
-        /// <param name="droneListPage"></param>
+        /// <param name="bl">Data Base</param>
+        /// <param name="drone">The drone to make on it actions</param>
+        /// <param name="droneListPage">Pointer to the Drone List Page</param>
         public DronePage(IBL.IBL bl, Drone drone, DroneListPage droneListPage)
         {
             InitializeComponent();
@@ -46,11 +46,12 @@ namespace PL
             InitializeButtons();
             InitializeData();
         }
+
         /// <summary>
-        /// The second constructor
+        /// The second constructor (Drone Add)
         /// </summary>
-        /// <param name="bl"></param>
-        /// <param name="droneListPage"></param>
+        /// <param name="bl">Data Base</param>
+        /// <param name="droneListPage">Pointer to the Drone List Page</param>
         public DronePage(IBL.IBL bl, DroneListPage droneListPage)
         {
             InitializeComponent();
@@ -66,16 +67,20 @@ namespace PL
         private void InitializeData()
         {
             dr = blDrone.GetDroneById(dr.Id);
+
             idDrone.Text = dr.Id.ToString();
             modelDrone.Text = dr.Model;
-            updateDrone.IsEnabled = false;
             batteryDrone.Text = Math.Round(dr.Battery, 3).ToString() + "%";
             maxWightDrone.Text = dr.MaxWeight.ToString();
             statusDrone.Text = dr.Status.ToString();
+            updateDrone.IsEnabled = false;
+            
             Inline line = locationDrone.Inlines.FirstInline;
             locationDrone.Inlines.Clear();
             locationDrone.Inlines.Add(line);
             locationDrone.Inlines.Add(new Run(dr.CLocation.ToString()));
+
+            //If the choosen drone is in delivery
             if (dr.Status == DroneStatuses.Delivery)
             {
                 droneWithoutParcel.Visibility = Visibility.Hidden;
@@ -85,13 +90,13 @@ namespace PL
             else
             {
                 droneWithParcel.Visibility = Visibility.Hidden;
-                parcelDrone.Text = "not exist";
                 droneWithoutParcel.Visibility = Visibility.Visible;
+                parcelDrone.Text = "not exist";
             }
         }
 
         /// <summary>
-        /// Initialise all the buttons
+        /// Initialise all the buttons of actions
         /// </summary>
         private void InitializeButtons()
         {
@@ -121,21 +126,20 @@ namespace PL
         }
 
         /// <summary>
-        /// Changes the backgroung according to if its legal or not - bonus
+        /// Changes the backgroung according to if its legal or not - Bonus
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void GetModel(object sender, RoutedEventArgs e)
         {
             if (moDrone.Text == "")
-                //bonus
                 moDrone.Background = Brushes.Red;
             else
                 moDrone.Background = Brushes.White;
         }
 
         /// <summary>
-        /// Updates the model
+        /// Changes the button according to if the drone's model changed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -243,7 +247,6 @@ namespace PL
             {
                 sendDrone.IsEnabled = false;
             }
-
         }
 
         /// <summary>
@@ -264,7 +267,7 @@ namespace PL
         /// <param name="e"></param>
         private void ShowStationsButton_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new StationListPage(blDrone, this));
+            this.NavigationService.Navigate(new StationListPage(this));
         }
 
         /// <summary>
@@ -274,6 +277,7 @@ namespace PL
         /// <param name="e"></param>
         private void Add_Click(object sender, RoutedEventArgs e)
         {
+            //If all the filed in "DroneAdd" filled
             if (moDrone.Text != "" && idone.Text != "" && idStationToChrging.Text != "" && maxWeight.SelectedItem != null)
             {
                 try
@@ -298,7 +302,7 @@ namespace PL
         }
 
         /// <summary>
-        /// Send the id of the stations to GetInt function
+        /// Check if what captured in the "Id Station To Chrging" filed is valid
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -318,7 +322,7 @@ namespace PL
         }
 
         /// <summary>
-        /// Sends the if to GetInt function
+        /// Check if what captured in the "Id of Drone" filed is valid
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -328,7 +332,7 @@ namespace PL
         }
 
         /// <summary>
-        /// Checks if its legal, if not it changes the color of the background to red - bonus
+        /// Checks if its legal int, if not it changes the color of the background to red - Bonus
         /// </summary>
         /// <param name="tBox"></param>
         private void GetInt(TextBox tBox)
@@ -336,14 +340,13 @@ namespace PL
             int num;
             bool error = Int32.TryParse(tBox.Text, out num);
             if (!error)
-                //bonus
                 tBox.Background = Brushes.Red;
             else
                 tBox.Background = Brushes.White;
         }
 
         /// <summary>
-        /// Changes the color of the background according to if the time is legal or not
+        /// Changes the color of the background according to if the time is legal or not - Bonus
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -352,7 +355,6 @@ namespace PL
             double num;
             bool error = double.TryParse(InputTextBox.Text, out num);
             if (!error)
-                //bonus
                 InputTextBox.Background = Brushes.Red;
             else
                 InputTextBox.Background = Brushes.White;
@@ -391,16 +393,16 @@ namespace PL
         }
 
         /// <summary>
-        /// If the cancel bitton has been pressed
+        /// If the cancel button has been pressed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            // NoButton Clicked! Let's hide our InputBox.
+            //NoButton Clicked! Let's hide our InputBox.
             InputBox.Visibility = Visibility.Hidden;
             DroneListGrid.IsEnabled = true;
-            // Clear InputBox.
+            //Clear InputBox.
             InputTextBox.Text = String.Empty;
         }
     }

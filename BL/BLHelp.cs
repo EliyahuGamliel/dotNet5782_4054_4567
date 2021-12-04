@@ -115,10 +115,9 @@ namespace IBL
         }
 
        /// <summary>
-       /// Checks if the id is valid and if not it throws an error
+       /// Checks if the id is valid, if not it throws an error
        /// </summary>
-       /// <param name="id">the id that we want to check</param>
-       /// <exception cref="IdNotValid"></exception>
+       /// <param name="id">The id that we want to check</param>
         private void CheckValidId(int id)
         {
             if (id <= 0)
@@ -170,8 +169,8 @@ namespace IBL
         /// <summary>
         /// Checks if the location is legal
         /// </summary>
-        /// <param name="Longitude">the longitude</param>
-        /// <param name="Lattitude">the lattitude</param>
+        /// <param name="Longitude">The longitude of the location</param>
+        /// <param name="Lattitude">The lattitude of the location</param>
         private void CheckLegelLocation(double Longitude, double Lattitude)
         {
             if (90 < Lattitude || -90 > Lattitude || 180 < Longitude || -180 > Longitude)

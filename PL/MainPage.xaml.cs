@@ -24,11 +24,12 @@ namespace PL
         internal MainWindow mWindow;
 
         /// <summary>
-        /// The constructor of the main page 
+        /// The ctor of the main page 
         /// </summary>
-        /// <param name="mainWindow">the main window</param>
+        /// <param name="mainWindow">Pointer to the Main Window</param>
         public MainPage(MainWindow mainWindow)
         {
+            //Set the value of "CurrentPageBonus" to be "MainPage" to allow the window to close - Bonus
             mainWindow.CurrentPageBonus = typeof(MainPage);
             InitializeComponent();
             bl = new IBL.BL();
@@ -36,13 +37,13 @@ namespace PL
         }
 
         /// <summary>
-        /// When the show drone button has been pressed it navigates to the wanted page
+        /// When the show drone button has been pressed it navigates to the "DroneListPage"
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ShowDronesButton_Click(object sender, RoutedEventArgs e)
         {
-            // keeps track of the current page  - bonus
+            //Set the value of "CurrentPageBonus" to be "DroneListPage" to don't allow the window to close - Bonus
             mWindow.CurrentPageBonus = typeof(DroneListPage);
             this.NavigationService.Navigate(new DroneListPage(bl, this));
         }

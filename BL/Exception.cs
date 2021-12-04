@@ -81,7 +81,7 @@ namespace IBL.BO
     }
 
     /// <summary>
-    /// 
+    /// If the choice doesn't valid - throw Exception
     /// </summary>
     [Serializable]
     public class ChoiceNotLegal : Exception

@@ -43,8 +43,8 @@ namespace DalObject
         /// <summary> 
         /// Returns all the stations that fit the filter
         /// </summary>
-        /// <param name="stationList">the paradicte</param>
-        /// <returns>the Ienumerable to the stations </returns>
+        /// <param name="stationList">The paradicte to filter</param>
+        /// <returns>The Ienumerable to the stations</returns>
         public IEnumerable<Station> GetStationByFilter(Predicate<Station> stationList) {
             return DataSource.Stations.FindAll(stationList);
         }

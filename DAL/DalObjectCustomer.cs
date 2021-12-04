@@ -47,7 +47,7 @@ namespace DalObject
         /// Returns all the customers that fit the filter
         /// </summary>
         /// <param name="cutomerList">The paradicte to filter</param>
-        /// <returns>The Ienumerable to the customers </returns>
+        /// <returns>The Ienumerable to the customers</returns>
         public IEnumerable<Customer> GetCustomerByFilter(Predicate<Customer> cutomerList) {
             return DataSource.Customers.FindAll(cutomerList);
         }
