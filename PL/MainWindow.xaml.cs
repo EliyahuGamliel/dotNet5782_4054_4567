@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Media;
 
 namespace PL
 {
@@ -43,6 +44,7 @@ namespace PL
             //Checks of we are at the mainpage - Bonus
             if (CurrentPageBonus != typeof(MainPage))
             {
+                SystemSounds.Beep.Play();
                 base.OnClosing(e);
                 e.Cancel = true;
                 MessageBox.Show("Cannot Close! Back to Main Page.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);

@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <None Remove="font\Alef-Regular.ttf" />
+    <None Remove="font\FuzzyBubbles-Regular.ttf" />
+    <None Remove="font\IndieFlower-Regular.ttf" />
     <None Remove="img\drone1.gif" />
     <None Remove="img\droneIcon.ico" />
     <None Remove="img\droneList.gif" />
@@ -24,6 +26,12 @@
   <ItemGroup>
     <Content Include="font\Alef-Regular.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="font\FuzzyBubbles-Regular.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="font\IndieFlower-Regular.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\drone1.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
