@@ -20,7 +20,7 @@ namespace IBL.BO
         /// </returns></summary>
         public override string ToString()
         {
-            string str = $"Id: {Id}\nBattery: {Math.Round(Battery, 3)}%\nModel: {Model}\nMaxWeight: {MaxWeight}\nStatus: {Status}\nParcelId: ";
+            string str = $"Id: {Id}\nBattery: {Math.Round(Battery, 0)}%\nModel: {Model}\nMaxWeight: {MaxWeight}\nStatus: {Status}\nParcelId: ";
              if (ParcelId == 0)
                 str += "not exist";
             else

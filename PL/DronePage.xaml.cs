@@ -58,7 +58,9 @@ namespace PL
             blDrone = bl;
             dlPage = droneListPage;
             maxWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            maxWeight.SelectedIndex = 0;
             idStationToChrging.ItemsSource = bl.GetStationCharge();
+            idStationToChrging.SelectedIndex = 0;
             action2.Visibility = Visibility.Hidden;
             updateDrone.Visibility = Visibility.Hidden;
             action1.Content = "Add Drone";
@@ -74,7 +76,7 @@ namespace PL
 
             idDrone.Text = dr.Id.ToString();
             modelDrone.Text = dr.Model;
-            batteryDrone.Text = Math.Round(dr.Battery, 3).ToString() + "%";
+            batteryDrone.Text = Math.Round(dr.Battery, 0).ToString() + "%";
             maxWightDrone.Text = dr.MaxWeight.ToString();
             statusDrone.Text = dr.Status.ToString();
             updateDrone.IsEnabled = false;
@@ -306,16 +308,6 @@ namespace PL
         }
 
         /// <summary>
-        /// If the show stations button has been pressed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ShowStationsButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.NavigationService.Navigate(new StationListPage(blDrone, this));
-        }
-
-        /// <summary>
         /// If the add button has been pressed
         /// </summary>
         /// <param name="sender"></param>
@@ -323,7 +315,7 @@ namespace PL
         private void Add_Click(object sender, RoutedEventArgs e)
         {
             //If all the filed in "DroneAdd" filled
-            if (moDrone.Text != "" && idone.Text != "" && idStationToChrging.SelectedItem != null && maxWeight.SelectedItem != null)
+            if (moDrone.Text != "" && idone.Text != "" && moDrone.Background != Brushes.Red && idone.Background != Brushes.Red)
             {
                 try
                 {
@@ -344,7 +336,7 @@ namespace PL
                 }
             }
             else
-                MessageBox.Show("Enter data in all fields!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Enter valid data in all fields!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         /// <summary>
@@ -354,21 +346,12 @@ namespace PL
         /// <param name="e"></param>
         private void GetId(object sender, RoutedEventArgs e)
         {
-            GetInt(idone);
-        }
-
-        /// <summary>
-        /// Checks if its legal int, if not it changes the color of the background to red - Bonus
-        /// </summary>
-        /// <param name="tBox"></param>
-        private void GetInt(TextBox tBox)
-        {
             int num;
-            bool error = Int32.TryParse(tBox.Text, out num);
+            bool error = Int32.TryParse(idone.Text, out num);
             if (!error)
-                tBox.Background = Brushes.Red;
+                idone.Background = Brushes.Red;
             else
-                tBox.Background = Brushes.White;
+                idone.Background = Brushes.White;
         }
 
         /// <summary>

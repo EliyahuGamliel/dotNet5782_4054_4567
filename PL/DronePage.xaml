@@ -94,11 +94,11 @@
 
         <!-- Display Page of Drone Addition -->
         <Grid Name="DroneAddGrid">
-            <StackPanel HorizontalAlignment="Left" Margin="120,97,0,0" VerticalAlignment="Top" Width="294" Height="107" Grid.Row="0">
+            <StackPanel HorizontalAlignment="Left" Margin="120,97,0,0" VerticalAlignment="Top" Width="294" Height="56" Grid.Row="0">
                 <TextBlock FontWeight="Bold" FontSize="20" FontFamily="/font/#Alef" Text="Enter Id:" TextWrapping="Wrap"/>
                 <TextBox FontSize="16" FontFamily="/font/#Alef" Name="idone" Text="" TextWrapping="Wrap" TextChanged="GetId"/>
             </StackPanel>
-            <StackPanel HorizontalAlignment="Left" Margin="120,268,0,0" VerticalAlignment="Top" Width="296" Height="108" Grid.Row="0">
+            <StackPanel HorizontalAlignment="Left" Margin="120,268,0,0" VerticalAlignment="Top" Width="296" Height="64" Grid.Row="0">
                 <TextBlock FontWeight="Bold" FontSize="20" FontFamily="/font/#Alef" Text="Choose the maxWeight:" TextWrapping="Wrap" Width="293"/>
                 <ComboBox FontSize="16" FontFamily="/font/#Alef" Name="maxWeight"/>
             </StackPanel>
@@ -106,10 +106,10 @@
                 <TextBlock FontWeight="Bold" FontSize="20" FontFamily="/font/#Alef" Text="Enter Model:" TextWrapping="Wrap"/>
                 <TextBox FontSize="16" FontFamily="/font/#Alef" Name="moDrone" Text="" TextWrapping="Wrap" TextChanged="GetModel"/>
             </StackPanel>
-            <StackPanel HorizontalAlignment="Left" Margin="120,358,0,0" VerticalAlignment="Top" Width="297" Height="62">
+            <StackPanel HorizontalAlignment="Left" Margin="120,358,0,0" VerticalAlignment="Top" Width="297" Height="28">
                 <TextBlock FontWeight="Bold" FontSize="20" FontFamily="/font/#Alef" Text="Choose Station for Drone:" TextWrapping="Wrap" Width="297"/>
-                <ComboBox FontSize="16" FontFamily="/font/#Alef" Name="idStationToChrging"/>
             </StackPanel>
+            <ComboBox FontSize="16" HorizontalAlignment="Left" Grid.Row="0"  FontFamily="/font/#Alef" Name="idStationToChrging" Width="296" Margin="120,389,0,51"/>
             <MediaElement x:Name="Gif" Height="auto" HorizontalAlignment="Left"  MediaEnded="Again_MediaEnded" Source="img\drone1.gif" LoadedBehavior="Play" UnloadedBehavior="Manual" Margin="459,137,0,141" Grid.Row="0" Width="313"/>
         </Grid>
 
