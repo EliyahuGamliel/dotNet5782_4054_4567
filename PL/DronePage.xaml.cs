@@ -24,7 +24,6 @@ namespace PL
         static DroneList droneList = new DroneList();
         static Drone dr;
         static Parcel pa;
-        private int idStation;
         static IBL.IBL blDrone;
         private DroneListPage dlPage;
 
@@ -59,6 +58,11 @@ namespace PL
             blDrone = bl;
             dlPage = droneListPage;
             maxWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            idStationToChrging.ItemsSource = bl.GetStationCharge();
+            action2.Visibility = Visibility.Hidden;
+            updateDrone.Visibility = Visibility.Hidden;
+            action1.Content = "Add Drone";
+            action1.Click += new RoutedEventHandler(Add_Click);
         }
 
         /// <summary>
@@ -101,17 +105,17 @@ namespace PL
         private void InitializeButtons()
         {
             if (dr.Status == DroneStatuses.Delivery)
-                if (pa.PickedUp == null)
-                    pickUpDrone.IsEnabled = true;
-                else
-                    deliverDrone.IsEnabled = true;
-            else if (dr.Status == DroneStatuses.Maintenance)
-                releaseDrone.IsEnabled = true;
-            else
             {
-                assignDrone.IsEnabled = true;
-                sendDrone.IsEnabled = true;
+                action2.Visibility = Visibility.Hidden;
+                if (pa.PickedUp == null)
+                    ChangePickUP();
+                else
+                    ChangeDelivery();
             }
+            else if (dr.Status == DroneStatuses.Maintenance)
+                ChangeRelese();
+            else
+                ChangeAssignSend();
         }
 
         /// <summary>
@@ -173,17 +177,16 @@ namespace PL
             try
             {
                 MessageBox.Show(blDrone.AssignDroneParcel(dr.Id));
-                pickUpDrone.IsEnabled = true;
-                sendDrone.IsEnabled = false;
+                action2.Visibility = Visibility.Hidden;
+                action1.Click -= new RoutedEventHandler(Assign_Click);
+                action2.Click -= new RoutedEventHandler(Send_Click);
+                ChangePickUP();
                 InitializeData();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            finally
-            {
-                assignDrone.IsEnabled = false;
+                action1.Visibility = Visibility.Hidden;
             }
         }
 
@@ -195,8 +198,8 @@ namespace PL
         private void PickUp_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show(blDrone.PickUpDroneParcel(dr.Id));
-            pickUpDrone.IsEnabled = false;
-            deliverDrone.IsEnabled = true;
+            action1.Click -= new RoutedEventHandler(PickUp_Click);
+            ChangeDelivery();
             InitializeData();
         }
 
@@ -208,21 +211,9 @@ namespace PL
         private void Deliver_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show(blDrone.DeliverParcelCustomer(dr.Id));
-            deliverDrone.IsEnabled = false;
-            sendDrone.IsEnabled = true;
-            assignDrone.IsEnabled = true;
+            action1.Click -= new RoutedEventHandler(Deliver_Click);
+            ChangeAssignSend();
             InitializeData();
-        }
-
-        /// <summary>
-        /// Makes sure the gif is running over and over again
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Again_MediaEnded(object sender, RoutedEventArgs e)
-        {
-            Gif.Position = new TimeSpan(0, 0, 1);
-            Gif.Play();
         }
 
         /// <summary>
@@ -235,17 +226,15 @@ namespace PL
             try
             {
                 MessageBox.Show(blDrone.SendDrone(dr.Id));
-                releaseDrone.IsEnabled = true;
-                assignDrone.IsEnabled = false;
+                action2.Click -= new RoutedEventHandler(Send_Click);
+                action1.Click -= new RoutedEventHandler(Assign_Click);
+                ChangeRelese();
                 InitializeData();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            finally
-            {
-                sendDrone.IsEnabled = false;
+                action2.Visibility = Visibility.Hidden;
             }
         }
 
@@ -258,6 +247,62 @@ namespace PL
         {
             InputBox.Visibility = Visibility.Visible;
             DroneListGrid.IsEnabled = false;
+        }
+
+        /// <summary>
+        /// If the ok button has been pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OkButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (InputTextBox.Background != Brushes.Red)
+            {
+                // Do something with the Input
+                double time = Double.Parse(InputTextBox.Text);
+                InputBox.Visibility = Visibility.Hidden;
+                DroneListGrid.IsEnabled = true;
+                // Clear InputBox.
+                InputTextBox.Text = String.Empty;
+                try
+                {
+                    MessageBox.Show(blDrone.ReleasDrone(dr.Id, time));
+                    action2.Click -= new RoutedEventHandler(Release_Click);
+                    ChangeAssignSend();
+                    InitializeData();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+            }
+            else
+                MessageBox.Show("Enter valid input (double) or Cancel!", "Valid Input", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+        /// <summary>
+        /// If the cancel button has been pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            //NoButton Clicked! Let's hide our InputBox.
+            InputBox.Visibility = Visibility.Hidden;
+            DroneListGrid.IsEnabled = true;
+            //Clear InputBox.
+            InputTextBox.Text = String.Empty;
+        }
+
+        /// <summary>
+        /// Makes sure the gif is running over and over again
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Again_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            Gif.Position = new TimeSpan(0, 0, 1);
+            Gif.Play();
         }
 
         /// <summary>
@@ -278,17 +323,18 @@ namespace PL
         private void Add_Click(object sender, RoutedEventArgs e)
         {
             //If all the filed in "DroneAdd" filled
-            if (moDrone.Text != "" && idone.Text != "" && idStationToChrging.Text != "" && maxWeight.SelectedItem != null)
+            if (moDrone.Text != "" && idone.Text != "" && idStationToChrging.SelectedItem != null && maxWeight.SelectedItem != null)
             {
                 try
                 {
+                    int ID;
                     DroneList droneAdd = new DroneList();
                     droneAdd.MaxWeight = (WeightCategories)(int)maxWeight.SelectedItem;
-                    Int32.TryParse(idone.Text, out idStation);
-                    droneAdd.Id = idStation;
-                    Int32.TryParse(idStationToChrging.Text, out idStation);
+                    Int32.TryParse(idone.Text, out ID);
+                    droneAdd.Id = ID;
+                    StationList st = (StationList)idStationToChrging.SelectedItem;
                     droneAdd.Model = moDrone.Text;
-                    MessageBox.Show(blDrone.AddDrone(droneAdd, idStation));
+                    MessageBox.Show(blDrone.AddDrone(droneAdd, st.Id));
                     dlPage.Selector_SelectionChanged();
                     this.NavigationService.Navigate(dlPage);
                 }
@@ -299,26 +345,6 @@ namespace PL
             }
             else
                 MessageBox.Show("Enter data in all fields!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-
-        /// <summary>
-        /// Check if what captured in the "Id Station To Chrging" filed is valid
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void GetIdStationToChrging(object sender, RoutedEventArgs e)
-        {
-            GetInt(idStationToChrging);
-        }
-
-        /// <summary>
-        /// Changes the background to transparent
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void GetMaxWeight(object sender, RoutedEventArgs e)
-        {
-            maxWeight.Background = Brushes.Transparent;
         }
 
         /// <summary>
@@ -360,50 +386,32 @@ namespace PL
                 InputTextBox.Background = Brushes.White;
         }
 
-        /// <summary>
-        /// If the ok button has been pressed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OkButton_Click(object sender, RoutedEventArgs e)
+        private void ChangePickUP()
         {
-            if (InputTextBox.Background != Brushes.Red)
-            {
-                // Do something with the Input
-                double time = Double.Parse(InputTextBox.Text);
-                InputBox.Visibility = Visibility.Hidden;
-                DroneListGrid.IsEnabled = true;
-                // Clear InputBox.
-                InputTextBox.Text = String.Empty;
-                try
-                {
-                    MessageBox.Show(blDrone.ReleasDrone(dr.Id, time));
-                    releaseDrone.IsEnabled = false;
-                    assignDrone.IsEnabled = true;
-                    sendDrone.IsEnabled = true;
-                    InitializeData();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString());
-                }
-            }
-            else
-                MessageBox.Show("Enter valid input (double) or Cancel!", "Valid Input", MessageBoxButton.OK, MessageBoxImage.Error);
+            action1.Content = "PickUp the Parcel \n  from Customer";
+            action1.Click += new RoutedEventHandler(PickUp_Click);
         }
 
-        /// <summary>
-        /// If the cancel button has been pressed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        private void ChangeDelivery()
         {
-            //NoButton Clicked! Let's hide our InputBox.
-            InputBox.Visibility = Visibility.Hidden;
-            DroneListGrid.IsEnabled = true;
-            //Clear InputBox.
-            InputTextBox.Text = String.Empty;
+            action1.Content = "Deliver Parcel \n by the Drone";
+            action1.Click += new RoutedEventHandler(Deliver_Click);
+        }
+        private void ChangeAssignSend()
+        {
+            action1.Visibility = Visibility.Visible;
+            action1.Content = "Assign the Drone \n      to Parcel";
+            action1.Click += new RoutedEventHandler(Assign_Click);
+            action2.Visibility = Visibility.Visible;
+            action2.Content = "Send the Drone \n  to Charging";
+            action2.Click += new RoutedEventHandler(Send_Click);
+        }
+
+        private void ChangeRelese()
+        {
+            action1.Visibility = Visibility.Hidden;
+            action2.Content = "Release the Drone \n   from Charging";
+            action2.Click += new RoutedEventHandler(Release_Click);
         }
     }
 }

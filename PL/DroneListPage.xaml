@@ -20,14 +20,14 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <StackPanel Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <Label FontFamily="font/#Alef" FontSize="18" Content="Drone Status:" FontWeight="Bold"/>
-                <ComboBox FontFamily="font/#Alef" FontSize="18" Name="StatusSelector"
+            <StackPanel Grid.Column="1" Margin="0,0,54,0">
+                <Label FontFamily="font/#Alef" FontSize="20" Content="Drone Status:" FontWeight="Bold"/>
+                <ComboBox FontFamily="font/#Alef" FontSize="16" Name="StatusSelector"
                       SelectionChanged="Selector_SelectionChanged"/>
             </StackPanel>
-            <StackPanel Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <Label FontFamily="font/#Alef" FontSize="18" Content="Drone Max Weight:" FontWeight="Bold"/>
-                <ComboBox FontFamily="font/#Alef" FontSize="18" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="MaxWeightSelector"
+            <StackPanel Grid.Column="2" Margin="0,0,10,0">
+                <Label FontFamily="font/#Alef" FontSize="20" Content="Drone Max Weight:" FontWeight="Bold"/>
+                <ComboBox FontFamily="font/#Alef" FontSize="16" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="MaxWeightSelector"
                       SelectionChanged="Selector_SelectionChanged"/>
             </StackPanel>
             <Label FontFamily="font/#Alef" FontSize="48" Content="IC &amp; EG" Grid.Column="0" FontWeight="Bold"/>
@@ -38,7 +38,6 @@
                     </Style>
                 </Button.Resources>
             </Button>
-
         </Grid>
         <Grid Name="DownGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="2" VerticalAlignment="Stretch" Width="auto">
             <Grid.ColumnDefinitions>

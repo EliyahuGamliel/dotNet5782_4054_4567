@@ -19,6 +19,14 @@ namespace IBL.BO
         /// The function returns a string to print on all entity data
         /// </returns></summary>
         public override string ToString()
-        { return $"Id: {Id}\nBattery: {Math.Round(Battery, 3)}%\nModel: {Model}\nMaxWeight: {MaxWeight}\nStatus: {Status}\nParcelId: {ParcelId}\nCurrent Location: {CLocation}"; }
+        {
+            string str = $"Id: {Id}\nBattery: {Math.Round(Battery, 3)}%\nModel: {Model}\nMaxWeight: {MaxWeight}\nStatus: {Status}\nParcelId: ";
+             if (ParcelId == 0)
+                str += "not exist";
+            else
+                str += ParcelId;
+            str += $"\nCurrent Location: {CLocation}";
+            return str;
+        }
     }
 }

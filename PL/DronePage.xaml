@@ -9,14 +9,54 @@
       Title="DronePage"
       Background="SteelBlue">
 
-    <Grid Name="MainGrid" Margin="0,4,0,-4">
+    <Grid Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="350*"/>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="50*"/>
+        </Grid.RowDefinitions>
+        <Grid Name="Down2Grid" Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button BorderBrush="Black" Margin="10,8,10,8" Background="Red" FontFamily="font/#Alef" FontWeight="Bold"  FontSize="18" Content="Return Back" Click="Exit_Click">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="25,25,25,25"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button Name="action1" Background="PowderBlue" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" Grid.Column="1" FontSize="18" Content="">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="25,25,25,25"/>
+                        <Setter Property="Margin" Value="10,8,10,8"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button Name="action2" Background="PowderBlue" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" Grid.Column="2" FontSize="18" Content="">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="25,25,25,25"/>
+                        <Setter Property="Margin" Value="10,8,10,8"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button Background="PowderBlue" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" FontSize="18" Name="updateDrone" Content="Update Drone"  Grid.Column="3" IsEnabled="False" Click="Update_Click">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="25,25,25,25"/>
+                        <Setter Property="Margin" Value="10,8,10,8"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </Grid>
+
         <!-- Display Page of Drone's Action -->
-        <Grid Name="DroneListGrid" >
-            <Grid.RowDefinitions>
-                <RowDefinition Height="350*"/>
-                <RowDefinition Height="50*"/>
-                <RowDefinition Height="50*"/>
-            </Grid.RowDefinitions>
+        <Grid Name="DroneListGrid">
             <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
                 <StackPanel HorizontalAlignment="Left" Margin="50,58,0,0" VerticalAlignment="Top" Width="215" Height="107">
                     <TextBlock  FontSize="20" FontFamily="/font/#Alef" FontWeight="Bold" Text="The Id of the Drone:" TextWrapping="Wrap"/>
@@ -50,138 +90,32 @@
                 <Image x:Name="droneWithoutParcel"  Margin="570,73,43,265" Visibility="Hidden" Stretch="Fill" Source="img\droneWithoutParcel.jpg"/>
                 <Rectangle HorizontalAlignment="Left" Height="140" Margin="565,68,0,0" Stroke="Black" VerticalAlignment="Top" Width="182"/>
             </Grid>
-            <Grid Name="MiddleGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="1" VerticalAlignment="Stretch" Width="auto">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions >
-                <Button Background="PowderBlue" BorderBrush="Black" FontFamily="/font/#Alef" FontSize="16" Name="updateDrone" Content="Update the Drone" Grid.Column="0" IsEnabled="False" Click="Update_Click">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="25,25,25,25"/>
-                            <Setter Property="Margin" Value="10,8,10,8"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-                <Button  Background="PowderBlue" BorderBrush="Black" FontFamily="/font/#Alef" FontSize="16" Name="assignDrone" Content="Assign the Drone &#xa;      to Parcel" Grid.Column="1" IsEnabled="False" Click="Assign_Click">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="25,25,25,25"/>
-                            <Setter Property="Margin" Value="10,8,10,8"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-                <Button  Background="PowderBlue" BorderBrush="Black" FontFamily="/font/#Alef" FontSize="16" Name="pickUpDrone" Content="PickUp the Parcel &#xa;  fron Customer" Grid.Column="2" IsEnabled="False" Click="PickUp_Click">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="25,25,25,25"/>
-                            <Setter Property="Margin" Value="10,8,10,8"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-                <Button Background="PowderBlue" BorderBrush="Black" FontFamily="/font/#Alef" FontSize="16" Name="deliverDrone" Content="Deliver Parcel &#xa; by the Drone" Grid.Column="3" IsEnabled="False" Click="Deliver_Click">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="25,25,25,25"/>
-                            <Setter Property="Margin" Value="10,8,10,8"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-            </Grid>
-            <Grid Name="DownGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="2" VerticalAlignment="Stretch" Width="auto">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions >
-                <Button Background="PowderBlue" BorderBrush="Black" FontFamily="/font/#Alef" FontSize="16" Name="sendDrone" Content="Send the Drone &#xa;  to Charging" Grid.Column="0" IsEnabled="False" Click="Send_Click">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="25,25,25,25"/>
-                            <Setter Property="Margin" Value="10,8,10,8"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-                <Button FontFamily="/font/#Alef" FontSize="16" Background="PowderBlue" BorderBrush="Black" Name="releaseDrone" Content="Release the Drone &#xa;   from Charging" Grid.Column="1" IsEnabled="False" Click="Release_Click">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="25,25,25,25"/>
-                            <Setter Property="Margin" Value="10,8,10,8"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-                <Button BorderBrush="Black" Margin="10,8,10,8" Background="Red" FontFamily="font/#Alef" FontWeight="Bold" Grid.Column="3" FontSize="16" Content="Click to Return Back" Click="Exit_Click">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="25,25,25,25"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-            </Grid>
         </Grid>
+
         <!-- Display Page of Drone Addition -->
         <Grid Name="DroneAddGrid">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="350*"/>
-                <RowDefinition Height="50*"/>
-                <RowDefinition Height="50*"/>
-            </Grid.RowDefinitions>
-            <Grid Name="Down2Grid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="2" VerticalAlignment="Stretch" Width="auto">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions >
-                <Button BorderBrush="Black" Background="PowderBlue" FontFamily="/font/#Alef" FontWeight="Bold" FontSize="16" Content="Click to Add" Grid.Column="0" Click="Add_Click">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="25,25,25,25"/>
-                            <Setter Property="BorderBrush" Value="Black"/>
-                            <Setter Property="Background" Value="PowderBlue"/>
-                            <Setter Property="Margin" Value="10,8,10,8"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-                <Button BorderBrush="Black" Margin="10,8,10,8" Background="Red" FontFamily="font/#Alef" FontWeight="Bold" Grid.Column="3" FontSize="16" Content="Click to Return Back" Click="Exit_Click">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="25,25,25,25"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-                <Button BorderBrush="Black" Margin="10,8,10,8" Content="Station List" Click="ShowStationsButton_Click" Background="PaleTurquoise" FontFamily="font/#Alef" FontWeight="Bold" Grid.Column="1" FontSize="16">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="25,25,25,25"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-            </Grid>
             <StackPanel HorizontalAlignment="Left" Margin="120,97,0,0" VerticalAlignment="Top" Width="294" Height="107" Grid.Row="0">
                 <TextBlock FontWeight="Bold" FontSize="20" FontFamily="/font/#Alef" Text="Enter Id:" TextWrapping="Wrap"/>
-                <TextBox FontSize="20" FontFamily="/font/#Alef" Name="idone" Text="" TextWrapping="Wrap" TextChanged="GetId"/>
+                <TextBox FontSize="16" FontFamily="/font/#Alef" Name="idone" Text="" TextWrapping="Wrap" TextChanged="GetId"/>
             </StackPanel>
             <StackPanel HorizontalAlignment="Left" Margin="120,268,0,0" VerticalAlignment="Top" Width="296" Height="108" Grid.Row="0">
                 <TextBlock FontWeight="Bold" FontSize="20" FontFamily="/font/#Alef" Text="Choose the maxWeight:" TextWrapping="Wrap" Width="293"/>
-                <ComboBox FontSize="20" FontFamily="/font/#Alef" Name="maxWeight" SelectionChanged="GetMaxWeight"/>
+                <ComboBox FontSize="16" FontFamily="/font/#Alef" Name="maxWeight"/>
             </StackPanel>
             <StackPanel HorizontalAlignment="Left" Margin="120,179,0,0" VerticalAlignment="Top" Width="294" Height="107" Grid.Row="0">
                 <TextBlock FontWeight="Bold" FontSize="20" FontFamily="/font/#Alef" Text="Enter Model:" TextWrapping="Wrap"/>
-                <TextBox FontSize="20" FontFamily="/font/#Alef" Name="moDrone" Text="" TextWrapping="Wrap" TextChanged="GetModel"/>
+                <TextBox FontSize="16" FontFamily="/font/#Alef" Name="moDrone" Text="" TextWrapping="Wrap" TextChanged="GetModel"/>
             </StackPanel>
-            <StackPanel HorizontalAlignment="Left" Margin="120,358,0,0" VerticalAlignment="Top" Width="297" Height="108">
-                <TextBlock FontWeight="Bold" FontSize="20" FontFamily="/font/#Alef" Text="Enter Id of Station to charging:" TextWrapping="Wrap" Width="297"/>
-                <TextBox FontSize="20" FontFamily="/font/#Alef" Name="idStationToChrging" Text="" TextWrapping="Wrap" TextChanged="GetIdStationToChrging"/>
+            <StackPanel HorizontalAlignment="Left" Margin="120,358,0,0" VerticalAlignment="Top" Width="297" Height="62">
+                <TextBlock FontWeight="Bold" FontSize="20" FontFamily="/font/#Alef" Text="Choose Station for Drone:" TextWrapping="Wrap" Width="297"/>
+                <ComboBox FontSize="16" FontFamily="/font/#Alef" Name="idStationToChrging"/>
             </StackPanel>
             <MediaElement x:Name="Gif" Height="auto" HorizontalAlignment="Left"  MediaEnded="Again_MediaEnded" Source="img\drone1.gif" LoadedBehavior="Play" UnloadedBehavior="Manual" Margin="459,137,0,141" Grid.Row="0" Width="313"/>
         </Grid>
+
         <!-- -->
-        <Grid x:Name="InputBox" Visibility="Hidden">
-            <Grid Background="Black" Opacity="0.5"/>
+        <Grid Grid.RowSpan="3" x:Name="InputBox" Visibility="Hidden">
+            <Grid Background="Black" Opacity="0.5" />
             <Border MinWidth="250" Background="Orange" BorderBrush="Black" BorderThickness="1.5" CornerRadius="0,45,0,45" HorizontalAlignment="Center" VerticalAlignment="Center" Height="75" Width="272">
                 <StackPanel>
                     <TextBlock Margin="5" Text="how much time was the drone in charging?" FontWeight="Bold" FontFamily="Cambria" />
