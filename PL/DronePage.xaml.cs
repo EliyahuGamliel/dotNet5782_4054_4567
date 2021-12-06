@@ -387,7 +387,7 @@ namespace PL
         }
 
         /// <summary>
-        /// Changes the content of action 1
+        /// Changes action1 to be the clickup button
         /// </summary>
         private void ChangePickUP()
         {
@@ -396,7 +396,7 @@ namespace PL
         }
 
         /// <summary>
-        /// Changes the content of action 2
+        /// Changes action2 to be the changedelivery  button
         /// </summary>
         private void ChangeDelivery()
         {
@@ -405,7 +405,8 @@ namespace PL
         }
 
         /// <summary>
-        /// Makes action1 and action2 visible and changes the content
+        /// Makes action1 and action2 to visible and clickable buttons and changes them to be drone to parcel assigning
+        ///and sending drone for charging buttons
         /// </summary>
         private void ChangeAssignSend()
         {
@@ -418,7 +419,7 @@ namespace PL
         }
 
         /// <summary>
-        /// Hides action1 and makes action2 clickable
+        /// Hides action1 and changes action2 to drone releasing button
         /// </summary>
         private void ChangeRelese()
         {
