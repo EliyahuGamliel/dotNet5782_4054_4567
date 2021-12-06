@@ -387,7 +387,7 @@ namespace PL
         }
 
         /// <summary>
-        /// changes the content of action 1
+        /// Changes the content of action 1
         /// </summary>
         private void ChangePickUP()
         {
@@ -396,7 +396,7 @@ namespace PL
         }
 
         /// <summary>
-        /// changes the content of action 2
+        /// Changes the content of action 2
         /// </summary>
         private void ChangeDelivery()
         {
@@ -405,7 +405,7 @@ namespace PL
         }
 
         /// <summary>
-        /// makes action1 and action2 visible and changes the content
+        /// Makes action1 and action2 visible and changes the content
         /// </summary>
         private void ChangeAssignSend()
         {
@@ -418,7 +418,7 @@ namespace PL
         }
 
         /// <summary>
-        /// hides action1 and makes action2 clickable
+        /// Hides action1 and makes action2 clickable
         /// </summary>
         private void ChangeRelese()
         {
