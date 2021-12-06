@@ -386,17 +386,27 @@ namespace PL
                 InputTextBox.Background = Brushes.White;
         }
 
+        /// <summary>
+        /// changes the content of action 1
+        /// </summary>
         private void ChangePickUP()
         {
             action1.Content = "PickUp the Parcel \n  from Customer";
             action1.Click += new RoutedEventHandler(PickUp_Click);
         }
 
+        /// <summary>
+        /// changes the content of action 2
+        /// </summary>
         private void ChangeDelivery()
         {
             action1.Content = "Deliver Parcel \n by the Drone";
             action1.Click += new RoutedEventHandler(Deliver_Click);
         }
+
+        /// <summary>
+        /// makes action1 and action2 visible and changes the content
+        /// </summary>
         private void ChangeAssignSend()
         {
             action1.Visibility = Visibility.Visible;
@@ -407,6 +417,9 @@ namespace PL
             action2.Click += new RoutedEventHandler(Send_Click);
         }
 
+        /// <summary>
+        /// hides action1 and makes action2 clickable
+        /// </summary>
         private void ChangeRelese()
         {
             action1.Visibility = Visibility.Hidden;
