@@ -51,14 +51,7 @@ namespace PL
         public void Selector_SelectionChanged(object sender = null, SelectionChangedEventArgs e = null)
         {
             DroneListView.ItemsSource = null;
-            if (StatusSelector.SelectedItem is null or "All" && MaxWeightSelector.SelectedItem is null or "All")
-                DroneListView.ItemsSource = blDroneList.GetDroneByFilter(null, null);
-            else if (StatusSelector.SelectedItem is null or "All")
-                DroneListView.ItemsSource = blDroneList.GetDroneByFilter((int)MaxWeightSelector.SelectedItem, null);
-            else if (MaxWeightSelector.SelectedItem is null or "All")
-                DroneListView.ItemsSource = blDroneList.GetDroneByFilter(null, (int)StatusSelector.SelectedItem);
-            else
-                DroneListView.ItemsSource = blDroneList.GetDroneByFilter((int)MaxWeightSelector.SelectedItem, (int)StatusSelector.SelectedItem);
+            DroneListView.ItemsSource = blDroneList.GetDroneByFilter(MaxWeightSelector.SelectedItem, StatusSelector.SelectedItem);
         }
 
         /// <summary>

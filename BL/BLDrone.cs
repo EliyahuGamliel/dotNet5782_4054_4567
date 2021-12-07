@@ -204,15 +204,15 @@ namespace IBL
         /// <param name="weight">The weight value of the required drones</param>
         /// <param name="status">The status value of the required drones</param>
         /// <returns>Return list of drones by filter</returns>
-        public IEnumerable<DroneList> GetDroneByFilter(int? weight, int? status)
+        public IEnumerable<DroneList> GetDroneByFilter(object? weight, object? status)
         {
-            if (weight == null && status == null)
+            if (weight is null or "All" && status is null or "All")
                 return dronesList;
-            else if (weight == null)
-                return dronesList.FindAll(d => (int)d.Status == status);
-            else if (status == null)
-                return dronesList.FindAll(d => (int)d.MaxWeight == (int)weight);
-            return dronesList.FindAll(d => (int)d.Status == status && (int)d.MaxWeight == weight);   
+            else if (weight is null or "All")
+                return dronesList.FindAll(d => d.Status == (DroneStatuses)status);
+            else if (status is null or "All")
+                return dronesList.FindAll(d => d.MaxWeight == (WeightCategories)weight);
+            return dronesList.FindAll(d => d.Status == (DroneStatuses)status && d.MaxWeight == (WeightCategories)weight);   
         }
     }
 }

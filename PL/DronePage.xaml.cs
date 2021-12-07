@@ -36,17 +36,14 @@ namespace PL
         public DronePage(IBL.IBL bl, Drone drone, DroneListPage droneListPage)
         {
             InitializeComponent();
-            DroneAddGrid.Visibility = Visibility.Hidden;
             blDrone = bl;
             dlPage = droneListPage;
             dr = drone;
             maxWeightDrone.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             if (dr.Status == DroneStatuses.Delivery)
                 pa = blDrone.GetParcelById(dr.PTransfer.Id);
-            idDrone.IsEnabled = false;
-            maxWeightDrone.IsEnabled = false;
-            InitializeButtons();
             InitializeData();
+            InitializeButtons();
         }
 
         /// <summary>
@@ -59,12 +56,23 @@ namespace PL
             InitializeComponent();
             blDrone = bl;
             dlPage = droneListPage;
+
+            droneWithoutParcel.Visibility = Visibility.Visible;
+            DroneAddGrid.Visibility = Visibility.Visible;
+            idDrone.Background = Brushes.Red;
+            modelDrone.Background = Brushes.Red;
+            action1.IsEnabled = false;
+
             maxWeightDrone.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             maxWeightDrone.SelectedIndex = 0;
             idStationToChrging.ItemsSource = bl.GetStationCharge();
             idStationToChrging.SelectedIndex = 0;
+
+            parcelDrone.Text = "not exist";
+
             action2.Visibility = Visibility.Hidden;
             updateDrone.Visibility = Visibility.Hidden;
+            
             action1.Content = "Add Drone";
             action1.Click += new RoutedEventHandler(Add_Click);
         }
@@ -76,13 +84,16 @@ namespace PL
         {
             dr = blDrone.GetDroneById(dr.Id);
 
+            idDrone.IsEnabled = false;
+            maxWeightDrone.IsEnabled = false;
+
             idDrone.Text = dr.Id.ToString();
             modelDrone.Text = dr.Model;
             batteryDrone.Text = Math.Round(dr.Battery, 0).ToString() + "%";
             maxWeightDrone.SelectedIndex = maxWeightDrone.Items.IndexOf(dr.MaxWeight);
             statusDrone.Text = dr.Status.ToString();
             updateDrone.IsEnabled = false;
-            
+
             Inline line = locationDrone.Inlines.FirstInline;
             locationDrone.Inlines.Clear();
             locationDrone.Inlines.Add(line);
@@ -122,28 +133,27 @@ namespace PL
                 ChangeAssignSend();
         }
 
+        #region check valid input and the results
         /// <summary>
-        /// If the users wants to go back
+        /// Check if what captured in the "Id of Drone" filed is valid
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Exit_Click(object sender, RoutedEventArgs e)
+        private void GetId(object sender, RoutedEventArgs e)
         {
-            dlPage.Selector_SelectionChanged();
-            this.NavigationService.Navigate(dlPage);
-        }
-
-        /// <summary>
-        /// Changes the backgroung according to if its legal or not - Bonus
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void GetModel(object sender, RoutedEventArgs e)
-        {
-            if (modelDrone.Text == "")
-                modelDrone.Background = Brushes.Red;
+            int num;
+            bool error = Int32.TryParse(idDrone.Text, out num);
+            if (!error)
+            {
+                idDrone.Background = Brushes.Red;
+                action1.IsEnabled = false;
+            }
             else
-                modelDrone.Background = Brushes.White;
+            {
+                idDrone.Background = Brushes.White;
+                if (modelDrone.Background != Brushes.Red)
+                    action1.IsEnabled = true;
+            }
         }
 
         /// <summary>
@@ -154,11 +164,22 @@ namespace PL
         private void UpdateModel(object sender, RoutedEventArgs e)
         {
             if (modelDrone.Text == "")
+            {
                 updateDrone.IsEnabled = false;
+                modelDrone.Background = Brushes.Red;
+                action1.IsEnabled = false;
+            }
             else
+            {
                 updateDrone.IsEnabled = true;
+                modelDrone.Background = Brushes.White;
+                if (idDrone.Background != Brushes.Red)
+                    action1.IsEnabled = true;
+            }
         }
+        #endregion
 
+        #region possible functions for buttons (Drone View)
         /// <summary>
         /// If the update button has been pressed
         /// </summary>
@@ -251,7 +272,9 @@ namespace PL
         {
             InputBox.Visibility = Visibility.Visible;
         }
+        #endregion
 
+        #region "Window" to get input (time of charge)
         /// <summary>
         /// If the ok button has been pressed
         /// </summary>
@@ -296,53 +319,6 @@ namespace PL
         }
 
         /// <summary>
-        /// If the add button has been pressed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Add_Click(object sender, RoutedEventArgs e)
-        {
-            //If all the filed in "DroneAdd" filled
-            if (modelDrone.Text != "" && idDrone.Text != "" && modelDrone.Background != Brushes.Red && idDrone.Background != Brushes.Red)
-            {
-                try
-                {
-                    int ID;
-                    DroneList droneAdd = new DroneList();
-                    droneAdd.MaxWeight = (WeightCategories)(int)maxWeightDrone.SelectedItem;
-                    Int32.TryParse(idDrone.Text, out ID);
-                    droneAdd.Id = ID;
-                    StationList st = (StationList)idStationToChrging.SelectedItem;
-                    droneAdd.Model = modelDrone.Text;
-                    MessageBox.Show(blDrone.AddDrone(droneAdd, st.Id));
-                    dlPage.Selector_SelectionChanged();
-                    this.NavigationService.Navigate(dlPage);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-            else
-                MessageBox.Show("Enter valid data in all fields!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-
-        /// <summary>
-        /// Check if what captured in the "Id of Drone" filed is valid
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void GetId(object sender, RoutedEventArgs e)
-        {
-            int num;
-            bool error = Int32.TryParse(idDrone.Text, out num);
-            if (!error)
-                idDrone.Background = Brushes.Red;
-            else
-                idDrone.Background = Brushes.White;
-        }
-
-        /// <summary>
         /// Changes the color of the background according to if the time is legal or not - Bonus
         /// </summary>
         /// <param name="sender"></param>
@@ -356,7 +332,46 @@ namespace PL
             else
                 InputTextBox.Background = Brushes.White;
         }
+        #endregion
 
+        /// <summary>
+        /// If the add button has been pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Add_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int ID;
+                DroneList droneAdd = new DroneList();
+                droneAdd.MaxWeight = (WeightCategories)(int)maxWeightDrone.SelectedItem;
+                Int32.TryParse(idDrone.Text, out ID);
+                droneAdd.Id = ID;
+                StationList st = (StationList)idStationToChrging.SelectedItem;
+                droneAdd.Model = modelDrone.Text;
+                MessageBox.Show(blDrone.AddDrone(droneAdd, st.Id));
+                dlPage.Selector_SelectionChanged();
+                this.NavigationService.Navigate(dlPage);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        /// <summary>
+        /// If the users wants to go back
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            dlPage.Selector_SelectionChanged();
+            this.NavigationService.Navigate(dlPage);
+        }
+
+        #region change the button(s) according the drone status
         /// <summary>
         /// Changes action1 to be the clickup button
         /// </summary>
@@ -398,5 +413,6 @@ namespace PL
             action2.Content = "Release the Drone \n   from Charging";
             action2.Click += new RoutedEventHandler(Release_Click);
         }
+        #endregion
     }
 }
