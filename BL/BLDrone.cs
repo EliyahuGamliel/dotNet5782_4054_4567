@@ -204,7 +204,7 @@ namespace IBL
         /// <param name="weight">The weight value of the required drones</param>
         /// <param name="status">The status value of the required drones</param>
         /// <returns>Return list of drones by filter</returns>
-        public IEnumerable<DroneList> GetDroneByFilter(object? weight, object? status)
+        public IEnumerable<DroneList> GetDroneByFilter(object weight, object status)
         {
             if (weight is null or "All" && status is null or "All")
                 return dronesList;
