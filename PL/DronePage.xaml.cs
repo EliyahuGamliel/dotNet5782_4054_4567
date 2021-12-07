@@ -40,8 +40,11 @@ namespace PL
             blDrone = bl;
             dlPage = droneListPage;
             dr = drone;
+            maxWeightDrone.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             if (dr.Status == DroneStatuses.Delivery)
                 pa = blDrone.GetParcelById(dr.PTransfer.Id);
+            idDrone.IsEnabled = false;
+            maxWeightDrone.IsEnabled = false;
             InitializeButtons();
             InitializeData();
         }
@@ -54,11 +57,10 @@ namespace PL
         public DronePage(IBL.IBL bl, DroneListPage droneListPage)
         {
             InitializeComponent();
-            DroneListGrid.Visibility = Visibility.Hidden;
             blDrone = bl;
             dlPage = droneListPage;
-            maxWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-            maxWeight.SelectedIndex = 0;
+            maxWeightDrone.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            maxWeightDrone.SelectedIndex = 0;
             idStationToChrging.ItemsSource = bl.GetStationCharge();
             idStationToChrging.SelectedIndex = 0;
             action2.Visibility = Visibility.Hidden;
@@ -77,7 +79,7 @@ namespace PL
             idDrone.Text = dr.Id.ToString();
             modelDrone.Text = dr.Model;
             batteryDrone.Text = Math.Round(dr.Battery, 0).ToString() + "%";
-            maxWightDrone.Text = dr.MaxWeight.ToString();
+            maxWeightDrone.SelectedIndex = maxWeightDrone.Items.IndexOf(dr.MaxWeight);
             statusDrone.Text = dr.Status.ToString();
             updateDrone.IsEnabled = false;
             
@@ -138,10 +140,10 @@ namespace PL
         /// <param name="e"></param>
         private void GetModel(object sender, RoutedEventArgs e)
         {
-            if (moDrone.Text == "")
-                moDrone.Background = Brushes.Red;
+            if (modelDrone.Text == "")
+                modelDrone.Background = Brushes.Red;
             else
-                moDrone.Background = Brushes.White;
+                modelDrone.Background = Brushes.White;
         }
 
         /// <summary>
@@ -248,7 +250,6 @@ namespace PL
         private void Release_Click(object sender, RoutedEventArgs e)
         {
             InputBox.Visibility = Visibility.Visible;
-            DroneListGrid.IsEnabled = false;
         }
 
         /// <summary>
@@ -263,7 +264,6 @@ namespace PL
                 // Do something with the Input
                 double time = Double.Parse(InputTextBox.Text);
                 InputBox.Visibility = Visibility.Hidden;
-                DroneListGrid.IsEnabled = true;
                 // Clear InputBox.
                 InputTextBox.Text = String.Empty;
                 try
@@ -291,20 +291,8 @@ namespace PL
         {
             //NoButton Clicked! Let's hide our InputBox.
             InputBox.Visibility = Visibility.Hidden;
-            DroneListGrid.IsEnabled = true;
             //Clear InputBox.
             InputTextBox.Text = String.Empty;
-        }
-
-        /// <summary>
-        /// Makes sure the gif is running over and over again
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Again_MediaEnded(object sender, RoutedEventArgs e)
-        {
-            Gif.Position = new TimeSpan(0, 0, 1);
-            Gif.Play();
         }
 
         /// <summary>
@@ -315,17 +303,17 @@ namespace PL
         private void Add_Click(object sender, RoutedEventArgs e)
         {
             //If all the filed in "DroneAdd" filled
-            if (moDrone.Text != "" && idone.Text != "" && moDrone.Background != Brushes.Red && idone.Background != Brushes.Red)
+            if (modelDrone.Text != "" && idDrone.Text != "" && modelDrone.Background != Brushes.Red && idDrone.Background != Brushes.Red)
             {
                 try
                 {
                     int ID;
                     DroneList droneAdd = new DroneList();
-                    droneAdd.MaxWeight = (WeightCategories)(int)maxWeight.SelectedItem;
-                    Int32.TryParse(idone.Text, out ID);
+                    droneAdd.MaxWeight = (WeightCategories)(int)maxWeightDrone.SelectedItem;
+                    Int32.TryParse(idDrone.Text, out ID);
                     droneAdd.Id = ID;
                     StationList st = (StationList)idStationToChrging.SelectedItem;
-                    droneAdd.Model = moDrone.Text;
+                    droneAdd.Model = modelDrone.Text;
                     MessageBox.Show(blDrone.AddDrone(droneAdd, st.Id));
                     dlPage.Selector_SelectionChanged();
                     this.NavigationService.Navigate(dlPage);
@@ -347,11 +335,11 @@ namespace PL
         private void GetId(object sender, RoutedEventArgs e)
         {
             int num;
-            bool error = Int32.TryParse(idone.Text, out num);
+            bool error = Int32.TryParse(idDrone.Text, out num);
             if (!error)
-                idone.Background = Brushes.Red;
+                idDrone.Background = Brushes.Red;
             else
-                idone.Background = Brushes.White;
+                idDrone.Background = Brushes.White;
         }
 
         /// <summary>

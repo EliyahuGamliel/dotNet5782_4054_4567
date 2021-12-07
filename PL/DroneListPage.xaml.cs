@@ -33,8 +33,12 @@ namespace PL
         {
             InitializeComponent();
             blDroneList = bl;
-            StatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
-            MaxWeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            foreach (var item in Enum.GetValues(typeof(DroneStatuses)))
+                StatusSelector.Items.Add(item);
+            StatusSelector.Items.Add("All");
+            foreach (var item in Enum.GetValues(typeof(WeightCategories)))
+                MaxWeightSelector.Items.Add(item);
+            MaxWeightSelector.Items.Add("All");
             DroneListView.ItemsSource = blDroneList.GetDrones();
             mPage = mainPage;
         }
@@ -47,11 +51,11 @@ namespace PL
         public void Selector_SelectionChanged(object sender = null, SelectionChangedEventArgs e = null)
         {
             DroneListView.ItemsSource = null;
-            if (StatusSelector.SelectedItem == null && MaxWeightSelector.SelectedItem == null)
+            if (StatusSelector.SelectedItem is null or "All" && MaxWeightSelector.SelectedItem is null or "All")
                 DroneListView.ItemsSource = blDroneList.GetDroneByFilter(null, null);
-            else if (StatusSelector.SelectedItem == null)
+            else if (StatusSelector.SelectedItem is null or "All")
                 DroneListView.ItemsSource = blDroneList.GetDroneByFilter((int)MaxWeightSelector.SelectedItem, null);
-            else if (MaxWeightSelector.SelectedItem == null)
+            else if (MaxWeightSelector.SelectedItem is null or "All")
                 DroneListView.ItemsSource = blDroneList.GetDroneByFilter(null, (int)StatusSelector.SelectedItem);
             else
                 DroneListView.ItemsSource = blDroneList.GetDroneByFilter((int)MaxWeightSelector.SelectedItem, (int)StatusSelector.SelectedItem);
