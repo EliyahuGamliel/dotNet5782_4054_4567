@@ -1,20 +1,24 @@
 using System;
 
-namespace BO
+namespace DO
 {
+
     /// <summary>
-    /// Defining the "Location" class
+    /// Defining the "Station" struct
     /// </summary>
-    public class Location
+    public struct Station
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
         public double Longitude { get; set; }
         public double Lattitude { get; set; }
+        public int ChargeSlots { get; set; }
 
         /// <summary><returns>
         /// The function returns a string to print on all entity data
         /// </returns></summary>
         public override string ToString()
-        { return $"\n      Longitude: {LongitudeBonus(Longitude)}\n      Lattitude: {LattitudeBonus(Lattitude)}\n"; }
+        { return $"Id: {Id}\nName: {Name}\nLongitude: {LongitudeBonus(Longitude)}\nLattitude: {LattitudeBonus(Lattitude)}\nChargeSlots: {ChargeSlots}\n"; }
 
         /// <summary>
         /// The function gets a longitube and turns it into a longitube at base 60
@@ -22,12 +26,12 @@ namespace BO
         /// <param name="num">The number to change</param>
         /// <returns>The function returns a string of a number representing base 60</returns>
         public static string LongitudeBonus(double num)
-        {
-            char dir = 'W';
+        {///returns the longitude
+            char dir = 'S';
             if (num < 0)
                 num = -num;
             else
-                dir = 'E';
+                dir = 'N';
             int degrees = (int)num;
             num = num - degrees;
             int minutes = (int)(num * 60);
@@ -42,12 +46,12 @@ namespace BO
         /// <param name="num">The number to change</param>
         /// <returns>The function returns a string of a number representing base 60</returns>
         public static string LattitudeBonus(double num)
-        {
-            char dir = 'S';
+        {///returns the lattitude
+            char dir = 'W';
             if (num < 0)
                 num = -num;
             else
-                dir = 'N';
+                dir = 'E';
             int degrees = (int)num;
             num = num - degrees;
             int minutes = (int)(num * 60);
@@ -56,4 +60,5 @@ namespace BO
             return $"{degrees}° {minutes}' {Math.Round(seconds, 3)}\" {dir}";
         }
     }
+
 }

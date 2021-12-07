@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace IBL.BO
+namespace BO
 {
     /// <summary>
     /// Defining the "StationList" class

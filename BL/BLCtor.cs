@@ -20,7 +20,7 @@ namespace IBL
             WeightHeavy = data.DroneElectricityUse()[3];
             ChargingRate = data.DroneElectricityUse()[4];
 
-            IEnumerable<IDAL.DO.Drone> droneslist = data.GetDroneByFilter(d => true);
+            IEnumerable<DO.Drone> droneslist = data.GetDroneByFilter(d => true);
             
             foreach (var item in droneslist)
             {
@@ -33,7 +33,7 @@ namespace IBL
                 dl.MaxWeight = (WeightCategories)(int)item.MaxWeight;
                 dl.Model = item.Model;
 
-                IEnumerable<IDAL.DO.Parcel> parcelslist = data.GetParcelByFilter(p => true);
+                IEnumerable<DO.Parcel> parcelslist = data.GetParcelByFilter(p => true);
                 foreach (var itemParcel in parcelslist)
                 {
                     //If the parcel is associated with the drone and also the parcrel in the middle of the shipment
@@ -80,14 +80,14 @@ namespace IBL
                     //If the situation that came out is: maintenance
                     if (dl.Status == DroneStatuses.Maintenance)
                     {
-                        IEnumerable<IDAL.DO.Station> stationslist = data.GetStationByFilter(sta => sta.ChargeSlots > 0);
+                        IEnumerable<DO.Station> stationslist = data.GetStationByFilter(sta => sta.ChargeSlots > 0);
                         int counter = stationslist.Count();
                         //The drone is at a random station
                         int stIndex = rand.Next(0, counter);
-                        IDAL.DO.Station st = stationslist.ElementAt(stIndex);
+                        DO.Station st = stationslist.ElementAt(stIndex);
                         dl.CLocation = GetStationById(st.Id).Location;
 
-                        IDAL.DO.DroneCharge droneCharge = new IDAL.DO.DroneCharge();
+                        DO.DroneCharge droneCharge = new DO.DroneCharge();
                         droneCharge.DroneId = dl.Id;
                         droneCharge.StationId = st.Id;
                         data.AddDroneCharge(droneCharge);

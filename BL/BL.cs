@@ -28,7 +28,7 @@ namespace IBL
             int index = dronesList.IndexOf(d);
             
             //Removed all the parcels that cann't assign to the Drone
-            IEnumerable<IDAL.DO.Parcel> parcelslist = data.GetParcelByFilter(p => ((WeightCategories)p.Weight <= d.MaxWeight) && 
+            IEnumerable<DO.Parcel> parcelslist = data.GetParcelByFilter(p => ((WeightCategories)p.Weight <= d.MaxWeight) && 
                 (ReturnBattery(3, d.CLocation, GetCustomerById(p.SenderId).Location) +
                 ReturnBattery((int)p.Weight, GetCustomerById(p.SenderId).Location, GetCustomerById(p.TargetId).Location) +
                 ReturnBattery(3, GetCustomerById(p.TargetId).Location, ReturnCloseStation(data.GetStationByFilter(s => true), GetCustomerById(p.TargetId).Location).Location)
@@ -41,7 +41,7 @@ namespace IBL
 
             //By Priority
             parcelslist =  parcelslist.OrderByDescending(p => p.Priority);
-            IDAL.DO.Parcel parcelchoose = parcelslist.First();
+            DO.Parcel parcelchoose = parcelslist.First();
             parcelslist = parcelslist.Where(p => p.Priority == parcelchoose.Priority);
 
             //By Weight
@@ -78,7 +78,7 @@ namespace IBL
             Drone chosendrone = GetDroneById(id);
             int index = dronesList.IndexOf(d);
 
-            IDAL.DO.Parcel chosenp = data.GetParcelById(d.ParcelId);
+            DO.Parcel chosenp = data.GetParcelById(d.ParcelId);
             if (ReturnStatus(chosenp) != 1)
                 throw new DroneCannotPickUp();
 
@@ -103,7 +103,7 @@ namespace IBL
             Drone chosendrone = GetDroneById(id);
             int index = dronesList.IndexOf(d);
 
-            IDAL.DO.Parcel chosenp = data.GetParcelById(d.ParcelId);
+            DO.Parcel chosenp = data.GetParcelById(d.ParcelId);
             if (ReturnStatus(chosenp) != 2)
                 throw new DroneCannotDeliver();
 

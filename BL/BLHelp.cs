@@ -12,7 +12,7 @@ namespace IBL
         /// </summary>
         /// <param name="p">Object of parcel</param>
         /// <returns>int of Status of parcel</returns>
-        private int ReturnStatus(IDAL.DO.Parcel chosenp)
+        private int ReturnStatus(DO.Parcel chosenp)
         {
             if (chosenp.Scheduled == null)
                 return (int)Statuses.Created;
@@ -48,9 +48,9 @@ namespace IBL
         /// <param name="s">list of Station</param>
         /// <param name="drone">Object of Drone's Location</param>
         /// <returns>Returns a station object</returns>
-        private Station ReturnCloseStation(IEnumerable<IDAL.DO.Station> s, Location drone)
+        private Station ReturnCloseStation(IEnumerable<DO.Station> s, Location drone)
         {
-            IDAL.DO.Station st = s.OrderBy(sta => DistanceTo(ReturnLocation(sta), drone)).First();
+            DO.Station st = s.OrderBy(sta => DistanceTo(ReturnLocation(sta), drone)).First();
             return GetStationById(st.Id);
         }
         
@@ -59,7 +59,7 @@ namespace IBL
         /// </summary>
         /// <param name="s">the station that we want its location</param>
         /// <returns></returns>
-        private Location ReturnLocation(IDAL.DO.Station s)
+        private Location ReturnLocation(DO.Station s)
         {
             Location location = new Location();
             location.Lattitude = s.Lattitude;
@@ -141,7 +141,7 @@ namespace IBL
         /// <param name="dl">Object of Drone</param>
         /// <typeparam name="T">he type of the list</typeparam>
         /// <returns>Nothing</returns>
-        private double CheckDroneCannotSend(IEnumerable<IDAL.DO.Station> list, DroneList dl)
+        private double CheckDroneCannotSend(IEnumerable<DO.Station> list, DroneList dl)
         {
             Location lst = new Location();
             Location locationStation = new Location();

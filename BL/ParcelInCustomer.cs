@@ -1,6 +1,6 @@
 using System;
 
-namespace IBL.BO
+namespace BO
 {
     /// <summary>
     /// Defining the "ParcelInCustomer" class

@@ -20,20 +20,20 @@ namespace IBL
                     throw new SameCustomerException(TargetId);
                 CheckLegelChoice((int)p.Weight);
                 CheckLegelChoice((int)p.Priority);
-                IDAL.DO.Parcel pa = new IDAL.DO.Parcel();
+                DO.Parcel pa = new DO.Parcel();
             
                 pa.SenderId = SenderId;
                 pa.TargetId = TargetId;
-                pa.Weight = (IDAL.DO.WeightCategories)(int)p.Weight;
-                pa.Priority = (IDAL.DO.Priorities)(int)p.Priority;
+                pa.Weight = (DO.WeightCategories)(int)p.Weight;
+                pa.Priority = (DO.Priorities)(int)p.Priority;
                 pa.Requested = DateTime.Now;
                 int Id = data.AddParcel(pa);
                 return $"The number of parcel: {Id-1}\n";
             }
-            catch (IDAL.DO.IdExistException) {
+            catch (DO.IdExistException) {
                 throw new IdExistException(p.Id);
             }
-            catch (IDAL.DO.IdNotExistException exp) {
+            catch (DO.IdNotExistException exp) {
                 throw new IdNotExistException(exp.id);
             }   
         }
@@ -45,7 +45,7 @@ namespace IBL
         /// <returns>The object of the requested parcel</returns>
             public Parcel GetParcelById(int Id) {
             try {
-                IDAL.DO.Parcel chosenp = data.GetParcelById(Id);
+                DO.Parcel chosenp = data.GetParcelById(Id);
                 Parcel pa = new Parcel();
                 pa.Id = chosenp.Id;
                 pa.PickedUp = chosenp.PickedUp;
@@ -67,7 +67,7 @@ namespace IBL
                 //CustomerInParcel - The Target Customer of Parcel 
                 CustomerInParcel cp1 = new CustomerInParcel();
                 cp1.Id = chosenp.TargetId;
-                IDAL.DO.Customer customerhelp = data.GetCustomerById(cp1.Id); 
+                DO.Customer customerhelp = data.GetCustomerById(cp1.Id); 
                 cp1.Name = customerhelp.Name;
                 pa.Target = cp1;
 
@@ -80,7 +80,7 @@ namespace IBL
             
                 return pa;
             }
-            catch (IDAL.DO.IdNotExistException) {
+            catch (DO.IdNotExistException) {
                 throw new IdNotExistException(Id);
             }
         }
@@ -106,7 +106,7 @@ namespace IBL
         /// </summary>
         /// <param name="listCustomers">The list we want to convert</param>
         /// <returns>The same list converted to BL(ParcelList)</returns>
-        private IEnumerable<ParcelList> ConvertToBL(IEnumerable<IDAL.DO.Parcel> listParcels)
+        private IEnumerable<ParcelList> ConvertToBL(IEnumerable<DO.Parcel> listParcels)
         {
             List<ParcelList> parcel = new List<ParcelList>();
             foreach (var item in listParcels) {

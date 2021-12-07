@@ -12,7 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using IBL.BO;
+using BO;
+using BlApi;
 
 namespace PL
 {
@@ -24,7 +25,7 @@ namespace PL
         static DroneList droneList = new DroneList();
         static Drone dr;
         static Parcel pa;
-        static IBL.IBL blDrone;
+        static BlApi.IBL blDrone;
         private DroneListPage dlPage;
 
         /// <summary>
@@ -33,7 +34,7 @@ namespace PL
         /// <param name="bl">Data Base</param>
         /// <param name="drone">The drone to make on it actions</param>
         /// <param name="droneListPage">Pointer to the Drone List Page</param>
-        public DronePage(IBL.IBL bl, Drone drone, DroneListPage droneListPage)
+        public DronePage(BlApi.IBL bl, Drone drone, DroneListPage droneListPage)
         {
             InitializeComponent();
             blDrone = bl;
@@ -51,7 +52,7 @@ namespace PL
         /// </summary>
         /// <param name="bl">Data Base</param>
         /// <param name="droneListPage">Pointer to the Drone List Page</param>
-        public DronePage(IBL.IBL bl, DroneListPage droneListPage)
+        public DronePage(BlApi.IBL bl, DroneListPage droneListPage)
         {
             InitializeComponent();
             blDrone = bl;

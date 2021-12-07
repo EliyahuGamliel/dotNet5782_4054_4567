@@ -1,8 +1,8 @@
 ﻿using System;
-using IBL.BO;
+using BO;
 using System.Collections.Generic;
 
-namespace IBL
+namespace BlApi
 {
     /// <summary>
     /// Defining the "IBL" interface

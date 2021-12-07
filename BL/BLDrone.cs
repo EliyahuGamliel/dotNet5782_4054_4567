@@ -16,7 +16,7 @@ namespace IBL
         public string AddDrone(DroneList d, int idStation) {
             try {
                 CheckValidId(d.Id);
-                IDAL.DO.Station s = data.GetStationById(idStation);
+                DO.Station s = data.GetStationById(idStation);
                 CheckLegelChoice((int)d.MaxWeight);
                 d.CLocation = new Location();
                 d.Battery = rand.Next(20,41);
@@ -28,16 +28,16 @@ namespace IBL
                 if (s.ChargeSlots == 0)
                     throw new StationIsFull();
 
-                IDAL.DO.Drone dr = new IDAL.DO.Drone();
+                DO.Drone dr = new DO.Drone();
                 dr.Id = d.Id;
                 dr.Model = d.Model;
-                dr.MaxWeight = (IDAL.DO.WeightCategories)((int)d.MaxWeight);
+                dr.MaxWeight = (DO.WeightCategories)((int)d.MaxWeight);
                 data.AddDrone(dr);
                 dronesList.Add(d);
 
                 int chargeSlots = ChargeSlotsCatched(idStation) + s.ChargeSlots;
 
-                IDAL.DO.DroneCharge dc = new IDAL.DO.DroneCharge();
+                DO.DroneCharge dc = new DO.DroneCharge();
                 dc.DroneId = d.Id;
                 dc.StationId = idStation;
                 data.AddDroneCharge(dc);
@@ -45,7 +45,7 @@ namespace IBL
                 UpdateStation(idStation, "", chargeSlots);
                 return "The addition was successful\n";
             }
-            catch (IDAL.DO.IdExistException) {
+            catch (DO.IdExistException) {
                 throw new IdExistException(d.Id);
             }
         }
@@ -58,7 +58,7 @@ namespace IBL
         /// <returns>Notice if the addition was successful</returns>
         public string UpdateDrone(int id, string model) {
             try {
-                IDAL.DO.Drone dr = data.GetDroneById(id);
+                DO.Drone dr = data.GetDroneById(id);
                 dr.Model = model;
                 data.UpdateDrone(dr);
                 DroneList d = dronesList.Find(dro => dro.Id == id);
@@ -67,7 +67,7 @@ namespace IBL
                 dronesList[index] = d;
                 return "The update was successful\n";
             }
-            catch (IDAL.DO.IdNotExistException) {
+            catch (DO.IdNotExistException) {
                 throw new IdNotExistException(id);
             }
         }
@@ -91,7 +91,7 @@ namespace IBL
             dronesList[index] = d;
             UpdateStation(st.Id, "", st.ChargeSlots - 1);
 
-            IDAL.DO.DroneCharge dc = new IDAL.DO.DroneCharge();
+            DO.DroneCharge dc = new DO.DroneCharge();
             dc.DroneId = d.Id;
             dc.StationId = st.Id;
             data.AddDroneCharge(dc);
@@ -125,7 +125,7 @@ namespace IBL
             st = ReturnCloseStation(data.GetStationByFilter(s => true), d.CLocation);
             int chargeSlots = ChargeSlotsCatched(st.Id) + st.ChargeSlots;
 
-            IDAL.DO.DroneCharge dc = new IDAL.DO.DroneCharge();
+            DO.DroneCharge dc = new DO.DroneCharge();
             dc.DroneId = d.Id;
             dc.StationId = st.Id;
             data.DeleteDroneCharge(dc);
@@ -153,7 +153,7 @@ namespace IBL
             if (dr.Status == DroneStatuses.Delivery)
             {
                 ParcelTransfer pt = new ParcelTransfer();
-                IDAL.DO.Parcel parcel = data.GetParcelByFilter(p => p.Id == dl.ParcelId).First();
+                DO.Parcel parcel = data.GetParcelByFilter(p => p.Id == dl.ParcelId).First();
                 //If the parcel associated with the drone
                 pt.Id = parcel.Id;
                 pt.Priority = (Priorities)(int)parcel.Priority;
@@ -166,7 +166,7 @@ namespace IBL
                 //CustomerInParcel - The Target Customer of Parcel 
                 CustomerInParcel cp1 = new CustomerInParcel();
                 cp1.Id = parcel.TargetId;
-                IDAL.DO.Customer customerhelp = data.GetCustomerById(cp1.Id);
+                DO.Customer customerhelp = data.GetCustomerById(cp1.Id);
                 cp1.Name = customerhelp.Name;
                 pt.Recipient = cp1;
                 pt.DestinationLocation = new Location();

@@ -1,21 +1,21 @@
 using System;
 
-namespace BO
+namespace DO
 {
 
     /// <summary>
-    /// Defining the "CustomerInParcel" class
+    /// Defining the "DroneCharge" struct
     /// </summary>
-    public class CustomerInParcel
+    public struct DroneCharge
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public int DroneId { get; set; }
+        public int StationId { get; set; }
 
         /// <summary><returns>
         /// The function returns a string to print on all entity data
         /// </returns></summary>
         public override string ToString()
-        { return $"\n        Id: {Id}\n        Name: {Name}\n"; }
+        { return $"droneId: {DroneId}\nStationld: {StationId}\n"; }
     }
 
 }

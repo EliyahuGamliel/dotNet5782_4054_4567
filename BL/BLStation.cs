@@ -16,7 +16,7 @@ namespace IBL
         public string AddStation(Station s) {
             try {
                 CheckValidId(s.Id);
-                IDAL.DO.Station st = new IDAL.DO.Station();
+                DO.Station st = new DO.Station();
                 st.Id = s.Id;
                 st.Name = s.Name;
                 st.Longitude = s.Location.Longitude;
@@ -28,7 +28,7 @@ namespace IBL
                 data.AddStation(st);
                 return "The addition was successful\n";
             }
-            catch (IDAL.DO.IdExistException) {
+            catch (DO.IdExistException) {
                 throw new IdExistException(s.Id);
             }     
         }
@@ -42,7 +42,7 @@ namespace IBL
         /// <returns>Notice if the addition was successful</returns>
         public string UpdateStation(int id, string name, int? chargeSlots) {
             try {
-                IDAL.DO.Station s = data.GetStationById(id);
+                DO.Station s = data.GetStationById(id);
                 if (name != "")
                     s.Name = name;
                 if (chargeSlots != null) {
@@ -53,7 +53,7 @@ namespace IBL
                 data.UpdateStation(s);
                 return "The update was successful\n";
             }
-            catch (IDAL.DO.IdNotExistException) {
+            catch (DO.IdNotExistException) {
                 throw new IdNotExistException(id);
             }
         }
@@ -65,7 +65,7 @@ namespace IBL
         /// <returns>The object of the requested station</returns>
         public Station GetStationById(int Id) {
             try {
-                IDAL.DO.Station chosens = data.GetStationById(Id);
+                DO.Station chosens = data.GetStationById(Id);
                 Station st = new Station();
                 st.Id = chosens.Id;
                 st.Name = chosens.Name;
@@ -85,7 +85,7 @@ namespace IBL
                 }
                 return st;
             }
-            catch (IDAL.DO.IdNotExistException) {
+            catch (DO.IdNotExistException) {
                 throw new IdNotExistException(Id);
             }
         }
@@ -111,7 +111,7 @@ namespace IBL
         /// </summary>
         /// <param name="listCustomers">The list we want to convert</param>
         /// <returns>The same list converted to BL(StationList)</returns>
-        private IEnumerable<StationList> ConvertToBL(IEnumerable<IDAL.DO.Station> listStation)
+        private IEnumerable<StationList> ConvertToBL(IEnumerable<DO.Station> listStation)
         {
             List<StationList> station = new List<StationList>();
             foreach (var item in listStation) {

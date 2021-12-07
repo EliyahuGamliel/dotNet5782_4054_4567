@@ -15,7 +15,7 @@ namespace IBL
         public string AddCustomer(Customer c){
             try {
                 CheckValidId(c.Id);
-                IDAL.DO.Customer cu = new IDAL.DO.Customer();
+                DO.Customer cu = new DO.Customer();
                 cu.Id = c.Id;
                 cu.Name = c.Name;
                 cu.Phone = c.Phone;
@@ -25,7 +25,7 @@ namespace IBL
                 data.AddCustomer(cu); 
                 return "The addition was successful\n";
             }
-            catch (IDAL.DO.IdExistException) {
+            catch (DO.IdExistException) {
                 throw new IdExistException(c.Id);
             }     
         }
@@ -39,7 +39,7 @@ namespace IBL
         /// <returns>Notice if the addition was successful</returns>
         public string UpdateCustomer(int id, string nameCustomer, string phoneCustomer) {
             try {
-                IDAL.DO.Customer chosenc = data.GetCustomerById(id);
+                DO.Customer chosenc = data.GetCustomerById(id);
                 //If input is received
                 if (nameCustomer != "") 
                     chosenc.Name = nameCustomer;
@@ -49,10 +49,10 @@ namespace IBL
                 data.UpdateCustomer(chosenc, phoneCustomer);
                 return "The update was successful\n"; 
             }
-            catch (IDAL.DO.IdNotExistException) {
+            catch (DO.IdNotExistException) {
                 throw new IdNotExistException(id);
             }
-            catch (IDAL.DO.PhoneExistException) {
+            catch (DO.PhoneExistException) {
                 throw new PhoneExistException(phoneCustomer);
             }
         }
@@ -64,7 +64,7 @@ namespace IBL
         /// <returns>The object of the requested customer</returns>
         public Customer GetCustomerById(int Id) {
             try {
-                IDAL.DO.Customer chosenc = data.GetCustomerById(Id); 
+                DO.Customer chosenc = data.GetCustomerById(Id); 
                 Customer cu = new Customer();
                 cu.ForCustomer = new List<ParcelInCustomer>();
                 cu.FromCustomer = new List<ParcelInCustomer>();
@@ -86,7 +86,7 @@ namespace IBL
 
                     CustomerInParcel cp = new CustomerInParcel();
                     cp.Id = item.SenderId;
-                    IDAL.DO.Customer customerhelp = data.GetCustomerById(cp.Id); 
+                    DO.Customer customerhelp = data.GetCustomerById(cp.Id); 
                     cp.Name = customerhelp.Name;
                     pc.CParcel = cp;
 
@@ -104,7 +104,7 @@ namespace IBL
 
                     CustomerInParcel cp = new CustomerInParcel();
                     cp.Id = item.TargetId;
-                    IDAL.DO.Customer customerhelp = data.GetCustomerById(cp.Id); 
+                    DO.Customer customerhelp = data.GetCustomerById(cp.Id); 
                     cp.Name = customerhelp.Name;
                     pc.CParcel = cp;
 
@@ -112,7 +112,7 @@ namespace IBL
                 } 
                 return cu;
             }
-            catch (IDAL.DO.IdNotExistException) {
+            catch (DO.IdNotExistException) {
                 throw new IdNotExistException(Id);
             }
         }
@@ -130,7 +130,7 @@ namespace IBL
         /// </summary>
         /// <param name="listCustomers">The list we want to convert</param>
         /// <returns>The same list converted to BL</returns>
-        private IEnumerable<CustomerList> ConvertToBL(IEnumerable<IDAL.DO.Customer> listCustomers)
+        private IEnumerable<CustomerList> ConvertToBL(IEnumerable<DO.Customer> listCustomers)
         {
             List<CustomerList> customer = new List<CustomerList>();
             foreach (var item in listCustomers) {
@@ -139,7 +139,7 @@ namespace IBL
                 cu.Name = item.Name;
                 cu.Phone = item.Phone;
 
-                IEnumerable<IDAL.DO.Parcel> listparcels = data.GetParcelByFilter(p => true);
+                IEnumerable<DO.Parcel> listparcels = data.GetParcelByFilter(p => true);
                 //If the customer is the target and the parcel is arrived
                 cu.ParcelsGet = listparcels.Where(p => ReturnStatus(p) == 3 && p.TargetId == cu.Id).Count();
 

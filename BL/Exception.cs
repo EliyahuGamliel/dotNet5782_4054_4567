@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 
-namespace IBL.BO
+namespace BO
 {
     /// <summary>
     /// If the id already exist - throw Exception

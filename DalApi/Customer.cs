@@ -1,12 +1,15 @@
 using System;
 
-namespace BO
+namespace DO
 {
     /// <summary>
-    /// Defining the "Location" class
+    /// Defining the "Customer" struct
     /// </summary>
-    public class Location
+    public struct Customer
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Phone { get; set; }
         public double Longitude { get; set; }
         public double Lattitude { get; set; }
 
@@ -14,7 +17,7 @@ namespace BO
         /// The function returns a string to print on all entity data
         /// </returns></summary>
         public override string ToString()
-        { return $"\n      Longitude: {LongitudeBonus(Longitude)}\n      Lattitude: {LattitudeBonus(Lattitude)}\n"; }
+        { return $"Id: {Id}\nName: {Name}\nPhone: {Phone}\nLongitude: {LongitudeBonus(Longitude)}\nLattitude: {LattitudeBonus(Lattitude)}\n"; }
 
         /// <summary>
         /// The function gets a longitube and turns it into a longitube at base 60
@@ -23,11 +26,11 @@ namespace BO
         /// <returns>The function returns a string of a number representing base 60</returns>
         public static string LongitudeBonus(double num)
         {
-            char dir = 'W';
+            char dir = 'S';
             if (num < 0)
                 num = -num;
             else
-                dir = 'E';
+                dir = 'N';
             int degrees = (int)num;
             num = num - degrees;
             int minutes = (int)(num * 60);
@@ -43,11 +46,11 @@ namespace BO
         /// <returns>The function returns a string of a number representing base 60</returns>
         public static string LattitudeBonus(double num)
         {
-            char dir = 'S';
+            char dir = 'W';
             if (num < 0)
                 num = -num;
             else
-                dir = 'N';
+                dir = 'E';
             int degrees = (int)num;
             num = num - degrees;
             int minutes = (int)(num * 60);
@@ -56,4 +59,5 @@ namespace BO
             return $"{degrees}° {minutes}' {Math.Round(seconds, 3)}\" {dir}";
         }
     }
+
 }
