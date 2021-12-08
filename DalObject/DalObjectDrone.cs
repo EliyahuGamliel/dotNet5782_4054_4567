@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using DO;
 using DalApi;
 
-namespace DalObject
+namespace Dal
 {
     /// <summary>
     /// Class partial DalObject - All functions running on the list of drones
     /// </summary>
-    public partial class DalObject : IDal
+    partial class DalObject : IDal
     {
         /// <summary>
         /// If everything is fine, add a drone to the list of drones

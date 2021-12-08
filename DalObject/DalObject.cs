@@ -1,13 +1,14 @@
 using System;
-using DO;
 using System.Collections.Generic;
+using DO;
+using DalApi;
 
-namespace DalObject
+namespace Dal
 {
     /// <summary>
     /// Class partial DalObject - All functions running on the list of customers
     /// </summary>
-    public partial class DalObject : IDAL.IDal
+    partial class DalObject : IDal
     {
         /// <summary>
         /// Ctor of DalObject - Uses the function Initialize() in order to initialise the data

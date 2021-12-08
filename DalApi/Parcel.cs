@@ -2,7 +2,6 @@ using System;
 
 namespace DO
 {
-    
         /// <summary>
         /// Defining the "Parcel" struct
         /// </summary>

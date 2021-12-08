@@ -1,8 +1,7 @@
 using System;
 
-namespace IDAL.DO
+namespace DO
 {
-
     /// <summary>
     /// Defining the "Customer" struct
     /// </summary>

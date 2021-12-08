@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using DO;
 using DalApi;
 
-namespace DalObject
+namespace Dal
 {
     /// <summary>
     /// Class partial DalObject - All functions running on the list of stations
