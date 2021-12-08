@@ -2,6 +2,9 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using BO;
+using BlApi;
+using DalApi;
+using DO;
 
 namespace BL
 {
@@ -12,7 +15,7 @@ namespace BL
         /// </summary>
         public BL()
         {
-            data = new DalObject.DalObject();
+            data = new Dal.DalObject();
 
             Avaliable = data.DroneElectricityUse()[0];
             WeightLight = data.DroneElectricityUse()[1];
@@ -30,7 +33,7 @@ namespace BL
                 DroneList dl = new DroneList();
                 dl.CLocation = new Location();
                 dl.Id = item.Id;
-                dl.MaxWeight = (WeightCategories)(int)item.MaxWeight;
+                dl.MaxWeight = (BO.WeightCategories)(int)item.MaxWeight;
                 dl.Model = item.Model;
 
                 IEnumerable<DO.Parcel> parcelslist = data.GetParcelByFilter(p => true);
@@ -44,18 +47,18 @@ namespace BL
                         //If the parcel was only associated
                         if (itemParcel.PickedUp == null)
                         {
-                            Customer customer = GetCustomerById(itemParcel.SenderId);
+                            BO.Customer customer = GetCustomerById(itemParcel.SenderId);
                             dl.CLocation = ReturnCloseStation(data.GetStationByFilter(s => true), customer.Location).Location;
                         }
                         //If the parcel was also collected
                         else
                         {
-                            Customer customer = GetCustomerById(itemParcel.SenderId);
+                            BO.Customer customer = GetCustomerById(itemParcel.SenderId);
                             dl.CLocation = customer.Location;
                         }
 
                         //The customer target of the parcel
-                        Customer customertar = GetCustomerById(itemParcel.TargetId);
+                        BO.Customer customertar = GetCustomerById(itemParcel.TargetId);
                         Location tarloc = new Location();
                         tarloc = customertar.Location;
 
@@ -103,7 +106,7 @@ namespace BL
                         //The drone is at a random customer Location
                         int cuIndex = rand.Next(0, counter);
                         CustomerList cu = customerslist.ElementAt(cuIndex);
-                        Customer c = GetCustomerById(cu.Id);
+                        BO.Customer c = GetCustomerById(cu.Id);
                         dl.CLocation = c.Location;
 
                         Location lst = new Location();

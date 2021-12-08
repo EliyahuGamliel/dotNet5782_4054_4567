@@ -22,7 +22,7 @@ namespace PL
     /// </summary>
     public partial class MainPage : Page
     {
-        static IBL.IBL bl;
+        static IBL bl;
         internal MainWindow mWindow;
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace PL
             //Set the value of "CurrentPageBonus" to be "MainPage" to allow the window to close - Bonus
             mainWindow.CurrentPageBonus = typeof(MainPage);
             InitializeComponent();
-            bl = new IBL.BL();
+            bl = new BL.BL();
             mWindow = mainWindow;
         }
 

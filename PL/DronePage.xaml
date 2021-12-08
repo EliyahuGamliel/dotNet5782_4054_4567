@@ -80,7 +80,7 @@
                     <Run FontWeight="Bold" Text="The current Location of Drone:"/>
                 </TextBlock>
             </StackPanel>
-            <StackPanel HorizontalAlignment="Left" Margin="302,58,0,0" VerticalAlignment="Top" Width="267" Height="429">
+            <StackPanel HorizontalAlignment="Left" Margin="302,58,0,0" VerticalAlignment="Top" Width="303" Height="429">
                 <TextBlock FontSize="20" FontFamily="/font/#Alef" FontWeight="Bold" Text="The parcel in Drone:" TextWrapping="Wrap"/>
                 <TextBlock FontSize="15" FontFamily="/font/#Fuzzy Bubbles" Name="parcelDrone" Text="" TextWrapping="Wrap"/>
             </StackPanel>

@@ -1,12 +1,13 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
-using BO;
 using System.Collections.Generic;
+using BO;
+using BlApi;
 
 namespace BL
 {
-    public partial class BL : BlApi.IBL
+    public partial class BL : IBL
     {
         /// <summary>
         /// If everything is fine, add a station to the list of stations, else throw exception
