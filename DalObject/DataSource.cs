@@ -11,7 +11,7 @@ namespace Dal
     /// <summary>
     /// All lists and data
     /// </summary>
-    public class DataSource
+    static class DataSource
     {
         readonly static Random rando = new Random();
         internal static List<Drone> Drones = new List<Drone>();

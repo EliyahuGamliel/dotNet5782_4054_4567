@@ -34,7 +34,7 @@ namespace PL
             //Set the value of "CurrentPageBonus" to be "MainPage" to allow the window to close - Bonus
             mainWindow.CurrentPageBonus = typeof(MainPage);
             InitializeComponent();
-            bl = new BL.BL();
+            bl = BlApi.BlFactory.GetBl();
             mWindow = mainWindow;
         }
 

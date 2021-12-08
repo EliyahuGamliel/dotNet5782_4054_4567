@@ -8,8 +8,16 @@ using DalApi;
 
 namespace BL
 {
-    public partial class BL : IBL
+    public sealed partial class BL : IBL
     {
+
+        class Nested {
+            static Nested() { }
+            internal static readonly BL instance = new BL();
+        }
+        
+        public static BL Instance { get { return Nested.instance; } }
+
         static Random rand = new Random();
         DalApi.IDal data;
         List<DroneList> dronesList = new List<DroneList>();

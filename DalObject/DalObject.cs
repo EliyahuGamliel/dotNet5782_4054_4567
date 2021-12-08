@@ -8,12 +8,23 @@ namespace Dal
     /// <summary>
     /// Class partial DalObject - All functions running on the list of customers
     /// </summary>
-    partial class DalObject : IDal
+    sealed partial class DalObject : IDal
     {
+
+        class Nested
+        {
+            static Nested(){ }
+            internal static readonly DalObject instance = new DalObject();
+        }
+
         /// <summary>
         /// Ctor of DalObject - Uses the function Initialize() in order to initialise the data
         /// </summary>
         public DalObject() { DataSource.Initialize(); }
+
+
+        public static DalObject Instance { get { return Nested.instance; } }
+
 
         /// <summary>
         /// Checks if the ״id״ already exists, if there is an error return

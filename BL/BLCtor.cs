@@ -15,7 +15,7 @@ namespace BL
         /// </summary>
         public BL()
         {
-            data = new Dal.DalObject();
+            data = DalApi.DalFactory.GetDal("Object");
 
             Avaliable = data.DroneElectricityUse()[0];
             WeightLight = data.DroneElectricityUse()[1];
