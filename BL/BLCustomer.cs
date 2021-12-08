@@ -3,6 +3,8 @@ using System.Linq;
 using System.Collections.Generic;
 using BO;
 using BlApi;
+using DO;
+using DalApi;
 
 namespace BL
 {
@@ -13,7 +15,7 @@ namespace BL
         /// </summary>
         /// <param name="c">Object of customer to add</param>
         /// <returns>Notice if the addition was successful</returns>
-        public string AddCustomer(Customer c){
+        public string AddCustomer(BO.Customer c){
             try {
                 CheckValidId(c.Id);
                 DO.Customer cu = new DO.Customer();
@@ -27,7 +29,7 @@ namespace BL
                 return "The addition was successful\n";
             }
             catch (DO.IdExistException) {
-                throw new IdExistException(c.Id);
+                throw new BO.IdExistException(c.Id);
             }     
         }
 
@@ -51,10 +53,10 @@ namespace BL
                 return "The update was successful\n"; 
             }
             catch (DO.IdNotExistException) {
-                throw new IdNotExistException(id);
+                throw new BO.IdNotExistException(id);
             }
             catch (DO.PhoneExistException) {
-                throw new PhoneExistException(phoneCustomer);
+                throw new BO.PhoneExistException(phoneCustomer);
             }
         }
 
@@ -63,10 +65,10 @@ namespace BL
         /// </summary>
         /// <param name="Id">The id of the requested customer</param>
         /// <returns>The object of the requested customer</returns>
-        public Customer GetCustomerById(int Id) {
+        public BO.Customer GetCustomerById(int Id) {
             try {
                 DO.Customer chosenc = data.GetCustomerById(Id); 
-                Customer cu = new Customer();
+                BO.Customer cu = new BO.Customer();
                 cu.ForCustomer = new List<ParcelInCustomer>();
                 cu.FromCustomer = new List<ParcelInCustomer>();
                 cu.Location = new Location();
@@ -81,8 +83,8 @@ namespace BL
                     ParcelInCustomer pc = new ParcelInCustomer();
                     pc.CParcel = new CustomerInParcel();
                     pc.Id = item.Id;
-                    pc.Priority = (Priorities)(int)item.Priority;
-                    pc.Weight = (WeightCategories)(int)item.Weight;
+                    pc.Priority = (BO.Priorities)(int)item.Priority;
+                    pc.Weight = (BO.WeightCategories)(int)item.Weight;
                     pc.Status = (Statuses)ReturnStatus(item);
 
                     CustomerInParcel cp = new CustomerInParcel();
@@ -99,8 +101,8 @@ namespace BL
                     ParcelInCustomer pc = new ParcelInCustomer();
                     pc.CParcel = new CustomerInParcel();
                     pc.Id = item.Id;
-                    pc.Priority = (Priorities)(int)item.Priority;
-                    pc.Weight = (WeightCategories)(int)item.Weight;
+                    pc.Priority = (BO.Priorities)(int)item.Priority;
+                    pc.Weight = (BO.WeightCategories)(int)item.Weight;
                     pc.Status = (Statuses)ReturnStatus(item);
 
                     CustomerInParcel cp = new CustomerInParcel();
@@ -114,7 +116,7 @@ namespace BL
                 return cu;
             }
             catch (DO.IdNotExistException) {
-                throw new IdNotExistException(Id);
+                throw new BO.IdNotExistException(Id);
             }
         }
 

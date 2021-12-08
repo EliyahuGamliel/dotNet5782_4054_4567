@@ -4,6 +4,8 @@ using System.Linq.Expressions;
 using System.Collections.Generic;
 using BO;
 using BlApi;
+using DO;
+using DalApi;
 
 namespace BL
 {
@@ -14,7 +16,7 @@ namespace BL
         /// </summary>
         /// <param name="s">Object of station to add</param>
         /// <returns>Notice if the addition was successful</returns>
-        public string AddStation(Station s) {
+        public string AddStation(BO.Station s) {
             try {
                 CheckValidId(s.Id);
                 DO.Station st = new DO.Station();
@@ -30,7 +32,7 @@ namespace BL
                 return "The addition was successful\n";
             }
             catch (DO.IdExistException) {
-                throw new IdExistException(s.Id);
+                throw new BO.IdExistException(s.Id);
             }     
         }
         
@@ -55,7 +57,7 @@ namespace BL
                 return "The update was successful\n";
             }
             catch (DO.IdNotExistException) {
-                throw new IdNotExistException(id);
+                throw new BO.IdNotExistException(id);
             }
         }
 
@@ -64,21 +66,21 @@ namespace BL
         /// </summary>
         /// <param name="Id">The id of the requested station</param>
         /// <returns>The object of the requested station</returns>
-        public Station GetStationById(int Id) {
+        public BO.Station GetStationById(int Id) {
             try {
                 DO.Station chosens = data.GetStationById(Id);
-                Station st = new Station();
+                BO.Station st = new BO.Station();
                 st.Id = chosens.Id;
                 st.Name = chosens.Name;
                 st.ChargeSlots = chosens.ChargeSlots;
                 st.Location = new Location();
                 st.Location.Longitude = chosens.Longitude;
                 st.Location.Lattitude = chosens.Lattitude;
-                st.DCharge = new List<DroneCharge>();
+                st.DCharge = new List<BO.DroneCharge>();
                 foreach (var item in dronesList.FindAll(d => d.Status == DroneStatuses.Maintenance)) {
                     //if drone is in charge in this station
                     if (item.CLocation.Lattitude == st.Location.Lattitude && item.CLocation.Longitude == st.Location.Longitude) {
-                        DroneCharge dc = new DroneCharge();
+                        BO.DroneCharge dc = new BO.DroneCharge();
                         dc.Id = item.Id;
                         dc.Battery = item.Battery;
                         st.DCharge.Add(dc);
@@ -87,7 +89,7 @@ namespace BL
                 return st;
             }
             catch (DO.IdNotExistException) {
-                throw new IdNotExistException(Id);
+                throw new BO.IdNotExistException(Id);
             }
         }
 

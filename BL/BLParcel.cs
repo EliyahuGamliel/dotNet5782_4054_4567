@@ -3,6 +3,8 @@ using System.Linq;
 using System.Collections.Generic;
 using BO;
 using BlApi;
+using DO;
+using DalApi;
 
 namespace BL
 {
@@ -15,7 +17,7 @@ namespace BL
         /// <param name="SenderId">The ID of the sender of the parcel</param>
         /// <param name="TargetId">The ID of the target of the parcel</param>
         /// <returns>Notice if the addition was successful</returns>
-        public string AddParcel(Parcel p, int SenderId, int TargetId){
+        public string AddParcel(BO.Parcel p, int SenderId, int TargetId){
             try {
                 if (SenderId == TargetId)
                     throw new SameCustomerException(TargetId);
@@ -32,10 +34,10 @@ namespace BL
                 return $"The number of parcel: {Id-1}\n";
             }
             catch (DO.IdExistException) {
-                throw new IdExistException(p.Id);
+                throw new BO.IdExistException(p.Id);
             }
             catch (DO.IdNotExistException exp) {
-                throw new IdNotExistException(exp.id);
+                throw new BO.IdNotExistException(exp.id);
             }   
         }
         
@@ -44,22 +46,22 @@ namespace BL
         /// </summary>
         /// <param name="Id">The id of the requested parcel</param>
         /// <returns>The object of the requested parcel</returns>
-            public Parcel GetParcelById(int Id) {
+            public BO.Parcel GetParcelById(int Id) {
             try {
                 DO.Parcel chosenp = data.GetParcelById(Id);
-                Parcel pa = new Parcel();
+                BO.Parcel pa = new BO.Parcel();
                 pa.Id = chosenp.Id;
                 pa.PickedUp = chosenp.PickedUp;
-                pa.Priority = (Priorities)(int)chosenp.Priority;
+                pa.Priority = (BO.Priorities)(int)chosenp.Priority;
                 pa.Requested = chosenp.Requested;
                 pa.Scheduled = chosenp.Scheduled;
-                pa.Weight = (WeightCategories)(int)chosenp.Weight;
+                pa.Weight = (BO.WeightCategories)(int)chosenp.Weight;
                 pa.Delivered = chosenp.Delivered;
                 //If a drone is associated with a parcel
                 if (chosenp.DroneId != 0)
                 {
                     pa.Drone = new DroneInParcel();
-                    Drone d = GetDroneById(chosenp.DroneId);
+                    BO.Drone d = GetDroneById(chosenp.DroneId);
                     pa.Drone.Battery = d.Battery;
                     pa.Drone.Id = d.Id;
                     pa.Drone.CLocation = d.CLocation;
@@ -82,7 +84,7 @@ namespace BL
                 return pa;
             }
             catch (DO.IdNotExistException) {
-                throw new IdNotExistException(Id);
+                throw new BO.IdNotExistException(Id);
             }
         }
 
@@ -113,10 +115,10 @@ namespace BL
             foreach (var item in listParcels) {
                 ParcelList pa = new ParcelList();
                 pa.Id = item.Id;
-                pa.Priority = (Priorities)(int)item.Priority;
+                pa.Priority = (BO.Priorities)(int)item.Priority;
                 pa.SenderId = item.SenderId;
                 pa.TargetId = item.TargetId;
-                pa.Weight = (WeightCategories)(int)item.Weight;
+                pa.Weight = (BO.WeightCategories)(int)item.Weight;
                 pa.Status = (Statuses)ReturnStatus(item);
                 parcel.Add(pa);
             }

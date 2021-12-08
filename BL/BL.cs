@@ -3,6 +3,8 @@ using System.Linq;
 using System.Collections.Generic;
 using BO;
 using BlApi;
+using DO;
+using DalApi;
 
 namespace BL
 {
@@ -29,7 +31,7 @@ namespace BL
             int index = dronesList.IndexOf(d);
             
             //Removed all the parcels that cann't assign to the Drone
-            IEnumerable<DO.Parcel> parcelslist = data.GetParcelByFilter(p => ((WeightCategories)p.Weight <= d.MaxWeight) && 
+            IEnumerable<DO.Parcel> parcelslist = data.GetParcelByFilter(p => ((BO.WeightCategories)p.Weight <= d.MaxWeight) && 
                 (ReturnBattery(3, d.CLocation, GetCustomerById(p.SenderId).Location) +
                 ReturnBattery((int)p.Weight, GetCustomerById(p.SenderId).Location, GetCustomerById(p.TargetId).Location) +
                 ReturnBattery(3, GetCustomerById(p.TargetId).Location, ReturnCloseStation(data.GetStationByFilter(s => true), GetCustomerById(p.TargetId).Location).Location)
@@ -76,7 +78,7 @@ namespace BL
         {
             CheckNotExistId(dronesList, id);
             DroneList d = dronesList.Find(dr => dr.Id == id);
-            Drone chosendrone = GetDroneById(id);
+            BO.Drone chosendrone = GetDroneById(id);
             int index = dronesList.IndexOf(d);
 
             DO.Parcel chosenp = data.GetParcelById(d.ParcelId);
@@ -101,7 +103,7 @@ namespace BL
         {
             CheckNotExistId(dronesList, id);
             DroneList d = dronesList.Find(dr => dr.Id == id);
-            Drone chosendrone = GetDroneById(id);
+            BO.Drone chosendrone = GetDroneById(id);
             int index = dronesList.IndexOf(d);
 
             DO.Parcel chosenp = data.GetParcelById(d.ParcelId);

@@ -3,6 +3,8 @@ using System.Linq;
 using System.Collections.Generic;
 using BO;
 using BlApi;
+using DO;
+using DalApi;
 
 namespace BL
 {
@@ -49,7 +51,7 @@ namespace BL
         /// <param name="s">list of Station</param>
         /// <param name="drone">Object of Drone's Location</param>
         /// <returns>Returns a station object</returns>
-        private Station ReturnCloseStation(IEnumerable<DO.Station> s, Location drone)
+        private BO.Station ReturnCloseStation(IEnumerable<DO.Station> s, Location drone)
         {
             DO.Station st = s.OrderBy(sta => DistanceTo(ReturnLocation(sta), drone)).First();
             return GetStationById(st.Id);
@@ -112,7 +114,7 @@ namespace BL
                 if (idobject == id)
                     return;
             }
-            throw new IdNotExistException(id);
+            throw new BO.IdNotExistException(id);
         }
 
        /// <summary>

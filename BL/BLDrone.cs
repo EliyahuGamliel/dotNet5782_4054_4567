@@ -3,6 +3,8 @@ using System.Linq;
 using System.Collections.Generic;
 using BO;
 using BlApi;
+using DO;
+using DalApi;
 
 namespace BL
 {
@@ -47,7 +49,7 @@ namespace BL
                 return "The addition was successful\n";
             }
             catch (DO.IdExistException) {
-                throw new IdExistException(d.Id);
+                throw new BO.IdExistException(d.Id);
             }
         }
 
@@ -69,7 +71,7 @@ namespace BL
                 return "The update was successful\n";
             }
             catch (DO.IdNotExistException) {
-                throw new IdNotExistException(id);
+                throw new BO.IdNotExistException(id);
             }
         }
 
@@ -85,7 +87,7 @@ namespace BL
             int index = dronesList.IndexOf(d);
             double battery = CheckDroneCannotSend(data.GetStationByFilter(s => true).Where(s => s.ChargeSlots > 0), d);
             d.Status = DroneStatuses.Maintenance;
-            Station st = new Station();
+            BO.Station st = new BO.Station();
             st = ReturnCloseStation(data.GetStationByFilter(s => true), d.CLocation);
             d.CLocation = st.Location;
             d.Battery = d.Battery - battery;
@@ -122,7 +124,7 @@ namespace BL
                 d.Battery = 100;
             dronesList[index] = d;
 
-            Station st = new Station();
+            BO.Station st = new BO.Station();
             st = ReturnCloseStation(data.GetStationByFilter(s => true), d.CLocation);
             int chargeSlots = ChargeSlotsCatched(st.Id) + st.ChargeSlots;
 
@@ -140,9 +142,9 @@ namespace BL
         /// </summary>
         /// <param name="Id">The id of the requested drone</param>
         /// <returns>The object of the requested drone</returns>
-        public Drone GetDroneById(int Id) {
+        public BO.Drone GetDroneById(int Id) {
             CheckNotExistId(dronesList, Id);
-            Drone dr = new Drone();
+            BO.Drone dr = new BO.Drone();
             DroneList dl = dronesList.Find(d => d.Id == Id);           
             dr.Id = dl.Id;
             dr.MaxWeight = dl.MaxWeight;
@@ -157,8 +159,8 @@ namespace BL
                 DO.Parcel parcel = data.GetParcelByFilter(p => p.Id == dl.ParcelId).First();
                 //If the parcel associated with the drone
                 pt.Id = parcel.Id;
-                pt.Priority = (Priorities)(int)parcel.Priority;
-                pt.Weight = (WeightCategories)(int)parcel.Weight;
+                pt.Priority = (BO.Priorities)(int)parcel.Priority;
+                pt.Weight = (BO.WeightCategories)(int)parcel.Weight;
                 pt.Status = false;
                 //If the parcel has already been collected
                 if (parcel.PickedUp != null)
@@ -212,8 +214,8 @@ namespace BL
             else if (weight is null or "All")
                 return dronesList.FindAll(d => d.Status == (DroneStatuses)status);
             else if (status is null or "All")
-                return dronesList.FindAll(d => d.MaxWeight == (WeightCategories)weight);
-            return dronesList.FindAll(d => d.Status == (DroneStatuses)status && d.MaxWeight == (WeightCategories)weight);   
+                return dronesList.FindAll(d => d.MaxWeight == (BO.WeightCategories)weight);
+            return dronesList.FindAll(d => d.Status == (DroneStatuses)status && d.MaxWeight == (BO.WeightCategories)weight);   
         }
     }
 }

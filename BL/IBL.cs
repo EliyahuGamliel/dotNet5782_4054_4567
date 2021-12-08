@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using BO;
+using DO;
+using DalApi;
 
 namespace BlApi
 {
@@ -14,7 +16,7 @@ namespace BlApi
         /// </summary>
         /// <param name="s">Object of station to add</param>
         /// <returns>Notice if the addition was successful</returns>
-        string AddStation(Station s);
+        string AddStation(BO.Station s);
 
         /// <summary>
         /// If everything is fine, add a drone to the list of drones, else throw exception
@@ -31,14 +33,14 @@ namespace BlApi
         /// <param name="SenderId">The ID of the sender of the parcel</param>
         /// <param name="TargetId">The ID of the target of the parcel</param>
         /// <returns>Notice if the addition was successful</returns>
-        string AddParcel(Parcel p, int SenderId, int TargetId);
+        string AddParcel(BO.Parcel p, int SenderId, int TargetId);
 
         /// <summary>
         /// If everything is fine, add a customer to the list of customers, else throw exception
         /// </summary>
         /// <param name="c">Object of customer to add</param>
         /// <returns>Notice if the addition was successful</returns>
-        string AddCustomer(Customer c);
+        string AddCustomer(BO.Customer c);
 
         /// If all is fine, update the drone in a list of drones, else throw exception
         /// </summary>
@@ -98,35 +100,35 @@ namespace BlApi
         /// <param name="idDrone">ID of the drone relese from charging</param>
         /// <param name="time">The time the drone was in charge (in hours)</param>
         /// <returns>Notice if the addition was successful</returns>
-        string ReleasDrone(int id, double time); 
+        string ReleasDrone(int id, double time);
 
         /// <summary>
         /// If all is fine, return a parcel object by id, else throw exception
         /// </summary>
         /// <param name="Id">The id of the requested parcel</param>
         /// <returns>The object of the requested parcel</returns>
-        Parcel GetParcelById(int Id);
+        BO.Parcel GetParcelById(int Id);
 
         /// <summary>
         /// If all is fine, return a drone object by id, else throw exception
         /// </summary>
         /// <param name="Id">The id of the requested drone</param>
         /// <returns>The object of the requested drone</returns>
-        Drone GetDroneById(int Id);
+        BO.Drone GetDroneById(int Id);
 
         /// <summary>
         /// If all is fine, return a customer object by id
         /// </summary>
         /// <param name="Id">The id of the requested customer</param>
         /// <returns>The object of the requested customer</returns>
-        Customer GetCustomerById(int Id);
+        BO.Customer GetCustomerById(int Id);
 
         /// <summary>
         /// If all is fine, return a station object by id, else throw exception
         /// </summary>
         /// <param name="Id">The id of the requested station</param>
         /// <returns>The object of the requested station</returns>
-        Station GetStationById(int Id);
+        BO.Station GetStationById(int Id);
 
         /// <summary>
         /// Returns the list of stations
