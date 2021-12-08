@@ -59,5 +59,4 @@ namespace DO
             return $"{degrees}° {minutes}' {Math.Round(seconds, 3)}\" {dir}";
         }
     }
-
 }

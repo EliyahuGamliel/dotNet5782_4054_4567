@@ -16,5 +16,4 @@ namespace DO
         public override string ToString()
         { return $"droneId: {DroneId}\nStationld: {StationId}\n"; }
     }
-
 }

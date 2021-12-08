@@ -3,8 +3,6 @@ using System.Collections.Generic;
 
 namespace BO
 {
-
-
     /// <summary>
     /// Defining the "Customer" class
     /// </summary>
@@ -30,6 +28,5 @@ namespace BO
                 str += item;
             return str;
         }
-
     }
 }

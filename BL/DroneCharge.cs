@@ -16,5 +16,4 @@ namespace BO
         public override string ToString()
         { return $"\n    Id: {Id}\n    Battery: {Math.Round(Battery, 3)}%\n"; }
     }
-
 }

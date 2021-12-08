@@ -2,7 +2,6 @@ using System;
 
 namespace BO
 {
-
     /// <summary>
     /// Defining the "CustomerInParcel" class
     /// </summary>
@@ -17,5 +16,4 @@ namespace BO
         public override string ToString()
         { return $"\n        Id: {Id}\n        Name: {Name}\n"; }
     }
-
 }

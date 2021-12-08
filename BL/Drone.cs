@@ -21,5 +21,4 @@ namespace BO
         public override string ToString()
         { return $"Id: {Id}\nBattery: {Math.Round(Battery, 3)}%\nModel: {Model}\nStatus: {Status}\nMaxWeight: {MaxWeight}\nLocation: {CLocation}Parcel In Transfer: {PTransfer}"; }
     }
-
 }

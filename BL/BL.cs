@@ -1,14 +1,15 @@
 using System;
 using System.Linq;
-using IBL.BO;
 using System.Collections.Generic;
+using BO;
+using BlApi;
 
-namespace IBL
+namespace BL
 {
     public partial class BL : IBL
     {
         static Random rand = new Random();
-        IDAL.IDal data;
+        DalApi.IDal data;
         List<DroneList> dronesList = new List<DroneList>();
         double Avaliable;
         double WeightLight;
