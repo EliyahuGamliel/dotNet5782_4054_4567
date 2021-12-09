@@ -10,21 +10,21 @@ namespace Dal
     /// </summary>
     sealed partial class DalObject : IDal
     {
+        //class Nested
+        //{
+        //    static Nested(){ }
+        //    internal static readonly DalObject instance = new DalObject();
+        //}
+        static readonly DalObject instance = new DalObject();
 
-        class Nested
-        {
-            static Nested(){ }
-            internal static readonly DalObject instance = new DalObject();
-        }
+        public static DalObject Instance { get => instance; }
 
         /// <summary>
         /// Ctor of DalObject - Uses the function Initialize() in order to initialise the data
         /// </summary>
-        public DalObject() { DataSource.Initialize(); }
+        DalObject() { }
 
-
-        public static DalObject Instance { get { return Nested.instance; } }
-
+        static DalObject() { DataSource.Initialize(); }
 
         /// <summary>
         /// Checks if the ״id״ already exists, if there is an error return

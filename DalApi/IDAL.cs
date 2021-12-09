@@ -9,6 +9,7 @@ namespace DalApi
     /// </summary>
     public interface IDal
     {
+        #region Addition
         /// <summary>
         /// If everything is fine, add a station to the list of stations
         /// </summary>
@@ -38,7 +39,9 @@ namespace DalApi
         /// </summary>
         /// <param name="d">Object of droneCharge to add</param>
         void AddDroneCharge(DroneCharge d);
+        #endregion
 
+        #region Updating
         /// <summary>
         /// If all is fine, update the drone in a list of drones
         /// </summary>
@@ -63,13 +66,18 @@ namespace DalApi
         /// </summary>
         /// <param name="p">Object of parcel to update</param>
         void UpdateParcel(Parcel p);
+        #endregion
+
+        #region Delete
 
         /// <summary>
         /// If everything is fine, delete a droneCharge from the list of dronesCharge
         /// </summary>
         /// <param name="d">Object of droneCharge to delete</param>
         void DeleteDroneCharge(DroneCharge d);
+        #endregion
 
+        #region Getting
         /// <summary>
         /// If all is fine, return a customer object by id
         /// </summary>
@@ -137,6 +145,8 @@ namespace DalApi
         /// Returns an array with all fields of power consumption
         /// </summary>
         /// <returns>Returns an array with all fields of power consumption</returns>
+        #endregion
+
         double[] DroneElectricityUse();
     }
 }
