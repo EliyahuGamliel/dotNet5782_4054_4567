@@ -5,13 +5,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 
+
 namespace DalApi
 {
     static public class DalFactory
     {
         static public IDal GetDal(string typeDL)
         {
-            Type type = Type.GetType($"Dal.DalObject");
+            try
+            {
+                Assembly.Load("DalObject.dll");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            Type type = Type.GetType("Dal.DalObject, DalOblect.dll");
             switch(typeDL)
             {
                 case "Object":

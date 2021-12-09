@@ -14,12 +14,11 @@ namespace BL
         class Nested {
             static Nested() { }
             internal static readonly BL instance = new BL();
-        }
         
         public static BL Instance { get { return Nested.instance; } }
 
         static Random rand = new Random();
-        DalApi.IDal data;
+        IDal data;
         List<DroneList> dronesList = new List<DroneList>();
         double Avaliable;
         double WeightLight;
