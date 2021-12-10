@@ -16,7 +16,6 @@ namespace BL
         public BL()
         {
             data = DalApi.DalFactory.GetDal("Object");
-
             Avaliable = data.DroneElectricityUse()[0];
             WeightLight = data.DroneElectricityUse()[1];
             WeightMedium = data.DroneElectricityUse()[2];
@@ -65,6 +64,7 @@ namespace BL
                         Location staloc = new Location();
                         staloc = ReturnCloseStation(data.GetStationByFilter(s => true), tarloc).Location;
 
+                        dl.Battery = new double();
                         //Minimum battery to finish the shipment
                         minbattery = ReturnBattery((int)itemParcel.Weight, dl.CLocation, tarloc) + ReturnBattery(3, dl.CLocation, staloc);
                         dl.Battery = rand.NextDouble() + rand.Next((int)minbattery + 1, 100);

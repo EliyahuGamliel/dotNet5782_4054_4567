@@ -22,8 +22,6 @@ namespace Dal
         /// <summary>
         /// Ctor of DalObject - Uses the function Initialize() in order to initialise the data
         /// </summary>
-        DalObject() { }
-
         static DalObject() { DataSource.Initialize(); }
 
         /// <summary>

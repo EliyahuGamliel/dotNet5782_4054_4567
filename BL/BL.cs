@@ -10,14 +10,19 @@ namespace BL
 {
     public sealed partial class BL : IBL
     {
-
-        class Nested {
+        /*
+        class Nested
+        {
             static Nested() { }
             internal static readonly BL instance = new BL();
-        
-        public static BL Instance { get { return Nested.instance; } }
+        }*/
 
-        static Random rand = new Random();
+
+        static readonly BL instance = new BL();
+
+        public static BL Instance { get => instance;  }
+
+        Random rand = new Random();
         IDal data;
         List<DroneList> dronesList = new List<DroneList>();
         double Avaliable;
