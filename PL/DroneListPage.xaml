@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:PL"
       mc:Ignorable="d" 
       d:DesignHeight="640" d:DesignWidth="800"
-      Title="DroneListPage" >
+      Title="DroneListPage">
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
@@ -63,7 +63,7 @@
             </Button>
         </Grid>
         <MediaElement x:Name="Gif" Height="auto" HorizontalAlignment="Right"  MediaEnded="Again_MediaEnded" Source="img\droneList.gif" LoadedBehavior="Play" UnloadedBehavior="Manual" Margin="150,0,0,0" Grid.Row="1"/>
-        <ListView Background="LightCyan" FontFamily="/font/#Alef" x:Name="DroneListView" Height="auto" MouseDoubleClick="DroneActions" Margin="0,0,560,0" Grid.Row="1">
+        <ListView Background="LightCyan" FontFamily="/font/#Alef" x:Name="DroneListView" Width="auto" Grid.Row="1" Height="auto" MouseDoubleClick="DroneActions" Margin="0,0,565,0">
             <ListView.Resources>
                 <Style TargetType="GridViewColumnHeader">
                     <Setter Property="Visibility" Value="Hidden"/>
@@ -71,7 +71,7 @@
             </ListView.Resources>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn/>
+                    <GridViewColumn Width="auto"/>
                 </GridView>
             </ListView.View>
         </ListView>

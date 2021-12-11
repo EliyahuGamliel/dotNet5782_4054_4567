@@ -10,17 +10,35 @@ namespace BL
 {
     public sealed partial class BL : IBL
     {
-        /*
+        /// <summary>
+        /// Ctor for the compiler
+        /// </summary>
+        static BL() { }
+
         class Nested
         {
+            internal static volatile BL _instance = null;
+            internal static readonly object _lock = new object();
             static Nested() { }
-            internal static readonly BL instance = new BL();
-        }*/
+        }
 
-
-        static readonly BL instance = new BL();
-
-        public static BL Instance { get => instance;  }
+        public static BL Instance
+        {
+            get
+            {
+                if (Nested._instance == null)
+                {
+                    lock(Nested._lock)
+                    {
+                        if (Nested._instance == null)
+                        {
+                            Nested._instance = new BL();
+                        }
+                    }
+                }
+                return Nested._instance;
+            }
+        }
 
         Random rand = new Random();
         IDal data;

@@ -13,21 +13,12 @@ namespace DalApi
         static public IDal GetDal(string typeDL)
         {
             string path = AppDomain.CurrentDomain.BaseDirectory;
-            Assembly assembly;
-            try
-            {
-                assembly = Assembly.LoadFrom(path + "DalObject.dll");
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            Assembly assembly = Assembly.LoadFrom(path + "DalObject.dll");
             Type type = assembly.GetType("Dal.DalObject");
             switch(typeDL)
             {
                 case "Object":
-                    return (IDal)Activator.CreateInstance(type);
+                    return (IDal)type.GetProperty("Instance").GetValue(null, null);
                 case "Xml":
                     return null;
                 default:
