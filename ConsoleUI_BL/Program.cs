@@ -181,7 +181,7 @@ namespace ConsoleUI_BL
 
                 //For adding a station
                 case Adding.Station:
-                    Station s = new Station();
+                    a s = new a();
                     s.Location = new Location();
                     s.DCharge = new List<DroneCharge>();
                     Console.WriteLine("Enter Station Id: ");
