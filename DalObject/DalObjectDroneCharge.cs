@@ -15,6 +15,7 @@ namespace Dal
         /// </summary>
         /// <param name="d">Object of droneCharge to add</param>
         public void AddDroneCharge(DroneCharge d) {
+  
             DataSource.DroneCharges.Add(d);
         }
 

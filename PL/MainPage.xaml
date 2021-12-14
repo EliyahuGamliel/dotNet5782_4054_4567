@@ -18,5 +18,26 @@
                 </Style>
             </Button.Resources>
         </Button>
+        <Button Background="LightSkyBlue" FontFamily="/font/#Alef" FontSize="35" FontWeight="Bold" Content="For Drone List View Click Here" Click="ShowDronesButton_Click" Margin="0,0,0,514">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="0,0,50,50"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button Background="LightSkyBlue" FontFamily="/font/#Alef" FontSize="35" FontWeight="Bold" Content="For Drone List View Click Here" Click="ShowDronesButton_Click" Margin="0,0,0,514">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="0,0,50,50"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button Background="LightSkyBlue" FontFamily="/font/#Alef" FontSize="35" FontWeight="Bold" Content="For Drone List View Click Here" Click="ShowDronesButton_Click" Margin="0,0,0,514">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="0,0,50,50"/>
+                </Style>
+            </Button.Resources>
+        </Button>
     </Grid>
 </Page>

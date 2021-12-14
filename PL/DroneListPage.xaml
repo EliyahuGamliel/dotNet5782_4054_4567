@@ -54,6 +54,13 @@
                     </Style>
                 </Button.Resources>
             </Button>
+            <Button BorderBrush="Black" Margin="10,8,10,8" Background="Red" FontFamily="font/#Alef"  FontSize="18" Content="Click to Change Display" Grid.Column="1" Click="Exit_Click">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="25,25,25,25"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
             <Button BorderBrush="Black" Margin="15,8,15,8" Background="Red" FontFamily="font/#Alef"  FontSize="18" Content="Click to Reset Filter" Grid.Column="0" Click="Reset_Click">
                 <Button.Resources>
                     <Style TargetType="Border">

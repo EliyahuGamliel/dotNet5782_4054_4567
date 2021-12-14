@@ -43,6 +43,7 @@ namespace BL
                 DO.DroneCharge dc = new DO.DroneCharge();
                 dc.DroneId = d.Id;
                 dc.StationId = idStation;
+                dc.Start = DateTime.Now;
                 data.AddDroneCharge(dc);
 
                 UpdateStation(idStation, "", chargeSlots);
@@ -97,6 +98,7 @@ namespace BL
             DO.DroneCharge dc = new DO.DroneCharge();
             dc.DroneId = d.Id;
             dc.StationId = st.Id;
+            dc.Start = DateTime.Now;
             data.AddDroneCharge(dc);
             return "The update was successful\n";
         }
@@ -109,8 +111,6 @@ namespace BL
         /// <returns>Notice if the addition was successful</returns>
         public String ReleasDrone(int idDrone, double time){
             CheckNotExistId(dronesList, idDrone);
-            if (time < 0)
-                throw new TimeNotLegal(time);
 
             DroneList d = dronesList.Find(dr => idDrone == dr.Id);
             int index = dronesList.IndexOf(d);
@@ -119,7 +119,8 @@ namespace BL
                 throw new DroneCannotRelese();
 
             d.Status = DroneStatuses.Available;
-            d.Battery = d.Battery + time * ChargingRate;
+            DO.DroneCharge dc = getDroneChargeById(d.Id);
+            d.Battery = d.Battery +  * ChargingRate;
             if (d.Battery > 100)
                 d.Battery = 100;
             dronesList[index] = d;
