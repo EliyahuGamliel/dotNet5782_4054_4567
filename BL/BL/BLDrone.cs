@@ -109,7 +109,7 @@ namespace BL
         /// <param name="idDrone">ID of the drone relese from charging</param>
         /// <param name="time">The time the drone was in charge (in hours)</param>
         /// <returns>Notice if the addition was successful</returns>
-        public String ReleasDrone(int idDrone, double time){
+        public String ReleasDrone(int idDrone){
             CheckNotExistId(dronesList, idDrone);
 
             DroneList d = dronesList.Find(dr => idDrone == dr.Id);
@@ -119,8 +119,9 @@ namespace BL
                 throw new DroneCannotRelese();
 
             d.Status = DroneStatuses.Available;
-            DO.DroneCharge dc = getDroneChargeById(d.Id);
-            d.Battery = d.Battery +  * ChargingRate;
+            DO.DroneCharge dc = data.GetDroneChargeById(d.Id);
+            TimeSpan time = DateTime.Now - dc.Start;
+            d.Battery = d.Battery +  (time.Minutes * ChargingRate);
             if (d.Battery > 100)
                 d.Battery = 100;
             dronesList[index] = d;
@@ -129,9 +130,6 @@ namespace BL
             st = ReturnCloseStation(data.GetStationByFilter(s => true), d.CLocation);
             int chargeSlots = ChargeSlotsCatched(st.Id) + st.ChargeSlots;
 
-            DO.DroneCharge dc = new DO.DroneCharge();
-            dc.DroneId = d.Id;
-            dc.StationId = st.Id;
             data.DeleteDroneCharge(dc);
 
             UpdateStation(st.Id, "", chargeSlots);

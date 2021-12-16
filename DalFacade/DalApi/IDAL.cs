@@ -85,6 +85,8 @@ namespace DalApi
         /// <returns>The object of the requested customer</returns>
         Customer GetCustomerById(int Id);
 
+        DroneCharge GetDroneChargeById(int Id);
+
         /// <summary>
         /// If all is fine, return a drone object by id
         /// </summary>

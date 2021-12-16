@@ -29,6 +29,13 @@ namespace Dal
             DataSource.DroneCharges.Remove(d);
         }
 
+        public DroneCharge GetDroneChargeById(int Id)
+        {
+            CheckNotExistId(DataSource.DroneCharges, Id);
+            DroneCharge dC = DataSource.DroneCharges.Find(d => Id == d.DroneId);
+            return dC;
+        }
+
         /// <summary>
         /// Returns all the drone charges that fit the filter
         /// </summary>
