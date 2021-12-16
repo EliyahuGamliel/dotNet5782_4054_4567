@@ -121,7 +121,7 @@ namespace BL
             d.Status = DroneStatuses.Available;
             DO.DroneCharge dc = data.GetDroneChargeById(d.Id);
             TimeSpan time = DateTime.Now - dc.Start;
-            d.Battery = d.Battery +  (time.Minutes * ChargingRate);
+            d.Battery = d.Battery +  (time.TotalSeconds * ChargingRate);
             if (d.Battery > 100)
                 d.Battery = 100;
             dronesList[index] = d;

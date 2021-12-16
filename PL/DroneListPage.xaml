@@ -31,7 +31,7 @@
                       SelectionChanged="Selector_SelectionChanged"/>
             </StackPanel>
             <Label FontFamily="font/#Alef" FontSize="48" Content="IC &amp; EG" Grid.Column="0" FontWeight="Bold"/>
-            <Button BorderBrush="Black" Background="PowderBlue" FontFamily="font/#Alef"  FontSize="18" Content="Click to add Drone" Grid.Column="3" Click="AddDrone_Click" Margin="18,8,18,8">
+            <Button BorderBrush="Black" Background="PowderBlue" FontFamily="font/#Alef"  FontSize="18" Content="Add Drone" Grid.Column="3" Click="AddDrone_Click" Margin="18,8,18,8">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="25,25,25,25"/>
@@ -47,21 +47,21 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
             <Label Grid.Column="0"/>
-            <Button BorderBrush="Black" Margin="10,8,10,8" Background="Red" FontFamily="font/#Alef"  FontSize="18" Content="Click to Return Back" Grid.Column="3" Click="Exit_Click">
+            <Button BorderBrush="Black" Margin="10,8,10,8" Background="Red" FontFamily="font/#Alef"  FontSize="18" Content="Return Back" Grid.Column="3" Click="Exit_Click">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="25,25,25,25"/>
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button BorderBrush="Black" Margin="10,8,10,8" Background="Red" FontFamily="font/#Alef"  FontSize="18" Content="Click to Change Display" Grid.Column="1" Click="Exit_Click">
+            <Button BorderBrush="Black" Margin="10,8,10,8" Background="Red" FontFamily="font/#Alef"  FontSize="18" Content="Change Display" Grid.Column="1" Click="ChangeViewList">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="25,25,25,25"/>
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button BorderBrush="Black" Margin="15,8,15,8" Background="Red" FontFamily="font/#Alef"  FontSize="18" Content="Click to Reset Filter" Grid.Column="0" Click="Reset_Click">
+            <Button BorderBrush="Black" Margin="15,8,15,8" Background="Red" FontFamily="font/#Alef"  FontSize="18" Content="Reset Filter" Grid.Column="0" Click="Reset_Click">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="25,25,25,25"/>
@@ -81,6 +81,25 @@
                     <GridViewColumn Width="auto"/>
                 </GridView>
             </ListView.View>
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <Expander IsExpanded="true">
+                                            <Expander.Header>
+                                                <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Name}"/>
+                                            </Expander.Header>
+                                        </Expander>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                </GroupStyle>
+            </ListView.GroupStyle>
         </ListView>
         <Frame x:Name="DronePage" NavigationUIVisibility="Hidden"/>
     </Grid>

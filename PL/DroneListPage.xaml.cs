@@ -41,6 +41,9 @@ namespace PL
                 MaxWeightSelector.Items.Add(item);
             MaxWeightSelector.Items.Add("All");
             DroneListView.ItemsSource = blDroneList.GetDrones();
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(DroneListView.ItemsSource);
+            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Status");
+            view.GroupDescriptions.Add(groupDescription);
             mPage = mainPage;
         }
 
@@ -110,6 +113,13 @@ namespace PL
         {
             Gif.Position = new TimeSpan(0, 0, 1);
             Gif.Play();
+        }
+
+        private void ChangeViewList(object sender, RoutedEventArgs e)
+        {
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(DroneListView.ItemsSource);
+            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Status");
+            view.GroupDescriptions.Add(groupDescription);
         }
     }
 }

@@ -12,32 +12,23 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using BO;
 using BlApi;
 
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for MainPage.xaml
+    /// Interaction logic for EmployeeViewPage.xaml
     /// </summary>
-    public partial class MainPage : Page
+    public partial class EmployeeViewPage : Page
     {
         static IBL bl;
         internal MainWindow mWindow;
-
-        /// <summary>
-        /// The ctor of the main page 
-        /// </summary>
-        /// <param name="mainWindow">Pointer to the Main Window</param>
-        public MainPage(MainWindow mainWindow)
+        public EmployeeViewPage()
         {
-            //Set the value of "CurrentPageBonus" to be "MainPage" to allow the window to close - Bonus
-            mainWindow.CurrentPageBonus = typeof(MainPage);
             InitializeComponent();
             bl = BlApi.BlFactory.GetBl();
-            mWindow = mainWindow;
         }
-
+      
         /// <summary>
         /// When the show drone button has been pressed it navigates to the "DroneListPage"
         /// </summary>
@@ -50,14 +41,15 @@ namespace PL
             this.NavigationService.Navigate(new DroneListPage(bl, this));
         }
 
-        private void SignUp(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Makes sure that the gif keep running over and over again
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Again_MediaEnded(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void SignIn(object sender, RoutedEventArgs e)
-        {
-
+            Gif.Position = new TimeSpan(0, 0, 1);
+            Gif.Play();
         }
     }
 }

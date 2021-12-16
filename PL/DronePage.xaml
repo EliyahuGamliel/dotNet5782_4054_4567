@@ -55,11 +55,11 @@
         </Grid>
 
         <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
-            <StackPanel HorizontalAlignment="Left" Margin="50,58,0,0" VerticalAlignment="Top" Width="198" Height="107">
+            <StackPanel HorizontalAlignment="Left" Margin="129,58,0,0" VerticalAlignment="Top" Width="198" Height="107">
                 <TextBlock  FontSize="20" FontFamily="/font/#Alef" FontWeight="Bold" Text="The Id of the Drone:" TextWrapping="Wrap"/>
                 <TextBox FontSize="15" FontFamily="/font/#Fuzzy Bubbles" Name="idDrone" Text="" TextWrapping="Wrap" TextChanged="GetId"/>
             </StackPanel>
-            <StackPanel HorizontalAlignment="Left" Margin="50,118,0,0" VerticalAlignment="Top" Width="234" Height="107">
+            <StackPanel HorizontalAlignment="Left" Margin="129,118,0,0" VerticalAlignment="Top" Width="234" Height="107">
                 <TextBlock FontSize="20" FontFamily="/font/#Alef" FontWeight="Bold" Text="The Model of the Drone:" TextWrapping="Wrap"/>
                 <TextBox  FontSize="16" FontFamily="/font/#Fuzzy Bubbles" Name="modelDrone" Text="" TextWrapping="Wrap" TextChanged="UpdateModel"/>
             </StackPanel>
@@ -80,7 +80,7 @@
                     <Run FontWeight="Bold" Text="The current Location of Drone:"/>
                 </TextBlock>
             </StackPanel>
-            <StackPanel HorizontalAlignment="Left" Margin="302,58,0,0" VerticalAlignment="Top" Width="303" Height="429">
+            <StackPanel HorizontalAlignment="Left" Margin="465,307,0,0" VerticalAlignment="Top" Width="303" Height="165">
                 <TextBlock FontSize="20" FontFamily="/font/#Alef" FontWeight="Bold" Text="The parcel in Drone:" TextWrapping="Wrap"/>
                 <TextBlock FontSize="15" FontFamily="/font/#Fuzzy Bubbles" Name="parcelDrone" Text="" TextWrapping="Wrap"/>
             </StackPanel>
@@ -93,21 +93,6 @@
         <Grid Name="DroneAddGrid" Visibility="Hidden">
             <TextBlock FontWeight="Bold" FontSize="20" FontFamily="/font/#Alef" Text="Choose Station for Drone:" TextWrapping="Wrap" Width="297"  Margin="50,418,448,0"/>
             <ComboBox FontSize="16" HorizontalAlignment="Left" Grid.Row="0"  FontFamily="/font/#Fuzzy Bubbles" Name="idStationToChrging" Width="252" Margin="50,444,0,65"/>
-        </Grid>
-
-        <!--"Window" to get input-->
-        <Grid Grid.RowSpan="3" x:Name="InputBox" Visibility="Hidden">
-            <Grid Background="Black" Opacity="0.5" />
-            <Border MinWidth="250" Background="Orange" BorderBrush="Black" BorderThickness="1.5" CornerRadius="0,45,0,45" HorizontalAlignment="Center" VerticalAlignment="Center" Height="75" Width="272">
-                <StackPanel>
-                    <TextBlock Margin="5" Text="how much time was the drone in charging?" FontWeight="Bold" FontFamily="Cambria" />
-                    <TextBox MinWidth="150" HorizontalAlignment="Center" Background="Red" VerticalAlignment="Center" x:Name="InputTextBox" TextChanged="GetTime"/>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button x:Name="OkButton" Margin="5" Content="OK" Background="{x:Null}" Click="OkButton_Click" Width="35"/>
-                        <Button x:Name="CancelButton" Margin="5" Content="Cancel" Background="{x:Null}" Click="CancelButton_Click" Width="50" />
-                    </StackPanel>
-                </StackPanel>
-            </Border>
         </Grid>
     </Grid>
 </Page>

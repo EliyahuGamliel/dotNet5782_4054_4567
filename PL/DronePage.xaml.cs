@@ -73,7 +73,7 @@ namespace PL
 
             action2.Visibility = Visibility.Hidden;
             updateDrone.Visibility = Visibility.Hidden;
-            
+
             action1.Content = "Add Drone";
             action1.Click += new RoutedEventHandler(Add_Click);
         }
@@ -271,7 +271,10 @@ namespace PL
         /// <param name="e"></param>
         private void Release_Click(object sender, RoutedEventArgs e)
         {
-            InputBox.Visibility = Visibility.Visible;
+            MessageBox.Show(blDrone.ReleasDrone(dr.Id));
+            action2.Click -= new RoutedEventHandler(Release_Click);
+            ChangeAssignSend();
+            InitializeData();
         }
         #endregion
 
@@ -283,27 +286,8 @@ namespace PL
         /// <param name="e"></param>
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
-            if (InputTextBox.Background != Brushes.Red)
-            {
-                // Do something with the Input
-                double time = Double.Parse(InputTextBox.Text);
-                InputBox.Visibility = Visibility.Hidden;
-                // Clear InputBox.
-                InputTextBox.Text = String.Empty;
-                try
-                {
-                    MessageBox.Show(blDrone.ReleasDrone(dr.Id, time));
-                    action2.Click -= new RoutedEventHandler(Release_Click);
-                    ChangeAssignSend();
-                    InitializeData();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString());
-                }
-            }
-            else
-                MessageBox.Show("Enter valid input (double) or Cancel!", "Valid Input", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            
         }
 
         /// <summary>
