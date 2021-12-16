@@ -38,17 +38,6 @@ namespace PL
             mWindow = mainWindow;
         }
 
-        /// <summary>
-        /// When the show drone button has been pressed it navigates to the "DroneListPage"
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ShowDronesButton_Click(object sender, RoutedEventArgs e)
-        {
-            //Set the value of "CurrentPageBonus" to be "DroneListPage" to don't allow the window to close - Bonus
-            mWindow.CurrentPageBonus = typeof(DroneListPage);
-            this.NavigationService.Navigate(new DroneListPage(bl, this));
-        }
 
         private void SignUp(object sender, RoutedEventArgs e)
         {

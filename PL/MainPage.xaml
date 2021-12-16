@@ -11,32 +11,21 @@
     <Grid>
         <Frame x:Name="DroneListPage" NavigationUIVisibility="Hidden" />
         <Image x:Name="droneWithoutParcel"  Margin="0,0,0,0" Stretch="Fill" Source="img\login.jpg"/>
-        <Button Background="LightSkyBlue"  FontFamily="/font/#Alef" FontSize="26" FontWeight="Bold" Content="Sign In" Click="SignIn" Margin="368,498,272,67">
+        <Button Background="LightSkyBlue"  FontFamily="/font/#Alef" FontSize="26" FontWeight="Bold" Content="Sign In" Click="SignIn" Margin="336,448,304,101">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="25,25,25,25"/>
                 </Style>
             </Button.Resources>
         </Button>
-        <Button Background="LightSkyBlue"  FontFamily="/font/#Alef" FontSize="26" FontWeight="Bold" Content="Sign Up" Click="SignUp" Margin="550,498,90,67">
+        <Button Background="LightSkyBlue"  FontFamily="/font/#Alef" FontSize="26" FontWeight="Bold" Content="Sign Up" Click="SignUp" Margin="520,448,120,101">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="25,25,25,25"/>
                 </Style>
             </Button.Resources>
         </Button>
-        <Grid x:Name="InputBox" Visibility="Hidden">
-            <Grid Background="Black" Opacity="0.5" />
-            <Border MinWidth="250" Background="Orange" BorderBrush="Black" BorderThickness="1.5" CornerRadius="0,45,0,45" HorizontalAlignment="Center" VerticalAlignment="Center" Height="75" Width="272">
-                <StackPanel>
-                    <TextBlock Margin="5" Text="how much time was the drone in charging?" FontWeight="Bold" FontFamily="Cambria" />
-                    <TextBox MinWidth="150" HorizontalAlignment="Center" Background="Red" VerticalAlignment="Center" x:Name="InputTextBox" TextChanged="GetTime"/>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button x:Name="OkButton" Margin="5" Content="OK" Background="{x:Null}" Click="OkButton_Click" Width="35"/>
-                        <Button x:Name="CancelButton" Margin="5" Content="Cancel" Background="{x:Null}" Click="CancelButton_Click" Width="50" />
-                    </StackPanel>
-                </StackPanel>
-            </Border>
-        </Grid>
+        <TextBox x:Name="Username" Margin="345,273,150,0" FontFamily="/font/#Alef" Text="" FontSize="26" TextWrapping="Wrap" VerticalAlignment="Top" Height="39"/>
+        <TextBox x:Name="Password" Margin="343,366,152,0" FontFamily="/font/#Alef" Text="" FontSize="26" TextWrapping="Wrap" VerticalAlignment="Top" Height="40"/>
     </Grid>
 </Page>

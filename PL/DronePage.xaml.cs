@@ -278,47 +278,6 @@ namespace PL
         }
         #endregion
 
-        #region "Window" to get input (time of charge)
-        /// <summary>
-        /// If the ok button has been pressed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OkButton_Click(object sender, RoutedEventArgs e)
-        {
-
-            
-        }
-
-        /// <summary>
-        /// If the cancel button has been pressed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            //NoButton Clicked! Let's hide our InputBox.
-            InputBox.Visibility = Visibility.Hidden;
-            //Clear InputBox.
-            InputTextBox.Text = String.Empty;
-        }
-
-        /// <summary>
-        /// Changes the color of the background according to if the time is legal or not - Bonus
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void GetTime(object sender, RoutedEventArgs e)
-        {
-            double num;
-            bool error = double.TryParse(InputTextBox.Text, out num);
-            if (!error)
-                InputTextBox.Background = Brushes.Red;
-            else
-                InputTextBox.Background = Brushes.White;
-        }
-        #endregion
-
         /// <summary>
         /// If the add button has been pressed
         /// </summary>

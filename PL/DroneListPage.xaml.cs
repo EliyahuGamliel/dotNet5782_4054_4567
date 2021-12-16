@@ -23,14 +23,14 @@ namespace PL
     public partial class DroneListPage : Page
     {
         static BlApi.IBL blDroneList;
-        private MainPage mPage;
+        private EmployeeViewPage evPage;
 
         /// <summary>
         /// The ctor
         /// </summary>
         /// <param name="bl">Data Base</param>
         /// <param name="mainPage">Pointer to the Main Page</param>
-        public DroneListPage(BlApi.IBL bl, MainPage mainPage)
+        public DroneListPage(BlApi.IBL bl, EmployeeViewPage employeeViewPage)
         {
             InitializeComponent();
             blDroneList = bl;
@@ -44,7 +44,7 @@ namespace PL
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(DroneListView.ItemsSource);
             PropertyGroupDescription groupDescription = new PropertyGroupDescription("Status");
             view.GroupDescriptions.Add(groupDescription);
-            mPage = mainPage;
+            evPage = employeeViewPage;
         }
 
         /// <summary>
@@ -76,8 +76,8 @@ namespace PL
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             //Set the value of "CurrentPageBonus" to be "MainPage" to allow the window to close - Bonus
-            mPage.mWindow.CurrentPageBonus = typeof(MainPage);
-            this.NavigationService.Navigate(mPage);
+            evPage.mWindow.CurrentPageBonus = typeof(MainPage);
+            this.NavigationService.Navigate(evPage);
         }
 
         /// <summary>
