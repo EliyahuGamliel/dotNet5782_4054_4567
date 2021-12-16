@@ -98,9 +98,8 @@ namespace BlApi
         /// If all is fine, the drone relese from the station and from the charge, else throw exception
         /// </summary>
         /// <param name="idDrone">ID of the drone relese from charging</param>
-        /// <param name="time">The time the drone was in charge (in hours)</param>
         /// <returns>Notice if the addition was successful</returns>
-        string ReleasDrone(int id, double time);
+        string ReleasDrone(int id);
 
         /// <summary>
         /// If all is fine, return a parcel object by id, else throw exception

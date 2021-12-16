@@ -9,7 +9,7 @@ namespace DO
     {
         public int DroneId { get; set; }
         public int StationId { get; set; }
-        public DateTime? Start { get; set; }
+        public DateTime Start { get; set; }
 
         /// <summary><returns>
         /// The function returns a string to print on all entity data

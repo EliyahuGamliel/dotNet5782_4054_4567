@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using IBL;
-using IBL.BO;
+using BlApi;
+using BO;
 
 namespace ConsoleUI_BL
 {
     partial class Program
     {
-        private static IBL.IBL logic;
+        private static IBL logic;
 
         /// <summary>
         /// The main function
         /// </summary>
         static void Main(string[] args)
         {
-            logic = new IBL.BL();
+            logic = BlFactory.GetBl();
             MainMenu();
         }
 
@@ -181,7 +181,7 @@ namespace ConsoleUI_BL
 
                 //For adding a station
                 case Adding.Station:
-                    a s = new a();
+                    Station s = new Station();
                     s.Location = new Location();
                     s.DCharge = new List<DroneCharge>();
                     Console.WriteLine("Enter Station Id: ");
@@ -315,9 +315,7 @@ namespace ConsoleUI_BL
                 case Update.ReleaseDrone:
                     Console.WriteLine("Enter Id of Drone: ");
                     id = GetInt();
-                    Console.WriteLine("Enter How long was the drone charging: ");
-                    double time = GetDouble();
-                    System.Console.WriteLine(logic.ReleasDrone(id, time));
+                    System.Console.WriteLine(logic.ReleasDrone(id));
                     break;
 
                 case Update.AssignParcel:

@@ -1,5 +1,4 @@
 using System;
-using DalObject;
 
 namespace ConsoleUI
 {
