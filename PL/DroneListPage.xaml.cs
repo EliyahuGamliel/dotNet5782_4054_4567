@@ -22,25 +22,26 @@ namespace PL
     /// </summary>
     public partial class DroneListPage : Page
     {
-        static BlApi.IBL blDroneList;
+        private BlApi.IBL bl;
         private EmployeeViewPage evPage;
+        private bool isGroup;
 
         /// <summary>
         /// The ctor
         /// </summary>
         /// <param name="bl">Data Base</param>
         /// <param name="mainPage">Pointer to the Main Page</param>
-        public DroneListPage(BlApi.IBL bl)
+        public DroneListPage(BlApi.IBL blhjj)
         {
             InitializeComponent();
-            blDroneList = bl;
+            bl = BlApi.BlFactory.GetBl();
             foreach (var item in Enum.GetValues(typeof(DroneStatuses)))
                 StatusSelector.Items.Add(item);
             StatusSelector.Items.Add("All");
             foreach (var item in Enum.GetValues(typeof(WeightCategories)))
                 MaxWeightSelector.Items.Add(item);
             MaxWeightSelector.Items.Add("All");
-            DroneListView.ItemsSource = blDroneList.GetDrones();
+            DroneListView.ItemsSource = bl.GetDrones();
         }
 
         /// <summary>
@@ -51,7 +52,8 @@ namespace PL
         public void Selector_SelectionChanged(object sender = null, SelectionChangedEventArgs e = null)
         {
             DroneListView.ItemsSource = null;
-            DroneListView.ItemsSource = blDroneList.GetDroneByFilter(MaxWeightSelector.SelectedItem, StatusSelector.SelectedItem);
+            DroneListView.ItemsSource = bl.GetDroneByFilter(MaxWeightSelector.SelectedItem, StatusSelector.SelectedItem);
+            SaveDisplay();
         }
 
         /// <summary>
@@ -61,7 +63,7 @@ namespace PL
         /// <param name="e"></param>
         private void AddDrone_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new DronePage(blDroneList, this));
+            this.NavigationService.Navigate(new DronePage(bl, this));
         }
 
         /// <summary>
@@ -82,7 +84,7 @@ namespace PL
         private void Reset_Click(object sender, RoutedEventArgs e)
         {
             DroneListView.ItemsSource = null;
-            DroneListView.ItemsSource = blDroneList.GetDrones();
+            DroneListView.ItemsSource = bl.GetDrones();
             StatusSelector.SelectedItem = null;
             MaxWeightSelector.SelectedItem = null;
         }
@@ -94,8 +96,11 @@ namespace PL
         /// <param name="e"></param>
         private void DroneActions(object sender, MouseButtonEventArgs e)
         {
-            DroneList d = (DroneList)DroneListView.SelectedItem;
-            this.NavigationService.Navigate(new DronePage(blDroneList, blDroneList.GetDroneById(d.Id), this));
+            if (DroneListView.SelectedItem != null)
+            {
+                DroneList d = (DroneList)DroneListView.SelectedItem;
+                this.NavigationService.Navigate(new DronePage(bl, bl.GetDroneById(d.Id), this));
+            }
         }
 
         /// <summary>
@@ -109,14 +114,37 @@ namespace PL
             Gif.Play();
         }
 
-        private void ChangeViewList(object sender, RoutedEventArgs e)
+
+        private void ChangeViewList(object sender = null, RoutedEventArgs e = null)
         {
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(DroneListView.ItemsSource);
             PropertyGroupDescription groupDescription = new PropertyGroupDescription("Status");
             if (view.GroupDescriptions.Count != 0)
+            {
+                isGroup = false;
                 view.GroupDescriptions.Clear();
+            }
             else
+            {
+                isGroup = true;
                 view.GroupDescriptions.Add(groupDescription);
+            }
+        }
+
+        private void SaveDisplay()
+        {
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(DroneListView.ItemsSource);
+            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Status");
+            if (isGroup)
+            {
+                if (view.GroupDescriptions.Count != 0)
+                {
+                    view.GroupDescriptions.Clear();
+                    view.GroupDescriptions.Add(groupDescription);
+                }
+                else
+                    view.GroupDescriptions.Add(groupDescription);
+            }
         }
     }
 }

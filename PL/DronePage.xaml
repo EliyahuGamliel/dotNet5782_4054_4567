@@ -14,7 +14,23 @@
             <RowDefinition Height="400*"/>
             <RowDefinition Height="50*"/>
         </Grid.RowDefinitions>
-        <Grid Name="Down2Grid" Grid.Row="2">
+
+        <Image Grid.RowSpan="2" Margin="0,0,0,0" Stretch="Fill" Source="img\dronesImage.jpg"/>
+        <TextBox FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="idDrone" Text="" TextWrapping="Wrap" TextChanged="GetId" Margin="146,112,480,398"/>
+        <TextBox  FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="modelDrone" Text="" TextWrapping="Wrap" TextChanged="UpdateModel" Margin="146,186,427,324"/>
+        <ComboBox FontSize="20" HorizontalAlignment="Left" FontFamily="/font/#Fuzzy Bubbles" Name="maxWeightDrone" Width="286" Margin="146,250,0,250"/>
+        <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="batteryDrone" Text="" TextWrapping="Wrap" Margin="146,318,427,192"/>
+        <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="statusDrone" Text="Maintenance" TextWrapping="Wrap" Margin="146,386,427,124"/>
+        <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="locationDrone" TextWrapping="Wrap" Margin="102,420,321,41"/>
+        <Button Name="parcelDrone" Background="PowderBlue" Content="ParceL in Drone" BorderBrush="Black" FontFamily="/font/#Alef" Click="ParcelInDrone" FontWeight="Bold" Grid.Column="0" FontSize="18" Margin="534,406,0,62" HorizontalAlignment="Left" Width="216">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="25,25,25,25"/>
+                    <Setter Property="Margin" Value="10,8,10,8"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Grid Name="DownGrid" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -54,45 +70,10 @@
             </Button>
         </Grid>
 
-        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
-            <StackPanel HorizontalAlignment="Left" Margin="129,58,0,0" VerticalAlignment="Top" Width="198" Height="107">
-                <TextBlock  FontSize="20" FontFamily="/font/#Alef" FontWeight="Bold" Text="The Id of the Drone:" TextWrapping="Wrap"/>
-                <TextBox FontSize="15" FontFamily="/font/#Fuzzy Bubbles" Name="idDrone" Text="" TextWrapping="Wrap" TextChanged="GetId"/>
-            </StackPanel>
-            <StackPanel HorizontalAlignment="Left" Margin="129,118,0,0" VerticalAlignment="Top" Width="234" Height="107">
-                <TextBlock FontSize="20" FontFamily="/font/#Alef" FontWeight="Bold" Text="The Model of the Drone:" TextWrapping="Wrap"/>
-                <TextBox  FontSize="16" FontFamily="/font/#Fuzzy Bubbles" Name="modelDrone" Text="" TextWrapping="Wrap" TextChanged="UpdateModel"/>
-            </StackPanel>
-            <StackPanel HorizontalAlignment="Left" Margin="50,183,0,0" VerticalAlignment="Top" Width="288" Height="107">
-                <TextBlock FontSize="20" FontFamily="/font/#Alef" FontWeight="Bold" Text="The MaxWeight of the Drone:" TextWrapping="Wrap"/>
-                <ComboBox FontSize="16" HorizontalAlignment="Left" FontFamily="/font/#Fuzzy Bubbles" Name="maxWeightDrone" Width="264"/>
-            </StackPanel>
-            <StackPanel HorizontalAlignment="Left" Margin="50,252,0,0" VerticalAlignment="Top" Width="251" Height="107">
-                <TextBlock FontSize="20" FontFamily="/font/#Alef" FontWeight="Bold" Text="The Battery of the Drone:" TextWrapping="Wrap"/>
-                <TextBlock FontSize="16" FontFamily="/font/#Fuzzy Bubbles" Name="batteryDrone" Text="" TextWrapping="Wrap"/>
-            </StackPanel>
-            <StackPanel HorizontalAlignment="Left" Margin="50,316,0,0" VerticalAlignment="Top" Width="237" Height="107">
-                <TextBlock FontSize="20" FontFamily="/font/#Alef" FontWeight="Bold" Text="The Status of the Drone:" TextWrapping="Wrap" Width="250"/>
-                <TextBlock  FontSize="16" FontFamily="/font/#Fuzzy Bubbles" Name="statusDrone" Text="Maintenance" TextWrapping="Wrap"/>
-            </StackPanel>
-            <StackPanel HorizontalAlignment="Left" Margin="50,376,0,0" VerticalAlignment="Top" Width="338" Height="70">
-                <TextBlock FontSize="16" FontFamily="/font/#Fuzzy Bubbles" Name="locationDrone" TextWrapping="Wrap" Width="334">
-                    <Run FontWeight="Bold" Text="The current Location of Drone:"/>
-                </TextBlock>
-            </StackPanel>
-            <StackPanel HorizontalAlignment="Left" Margin="465,307,0,0" VerticalAlignment="Top" Width="303" Height="165">
-                <TextBlock FontSize="20" FontFamily="/font/#Alef" FontWeight="Bold" Text="The parcel in Drone:" TextWrapping="Wrap"/>
-                <TextBlock FontSize="15" FontFamily="/font/#Fuzzy Bubbles" Name="parcelDrone" Text="" TextWrapping="Wrap"/>
-            </StackPanel>
-            <Image x:Name="droneWithParcel" Margin="570,73,42,330" Visibility="Hidden" Stretch="Fill" Source="img\droneWithParcel.jpg"/>
-            <Image x:Name="droneWithoutParcel"  Margin="570,73,42,330" Visibility="Hidden" Stretch="Fill" Source="img\droneWithoutParcel.jpg"/>
-            <Rectangle HorizontalAlignment="Left" Height="140" Margin="565,68,0,0" Stroke="Black" VerticalAlignment="Top" Width="182"/>
-        </Grid>
-
         <!--Display Page of Drone Addition (partial)-->
         <Grid Name="DroneAddGrid" Visibility="Hidden">
-            <TextBlock FontWeight="Bold" FontSize="20" FontFamily="/font/#Alef" Text="Choose Station for Drone:" TextWrapping="Wrap" Width="297"  Margin="50,418,448,0"/>
-            <ComboBox FontSize="16" HorizontalAlignment="Left" Grid.Row="0"  FontFamily="/font/#Fuzzy Bubbles" Name="idStationToChrging" Width="252" Margin="50,444,0,65"/>
+            <TextBlock FontWeight="Bold" FontSize="25" FontFamily="/font/#Alef" Text="Choose Station for Drone:" TextWrapping="Wrap"  Margin="204,438,250,27"/>
+            <ComboBox FontSize="16" HorizontalAlignment="Left" Grid.Row="0"  FontFamily="/font/#Fuzzy Bubbles" Name="idStationToChrging" Width="252" Margin="216,474,0,35"/>
         </Grid>
     </Grid>
 </Page>

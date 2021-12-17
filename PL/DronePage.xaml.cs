@@ -58,7 +58,6 @@ namespace PL
             blDrone = bl;
             dlPage = droneListPage;
 
-            droneWithoutParcel.Visibility = Visibility.Visible;
             DroneAddGrid.Visibility = Visibility.Visible;
             idDrone.Background = Brushes.Red;
             modelDrone.Background = Brushes.Red;
@@ -68,8 +67,6 @@ namespace PL
             maxWeightDrone.SelectedIndex = 0;
             idStationToChrging.ItemsSource = bl.GetStationCharge();
             idStationToChrging.SelectedIndex = 0;
-
-            parcelDrone.Text = "not exist";
 
             action2.Visibility = Visibility.Hidden;
             updateDrone.Visibility = Visibility.Hidden;
@@ -93,26 +90,13 @@ namespace PL
             batteryDrone.Text = Math.Round(dr.Battery, 0).ToString() + "%";
             maxWeightDrone.SelectedIndex = maxWeightDrone.Items.IndexOf(dr.MaxWeight);
             statusDrone.Text = dr.Status.ToString();
+            locationDrone.Text = dr.CLocation.ToString();
             updateDrone.IsEnabled = false;
-
-            Inline line = locationDrone.Inlines.FirstInline;
-            locationDrone.Inlines.Clear();
-            locationDrone.Inlines.Add(line);
-            locationDrone.Inlines.Add(new Run(dr.CLocation.ToString()));
-
             //If the choosen drone is in delivery
             if (dr.Status == DroneStatuses.Delivery)
-            {
-                droneWithoutParcel.Visibility = Visibility.Hidden;
-                droneWithParcel.Visibility = Visibility.Visible;
-                parcelDrone.Text = dr.PTransfer.ToString();
-            }
+                parcelDrone.IsEnabled = true;
             else
-            {
-                droneWithParcel.Visibility = Visibility.Hidden;
-                droneWithoutParcel.Visibility = Visibility.Visible;
-                parcelDrone.Text = "not exist";
-            }
+                parcelDrone.IsEnabled = false;
         }
 
         /// <summary>
@@ -120,6 +104,7 @@ namespace PL
         /// </summary>
         private void InitializeButtons()
         {
+            //If the choosen drone is in delivery
             if (dr.Status == DroneStatuses.Delivery)
             {
                 action2.Visibility = Visibility.Hidden;
@@ -312,7 +297,7 @@ namespace PL
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             dlPage.Selector_SelectionChanged();
-            this.NavigationService.Navigate(dlPage);
+            this.NavigationService.GoBack();
         }
 
         #region change the button(s) according the drone status
@@ -358,5 +343,10 @@ namespace PL
             action2.Click += new RoutedEventHandler(Release_Click);
         }
         #endregion
+
+        private void ParcelInDrone(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -76,17 +76,6 @@
                     <Setter Property="Visibility" Value="Hidden"/>
                 </Style>
             </ListView.Resources>
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Drone" Width="auto" DisplayMemberBinding="{Binding Path=Id}"/>
-                    <GridViewColumn Header="Drone" Width="auto" DisplayMemberBinding="{Binding Path=Model}"/>
-                    <GridViewColumn Header="Drone" Width="auto" DisplayMemberBinding="{Binding Path=MaxWeight}"/>
-                    <GridViewColumn Header="Drone" Width="auto" DisplayMemberBinding="{Binding Path=Battery}"/>
-                    <GridViewColumn Header="Drone" Width="auto" DisplayMemberBinding="{Binding Path=Status}"/>
-                    <GridViewColumn Header="Drone" Width="auto" DisplayMemberBinding="{Binding Path=CLocation}"/>
-                    <GridViewColumn Header="Drone" Width="auto" DisplayMemberBinding="{Binding Path=ParcelId}"/>
-                </GridView>
-            </ListView.View>
             <ListView.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.ContainerStyle>
@@ -94,12 +83,17 @@
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate>
-                                        <Expander IsExpanded="true">
+                                        <Expander IsExpanded="True">
                                             <Expander.Header>
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Name}"/>
+                                                    <TextBlock Margin="10,0,0,0" Foreground="Gray" FontStyle="Italic" FontSize="14" Text="{Binding ItemCount}" />
+                                                    <TextBlock Foreground="Gray" FontStyle="Italic" FontSize="14" Text="  item(s)" />
                                                 </StackPanel>
                                             </Expander.Header>
+                                            <Expander.Content>
+                                                <ItemsPresenter/>
+                                            </Expander.Content>
                                         </Expander>
                                     </ControlTemplate>
                                 </Setter.Value>
