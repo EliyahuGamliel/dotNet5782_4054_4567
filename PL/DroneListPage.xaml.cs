@@ -30,7 +30,7 @@ namespace PL
         /// </summary>
         /// <param name="bl">Data Base</param>
         /// <param name="mainPage">Pointer to the Main Page</param>
-        public DroneListPage(BlApi.IBL bl, EmployeeViewPage employeeViewPage)
+        public DroneListPage(BlApi.IBL bl)
         {
             InitializeComponent();
             blDroneList = bl;
@@ -41,10 +41,6 @@ namespace PL
                 MaxWeightSelector.Items.Add(item);
             MaxWeightSelector.Items.Add("All");
             DroneListView.ItemsSource = blDroneList.GetDrones();
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(DroneListView.ItemsSource);
-            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Status");
-            view.GroupDescriptions.Add(groupDescription);
-            evPage = employeeViewPage;
         }
 
         /// <summary>
@@ -75,9 +71,7 @@ namespace PL
         /// <param name="e"></param>
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
-            //Set the value of "CurrentPageBonus" to be "MainPage" to allow the window to close - Bonus
-            evPage.mWindow.CurrentPageBonus = typeof(MainPage);
-            this.NavigationService.Navigate(evPage);
+            this.NavigationService.GoBack();
         }
 
         /// <summary>
@@ -119,7 +113,10 @@ namespace PL
         {
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(DroneListView.ItemsSource);
             PropertyGroupDescription groupDescription = new PropertyGroupDescription("Status");
-            view.GroupDescriptions.Add(groupDescription);
+            if (view.GroupDescriptions.Count != 0)
+                view.GroupDescriptions.Clear();
+            else
+                view.GroupDescriptions.Add(groupDescription);
         }
     }
 }

@@ -22,11 +22,12 @@ namespace PL
     public partial class EmployeeViewPage : Page
     {
         static IBL bl;
-        internal MainWindow mWindow;
-        public EmployeeViewPage()
+        internal MainPage mPage;
+        public EmployeeViewPage(MainPage mainPage)
         {
             InitializeComponent();
             bl = BlApi.BlFactory.GetBl();
+            mPage = mainPage;
         }
       
         /// <summary>
@@ -34,11 +35,33 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ShowDronesButton_Click(object sender, RoutedEventArgs e)
+        private void DroneList(object sender, RoutedEventArgs e)
         {
-            //Set the value of "CurrentPageBonus" to be "DroneListPage" to don't allow the window to close - Bonus
-            mWindow.CurrentPageBonus = typeof(DroneListPage);
-            this.NavigationService.Navigate(new DroneListPage(bl, this));
+            this.NavigationService.Navigate(new DroneListPage(bl));
+        }
+
+
+        private void CustomerList(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new CustomerListPage());
+        }
+
+
+        private void StationList(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new StationListPage());
+        }
+
+
+        private void ParcelList(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new ParcelListPage());
+        }
+
+        private void LogOut(object sender, RoutedEventArgs e)
+        {
+      
+            this.NavigationService.GoBack();
         }
 
         /// <summary>

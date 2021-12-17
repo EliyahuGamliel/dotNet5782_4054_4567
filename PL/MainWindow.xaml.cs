@@ -24,7 +24,7 @@ namespace PL
     public partial class MainWindow : Window
     {
         //Keeps track of the page we are at so we will know if we can close the window - Bonus
-        internal Type CurrentPageBonus { set; get; }
+        internal bool ExitBonus { set; get; }
 
         /// <summary>
         /// The ctor
@@ -43,7 +43,7 @@ namespace PL
         protected override void OnClosing(CancelEventArgs e)
         {
             //Checks of we are at the mainpage - Bonus
-            if (CurrentPageBonus != typeof(MainPage))
+            if (ExitBonus != true)
             {
                 base.OnClosing(e);
                 e.Cancel = true;

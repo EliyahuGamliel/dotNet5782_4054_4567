@@ -78,7 +78,13 @@
             </ListView.Resources>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="auto"/>
+                    <GridViewColumn Header="Drone" Width="auto" DisplayMemberBinding="{Binding Path=Id}"/>
+                    <GridViewColumn Header="Drone" Width="auto" DisplayMemberBinding="{Binding Path=Model}"/>
+                    <GridViewColumn Header="Drone" Width="auto" DisplayMemberBinding="{Binding Path=MaxWeight}"/>
+                    <GridViewColumn Header="Drone" Width="auto" DisplayMemberBinding="{Binding Path=Battery}"/>
+                    <GridViewColumn Header="Drone" Width="auto" DisplayMemberBinding="{Binding Path=Status}"/>
+                    <GridViewColumn Header="Drone" Width="auto" DisplayMemberBinding="{Binding Path=CLocation}"/>
+                    <GridViewColumn Header="Drone" Width="auto" DisplayMemberBinding="{Binding Path=ParcelId}"/>
                 </GridView>
             </ListView.View>
             <ListView.GroupStyle>
@@ -90,7 +96,9 @@
                                     <ControlTemplate>
                                         <Expander IsExpanded="true">
                                             <Expander.Header>
-                                                <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Name}"/>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Name}"/>
+                                                </StackPanel>
                                             </Expander.Header>
                                         </Expander>
                                     </ControlTemplate>

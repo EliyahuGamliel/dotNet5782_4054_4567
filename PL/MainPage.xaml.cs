@@ -32,7 +32,7 @@ namespace PL
         public MainPage(MainWindow mainWindow)
         {
             //Set the value of "CurrentPageBonus" to be "MainPage" to allow the window to close - Bonus
-            mainWindow.CurrentPageBonus = typeof(MainPage);
+            mainWindow.ExitBonus = true;
             InitializeComponent();
             bl = BlApi.BlFactory.GetBl();
             mWindow = mainWindow;
@@ -41,12 +41,14 @@ namespace PL
 
         private void SignUp(object sender, RoutedEventArgs e)
         {
-
+            mWindow.ExitBonus = false;
+            this.NavigationService.Navigate(new CustomerPage());
         }
 
         private void SignIn(object sender, RoutedEventArgs e)
-        {
-
+        { 
+            mWindow.ExitBonus = false;
+            this.NavigationService.Navigate(new EmployeeViewPage(this));
         }
     }
 }

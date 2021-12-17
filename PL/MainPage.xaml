@@ -26,6 +26,6 @@
             </Button.Resources>
         </Button>
         <TextBox x:Name="Username" Margin="345,273,150,0" FontFamily="/font/#Alef" Text="" FontSize="26" TextWrapping="Wrap" VerticalAlignment="Top" Height="39"/>
-        <TextBox x:Name="Password" Margin="343,366,152,0" FontFamily="/font/#Alef" Text="" FontSize="26" TextWrapping="Wrap" VerticalAlignment="Top" Height="40"/>
+        <PasswordBox x:Name="Password" Margin="343,366,152,0" FontFamily="/font/#Alef" Password="" PasswordChar="*" FontSize="26" VerticalAlignment="Top" Height="40"/>
     </Grid>
 </Page>
