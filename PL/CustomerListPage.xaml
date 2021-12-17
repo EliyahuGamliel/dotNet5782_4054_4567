@@ -5,10 +5,56 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PL"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="640" d:DesignWidth="800"
       Title="CustomerListPage">
 
-    <Grid>
-        
+    <Grid Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="350*"/>
+            <RowDefinition Height="50*"/>
+        </Grid.RowDefinitions>
+        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions >
+
+
+            <Label FontFamily="font/#Alef" FontSize="48" Content="IC &amp; EG" Grid.Column="0" FontWeight="Bold"/>
+            <Button BorderBrush="Black" Background="PowderBlue" FontFamily="font/#Alef"  FontSize="18" Content="Add Customer" Grid.Column="3" Click="AddCustomer" Margin="18,8,18,8">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="25,25,25,25"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </Grid>
+        <Grid Name="DownGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="2" VerticalAlignment="Stretch" Width="auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions >
+            <Label Grid.Column="0"/>
+            <Button BorderBrush="Black" Margin="10,8,10,8" Background="Red" FontFamily="font/#Alef"  FontSize="18" Content="Return Back" Grid.Column="3" Click="Exit">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="25,25,25,25"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </Grid>
+        <MediaElement x:Name="Gif" Height="auto" HorizontalAlignment="Left"  MediaEnded="Again_MediaEnded" Source="img\customerList.gif" LoadedBehavior="Play" UnloadedBehavior="Manual" Margin="203,71,0,70" Grid.RowSpan="3" Width="597"/>
+        <ListView Background="LightCyan" FontFamily="/font/#Alef" x:Name="CustomerListView" Width="auto" Height="auto" MouseDoubleClick="CustomerActions" Margin="0,0,528,0" Grid.Row="1">
+            <ListView.Resources>
+                <Style TargetType="GridViewColumnHeader">
+                    <Setter Property="Visibility" Value="Hidden"/>
+                </Style>
+            </ListView.Resources>
+        </ListView>
     </Grid>
 </Page>

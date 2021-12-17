@@ -21,7 +21,7 @@ namespace PL
     /// </summary>
     public partial class EmployeeViewPage : Page
     {
-        static IBL bl;
+        private IBL bl;
         internal MainPage mPage;
         public EmployeeViewPage(MainPage mainPage)
         {
@@ -37,7 +37,7 @@ namespace PL
         /// <param name="e"></param>
         private void DroneList(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new DroneListPage(bl));
+            this.NavigationService.Navigate(new DroneListPage());
         }
 
 
@@ -46,12 +46,10 @@ namespace PL
             this.NavigationService.Navigate(new CustomerListPage());
         }
 
-
         private void StationList(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(new StationListPage());
         }
-
 
         private void ParcelList(object sender, RoutedEventArgs e)
         {
@@ -60,7 +58,7 @@ namespace PL
 
         private void LogOut(object sender, RoutedEventArgs e)
         {
-      
+            mPage.mWindow.ExitBonus = true;
             this.NavigationService.GoBack();
         }
 

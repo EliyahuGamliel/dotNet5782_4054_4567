@@ -47,7 +47,7 @@ namespace PL
             {
                 base.OnClosing(e);
                 e.Cancel = true;
-                MessageBox.Show("Cannot Close! Back to Main Page.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Cannot Close! Log Out", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

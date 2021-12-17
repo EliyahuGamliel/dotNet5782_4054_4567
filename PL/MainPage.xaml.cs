@@ -22,7 +22,7 @@ namespace PL
     /// </summary>
     public partial class MainPage : Page
     {
-        static IBL bl;
+        private IBL bl;
         internal MainWindow mWindow;
 
         /// <summary>

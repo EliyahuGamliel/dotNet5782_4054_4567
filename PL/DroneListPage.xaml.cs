@@ -22,7 +22,7 @@ namespace PL
     /// </summary>
     public partial class DroneListPage : Page
     {
-        private BlApi.IBL bl;
+        private BlApi.IBL bl = BlFactory.GetBl();
         private EmployeeViewPage evPage;
         private bool isGroup;
 
@@ -31,10 +31,9 @@ namespace PL
         /// </summary>
         /// <param name="bl">Data Base</param>
         /// <param name="mainPage">Pointer to the Main Page</param>
-        public DroneListPage(BlApi.IBL blhjj)
+        public DroneListPage()
         {
             InitializeComponent();
-            bl = BlApi.BlFactory.GetBl();
             foreach (var item in Enum.GetValues(typeof(DroneStatuses)))
                 StatusSelector.Items.Add(item);
             StatusSelector.Items.Add("All");
@@ -63,7 +62,7 @@ namespace PL
         /// <param name="e"></param>
         private void AddDrone_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new DronePage(bl, this));
+            this.NavigationService.Navigate(new DronePage(this));
         }
 
         /// <summary>
@@ -99,7 +98,7 @@ namespace PL
             if (DroneListView.SelectedItem != null)
             {
                 DroneList d = (DroneList)DroneListView.SelectedItem;
-                this.NavigationService.Navigate(new DronePage(bl, bl.GetDroneById(d.Id), this));
+                this.NavigationService.Navigate(new DronePage(bl.GetDroneById(d.Id), this));
             }
         }
 

@@ -22,6 +22,6 @@ namespace BO
         /// The function returns a string to print on all entity data
         /// </returns></summary>
         public override string ToString()
-        { return $"Id: {Id}\nName: {Name}\nPhone: {Phone}\nThe amount of Parcels shipped and arrived: {ParcelsSent}\nThe amount of Parcels shipped and on the way: {ParcelsInTheWay}\nThe amount of Parcels sent and not yet delivered: {ParcelsOnlySend}\nThe amount of Parcels received: {ParcelsGet}\n"; }
+        { return $"Id: {Id}\nName: {Name}\nPhone: {Phone}\nParcels shipped and arrived: {ParcelsSent}\nParcels shipped and on the way: {ParcelsInTheWay}\nParcels sent and not yet delivered: {ParcelsOnlySend}\nParcels received: {ParcelsGet}\n"; }
     }
 }

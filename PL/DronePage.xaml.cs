@@ -24,8 +24,8 @@ namespace PL
     {
         static DroneList droneList = new DroneList();
         static Drone dr;
-        static Parcel pa;
-        static BlApi.IBL blDrone;
+        private Parcel pa;
+        private BlApi.IBL bl = BlApi.BlFactory.GetBl();
         private DroneListPage dlPage;
 
         /// <summary>
@@ -34,15 +34,14 @@ namespace PL
         /// <param name="bl">Data Base</param>
         /// <param name="drone">The drone to make on it actions</param>
         /// <param name="droneListPage">Pointer to the Drone List Page</param>
-        public DronePage(BlApi.IBL bl, Drone drone, DroneListPage droneListPage)
+        public DronePage(Drone drone, DroneListPage droneListPage)
         {
             InitializeComponent();
-            blDrone = bl;
             dlPage = droneListPage;
             dr = drone;
             maxWeightDrone.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             if (dr.Status == DroneStatuses.Delivery)
-                pa = blDrone.GetParcelById(dr.PTransfer.Id);
+                pa = bl.GetParcelById(dr.PTransfer.Id);
             InitializeData();
             InitializeButtons();
         }
@@ -52,10 +51,9 @@ namespace PL
         /// </summary>
         /// <param name="bl">Data Base</param>
         /// <param name="droneListPage">Pointer to the Drone List Page</param>
-        public DronePage(BlApi.IBL bl, DroneListPage droneListPage)
+        public DronePage(DroneListPage droneListPage)
         {
             InitializeComponent();
-            blDrone = bl;
             dlPage = droneListPage;
 
             DroneAddGrid.Visibility = Visibility.Visible;
@@ -80,7 +78,7 @@ namespace PL
         /// </summary>
         private void InitializeData()
         {
-            dr = blDrone.GetDroneById(dr.Id);
+            dr = bl.GetDroneById(dr.Id);
 
             idDrone.IsEnabled = false;
             maxWeightDrone.IsEnabled = false;
@@ -174,7 +172,7 @@ namespace PL
         private void Update_Click(object sender, RoutedEventArgs e)
         {
             dr.Model = modelDrone.Text;
-            MessageBox.Show(blDrone.UpdateDrone(dr.Id, dr.Model));
+            MessageBox.Show(bl.UpdateDrone(dr.Id, dr.Model));
             updateDrone.IsEnabled = false;
         }
 
@@ -187,7 +185,7 @@ namespace PL
         {
             try
             {
-                MessageBox.Show(blDrone.AssignDroneParcel(dr.Id));
+                MessageBox.Show(bl.AssignDroneParcel(dr.Id));
                 action2.Visibility = Visibility.Hidden;
                 action1.Click -= new RoutedEventHandler(Assign_Click);
                 action2.Click -= new RoutedEventHandler(Send_Click);
@@ -208,7 +206,7 @@ namespace PL
         /// <param name="e"></param>
         private void PickUp_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(blDrone.PickUpDroneParcel(dr.Id));
+            MessageBox.Show(bl.PickUpDroneParcel(dr.Id));
             action1.Click -= new RoutedEventHandler(PickUp_Click);
             ChangeDelivery();
             InitializeData();
@@ -221,7 +219,7 @@ namespace PL
         /// <param name="e"></param>
         private void Deliver_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(blDrone.DeliverParcelCustomer(dr.Id));
+            MessageBox.Show(bl.DeliverParcelCustomer(dr.Id));
             action1.Click -= new RoutedEventHandler(Deliver_Click);
             ChangeAssignSend();
             InitializeData();
@@ -236,7 +234,7 @@ namespace PL
         {
             try
             {
-                MessageBox.Show(blDrone.SendDrone(dr.Id));
+                MessageBox.Show(bl.SendDrone(dr.Id));
                 action2.Click -= new RoutedEventHandler(Send_Click);
                 action1.Click -= new RoutedEventHandler(Assign_Click);
                 ChangeRelese();
@@ -256,7 +254,7 @@ namespace PL
         /// <param name="e"></param>
         private void Release_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(blDrone.ReleasDrone(dr.Id));
+            MessageBox.Show(bl.ReleasDrone(dr.Id));
             action2.Click -= new RoutedEventHandler(Release_Click);
             ChangeAssignSend();
             InitializeData();
@@ -279,7 +277,7 @@ namespace PL
                 droneAdd.Id = ID;
                 StationList st = (StationList)idStationToChrging.SelectedItem;
                 droneAdd.Model = modelDrone.Text;
-                MessageBox.Show(blDrone.AddDrone(droneAdd, st.Id));
+                MessageBox.Show(bl.AddDrone(droneAdd, st.Id));
                 dlPage.Selector_SelectionChanged();
                 this.NavigationService.Navigate(dlPage);
             }

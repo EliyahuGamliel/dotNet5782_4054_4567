@@ -20,9 +20,57 @@ namespace PL
     /// </summary>
     public partial class CustomerListPage : Page
     {
+        private BlApi.IBL bl = BlApi.BlFactory.GetBl();
         public CustomerListPage()
         {
             InitializeComponent();
+            CustomerListView.ItemsSource = bl.GetCustomers();
+        }
+
+
+        /// <summary>
+        /// Navigates to the "DronePage" - drone add page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AddCustomer(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new CustomerPage());
+        }
+
+        /// <summary>
+        /// If the user wants to go back
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Exit(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.GoBack();
+        }
+
+        /// <summary>
+        /// Navigates to the "DronaPage" - drone actions page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CustomerActions(object sender, MouseButtonEventArgs e)
+        {
+            if (CustomerListView.SelectedItem != null)
+            {
+                BO.CustomerList c = (BO.CustomerList)CustomerListView.SelectedItem;
+                this.NavigationService.Navigate(new CustomerPage(bl.GetCustomerById(c.Id)));
+            }
+        }
+
+        /// <summary>
+        /// Makes sure the gif keeps running over and over
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Again_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            Gif.Position = new TimeSpan(0, 0, 1);
+            Gif.Play();
         }
     }
 }

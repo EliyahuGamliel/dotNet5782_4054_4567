@@ -20,9 +20,16 @@ namespace PL
     /// </summary>
     public partial class CustomerPage : Page
     {
+        public CustomerPage(BO.Customer C)
+        {
+            InitializeComponent();
+        }
+
         public CustomerPage()
         {
             InitializeComponent();
         }
+
+
     }
 }
