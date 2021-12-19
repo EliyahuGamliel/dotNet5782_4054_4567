@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31702.278
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Targil0", "Targil0\Targil0.csproj", "{DE31EE80-1D27-4955-A7A0-0F24FA300D29}"
 EndProject
@@ -23,6 +23,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalXml", "DalXml\DalXml.csproj", "{65F414D3-53F4-4AF1-B0B9-E5F331956DA0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalFacade", "DalFacade\DalFacade.csproj", "{C4EDAC9F-ECC3-422B-A2A8-1FECAE0D9443}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PLCustomer", "PLCustomer\PLCustomer.csproj", "{1FDBEB8A-62C4-483F-AD18-4752C4E47566}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,6 +64,10 @@ Global
 		{C4EDAC9F-ECC3-422B-A2A8-1FECAE0D9443}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4EDAC9F-ECC3-422B-A2A8-1FECAE0D9443}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4EDAC9F-ECC3-422B-A2A8-1FECAE0D9443}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FDBEB8A-62C4-483F-AD18-4752C4E47566}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FDBEB8A-62C4-483F-AD18-4752C4E47566}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FDBEB8A-62C4-483F-AD18-4752C4E47566}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FDBEB8A-62C4-483F-AD18-4752C4E47566}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
