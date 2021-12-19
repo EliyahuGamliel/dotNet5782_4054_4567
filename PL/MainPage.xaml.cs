@@ -46,9 +46,21 @@ namespace PL
         }
 
         private void SignIn(object sender, RoutedEventArgs e)
-        { 
-            mWindow.ExitBonus = false;
-            this.NavigationService.Navigate(new EmployeeViewPage(this));
+        {
+            if (Password.Password == "admin" && Username.Text == "admin")
+            {
+                mWindow.ExitBonus = false;
+                this.NavigationService.Navigate(new EmployeeViewPage(this));
+            }
+            else if(bl.CustomerPassword(Password.Password, Username.Text))
+            {
+                mWindow.ExitBonus = false;
+                this.NavigationService.Navigate(new CustomerViewPage(this));
+            }
+            else
+            {
+                MessageBox.Show("The password is wrong!", "error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

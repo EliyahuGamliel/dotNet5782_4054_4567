@@ -172,5 +172,8 @@ namespace BlApi
         /// <param name="status">The status value of the required drones</param>
         /// <returns>Return list of drones by filter</returns>
         IEnumerable<DroneList> GetDroneByFilter(object weight, object status);
+
+        bool CustomerPassword(string password, string name);
+
     }
 }

@@ -24,6 +24,7 @@ namespace BL
                 cu.Phone = c.Phone;
                 cu.Lattitude = c.Location.Lattitude;
                 cu.Longitude = c.Location.Longitude;
+                cu.Password = c.Password;
                 CheckLegelLocation(cu.Longitude, cu.Lattitude);
                 data.AddCustomer(cu); 
                 return "The addition was successful\n";
@@ -60,6 +61,12 @@ namespace BL
             }
         }
 
+        public bool CustomerPassword(string password, string name)
+        {
+            DO.Customer c = data.GetCustomerByFilter(c => c.Name == name).First();
+            return password == c.Password;
+        }
+
         /// <summary>
         /// If all is fine, return a customer object by id
         /// </summary>
@@ -74,6 +81,7 @@ namespace BL
                 cu.Location = new Location();
                 cu.Id = chosenc.Id;
                 cu.Name = chosenc.Name;
+                cu.Password = chosenc.Password;
                 cu.Phone = chosenc.Phone;
                 cu.Location.Longitude = chosenc.Longitude;
                 cu.Location.Lattitude = chosenc.Lattitude;
