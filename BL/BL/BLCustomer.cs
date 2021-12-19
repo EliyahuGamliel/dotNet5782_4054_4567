@@ -24,7 +24,6 @@ namespace BL
                 cu.Phone = c.Phone;
                 cu.Lattitude = c.Location.Lattitude;
                 cu.Longitude = c.Location.Longitude;
-                cu.Password = c.Password;
                 CheckLegelLocation(cu.Longitude, cu.Lattitude);
                 data.AddCustomer(cu); 
                 return "The addition was successful\n";
@@ -59,12 +58,6 @@ namespace BL
             catch (DO.PhoneExistException) {
                 throw new BO.PhoneExistException(phoneCustomer);
             }
-        }
-
-        public bool CustomerPassword(string password, string name)
-        {
-            DO.Customer c = data.GetCustomerByFilter(c => c.Name == name).First();
-            return password == c.Password;
         }
 
         /// <summary>
