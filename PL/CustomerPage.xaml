@@ -14,22 +14,9 @@
             <RowDefinition Height="50*"/>
         </Grid.RowDefinitions>
 
-        <Image Grid.RowSpan="2" Margin="0,0,0,0" Stretch="Fill" Source="img\customer.jpg"/>
-        <TextBox FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="idDrone" Text="" TextWrapping="Wrap" TextChanged="GetId" Margin="146,112,480,398"/>
-        <TextBox  FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="modelDrone" Text="" TextWrapping="Wrap" TextChanged="UpdateModel" Margin="146,186,427,324"/>
-        <ComboBox FontSize="20" HorizontalAlignment="Left" FontFamily="/font/#Fuzzy Bubbles" Name="maxWeightDrone" Width="286" Margin="146,250,0,250"/>
-        <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="batteryDrone" Text="" TextWrapping="Wrap" Margin="146,318,427,192"/>
-        <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="statusDrone" Text="Maintenance" TextWrapping="Wrap" Margin="146,386,427,124"/>
-        <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="locationDrone" TextWrapping="Wrap" Margin="102,420,321,41"/>
-        <TextBlock FontSize="15" FontFamily="/font/#Fuzzy Bubbles" Name="parcelDrone" Text="" TextWrapping="Wrap" Margin="434,91,17,63"/>
-        <Button Name="parcelInDrone" Background="PowderBlue" Content="Open Parcel" BorderBrush="Black" FontFamily="/font/#Alef" Click="ParcelInDrone" FontWeight="Bold" Grid.Column="0" FontSize="18" Margin="533,458,0,10" HorizontalAlignment="Left" Width="216">
-            <Button.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="25,25,25,25"/>
-                    <Setter Property="Margin" Value="10,8,10,8"/>
-                </Style>
-            </Button.Resources>
-        </Button>
+        <Image Grid.RowSpan="2" Margin="0,0,0,0" Stretch="Fill" Source="img\customerImage.jpg"/>
+        <TextBox FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="idCustomer" Text="" TextWrapping="Wrap" TextChanged="GetId" Margin="64,108,484,402"/>
+        <TextBox  FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="nameCustomer" Text="" TextWrapping="Wrap" TextChanged="UpdateName" Margin="70,182,451,328"/>
         <Grid Name="DownGrid" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -44,7 +31,7 @@
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button Name="action1" Background="PowderBlue" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" Grid.Column="1" FontSize="18" Content="">
+            <Button Name="action1" Background="PowderBlue" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" Grid.Column="2" FontSize="18" Content="">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="25,25,25,25"/>
@@ -52,7 +39,7 @@
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button Name="action2" Background="PowderBlue" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" Grid.Column="2" FontSize="18" Content="">
+            <Button Background="PowderBlue" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" FontSize="18" Name="updateCustomer" Content="Update Customer"  Grid.Column="3" IsEnabled="False" Click="Update_Click">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="25,25,25,25"/>
@@ -60,20 +47,6 @@
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button Background="PowderBlue" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" FontSize="18" Name="updateDrone" Content="Update Drone"  Grid.Column="3" IsEnabled="False" Click="Update_Click">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="25,25,25,25"/>
-                        <Setter Property="Margin" Value="10,8,10,8"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
-        </Grid>
-
-        <!--Display Page of Drone Addition (partial)-->
-        <Grid Name="DroneAddGrid" Visibility="Hidden">
-            <TextBlock FontWeight="Bold" FontSize="25" FontFamily="/font/#Alef" Text="Choose Station for Drone:" TextWrapping="Wrap"  Margin="204,438,250,27"/>
-            <ComboBox FontSize="16" HorizontalAlignment="Left" Grid.Row="0"  FontFamily="/font/#Fuzzy Bubbles" Name="idStationToChrging" Width="252" Margin="216,474,0,35"/>
         </Grid>
     </Grid>
 </Page>

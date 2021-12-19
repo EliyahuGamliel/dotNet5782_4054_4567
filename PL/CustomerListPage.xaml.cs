@@ -35,7 +35,7 @@ namespace PL
         /// <param name="e"></param>
         private void AddCustomer(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new CustomerPage());
+            this.NavigationService.Navigate(new CustomerPage(this));
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace PL
             if (CustomerListView.SelectedItem != null)
             {
                 BO.CustomerList c = (BO.CustomerList)CustomerListView.SelectedItem;
-                this.NavigationService.Navigate(new CustomerPage(bl.GetCustomerById(c.Id)));
+                this.NavigationService.Navigate(new CustomerPage(bl.GetCustomerById(c.Id), this));
             }
         }
 
