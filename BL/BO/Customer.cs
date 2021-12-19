@@ -16,6 +16,7 @@ namespace BO
         public Location Location { get; set; }
         public List<ParcelInCustomer> FromCustomer { get; set; }
         public List<ParcelInCustomer> ForCustomer { get; set; }
+        private string password { get; set; }
 
         /// <summary><returns>
         /// The function returns a string to print on all entity data
