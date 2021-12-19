@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BO;
 using BlApi;
- 
+
 namespace PL
 {
     /// <summary>
@@ -29,8 +29,7 @@ namespace PL
         /// The ctor of the main page 
         /// </summary>
         /// <param name="mainWindow">Pointer to the Main Window</param>
-        public MainPage(MainWindow mainWindow)
-        {
+        public MainPage(MainWindow mainWindow) {
             //Set the value of "CurrentPageBonus" to be "MainPage" to allow the window to close - Bonus
             mainWindow.ExitBonus = true;
             InitializeComponent();
@@ -38,17 +37,36 @@ namespace PL
             mWindow = mainWindow;
         }
 
-
-        private void SignUp(object sender, RoutedEventArgs e)
-        {
-            mWindow.ExitBonus = false;
-            this.NavigationService.Navigate(new CustomerPage());
+        /// <summary>
+        /// When the show drone button has been pressed it navigates to the "DroneListPage"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DroneList(object sender, RoutedEventArgs e) {
+            this.NavigationService.Navigate(new DroneListPage());
         }
 
-        private void SignIn(object sender, RoutedEventArgs e)
-        {
-            mWindow.ExitBonus = false;
-            this.NavigationService.Navigate(new EmployeeViewPage(this));
+
+        private void CustomerList(object sender, RoutedEventArgs e) {
+            this.NavigationService.Navigate(new CustomerListPage());
+        }
+
+        private void StationList(object sender, RoutedEventArgs e) {
+            this.NavigationService.Navigate(new StationListPage());
+        }
+
+        private void ParcelList(object sender, RoutedEventArgs e) {
+            this.NavigationService.Navigate(new ParcelListPage());
+        }
+
+        /// <summary>
+        /// Makes sure that the gif keep running over and over again
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Again_MediaEnded(object sender, RoutedEventArgs e) {
+            Gif.Position = new TimeSpan(0, 0, 1);
+            Gif.Play();
         }
     }
 }

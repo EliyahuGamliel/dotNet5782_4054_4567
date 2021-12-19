@@ -65,6 +65,7 @@ namespace PL
             maxWeightDrone.SelectedIndex = 0;
             idStationToChrging.ItemsSource = bl.GetStationCharge();
             idStationToChrging.SelectedIndex = 0;
+            parcelDrone.Text = "not exist";
 
             action2.Visibility = Visibility.Hidden;
             updateDrone.Visibility = Visibility.Hidden;
@@ -91,10 +92,14 @@ namespace PL
             locationDrone.Text = dr.CLocation.ToString();
             updateDrone.IsEnabled = false;
             //If the choosen drone is in delivery
-            if (dr.Status == DroneStatuses.Delivery)
-                parcelDrone.IsEnabled = true;
-            else
-                parcelDrone.IsEnabled = false;
+            if (dr.Status == DroneStatuses.Delivery) {
+                parcelInDrone.IsEnabled = true;
+                parcelDrone.Text = dr.PTransfer.ToString();
+            }
+            else {
+                parcelDrone.Text = "not exist";
+                parcelInDrone.IsEnabled = false;
+            }
         }
 
         /// <summary>
@@ -279,7 +284,7 @@ namespace PL
                 droneAdd.Model = modelDrone.Text;
                 MessageBox.Show(bl.AddDrone(droneAdd, st.Id));
                 dlPage.Selector_SelectionChanged();
-                this.NavigationService.Navigate(dlPage);
+                this.NavigationService.GoBack();
             }
             catch (Exception ex)
             {

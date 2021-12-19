@@ -23,7 +23,6 @@ namespace PL
     public partial class DroneListPage : Page
     {
         private BlApi.IBL bl = BlFactory.GetBl();
-        private EmployeeViewPage evPage;
         private bool isGroup;
 
         /// <summary>

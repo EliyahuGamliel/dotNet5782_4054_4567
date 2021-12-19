@@ -10,22 +10,34 @@
 
     <Grid>
         <Frame x:Name="DroneListPage" NavigationUIVisibility="Hidden" />
-        <Image x:Name="droneWithoutParcel"  Margin="0,0,0,0" Stretch="Fill" Source="img\login.jpg"/>
-        <Button Background="LightSkyBlue"  FontFamily="/font/#Alef" FontSize="26" FontWeight="Bold" Content="Sign In" Click="SignIn" Margin="336,448,304,101">
+        <MediaElement x:Name="Gif" MediaEnded="Again_MediaEnded" VerticalAlignment="Top" Source="img\droneMainPage.gif" LoadedBehavior="Play" UnloadedBehavior="Manual"/>
+        <Button Background="LightSkyBlue" FontFamily="/font/#Alef" FontSize="26" FontWeight="Bold" Content="Drone List" Click="DroneList" Margin="0,548,579,0">
             <Button.Resources>
                 <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="25,25,25,25"/>
+                    <Setter Property="CornerRadius" Value="50,50,0,0"/>
                 </Style>
             </Button.Resources>
         </Button>
-        <Button Background="LightSkyBlue"  FontFamily="/font/#Alef" FontSize="26" FontWeight="Bold" Content="Sign Up" Click="SignUp" Margin="520,448,120,101">
+        <Button Background="LightSkyBlue" FontFamily="/font/#Alef" FontSize="26" FontWeight="Bold" Content="Customer List" Click="CustomerList" Margin="200,548,379,0">
             <Button.Resources>
                 <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="25,25,25,25"/>
+                    <Setter Property="CornerRadius" Value="50,50,0,0"/>
                 </Style>
             </Button.Resources>
         </Button>
-        <TextBox x:Name="Username" Margin="345,273,150,0" FontFamily="/font/#Alef" Text="" FontSize="26" TextWrapping="Wrap" VerticalAlignment="Top" Height="39"/>
-        <PasswordBox x:Name="Password" Margin="343,366,152,0" FontFamily="/font/#Alef" Password="" PasswordChar="*" FontSize="26" VerticalAlignment="Top" Height="40"/>
+        <Button Background="LightSkyBlue" FontFamily="/font/#Alef" FontSize="26" FontWeight="Bold" Content="Station List" Click="StationList" Margin="400,548,179,0">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="50,50,0,0"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button Background="LightSkyBlue" FontFamily="/font/#Alef" FontSize="26" FontWeight="Bold" Content="Parcel List" Click="ParcelList" Margin="600,548,0,0">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="50,50,0,0"/>
+                </Style>
+            </Button.Resources>
+        </Button>
     </Grid>
 </Page>
