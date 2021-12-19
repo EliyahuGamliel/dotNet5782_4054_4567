@@ -74,7 +74,6 @@ namespace BL
                 cu.Location = new Location();
                 cu.Id = chosenc.Id;
                 cu.Name = chosenc.Name;
-                cu.Password = chosenc.Password;
                 cu.Phone = chosenc.Phone;
                 cu.Location.Longitude = chosenc.Longitude;
                 cu.Location.Lattitude = chosenc.Lattitude;
