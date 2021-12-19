@@ -77,7 +77,6 @@ namespace Dal
                 Customer cust = new Customer();
                 cust.Id = rid;
                 cust.Name = ("Customer" + i);
-                cust.Password = ("Customer" + i);
                 string phone = "+972-582559635";
                 rid = rando.Next(1000, 10000);
                 //h check if the random number is legal and if not h start over

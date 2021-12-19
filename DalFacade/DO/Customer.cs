@@ -12,13 +12,12 @@ namespace DO
         public string Phone { get; set; }
         public double Longitude { get; set; }
         public double Lattitude { get; set; }
-        public string Password { get; set; }
 
         /// <summary><returns>
         /// The function returns a string to print on all entity data
         /// </returns></summary>
         public override string ToString()
-        { return $"Id: {Id}\nName: {Name}\nPassword: {Password}\nPhone: {Phone}\nLongitude: {LongitudeBonus(Longitude)}\nLattitude: {LattitudeBonus(Lattitude)}\n"; }
+        { return $"Id: {Id}\nName: {Name}\nPhone: {Phone}\nLongitude: {LongitudeBonus(Longitude)}\nLattitude: {LattitudeBonus(Lattitude)}\n"; }
 
         /// <summary>
         /// The function gets a longitube and turns it into a longitube at base 60

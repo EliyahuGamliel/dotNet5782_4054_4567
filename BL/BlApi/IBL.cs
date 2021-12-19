@@ -173,7 +173,6 @@ namespace BlApi
         /// <returns>Return list of drones by filter</returns>
         IEnumerable<DroneList> GetDroneByFilter(object weight, object status);
 
-        bool CustomerPassword(string password, string name);
 
     }
 }

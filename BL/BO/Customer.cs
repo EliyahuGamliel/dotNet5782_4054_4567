@@ -16,14 +16,13 @@ namespace BO
         public Location Location { get; set; }
         public List<ParcelInCustomer> FromCustomer { get; set; }
         public List<ParcelInCustomer> ForCustomer { get; set; }
-        public string Password { get; set; }
 
         /// <summary><returns>
         /// The function returns a string to print on all entity data
         /// </returns></summary>
         public override string ToString()
         {
-            string str = $"Id: {Id}\nName: {Name}\nPassword: {Password}\nPhone: {Phone}\nLocation: {Location}Parcels From Customer: \n";
+            string str = $"Id: {Id}\nName: {Name}\nPhone: {Phone}\nLocation: {Location}Parcels From Customer: \n";
             foreach (var item in FromCustomer)
                 str += item;
             str += $"Parcels For Customer: \n";
