@@ -22,7 +22,7 @@
         <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="batteryDrone" Text="" TextWrapping="Wrap" Margin="146,318,427,192"/>
         <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="statusDrone" Text="Maintenance" TextWrapping="Wrap" Margin="146,386,427,124"/>
         <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="locationDrone" TextWrapping="Wrap" Margin="102,420,321,41"/>
-        <TextBlock FontSize="15" FontFamily="/font/#Fuzzy Bubbles" Name="parcelDrone" Text="" TextWrapping="Wrap" Margin="440,73,11,81"/>
+        <TextBlock FontSize="15" FontFamily="/font/#Fuzzy Bubbles" Name="parcelDrone" Text="" TextWrapping="Wrap" Margin="434,91,17,63"/>
         <Button Name="parcelInDrone" Background="PowderBlue" Content="Open Parcel" BorderBrush="Black" FontFamily="/font/#Alef" Click="ParcelInDrone" FontWeight="Bold" Grid.Column="0" FontSize="18" Margin="533,458,0,10" HorizontalAlignment="Left" Width="216">
             <Button.Resources>
                 <Style TargetType="Border">

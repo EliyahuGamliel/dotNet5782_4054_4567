@@ -44,6 +44,7 @@ namespace PL
                 pa = bl.GetParcelById(dr.PTransfer.Id);
             InitializeData();
             InitializeButtons();
+            this.DataContext = this;
         }
 
         /// <summary>
@@ -65,7 +66,7 @@ namespace PL
             maxWeightDrone.SelectedIndex = 0;
             idStationToChrging.ItemsSource = bl.GetStationCharge();
             idStationToChrging.SelectedIndex = 0;
-            parcelDrone.Text = "not exist";
+            parcelDrone.Text = "\n      not exist";
 
             action2.Visibility = Visibility.Hidden;
             updateDrone.Visibility = Visibility.Hidden;
@@ -85,7 +86,7 @@ namespace PL
             maxWeightDrone.IsEnabled = false;
 
             idDrone.Text = dr.Id.ToString();
-            modelDrone.Text = dr.Model;
+            //modelDrone.Text = dr.Model;
             batteryDrone.Text = Math.Round(dr.Battery, 0).ToString() + "%";
             maxWeightDrone.SelectedIndex = maxWeightDrone.Items.IndexOf(dr.MaxWeight);
             statusDrone.Text = dr.Status.ToString();
@@ -97,7 +98,7 @@ namespace PL
                 parcelDrone.Text = dr.PTransfer.ToString();
             }
             else {
-                parcelDrone.Text = "not exist";
+                parcelDrone.Text = "\n      not exist";
                 parcelInDrone.IsEnabled = false;
             }
         }
