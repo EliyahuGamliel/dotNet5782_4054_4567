@@ -10,6 +10,7 @@
     <None Remove="font\Alef-Regular.ttf" />
     <None Remove="font\FuzzyBubbles-Regular.ttf" />
     <None Remove="font\IndieFlower-Regular.ttf" />
+    <None Remove="img\customer.jpg" />
     <None Remove="img\customerList.gif" />
     <None Remove="img\droneIcon.ico" />
     <None Remove="img\droneList.gif" />
@@ -32,6 +33,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="font\IndieFlower-Regular.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\customer.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="img\customerList.gif">
