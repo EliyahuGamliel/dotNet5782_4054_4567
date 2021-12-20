@@ -33,5 +33,9 @@ namespace PLCustomer
             //Open in the window new Page
             MainPage.Content = new MainPage();
         }
+
+        private void MainPage_Navigated(object sender, NavigationEventArgs e) {
+
+        }
     }
 }

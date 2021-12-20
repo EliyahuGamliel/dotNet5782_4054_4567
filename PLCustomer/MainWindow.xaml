@@ -9,8 +9,13 @@
         Icon="/img/droneIcon.ico"
         Background="Cyan"
         ResizeMode="CanMinimize">
-    
+
     <Grid>
-        <Frame x:Name="MainPage" NavigationUIVisibility="Hidden" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0*"/>
+            <RowDefinition Height="7*"/>
+            <RowDefinition Height="149*"/>
+        </Grid.RowDefinitions>
+        <Frame x:Name="MainPage" NavigationUIVisibility="Hidden" Grid.RowSpan="3" Navigated="MainPage_Navigated" />
     </Grid>
 </Window>
