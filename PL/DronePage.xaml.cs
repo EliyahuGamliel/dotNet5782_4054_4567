@@ -22,7 +22,6 @@ namespace PL
     /// </summary>
     public partial class DronePage : Page
     {
-        static DroneList droneList = new DroneList();
         static Drone dr;
         private Parcel pa;
         private BlApi.IBL bl = BlApi.BlFactory.GetBl();

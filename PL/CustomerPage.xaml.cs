@@ -21,12 +21,13 @@ namespace PL
     public partial class CustomerPage : Page
     {
         private BlApi.IBL bl = BlApi.BlFactory.GetBl();
+        private BO.Customer cu;
         private CustomerListPage clPage;
 
         public CustomerPage(BO.Customer customer, CustomerListPage customerListPage) {
             InitializeComponent();
             clPage = customerListPage;
-            //maxWeightDrone.ItemsSource = ;
+            cu = customer;
             InitializeData();
             InitializeButtons();
             this.DataContext = this;
@@ -62,9 +63,8 @@ namespace PL
         /// Initialise all the data and some of the graphics
         /// </summary>
         private void InitializeData() {
+            CustomerForListView.ItemsSource = cu.ForCustomer;
             /*
-            dr = bl.GetDroneById(dr.Id);
-
             idDrone.IsEnabled = false;
             maxWeightDrone.IsEnabled = false;
 
@@ -199,5 +199,8 @@ namespace PL
 
         }
 
+        private void OpenParcel(object sender, MouseButtonEventArgs e) {
+
+        }
     }
 }
