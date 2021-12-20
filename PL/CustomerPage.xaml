@@ -17,6 +17,20 @@
         <Image Grid.RowSpan="2" Margin="0,0,0,0" Stretch="Fill" Source="img\customerImage.jpg"/>
         <TextBox FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="idCustomer" Text="" TextWrapping="Wrap" TextChanged="GetId" Margin="64,108,484,402"/>
         <TextBox  FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="nameCustomer" Text="" TextWrapping="Wrap" TextChanged="UpdateName" Margin="70,182,451,328"/>
+        <ListView Background="LightCyan" FontFamily="/font/#Alef" Grid.Row="0" x:Name="CustomerFromListView" Width="auto" Height="auto" MouseDoubleClick="OpenParcel" Margin="408,94,54,325" >
+            <ListView.Resources>
+                <Style TargetType="GridViewColumnHeader">
+                    <Setter Property="Visibility" Value="Hidden"/>
+                </Style>
+            </ListView.Resources>
+        </ListView>
+        <ListView Background="LightCyan" FontFamily="/font/#Alef" Grid.Row="0" x:Name="CustomerForListView" Width="auto" Height="auto" MouseDoubleClick="OpenParcel" Margin="408,245,54,174" >
+            <ListView.Resources>
+                <Style TargetType="GridViewColumnHeader">
+                    <Setter Property="Visibility" Value="Hidden"/>
+                </Style>
+            </ListView.Resources>
+        </ListView>
         <Grid Name="DownGrid" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
