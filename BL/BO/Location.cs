@@ -23,7 +23,7 @@ namespace BO
         /// </summary>
         /// <param name="num">The number to change</param>
         /// <returns>The function returns a string of a number representing base 60</returns>
-        public static string LongitudeBonus(double num)
+        public string LongitudeBonus(double num)
         {
             char dir = 'W';
             if (num < 0)
@@ -43,7 +43,7 @@ namespace BO
         /// </summary>
         /// <param name="num">The number to change</param>
         /// <returns>The function returns a string of a number representing base 60</returns>
-        public static string LattitudeBonus(double num)
+        public string LattitudeBonus(double num)
         {
             char dir = 'S';
             if (num < 0)

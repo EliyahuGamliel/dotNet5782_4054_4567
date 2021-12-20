@@ -109,33 +109,6 @@ namespace BO
     }
 
     /// <summary>
-    /// If the phone already exist - throw Exception
-    /// </summary>
-    [Serializable]
-    public class PhoneExistException : Exception
-    {
-        public string phone { get; private set; }
-
-        // <summary>
-        /// If the phone number already exists then it assigns the phone number
-        /// </summary>
-        /// <param name="phone">the phone number</param>
-        public PhoneExistException(string Phone)
-        {
-            this.phone = Phone;
-        }
-
-        /// <summary>
-        /// Returns a matching string for the exption
-        /// </summary>
-        /// <returns>a printable matching string</returns>
-        public override string ToString()
-        {
-            return "PhoneExistException: The Phone " + phone + " exist\n";
-        }
-    }
-
-    /// <summary>
     /// If the SenderID like the TargetID - throw Exception
     /// </summary>
     [Serializable]

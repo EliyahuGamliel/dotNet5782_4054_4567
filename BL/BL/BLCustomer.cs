@@ -15,7 +15,7 @@ namespace BL
         /// </summary>
         /// <param name="c">Object of customer to add</param>
         /// <returns>Notice if the addition was successful</returns>
-        public string AddCustomer(BO.Customer c){
+        public string AddCustomer(BO.Customer c) {
             try {
                 CheckValidId(c.Id);
                 DO.Customer cu = new DO.Customer();
@@ -25,12 +25,12 @@ namespace BL
                 cu.Lattitude = c.Location.Lattitude;
                 cu.Longitude = c.Location.Longitude;
                 CheckLegelLocation(cu.Longitude, cu.Lattitude);
-                data.AddCustomer(cu); 
+                data.AddCustomer(cu);
                 return "The addition was successful\n";
             }
             catch (DO.IdExistException) {
                 throw new BO.IdExistException(c.Id);
-            }     
+            }
         }
 
         /// <summary>
@@ -44,19 +44,14 @@ namespace BL
             try {
                 DO.Customer chosenc = data.GetCustomerById(id);
                 //If input is received
-                if (nameCustomer != "") 
-                    chosenc.Name = nameCustomer;
+                chosenc.Name = nameCustomer;
                 //If input is received
-                if (phoneCustomer != "")
-                    chosenc.Phone = phoneCustomer;
+                chosenc.Phone = phoneCustomer;
                 data.UpdateCustomer(chosenc, phoneCustomer);
-                return "The update was successful\n"; 
+                return "The update was successful\n";
             }
             catch (DO.IdNotExistException) {
                 throw new BO.IdNotExistException(id);
-            }
-            catch (DO.PhoneExistException) {
-                throw new BO.PhoneExistException(phoneCustomer);
             }
         }
 
@@ -67,7 +62,7 @@ namespace BL
         /// <returns>The object of the requested customer</returns>
         public BO.Customer GetCustomerById(int Id) {
             try {
-                DO.Customer chosenc = data.GetCustomerById(Id); 
+                DO.Customer chosenc = data.GetCustomerById(Id);
                 BO.Customer cu = new BO.Customer();
                 cu.ForCustomer = new List<ParcelInCustomer>();
                 cu.FromCustomer = new List<ParcelInCustomer>();
@@ -89,13 +84,13 @@ namespace BL
 
                     CustomerInParcel cp = new CustomerInParcel();
                     cp.Id = item.SenderId;
-                    DO.Customer customerhelp = data.GetCustomerById(cp.Id); 
+                    DO.Customer customerhelp = data.GetCustomerById(cp.Id);
                     cp.Name = customerhelp.Name;
                     pc.CParcel = cp;
 
                     cu.ForCustomer.Add(pc);
                 }
-                
+
                 foreach (var item in data.GetParcelByFilter(p => p.SenderId == cu.Id)) {
                     //If the customer is the sender of the parcel
                     ParcelInCustomer pc = new ParcelInCustomer();
@@ -107,12 +102,12 @@ namespace BL
 
                     CustomerInParcel cp = new CustomerInParcel();
                     cp.Id = item.TargetId;
-                    DO.Customer customerhelp = data.GetCustomerById(cp.Id); 
+                    DO.Customer customerhelp = data.GetCustomerById(cp.Id);
                     cp.Name = customerhelp.Name;
                     pc.CParcel = cp;
 
                     cu.FromCustomer.Add(pc);
-                } 
+                }
                 return cu;
             }
             catch (DO.IdNotExistException) {
@@ -124,7 +119,7 @@ namespace BL
         /// Returns the list of customers
         /// </summary>
         /// <returns>Returns the list of customers</returns>
-        public IEnumerable<CustomerList> GetCustomers(){
+        public IEnumerable<CustomerList> GetCustomers() {
             return ConvertToBL(data.GetCustomerByFilter(c => true));
         }
 
@@ -133,8 +128,7 @@ namespace BL
         /// </summary>
         /// <param name="listCustomers">The list we want to convert</param>
         /// <returns>The same list converted to BL</returns>
-        private IEnumerable<CustomerList> ConvertToBL(IEnumerable<DO.Customer> listCustomers)
-        {
+        private IEnumerable<CustomerList> ConvertToBL(IEnumerable<DO.Customer> listCustomers) {
             List<CustomerList> customer = new List<CustomerList>();
             foreach (var item in listCustomers) {
                 CustomerList cu = new CustomerList();
@@ -148,9 +142,9 @@ namespace BL
 
                 //If the customer is the sender
                 cu.ParcelsOnlySend = listparcels.Where(p => ReturnStatus(p) == 0 && p.SenderId == cu.Id).Count();
-                cu.ParcelsInTheWay = listparcels.Where(p => (ReturnStatus(p) == 1 || ReturnStatus(p) == 2)  && p.SenderId == cu.Id).Count();
+                cu.ParcelsInTheWay = listparcels.Where(p => (ReturnStatus(p) == 1 || ReturnStatus(p) == 2) && p.SenderId == cu.Id).Count();
                 cu.ParcelsSent = listparcels.Where(p => ReturnStatus(p) == 3 && p.SenderId == cu.Id).Count();
-             
+
                 customer.Add(cu);
             }
             return customer;

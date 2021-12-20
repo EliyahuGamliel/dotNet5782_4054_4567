@@ -24,13 +24,18 @@ namespace PL
         private BO.Customer cu;
         private CustomerListPage clPage;
 
+        private int numInt;
+        private double numDouble;
+
         public CustomerPage(BO.Customer customer, CustomerListPage customerListPage) {
             InitializeComponent();
             clPage = customerListPage;
             cu = customer;
+
+            action1.Content = "Delete Customer";
+            action1.Click += new RoutedEventHandler(DeleteCustomer);
+
             InitializeData();
-            InitializeButtons();
-            this.DataContext = this;
         }
 
         /// <summary>
@@ -42,19 +47,17 @@ namespace PL
             InitializeComponent();
             clPage = customerListPage;
 
+            updateCustomer.Visibility = Visibility.Hidden;
+
             idCustomer.Background = Brushes.Red;
             nameCustomer.Background = Brushes.Red;
-            action1.IsEnabled = false;
-            /*
-            maxWeightDrone.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-            maxWeightDrone.SelectedIndex = 0;
-            idStationToChrging.ItemsSource = bl.GetStationCharge();
-            idStationToChrging.SelectedIndex = 0;
-            parcelDrone.Text = "\n      not exist";
+            longCustomer.Background = Brushes.Red;
+            latiCustomer.Background = Brushes.Red;
+            phoneCustomer.Background = Brushes.Red;
 
-            action2.Visibility = Visibility.Hidden;
-            updateDrone.Visibility = Visibility.Hidden;
-            */
+            action1.IsEnabled = false;
+            phoneCustomer.Text = "+972-5????????";
+
             action1.Content = "Add Customer";
             action1.Click += new RoutedEventHandler(Add_Click);
         }
@@ -64,67 +67,50 @@ namespace PL
         /// </summary>
         private void InitializeData() {
             CustomerForListView.ItemsSource = cu.ForCustomer;
-            /*
-            idDrone.IsEnabled = false;
-            maxWeightDrone.IsEnabled = false;
+            CustomerFromListView.ItemsSource = cu.FromCustomer;
 
-            idDrone.Text = dr.Id.ToString();
-            //modelDrone.Text = dr.Model;
-            batteryDrone.Text = Math.Round(dr.Battery, 0).ToString() + "%";
-            maxWeightDrone.SelectedIndex = maxWeightDrone.Items.IndexOf(dr.MaxWeight);
-            statusDrone.Text = dr.Status.ToString();
-            locationDrone.Text = dr.CLocation.ToString();
-            updateDrone.IsEnabled = false;
-            //If the choosen drone is in delivery
-            if (dr.Status == DroneStatuses.Delivery) {
-                parcelInDrone.IsEnabled = true;
-                parcelDrone.Text = dr.PTransfer.ToString();
-            }
-            else {
-                parcelDrone.Text = "\n      not exist";
-                parcelInDrone.IsEnabled = false;
-            }
-            */
-        }
+            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Status");
+            CollectionView view1 = (CollectionView)CollectionViewSource.GetDefaultView(CustomerForListView.ItemsSource);
+            CollectionView view2 = (CollectionView)CollectionViewSource.GetDefaultView(CustomerFromListView.ItemsSource);
+            view1.GroupDescriptions.Add(groupDescription);
+            view2.GroupDescriptions.Add(groupDescription);
 
-        /// <summary>
-        /// Initialise all the buttons of actions
-        /// </summary>
-        private void InitializeButtons() {
-            /*
-            //If the choosen drone is in delivery
-            if (dr.Status == DroneStatuses.Delivery) {
-                action2.Visibility = Visibility.Hidden;
-                if (pa.PickedUp == null)
-                    ChangePickUP();
-                else
-                    ChangeDelivery();
-            }
-            else if (dr.Status == DroneStatuses.Maintenance)
-                ChangeRelese();
-            else
-                ChangeAssignSend();
-            */
+            longCustomer.TextChanged -= new TextChangedEventHandler(GetLong);
+            latiCustomer.TextChanged -= new TextChangedEventHandler(GetLati);
+
+            idCustomer.Text = cu.Id.ToString();
+            nameCustomer.Text = cu.Name;
+            phoneCustomer.Text = cu.Phone;
+            longCustomer.Text = cu.Location.LongitudeBonus(cu.Location.Longitude);
+            latiCustomer.Text = cu.Location.LattitudeBonus(cu.Location.Lattitude);
+
+            idCustomer.IsEnabled = false;
+            longCustomer.IsEnabled = false;
+            latiCustomer.IsEnabled = false;
+            updateCustomer.IsEnabled = false;
         }
 
         #region check valid input and the results
+
+        private void CheckAddCustomer() {
+            if (new[] { nameCustomer, idCustomer, phoneCustomer, latiCustomer, longCustomer }.All(x => x.Background != Brushes.Red))
+                action1.IsEnabled = true;
+            else
+                action1.IsEnabled = false;
+        }
+
         /// <summary>
         /// Check if what captured in the "Id of Drone" filed is valid
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void GetId(object sender, RoutedEventArgs e) {
-            int num;
-            bool error = Int32.TryParse(idCustomer.Text, out num);
-            if (!error) {
+            bool error = Int32.TryParse(idCustomer.Text, out numInt);
+            if (!error)
                 idCustomer.Background = Brushes.Red;
-                action1.IsEnabled = false;
-            }
-            else {
+            else
                 idCustomer.Background = Brushes.White;
-                if (nameCustomer.Background != Brushes.Red)
-                    action1.IsEnabled = true;
-            }
+            CheckAddCustomer();
         }
 
         /// <summary>
@@ -132,18 +118,58 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UpdateName(object sender, RoutedEventArgs e) {
+        private void GetName(object sender, RoutedEventArgs e) {
             if (nameCustomer.Text == "") {
                 updateCustomer.IsEnabled = false;
                 nameCustomer.Background = Brushes.Red;
-                action1.IsEnabled = false;
             }
             else {
                 updateCustomer.IsEnabled = true;
                 nameCustomer.Background = Brushes.White;
-                if (idCustomer.Background != Brushes.Red)
-                    action1.IsEnabled = true;
             }
+            CheckAddCustomer();
+        }
+
+        private void GetPhone(object sender, TextChangedEventArgs e) {
+            string num = phoneCustomer.Text;
+            int check;
+            bool error = true;
+            if (num.Length != 14 || num[0] != '+' || num[1] != '9' || num[2] != '7' || num[3] != '2' || num[4] != '-' || num[5] != '5')
+                error = false;
+            else {
+                string output = num.Substring(num.IndexOf("+") + 6, 4);
+                error = Int32.TryParse(output, out check);
+                if (error) {
+                    output = num.Substring(num.IndexOf("+") + 10, 4);
+                    error = Int32.TryParse(output, out check);
+                }
+            }
+            if (phoneCustomer.Text == "")
+                phoneCustomer.Text = "+972-5????????";
+            else if (!error) {
+                phoneCustomer.Background = Brushes.Red;
+            }
+            else
+                phoneCustomer.Background = Brushes.White;
+            CheckAddCustomer();
+        }
+
+        private void GetLong(object sender, TextChangedEventArgs e) {
+            bool error = Double.TryParse(longCustomer.Text, out numDouble);
+            if (!error)
+                longCustomer.Background = Brushes.Red;
+            else
+                longCustomer.Background = Brushes.White;
+            CheckAddCustomer();
+        }
+
+        private void GetLati(object sender, TextChangedEventArgs e) {
+            bool error = Double.TryParse(latiCustomer.Text, out numDouble);
+            if (!error)
+                latiCustomer.Background = Brushes.Red;
+            else
+                latiCustomer.Background = Brushes.White;
+            CheckAddCustomer();
         }
         #endregion
 
@@ -153,11 +179,8 @@ namespace PL
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Update_Click(object sender, RoutedEventArgs e) {
-            /*
-            dr.Model = modelDrone.Text;
-            MessageBox.Show(bl.UpdateDrone(dr.Id, dr.Model));
-            updateDrone.IsEnabled = false;
-            */
+            MessageBox.Show(bl.UpdateCustomer(cu.Id, nameCustomer.Text, phoneCustomer.Text));
+            updateCustomer.IsEnabled = false;
         }
 
         /// <summary>
@@ -166,23 +189,28 @@ namespace PL
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Add_Click(object sender, RoutedEventArgs e) {
-            /*
             try {
-                int ID;
-                DroneList droneAdd = new DroneList();
-                droneAdd.MaxWeight = (WeightCategories)(int)maxWeightDrone.SelectedItem;
-                Int32.TryParse(idDrone.Text, out ID);
-                droneAdd.Id = ID;
-                StationList st = (StationList)idStationToChrging.SelectedItem;
-                droneAdd.Model = modelDrone.Text;
-                MessageBox.Show(bl.AddDrone(droneAdd, st.Id));
-                dlPage.Selector_SelectionChanged();
+                BO.Customer customerAdd = new BO.Customer();
+                customerAdd.Location = new BO.Location();
+                Int32.TryParse(idCustomer.Text, out numInt);
+                customerAdd.Id = numInt;
+                customerAdd.Name = nameCustomer.Text;
+                customerAdd.Phone = phoneCustomer.Text;
+                Double.TryParse(longCustomer.Text, out numDouble);
+                customerAdd.Location.Longitude = numDouble;
+                Double.TryParse(latiCustomer.Text, out numDouble);
+                customerAdd.Location.Lattitude = numDouble;
+                MessageBox.Show(bl.AddCustomer(customerAdd));
                 this.NavigationService.GoBack();
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            */
+        }
+
+        private void DeleteCustomer(object sender, RoutedEventArgs e) {
+            MessageBox.Show(bl.DeleteCustomer(cu.Id));
+            this.NavigationService.GoBack();
         }
 
         /// <summary>
@@ -194,7 +222,7 @@ namespace PL
             this.NavigationService.GoBack();
         }
 
-        
+
         private void ParcelInDrone(object sender, RoutedEventArgs e) {
 
         }

@@ -75,21 +75,5 @@ namespace Dal
             }
             throw new IdNotExistException(id);   
         }
-
-        /// <summary>
-        /// Checks if the ״phone״ already exists, if there is an error return
-        /// </summary>
-        /// <param name="list">List of T-objects</param>
-        /// <param name="id">The phone for check</param>
-        /// <typeparam name="T">The type of the list</typeparam>
-        /// <returns>Nothing</returns>
-        public void CheckExistPhone <T>(List<T> list, string phone) {
-            foreach (var item in list) {
-                string phoneobject = (string)(typeof(T).GetProperty("Phone").GetValue(item, null));
-                if (phoneobject == phone) {
-                    throw new PhoneExistException(phone);
-                }         
-            }
-        }
     }
 }

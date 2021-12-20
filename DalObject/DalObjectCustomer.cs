@@ -26,8 +26,6 @@ namespace Dal
         /// <param name="phone">Object.phone of customer to update</param>
         public void UpdateCustomer(Customer c, string phone) {
             CheckNotExistId(DataSource.Customers, c.Id);
-            if (phone != "")
-                CheckExistPhone(DataSource.Customers, phone);
             Customer cu = DataSource.Customers.Find(cus => c.Id == cus.Id);
             int index = DataSource.Customers.IndexOf(cu);
             DataSource.Customers[index] = c;

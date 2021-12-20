@@ -201,7 +201,7 @@ namespace ConsoleUI_BL
                 //For adding a drone
                 case Adding.Drone:
                     int idStation;
-                    DroneList d = new DroneList();
+                    Drone d = new Drone();
                     Console.WriteLine("Enter Id: ");
                     d.Id = GetInt();
                     Console.WriteLine("Enter model of Drone: ");
