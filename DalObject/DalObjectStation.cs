@@ -49,5 +49,10 @@ namespace Dal
         public IEnumerable<Station> GetStationByFilter(Predicate<Station> stationList) {
             return DataSource.Stations.FindAll(stationList);
         }
+
+        public void DeleteStation(DO.Station s) {
+            int index = DataSource.Stations.FindIndex(st => st.Id == s.Id);
+            DataSource.Stations[index] = s;
+        }
     }
 }

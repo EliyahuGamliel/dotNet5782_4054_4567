@@ -28,14 +28,15 @@ namespace BL
                 st.ChargeSlots = s.ChargeSlots;
                 if (st.ChargeSlots < 0)
                     throw new ChargeSlotsNotLegal(st.ChargeSlots);
+                st.Active = true;
                 data.AddStation(st);
                 return "The addition was successful\n";
             }
             catch (DO.IdExistException) {
                 throw new BO.IdExistException(s.Id);
-            }     
+            }
         }
-        
+
         /// <summary>
         /// If all is fine, update the station in a list of stations, else throw exception
         /// </summary>
@@ -97,16 +98,16 @@ namespace BL
         /// Returns the list of stations
         /// </summary>
         /// <returns>Returns the list of stations</returns>
-        public IEnumerable<StationList> GetStations(){
-            return ConvertToBL(data.GetStationByFilter(st => true));
+        public IEnumerable<StationList> GetStations() {
+            return ConvertToBL(data.GetStationByFilter(st => st.Active));
         }
-    
+
         /// <summary>
         /// Returns a list of all stations that have available chargeSlots
         /// </summary>
         /// <returns>Returns a list of all stations that have available chargeSlots</returns>
-        public IEnumerable<StationList> GetStationCharge(){
-            return ConvertToBL(data.GetStationByFilter(st => st.ChargeSlots > 0));
+        public IEnumerable<StationList> GetStationCharge() {
+            return ConvertToBL(data.GetStationByFilter(st => st.ChargeSlots > 0 && st.Active));
         }
 
         /// <summary>
@@ -114,8 +115,7 @@ namespace BL
         /// </summary>
         /// <param name="listCustomers">The list we want to convert</param>
         /// <returns>The same list converted to BL(StationList)</returns>
-        private IEnumerable<StationList> ConvertToBL(IEnumerable<DO.Station> listStation)
-        {
+        private IEnumerable<StationList> ConvertToBL(IEnumerable<DO.Station> listStation) {
             List<StationList> station = new List<StationList>();
             foreach (var item in listStation) {
                 StationList sl = new StationList();
@@ -126,6 +126,15 @@ namespace BL
                 station.Add(sl);
             }
             return station;
+        }
+
+        public string DeleteStation(int id) {
+            DO.Station s = data.GetStationById(id);
+            if (ChargeSlotsCatched(s.Id) != 0)
+                throw new CanntDeleteStation(s.Id);
+            s.Active = false;
+            data.DeleteStation(s);
+            return "The delete was successful\n";
         }
     }
 }

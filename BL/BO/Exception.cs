@@ -320,4 +320,48 @@ namespace BO
             return "ChargeSlotsNotLegal: The station cann't add/update, because the chargeSlots is not legal (" + chargeSlots + ")\n";
         }
     }
+
+    [Serializable]
+    public class CanntDeleteStation : Exception
+    {
+        public int Id { get; private set; }
+
+        /// <summary>
+        /// If the chargeslot is not legal the it assigns the charge slots
+        /// </summary>
+        /// <param name="chargeSlots"></param>
+        public CanntDeleteStation(int id) {
+            this.Id = id;
+        }
+
+        /// <summary>
+        /// Returns a matching string for the exption
+        /// </summary>
+        /// <returns>a printable matching string</returns>
+        public override string ToString() {
+            return "CanntDeleteStation: The station (" + Id + ") cann't delete, because the chargeSlots is not empty\n";
+        }
+    }
+
+    [Serializable]
+    public class CanntDeleteCustomer : Exception
+    {
+        public int Id { get; private set; }
+
+        /// <summary>
+        /// If the chargeslot is not legal the it assigns the charge slots
+        /// </summary>
+        /// <param name="chargeSlots"></param>
+        public CanntDeleteCustomer(int id) {
+            this.Id = id;
+        }
+
+        /// <summary>
+        /// Returns a matching string for the exption
+        /// </summary>
+        /// <returns>a printable matching string</returns>
+        public override string ToString() {
+            return "CanntDeleteCustomer: The customer (" + Id + ") cann't delete, because s/he have parcels in the way\n";
+        }
+    }
 }

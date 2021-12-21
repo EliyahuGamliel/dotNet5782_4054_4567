@@ -54,5 +54,10 @@ namespace Dal
         public IEnumerable<Parcel> GetParcelByFilter(Predicate<Parcel> parcelList) {
             return DataSource.Parcels.FindAll(parcelList);
         }
+
+        public void DeleteParcel(DO.Parcel p) {
+            int index = DataSource.Parcels.FindIndex(pa => pa.Id == p.Id);
+            DataSource.Parcels[index] = p;
+        }
     }
 }
