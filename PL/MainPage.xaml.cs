@@ -58,15 +58,5 @@ namespace PL
         private void ParcelList(object sender, RoutedEventArgs e) {
             this.NavigationService.Navigate(new ParcelListPage());
         }
-
-        /// <summary>
-        /// Makes sure that the gif keep running over and over again
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Again_MediaEnded(object sender, RoutedEventArgs e) {
-            Gif.Position = new TimeSpan(0, 0, 1);
-            Gif.Play();
-        }
     }
 }

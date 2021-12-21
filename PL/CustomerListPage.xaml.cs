@@ -61,16 +61,5 @@ namespace PL
                 this.NavigationService.Navigate(new CustomerPage(bl.GetCustomerById(c.Id), this));
             }
         }
-
-        /// <summary>
-        /// Makes sure the gif keeps running over and over
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Again_MediaEnded(object sender, RoutedEventArgs e)
-        {
-            Gif.Position = new TimeSpan(0, 0, 1);
-            Gif.Play();
-        }
     }
 }
