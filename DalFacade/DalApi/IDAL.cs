@@ -75,6 +75,13 @@ namespace DalApi
         /// </summary>
         /// <param name="d">Object of droneCharge to delete</param>
         void DeleteDroneCharge(DroneCharge d);
+        
+        void DeleteCustomer(DO.Customer c);
+
+        void DeleteStation(DO.Station s);
+
+        void DeleteParcel(DO.Parcel p);
+
         #endregion
 
         #region Getting

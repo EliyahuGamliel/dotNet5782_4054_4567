@@ -52,6 +52,7 @@ namespace Dal
                     }
                 }
                 Station adst = new Station();
+                adst.Active = true;
                 adst.ChargeSlots = 2 + rando.Next(0, 3);
                 adst.Id = rid;
                 adst.Name = $"{rid}";
@@ -75,6 +76,7 @@ namespace Dal
                     }
                 }
                 Customer cust = new Customer();
+                cust.Active = true;
                 cust.Id = rid;
                 cust.Name = ("Customer" + i);
                 string phone = "+972-582559635";
@@ -123,6 +125,7 @@ namespace Dal
             for (int i = 0; i < ran; ++i)
             {
                 Parcel p = new Parcel();
+                p.Active = true;
                 p.Weight = (WeightCategories)(rando.Next(0, 3));
                 p.Id = Config.NumberID;
                 Config.NumberID += 1;

@@ -5,13 +5,13 @@ namespace DO
     /// <summary>
     /// Defining the "Customer" struct
     /// </summary>
-    public struct Customer
-    {
+    public struct Customer {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Phone { get; set; }
         public double Longitude { get; set; }
         public double Lattitude { get; set; }
+        public bool Active { get; set; }
 
         /// <summary><returns>
         /// The function returns a string to print on all entity data

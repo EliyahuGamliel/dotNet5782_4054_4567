@@ -26,12 +26,9 @@ namespace BL
         {
             get
             {
-                if (Nested._instance == null)
-                {
-                    lock(Nested._lock)
-                    {
-                        if (Nested._instance == null)
-                        {
+                if (Nested._instance == null) {
+                    lock (Nested._lock) {
+                        if (Nested._instance == null) {
                             Nested._instance = new BL();
                         }
                     }
@@ -54,14 +51,13 @@ namespace BL
         /// </summary>
         /// <param name="DroneId">ID of the drone to assign a parcel</param>
         /// <returns>Notice if the addition was successful</returns>
-        public string AssignDroneParcel(int DroneId)
-        {
+        public string AssignDroneParcel(int DroneId) {
             CheckNotExistId(dronesList, DroneId);
             DroneList d = dronesList.Find(dr => dr.Id == DroneId);
             int index = dronesList.IndexOf(d);
-            
+
             //Removed all the parcels that cann't assign to the Drone
-            IEnumerable<DO.Parcel> parcelslist = data.GetParcelByFilter(p => ((BO.WeightCategories)p.Weight <= d.MaxWeight) && 
+            IEnumerable<DO.Parcel> parcelslist = data.GetParcelByFilter(p => ((BO.WeightCategories)p.Weight <= d.MaxWeight) &&
                 (ReturnBattery(3, d.CLocation, GetCustomerById(p.SenderId).Location) +
                 ReturnBattery((int)p.Weight, GetCustomerById(p.SenderId).Location, GetCustomerById(p.TargetId).Location) +
                 ReturnBattery(3, GetCustomerById(p.TargetId).Location, ReturnCloseStation(data.GetStationByFilter(s => true), GetCustomerById(p.TargetId).Location).Location)
@@ -73,7 +69,7 @@ namespace BL
                 throw new DroneCannotAssigan();
 
             //By Priority
-            parcelslist =  parcelslist.OrderByDescending(p => p.Priority);
+            parcelslist = parcelslist.OrderByDescending(p => p.Priority);
             DO.Parcel parcelchoose = parcelslist.First();
             parcelslist = parcelslist.Where(p => p.Priority == parcelchoose.Priority);
 
@@ -104,8 +100,7 @@ namespace BL
         /// </summary>
         /// <param name="id">ID of the drone to pickup a parcel</param>
         /// <returns>Notice if the addition was successful</returns>        
-        public string PickUpDroneParcel(int id)
-        {
+        public string PickUpDroneParcel(int id) {
             CheckNotExistId(dronesList, id);
             DroneList d = dronesList.Find(dr => dr.Id == id);
             BO.Drone chosendrone = GetDroneById(id);
@@ -129,8 +124,7 @@ namespace BL
         /// </summary>
         /// <param name="id">ID of the drone to deliver a parcel</param>
         /// <returns>Notice if the addition was successful</returns>   
-        public string DeliverParcelCustomer(int id)
-        {
+        public string DeliverParcelCustomer(int id) {
             CheckNotExistId(dronesList, id);
             DroneList d = dronesList.Find(dr => dr.Id == id);
             BO.Drone chosendrone = GetDroneById(id);

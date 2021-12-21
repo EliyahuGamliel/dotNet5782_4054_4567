@@ -12,20 +12,19 @@ namespace DO
         public double Longitude { get; set; }
         public double Lattitude { get; set; }
         public int ChargeSlots { get; set; }
+        public bool Active { get; set; }
 
         /// <summary><returns>
         /// The function returns a string to print on all entity data
         /// </returns></summary>
-        public override string ToString()
-        { return $"Id: {Id}\nName: {Name}\nLongitude: {LongitudeBonus(Longitude)}\nLattitude: {LattitudeBonus(Lattitude)}\nChargeSlots: {ChargeSlots}\n"; }
+        public override string ToString() { return $"Id: {Id}\nName: {Name}\nLongitude: {LongitudeBonus(Longitude)}\nLattitude: {LattitudeBonus(Lattitude)}\nChargeSlots: {ChargeSlots}\n"; }
 
         /// <summary>
         /// The function gets a longitube and turns it into a longitube at base 60
         /// </summary>
         /// <param name="num">The number to change</param>
         /// <returns>The function returns a string of a number representing base 60</returns>
-        public static string LongitudeBonus(double num)
-        {///returns the longitude
+        public static string LongitudeBonus(double num) {///returns the longitude
             char dir = 'S';
             if (num < 0)
                 num = -num;
@@ -44,8 +43,7 @@ namespace DO
         /// </summary>
         /// <param name="num">The number to change</param>
         /// <returns>The function returns a string of a number representing base 60</returns>
-        public static string LattitudeBonus(double num)
-        {///returns the lattitude
+        public static string LattitudeBonus(double num) {///returns the lattitude
             char dir = 'W';
             if (num < 0)
                 num = -num;

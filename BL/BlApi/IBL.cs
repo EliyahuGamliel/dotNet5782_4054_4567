@@ -173,6 +173,10 @@ namespace BlApi
         /// <returns>Return list of drones by filter</returns>
         IEnumerable<DroneList> GetDroneByFilter(object weight, object status);
 
+        string DeleteParcel(int id);
 
+        string DeleteCustomer(int id);
+
+        string DeleteStation(int id);
     }
 }
