@@ -31,8 +31,7 @@ namespace PLCustomer
         }
 
         private void SignUp(object sender, RoutedEventArgs e) {
-            string UN = Username.Text;
-
+            this.NavigationService.Navigate(new CustomerPage(this));
         }
 
         private void SignIn(object sender, RoutedEventArgs e) {
