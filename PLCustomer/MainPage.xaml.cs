@@ -31,6 +31,8 @@ namespace PLCustomer
         }
 
         private void SignUp(object sender, RoutedEventArgs e) {
+            string UN = Username.Text;
+
         }
 
         private void SignIn(object sender, RoutedEventArgs e) {
