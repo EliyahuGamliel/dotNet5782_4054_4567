@@ -8,6 +8,10 @@
       d:DesignHeight="640" d:DesignWidth="800"
       Title="DronePage">
 
+    <Page.Resources>
+        <local:BatteryConvertor x:Key="batteryConvertor"/>
+    </Page.Resources>
+
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="400*"/>
@@ -15,13 +19,13 @@
         </Grid.RowDefinitions>
 
         <Image Grid.RowSpan="2" Margin="0,0,0,0" Stretch="Fill" Source="img\dronesImage.jpg"/>
-        <TextBox FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="idDrone" Text="" TextWrapping="Wrap" TextChanged="GetId" Margin="146,112,480,398"/>
-        <TextBox  FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="modelDrone" Text="" TextWrapping="Wrap" TextChanged="UpdateModel" Margin="146,186,427,324"/>
-        <ComboBox FontSize="20" HorizontalAlignment="Left" FontFamily="/font/#Fuzzy Bubbles" Name="maxWeightDrone" Width="286" Margin="146,250,0,250"/>
-        <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="batteryDrone" Text="" TextWrapping="Wrap" Margin="146,318,427,192"/>
-        <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="statusDrone" Text="Maintenance" TextWrapping="Wrap" Margin="146,386,427,124"/>
-        <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="locationDrone" TextWrapping="Wrap" Margin="102,420,321,41"/>
-        <TextBlock FontSize="15" FontFamily="/font/#Fuzzy Bubbles" Name="parcelDrone" Text="" TextWrapping="Wrap" Margin="434,91,17,63"/>
+        <TextBox FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="idDrone" Text="{Binding Path=Id}" TextWrapping="Wrap" TextChanged="GetId" Margin="146,112,480,398"/>
+        <TextBox  FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="modelDrone" Text="{Binding Path=Model}" TextWrapping="Wrap" TextChanged="UpdateModel" Margin="146,176,427,324"/>
+        <ComboBox FontSize="20" HorizontalAlignment="Left" FontFamily="/font/#Fuzzy Bubbles" SelectedItem="{Binding Path=MaxWeight}" Name="maxWeightDrone" Width="286" Margin="146,250,0,250"/>
+        <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="batteryDrone" Text="{Binding Path=Battery, Converter={StaticResource batteryConvertor}}" TextWrapping="Wrap" Margin="146,318,427,192"/>
+        <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="statusDrone" Text="{Binding Path=Status}" TextWrapping="Wrap" Margin="146,386,427,124"/>
+        <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="locationDrone" Text="{Binding Path=CLocation}" TextWrapping="Wrap" Margin="102,420,321,41"/>
+        <TextBlock FontSize="15" FontFamily="/font/#Fuzzy Bubbles" Name="parcelDrone" Text="{Binding Path=PTransfer}" TextWrapping="Wrap" Margin="434,91,17,63"/>
         <Button Name="parcelInDrone" Background="PowderBlue" Content="Open Parcel" BorderBrush="Black" FontFamily="/font/#Alef" Click="ParcelInDrone" FontWeight="Bold" Grid.Column="0" FontSize="18" Margin="533,458,0,10" HorizontalAlignment="Left" Width="216">
             <Button.Resources>
                 <Style TargetType="Border">
@@ -49,6 +53,19 @@
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="25,25,25,25"/>
                         <Setter Property="Margin" Value="10,8,10,8"/>
+                    </Style>
+                    <Style TargetType="Button">
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=idDrone, Path=Background}" Value="White"/>
+                                    <Condition Binding="{Binding ElementName=modelDrone, Path=Background}" Value="White"/>
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="true"/>
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
                     </Style>
                 </Button.Resources>
             </Button>

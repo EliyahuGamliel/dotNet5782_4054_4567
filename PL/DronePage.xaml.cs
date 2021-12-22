@@ -43,7 +43,6 @@ namespace PL
                 pa = bl.GetParcelById(dr.PTransfer.Id);
             InitializeData();
             InitializeButtons();
-            this.DataContext = this;
         }
 
         /// <summary>
@@ -56,17 +55,17 @@ namespace PL
             InitializeComponent();
             dlPage = droneListPage;
 
-            DroneAddGrid.Visibility = Visibility.Visible;
             idDrone.Background = Brushes.Red;
             modelDrone.Background = Brushes.Red;
+            statusDrone.Text = "Maintenance";
             action1.IsEnabled = false;
 
             maxWeightDrone.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             maxWeightDrone.SelectedIndex = 0;
             idStationToChrging.ItemsSource = bl.GetStationCharge();
             idStationToChrging.SelectedIndex = 0;
-            parcelDrone.Text = "\n      not exist";
 
+            DroneAddGrid.Visibility = Visibility.Visible;
             action2.Visibility = Visibility.Hidden;
             updateDrone.Visibility = Visibility.Hidden;
 
@@ -77,29 +76,19 @@ namespace PL
         /// <summary>
         /// Initialise all the data and some of the graphics
         /// </summary>
-        private void InitializeData()
-        {
+        private void InitializeData() {
             dr = bl.GetDroneById(dr.Id);
+            this.DataContext = dr;
 
             idDrone.IsEnabled = false;
             maxWeightDrone.IsEnabled = false;
+                        updateDrone.IsEnabled = false;
 
-            idDrone.Text = dr.Id.ToString();
-            //modelDrone.Text = dr.Model;
-            batteryDrone.Text = Math.Round(dr.Battery, 0).ToString() + "%";
-            maxWeightDrone.SelectedIndex = maxWeightDrone.Items.IndexOf(dr.MaxWeight);
-            statusDrone.Text = dr.Status.ToString();
-            locationDrone.Text = dr.CLocation.ToString();
-            updateDrone.IsEnabled = false;
             //If the choosen drone is in delivery
-            if (dr.Status == DroneStatuses.Delivery) {
+            if (dr.Status == DroneStatuses.Delivery)
                 parcelInDrone.IsEnabled = true;
-                parcelDrone.Text = dr.PTransfer.ToString();
-            }
-            else {
-                parcelDrone.Text = "\n      not exist";
+            else
                 parcelInDrone.IsEnabled = false;
-            }
         }
 
         /// <summary>
@@ -140,8 +129,8 @@ namespace PL
             else
             {
                 idDrone.Background = Brushes.White;
-                if (modelDrone.Background != Brushes.Red)
-                    action1.IsEnabled = true;
+                //if (modelDrone.Background != Brushes.Red)
+                  //  action1.IsEnabled = true;
             }
         }
 
@@ -162,8 +151,8 @@ namespace PL
             {
                 updateDrone.IsEnabled = true;
                 modelDrone.Background = Brushes.White;
-                if (idDrone.Background != Brushes.Red)
-                    action1.IsEnabled = true;
+               // if (idDrone.Background != Brushes.Red)
+                 //   action1.IsEnabled = true;
             }
         }
         #endregion
@@ -349,7 +338,7 @@ namespace PL
 
         private void ParcelInDrone(object sender, RoutedEventArgs e)
         {
-
+            this.NavigationService.Navigate(new ParcelPage(bl.GetParcelById(dr.PTransfer.Id)));
         }
     }
 }

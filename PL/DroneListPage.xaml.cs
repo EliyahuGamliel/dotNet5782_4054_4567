@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 using BO;
 using BlApi;
 
@@ -23,6 +24,7 @@ namespace PL
     public partial class DroneListPage : Page
     {
         private BlApi.IBL bl = BlFactory.GetBl();
+        private ObservableCollection<BO.DroneList> droneList;
         private bool isGroup;
 
         /// <summary>

@@ -20,8 +20,11 @@ namespace PL
     /// </summary>
     public partial class ParcelPage : Page
     {
-        public ParcelPage()
-        {
+        public ParcelPage() {
+            InitializeComponent();
+        }
+
+        public ParcelPage(BO.Parcel parcel) {
             InitializeComponent();
         }
     }
