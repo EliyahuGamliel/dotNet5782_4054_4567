@@ -76,7 +76,6 @@ namespace Dal
                     }
                 }
                 Customer cust = new Customer();
-                cust.Active = true;
                 cust.Id = rid;
                 cust.Name = ("Customer" + i);
                 string phone = "+972-582559635";

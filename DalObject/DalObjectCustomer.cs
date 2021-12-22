@@ -16,7 +16,6 @@ namespace Dal
         /// <param name="c">Object of customer to add</param>
         public void AddCustomer(Customer c) {
             CheckExistId(DataSource.Customers, c.Id);
-            c.Active = true;
             DataSource.Customers.Add(c);
         }
 
@@ -50,11 +49,6 @@ namespace Dal
         /// <returns>The Ienumerable to the customers</returns>
         public IEnumerable<Customer> GetCustomerByFilter(Predicate<Customer> cutomerList) {
             return DataSource.Customers.FindAll(cutomerList);
-        }
-
-        public void DeleteCustomer(DO.Customer c) {
-            int index = DataSource.Customers.FindIndex(cu => cu.Id == c.Id);
-            DataSource.Customers[index] = c;
         }
     }
 }

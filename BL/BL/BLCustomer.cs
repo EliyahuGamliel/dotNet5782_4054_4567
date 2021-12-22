@@ -120,7 +120,7 @@ namespace BL
         /// </summary>
         /// <returns>Returns the list of customers</returns>
         public IEnumerable<CustomerList> GetCustomers() {
-            return ConvertToBL(data.GetCustomerByFilter(c => c.Active));
+            return ConvertToBL(data.GetCustomerByFilter(c => true));
         }
 
         /// <summary>
@@ -148,16 +148,6 @@ namespace BL
                 customer.Add(cu);
             }
             return customer;
-        }
-
-        public string DeleteCustomer(int id) {
-            BO.Customer cHelp = GetCustomerById(id);
-            DO.Customer c = data.GetCustomerById(id);
-            if (!cHelp.ForCustomer.All(p => p.Status == Statuses.Provided))
-                throw new CanntDeleteCustomer(c.Id);
-            c.Active = false;
-            data.DeleteCustomer(c);
-            return "The delete was successful\n";
         }
     }
 }

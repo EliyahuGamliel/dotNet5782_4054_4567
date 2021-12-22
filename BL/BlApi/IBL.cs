@@ -175,7 +175,6 @@ namespace BlApi
 
         string DeleteParcel(int id);
 
-        string DeleteCustomer(int id);
 
         string DeleteStation(int id);
     }

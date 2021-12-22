@@ -32,9 +32,6 @@ namespace PL
             clPage = customerListPage;
             cu = customer;
 
-            action1.Content = "Delete Customer";
-            action1.Click += new RoutedEventHandler(DeleteCustomer);
-
             InitializeData();
         }
 
@@ -201,16 +198,6 @@ namespace PL
                 Double.TryParse(latiCustomer.Text, out numDouble);
                 customerAdd.Location.Lattitude = numDouble;
                 MessageBox.Show(bl.AddCustomer(customerAdd));
-                this.NavigationService.GoBack();
-            }
-            catch (Exception ex) {
-                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private void DeleteCustomer(object sender, RoutedEventArgs e) {
-            try {
-                MessageBox.Show(bl.DeleteCustomer(cu.Id));
                 this.NavigationService.GoBack();
             }
             catch (Exception ex) {

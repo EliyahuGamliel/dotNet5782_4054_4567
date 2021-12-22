@@ -10,6 +10,7 @@
 
     <Page.Resources>
         <local:BatteryConvertor x:Key="batteryConvertor"/>
+        <local:DefaultDroneConverter x:Key="defaultDroneConverter"/>
     </Page.Resources>
 
     <Grid Name="MainGrid">
@@ -19,10 +20,10 @@
         </Grid.RowDefinitions>
 
         <Image Grid.RowSpan="2" Margin="0,0,0,0" Stretch="Fill" Source="img\dronesImage.jpg"/>
-        <TextBox FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="idDrone" Text="{Binding Path=Id}" TextWrapping="Wrap" TextChanged="GetId" Margin="146,112,480,398"/>
+        <TextBox FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="idDrone" Text="{Binding Path=Id, Converter={StaticResource defaultDroneConverter}}" TextWrapping="Wrap" TextChanged="GetId" Margin="146,112,480,398"/>
         <TextBox  FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="modelDrone" Text="{Binding Path=Model}" TextWrapping="Wrap" TextChanged="UpdateModel" Margin="146,176,427,324"/>
         <ComboBox FontSize="20" HorizontalAlignment="Left" FontFamily="/font/#Fuzzy Bubbles" SelectedItem="{Binding Path=MaxWeight}" Name="maxWeightDrone" Width="286" Margin="146,250,0,250"/>
-        <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="batteryDrone" Text="{Binding Path=Battery, Converter={StaticResource batteryConvertor}}" TextWrapping="Wrap" Margin="146,318,427,192"/>
+        <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="batteryDrone" Text="{Binding Path=Battery, Converter={StaticResource defaultDroneConverter}}" TextWrapping="Wrap" Margin="146,318,427,192"/>
         <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="statusDrone" Text="{Binding Path=Status}" TextWrapping="Wrap" Margin="146,386,427,124"/>
         <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="locationDrone" Text="{Binding Path=CLocation}" TextWrapping="Wrap" Margin="102,420,321,41"/>
         <TextBlock FontSize="15" FontFamily="/font/#Fuzzy Bubbles" Name="parcelDrone" Text="{Binding Path=PTransfer}" TextWrapping="Wrap" Margin="434,91,17,63"/>
@@ -89,7 +90,7 @@
         <!--Display Page of Drone Addition (partial)-->
         <Grid Name="DroneAddGrid" Visibility="Hidden">
             <TextBlock FontWeight="Bold" FontSize="25" FontFamily="/font/#Alef" Text="Choose Station for Drone:" TextWrapping="Wrap"  Margin="204,438,250,27"/>
-            <ComboBox FontSize="16" HorizontalAlignment="Left" Grid.Row="0"  FontFamily="/font/#Fuzzy Bubbles" Name="idStationToChrging" Width="252" Margin="216,474,0,35"/>
+            <ComboBox SelectedIndex="0" FontSize="16" HorizontalAlignment="Left" Grid.Row="0"  FontFamily="/font/#Fuzzy Bubbles" Name="idStationToChrging" Width="252" Margin="216,474,0,35"/>
         </Grid>
     </Grid>
 </Page>

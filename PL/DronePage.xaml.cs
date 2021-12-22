@@ -22,7 +22,7 @@ namespace PL
     /// </summary>
     public partial class DronePage : Page
     {
-        static Drone dr;
+        static Drone dr = new Drone();
         private Parcel pa;
         private BlApi.IBL bl = BlApi.BlFactory.GetBl();
         private DroneListPage dlPage;
@@ -33,8 +33,7 @@ namespace PL
         /// <param name="bl">Data Base</param>
         /// <param name="drone">The drone to make on it actions</param>
         /// <param name="droneListPage">Pointer to the Drone List Page</param>
-        public DronePage(Drone drone, DroneListPage droneListPage)
-        {
+        public DronePage(Drone drone, DroneListPage droneListPage) {
             InitializeComponent();
             dlPage = droneListPage;
             dr = drone;
@@ -48,22 +47,23 @@ namespace PL
         /// <summary>
         /// The second constructor (Drone Add)
         /// </summary>
-        /// <param name="bl">Data Base</param>
         /// <param name="droneListPage">Pointer to the Drone List Page</param>
-        public DronePage(DroneListPage droneListPage)
-        {
+        public DronePage(DroneListPage droneListPage) {
             InitializeComponent();
             dlPage = droneListPage;
 
+            BO.Drone d = new Drone();
+            d.MaxWeight = BO.WeightCategories.Light;
+            d.Status = BO.DroneStatuses.Maintenance;
+            this.DataContext = d;
+
             idDrone.Background = Brushes.Red;
             modelDrone.Background = Brushes.Red;
-            statusDrone.Text = "Maintenance";
             action1.IsEnabled = false;
 
             maxWeightDrone.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-            maxWeightDrone.SelectedIndex = 0;
             idStationToChrging.ItemsSource = bl.GetStationCharge();
-            idStationToChrging.SelectedIndex = 0;
+
 
             DroneAddGrid.Visibility = Visibility.Visible;
             action2.Visibility = Visibility.Hidden;
@@ -82,7 +82,7 @@ namespace PL
 
             idDrone.IsEnabled = false;
             maxWeightDrone.IsEnabled = false;
-                        updateDrone.IsEnabled = false;
+            updateDrone.IsEnabled = false;
 
             //If the choosen drone is in delivery
             if (dr.Status == DroneStatuses.Delivery)
@@ -94,11 +94,9 @@ namespace PL
         /// <summary>
         /// Initialise all the buttons of actions
         /// </summary>
-        private void InitializeButtons()
-        {
+        private void InitializeButtons() {
             //If the choosen drone is in delivery
-            if (dr.Status == DroneStatuses.Delivery)
-            {
+            if (dr.Status == DroneStatuses.Delivery) {
                 action2.Visibility = Visibility.Hidden;
                 if (pa.PickedUp == null)
                     ChangePickUP();
@@ -117,20 +115,17 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void GetId(object sender, RoutedEventArgs e)
-        {
+        private void GetId(object sender, RoutedEventArgs e) {
             int num;
             bool error = Int32.TryParse(idDrone.Text, out num);
-            if (!error)
-            {
+            if (!error) {
                 idDrone.Background = Brushes.Red;
                 action1.IsEnabled = false;
             }
-            else
-            {
+            else {
                 idDrone.Background = Brushes.White;
-                //if (modelDrone.Background != Brushes.Red)
-                  //  action1.IsEnabled = true;
+                if (modelDrone.Background != Brushes.Red)
+                    action1.IsEnabled = true;
             }
         }
 
@@ -139,20 +134,17 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UpdateModel(object sender, RoutedEventArgs e)
-        {
-            if (modelDrone.Text == "")
-            {
+        private void UpdateModel(object sender, RoutedEventArgs e) {
+            if (modelDrone.Text == "") {
                 updateDrone.IsEnabled = false;
                 modelDrone.Background = Brushes.Red;
                 action1.IsEnabled = false;
             }
-            else
-            {
+            else {
                 updateDrone.IsEnabled = true;
                 modelDrone.Background = Brushes.White;
-               // if (idDrone.Background != Brushes.Red)
-                 //   action1.IsEnabled = true;
+                if (idDrone.Background != Brushes.Red)
+                    action1.IsEnabled = true;
             }
         }
         #endregion
@@ -163,8 +155,7 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Update_Click(object sender, RoutedEventArgs e)
-        {
+        private void Update_Click(object sender, RoutedEventArgs e) {
             dr.Model = modelDrone.Text;
             MessageBox.Show(bl.UpdateDrone(dr.Id, dr.Model));
             updateDrone.IsEnabled = false;
@@ -175,10 +166,8 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Assign_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
+        private void Assign_Click(object sender, RoutedEventArgs e) {
+            try {
                 MessageBox.Show(bl.AssignDroneParcel(dr.Id));
                 action2.Visibility = Visibility.Hidden;
                 action1.Click -= new RoutedEventHandler(Assign_Click);
@@ -186,8 +175,7 @@ namespace PL
                 ChangePickUP();
                 InitializeData();
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 action1.Visibility = Visibility.Hidden;
             }
@@ -198,8 +186,7 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void PickUp_Click(object sender, RoutedEventArgs e)
-        {
+        private void PickUp_Click(object sender, RoutedEventArgs e) {
             MessageBox.Show(bl.PickUpDroneParcel(dr.Id));
             action1.Click -= new RoutedEventHandler(PickUp_Click);
             ChangeDelivery();
@@ -211,8 +198,7 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Deliver_Click(object sender, RoutedEventArgs e)
-        {
+        private void Deliver_Click(object sender, RoutedEventArgs e) {
             MessageBox.Show(bl.DeliverParcelCustomer(dr.Id));
             action1.Click -= new RoutedEventHandler(Deliver_Click);
             ChangeAssignSend();
@@ -224,18 +210,15 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Send_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
+        private void Send_Click(object sender, RoutedEventArgs e) {
+            try {
                 MessageBox.Show(bl.SendDrone(dr.Id));
                 action2.Click -= new RoutedEventHandler(Send_Click);
                 action1.Click -= new RoutedEventHandler(Assign_Click);
                 ChangeRelese();
                 InitializeData();
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 action2.Visibility = Visibility.Hidden;
             }
@@ -246,8 +229,7 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Release_Click(object sender, RoutedEventArgs e)
-        {
+        private void Release_Click(object sender, RoutedEventArgs e) {
             MessageBox.Show(bl.ReleasDrone(dr.Id));
             action2.Click -= new RoutedEventHandler(Release_Click);
             ChangeAssignSend();
@@ -260,10 +242,8 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Add_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
+        private void Add_Click(object sender, RoutedEventArgs e) {
+            try {
                 int ID;
                 DroneList droneAdd = new DroneList();
                 droneAdd.MaxWeight = (WeightCategories)(int)maxWeightDrone.SelectedItem;
@@ -275,8 +255,7 @@ namespace PL
                 dlPage.Selector_SelectionChanged();
                 this.NavigationService.GoBack();
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -286,8 +265,7 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Exit_Click(object sender, RoutedEventArgs e)
-        {
+        private void Exit_Click(object sender, RoutedEventArgs e) {
             dlPage.Selector_SelectionChanged();
             this.NavigationService.GoBack();
         }
@@ -296,8 +274,7 @@ namespace PL
         /// <summary>
         /// Changes action1 to be the clickup button
         /// </summary>
-        private void ChangePickUP()
-        {
+        private void ChangePickUP() {
             action1.Content = "PickUp the Parcel \n  from Customer";
             action1.Click += new RoutedEventHandler(PickUp_Click);
         }
@@ -305,8 +282,7 @@ namespace PL
         /// <summary>
         /// Changes action2 to be the changedelivery  button
         /// </summary>
-        private void ChangeDelivery()
-        {
+        private void ChangeDelivery() {
             action1.Content = "Deliver Parcel \n by the Drone";
             action1.Click += new RoutedEventHandler(Deliver_Click);
         }
@@ -315,8 +291,7 @@ namespace PL
         /// Makes action1 and action2 to visible and clickable buttons and changes them to be drone to parcel assigning
         ///and sending drone for charging buttons
         /// </summary>
-        private void ChangeAssignSend()
-        {
+        private void ChangeAssignSend() {
             action1.Visibility = Visibility.Visible;
             action1.Content = "Assign the Drone \n      to Parcel";
             action1.Click += new RoutedEventHandler(Assign_Click);
@@ -328,16 +303,14 @@ namespace PL
         /// <summary>
         /// Hides action1 and changes action2 to drone releasing button
         /// </summary>
-        private void ChangeRelese()
-        {
+        private void ChangeRelese() {
             action1.Visibility = Visibility.Hidden;
             action2.Content = "Release the Drone \n   from Charging";
             action2.Click += new RoutedEventHandler(Release_Click);
         }
         #endregion
 
-        private void ParcelInDrone(object sender, RoutedEventArgs e)
-        {
+        private void ParcelInDrone(object sender, RoutedEventArgs e) {
             this.NavigationService.Navigate(new ParcelPage(bl.GetParcelById(dr.PTransfer.Id)));
         }
     }
