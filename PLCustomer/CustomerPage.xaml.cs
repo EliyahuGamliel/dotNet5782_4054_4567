@@ -13,8 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PL
+namespace PLCustomer
 {
+    
     /// <summary>
     /// Interaction logic for CustomerPage.xaml
     /// </summary>
@@ -22,28 +23,17 @@ namespace PL
     {
         private BlApi.IBL bl = BlApi.BlFactory.GetBl();
         private BO.Customer cu;
-        private CustomerListPage clPage;
+        private MainPage clPage;
 
         private int numInt;
         private double numDouble;
-
-        public CustomerPage(BO.Customer customer, CustomerListPage customerListPage) {
-            InitializeComponent();
-            clPage = customerListPage;
-            cu = customer;
-
-            action1.Content = "Delete Customer";
-            action1.Click += new RoutedEventHandler(DeleteCustomer);
-
-            InitializeData();
-        }
 
         /// <summary>
         /// The second constructor (Drone Add)
         /// </summary>
         /// <param name="bl">Data Base</param>
         /// <param name="droneListPage">Pointer to the Drone List Page</param>
-        public CustomerPage(CustomerListPage customerListPage) {
+        public CustomerPage(MainPage customerListPage) {
             InitializeComponent();
             clPage = customerListPage;
 
@@ -61,36 +51,6 @@ namespace PL
             action1.Content = "Add Customer";
             action1.Click += new RoutedEventHandler(Add_Click);
         }
-
-        /// <summary>
-        /// Initialise all the data and some of the graphics
-        /// </summary>
-        private void InitializeData() {
-            CustomerForListView.ItemsSource = cu.ForCustomer;
-            CustomerFromListView.ItemsSource = cu.FromCustomer;
-
-            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Status");
-            CollectionView view1 = (CollectionView)CollectionViewSource.GetDefaultView(CustomerForListView.ItemsSource);
-            CollectionView view2 = (CollectionView)CollectionViewSource.GetDefaultView(CustomerFromListView.ItemsSource);
-            view1.GroupDescriptions.Add(groupDescription);
-            view2.GroupDescriptions.Add(groupDescription);
-
-            longCustomer.TextChanged -= new TextChangedEventHandler(GetLong);
-            latiCustomer.TextChanged -= new TextChangedEventHandler(GetLati);
-
-            idCustomer.Text = cu.Id.ToString();
-            nameCustomer.Text = cu.Name;
-            phoneCustomer.Text = cu.Phone;
-            longCustomer.Text = cu.Location.LongitudeBonus(cu.Location.Longitude);
-            latiCustomer.Text = cu.Location.LattitudeBonus(cu.Location.Lattitude);
-
-            idCustomer.IsEnabled = false;
-            longCustomer.IsEnabled = false;
-            latiCustomer.IsEnabled = false;
-            updateCustomer.IsEnabled = false;
-        }
-
-        #region check valid input and the results
 
         private void CheckAddCustomer() {
             if (new[] { nameCustomer, idCustomer, phoneCustomer, latiCustomer, longCustomer }.All(x => x.Background != Brushes.Red))
@@ -171,7 +131,6 @@ namespace PL
                 latiCustomer.Background = Brushes.White;
             CheckAddCustomer();
         }
-        #endregion
 
         /// <summary>
         /// If the update button has been pressed
@@ -208,17 +167,12 @@ namespace PL
             }
         }
 
-        private void DeleteCustomer(object sender, RoutedEventArgs e) {
-            MessageBox.Show(bl.DeleteCustomer(cu.Id));
-            this.NavigationService.GoBack();
-        }
-
         /// <summary>
         /// If the users wants to go back
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Exit_Click(object sender, RoutedEventArgs e) {
+        private void Cancel_Click(object sender, RoutedEventArgs e) {
             this.NavigationService.GoBack();
         }
 

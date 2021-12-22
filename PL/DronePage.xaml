@@ -55,15 +55,14 @@
                         <Setter Property="Margin" Value="10,8,10,8"/>
                     </Style>
                     <Style TargetType="Button">
+                        <Setter Property="IsEnabled" Value="False" />
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding ElementName=idDrone, Path=Background}" Value="White"/>
-                                    <Condition Binding="{Binding ElementName=modelDrone, Path=Background}" Value="White"/>
+                                    <Condition Binding="{Binding ElementName=idDrone, Path=Background}" Value="White" />
+                                    <Condition Binding="{Binding ElementName=modelDrone, Path=Background}" Value="White" />
                                 </MultiDataTrigger.Conditions>
-                                <MultiDataTrigger.Setters>
-                                    <Setter Property="IsEnabled" Value="true"/>
-                                </MultiDataTrigger.Setters>
+                                <Setter Property="IsEnabled" Value="True" />
                             </MultiDataTrigger>
                         </Style.Triggers>
                     </Style>
