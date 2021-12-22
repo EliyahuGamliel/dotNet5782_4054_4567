@@ -7,33 +7,88 @@
       mc:Ignorable="d" 
       d:DesignHeight="640" d:DesignWidth="800"
       Title="MainPage">
-
+    
     <Grid>
-        <Frame x:Name="DroneListPage" NavigationUIVisibility="Hidden" />
-        <MediaElement x:Name="Gif" MediaEnded="Again_MediaEnded" VerticalAlignment="Top" Source="img\droneMainPage.gif" LoadedBehavior="Play" UnloadedBehavior="Manual"/>
-        <Button Background="LightSkyBlue" FontFamily="/font/#Alef" FontSize="26" FontWeight="Bold" Content="Drone List" Click="DroneList" Margin="0,548,579,0">
+        <MediaElement VerticalAlignment="Top" Source="img\droneMainPage.gif">
+            <MediaElement.Style>
+                <Style TargetType="MediaElement">
+                    <Style.Triggers>
+                        <EventTrigger RoutedEvent="MediaElement.Loaded">
+                            <EventTrigger.Actions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <MediaTimeline Source="img\droneMainPage.gif" Duration="0:0:1" RepeatBehavior="Forever"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger.Actions>
+                        </EventTrigger>
+                    </Style.Triggers>
+                </Style>
+            </MediaElement.Style>
+        </MediaElement>
+        <Button Background="LightSkyBlue" FontFamily="/font/#Alef" FontSize="26" FontWeight="Bold" Content="Drone List" Click="DroneList">
             <Button.Resources>
+                <Style TargetType="Button">
+                    <Style.Setters>
+                        <Setter Property="Margin" Value="0,548,579,0"/>
+                    </Style.Setters>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Margin" Value="0,505,579,0"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="50,50,0,0"/>
                 </Style>
             </Button.Resources>
         </Button>
-        <Button Background="LightSkyBlue" FontFamily="/font/#Alef" FontSize="26" FontWeight="Bold" Content="Customer List" Click="CustomerList" Margin="200,548,379,0">
+        <Button Background="LightSkyBlue" FontFamily="/font/#Alef" FontSize="26" FontWeight="Bold" Content="Customer List" Click="CustomerList">
             <Button.Resources>
+                <Style TargetType="Button">
+                    <Style.Setters>
+                        <Setter Property="Margin" Value="200,548,379,0"/>
+                    </Style.Setters>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Margin" Value="200,505,379,0"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="50,50,0,0"/>
                 </Style>
             </Button.Resources>
         </Button>
-        <Button Background="LightSkyBlue" FontFamily="/font/#Alef" FontSize="26" FontWeight="Bold" Content="Station List" Click="StationList" Margin="400,548,179,0">
+        <Button Background="LightSkyBlue" FontFamily="/font/#Alef" FontSize="26" FontWeight="Bold" Content="Station List" Click="StationList">
             <Button.Resources>
+                <Style TargetType="Button">
+                    <Style.Setters>
+                        <Setter Property="Margin" Value="400,548,179,0"/>
+                    </Style.Setters>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Margin" Value="400,505,179,0"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="50,50,0,0"/>
                 </Style>
             </Button.Resources>
         </Button>
-        <Button Background="LightSkyBlue" FontFamily="/font/#Alef" FontSize="26" FontWeight="Bold" Content="Parcel List" Click="ParcelList" Margin="600,548,0,0">
+        <Button Background="LightSkyBlue" FontFamily="/font/#Alef" FontSize="26" FontWeight="Bold" Content="Parcel List" Click="ParcelList">
             <Button.Resources>
+                <Style TargetType="Button">
+                    <Style.Setters>
+                        <Setter Property="Margin" Value="600,548,0,0"/>
+                    </Style.Setters>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Margin" Value="600,505,0,0"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="50,50,0,0"/>
                 </Style>

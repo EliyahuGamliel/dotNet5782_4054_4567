@@ -101,18 +101,6 @@ namespace PL
             }
         }
 
-        /// <summary>
-        /// Makes sure the gif keeps running over and over
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Again_MediaEnded(object sender, RoutedEventArgs e)
-        {
-            Gif.Position = new TimeSpan(0, 0, 1);
-            Gif.Play();
-        }
-
-
         private void ChangeViewList(object sender = null, RoutedEventArgs e = null)
         {
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(DroneListView.ItemsSource);

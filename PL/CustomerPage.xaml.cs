@@ -209,8 +209,13 @@ namespace PL
         }
 
         private void DeleteCustomer(object sender, RoutedEventArgs e) {
-            MessageBox.Show(bl.DeleteCustomer(cu.Id));
-            this.NavigationService.GoBack();
+            try {
+                MessageBox.Show(bl.DeleteCustomer(cu.Id));
+                this.NavigationService.GoBack();
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         /// <summary>

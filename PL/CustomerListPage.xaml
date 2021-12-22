@@ -48,7 +48,23 @@
                 </Button.Resources>
             </Button>
         </Grid>
-        <MediaElement x:Name="Gif" Height="auto" HorizontalAlignment="Left"  MediaEnded="Again_MediaEnded" Source="img\customerList.gif" LoadedBehavior="Play" UnloadedBehavior="Manual" Margin="203,71,0,70" Grid.RowSpan="3" Width="597"/>
+        <MediaElement Height="auto" HorizontalAlignment="Left" Source="img\customerList.gif" Margin="203,71,0,70" Grid.RowSpan="3" Width="597">
+            <MediaElement.Style>
+                <Style TargetType="MediaElement">
+                    <Style.Triggers>
+                        <EventTrigger RoutedEvent="MediaElement.Loaded">
+                            <EventTrigger.Actions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <MediaTimeline Source="img\customerList.gif" Duration="0:0:1" RepeatBehavior="Forever"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger.Actions>
+                        </EventTrigger>
+                    </Style.Triggers>
+                </Style>
+            </MediaElement.Style>
+        </MediaElement>
         <ListView Background="LightCyan" FontFamily="/font/#Alef" x:Name="CustomerListView" Width="auto" Height="auto" MouseDoubleClick="CustomerActions" Margin="0,0,528,0" Grid.Row="1">
             <ListView.Resources>
                 <Style TargetType="GridViewColumnHeader">

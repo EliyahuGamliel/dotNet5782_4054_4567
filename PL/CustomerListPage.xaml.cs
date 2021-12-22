@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.ComponentModel;
 
 namespace PL
 {
@@ -21,9 +22,17 @@ namespace PL
     public partial class CustomerListPage : Page
     {
         private BlApi.IBL bl = BlApi.BlFactory.GetBl();
+        private readonly BackgroundWorker worker = new BackgroundWorker();
+
         public CustomerListPage()
         {
             InitializeComponent();
+            worker.DoWork += Worker_DoWork;
+            CustomerListView.ItemsSource = bl.GetCustomers();
+        }
+
+        private void Worker_DoWork(object sender, DoWorkEventArgs e) {
+            CustomerListView.ItemsSource = null;
             CustomerListView.ItemsSource = bl.GetCustomers();
         }
 
@@ -60,17 +69,6 @@ namespace PL
                 BO.CustomerList c = (BO.CustomerList)CustomerListView.SelectedItem;
                 this.NavigationService.Navigate(new CustomerPage(bl.GetCustomerById(c.Id), this));
             }
-        }
-
-        /// <summary>
-        /// Makes sure the gif keeps running over and over
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Again_MediaEnded(object sender, RoutedEventArgs e)
-        {
-            Gif.Position = new TimeSpan(0, 0, 1);
-            Gif.Play();
         }
     }
 }

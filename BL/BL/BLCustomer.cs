@@ -153,7 +153,7 @@ namespace BL
         public string DeleteCustomer(int id) {
             BO.Customer cHelp = GetCustomerById(id);
             DO.Customer c = data.GetCustomerById(id);
-            if (cHelp.ForCustomer.All(p => p.Status == Statuses.Provided))
+            if (!cHelp.ForCustomer.All(p => p.Status == Statuses.Provided))
                 throw new CanntDeleteCustomer(c.Id);
             c.Active = false;
             data.DeleteCustomer(c);
