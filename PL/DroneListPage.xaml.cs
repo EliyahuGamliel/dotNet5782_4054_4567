@@ -24,7 +24,7 @@ namespace PL
     public partial class DroneListPage : Page
     {
         private BlApi.IBL bl = BlFactory.GetBl();
-        private ObservableCollection<BO.DroneList> droneList;
+        static ObservableCollection<BO.DroneList> droneList;
         private bool isGroup;
 
         /// <summary>
@@ -41,7 +41,14 @@ namespace PL
             foreach (var item in Enum.GetValues(typeof(WeightCategories)))
                 MaxWeightSelector.Items.Add(item);
             MaxWeightSelector.Items.Add("All");
-            DroneListView.ItemsSource = bl.GetDrones();
+            droneList = new ObservableCollection<DroneList>();
+
+            foreach (var item in bl.GetDrones()) {
+                droneList.Add(item);
+            }
+            this.DataContext = droneList;
+
+            //DroneListView.ItemsSource = bl.GetDrones();
         }
 
         /// <summary>

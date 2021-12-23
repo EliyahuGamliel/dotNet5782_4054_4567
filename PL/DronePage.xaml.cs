@@ -22,7 +22,7 @@ namespace PL
     /// </summary>
     public partial class DronePage : Page
     {
-        static Drone dr = new Drone();
+        static Drone dr;
         private Parcel pa;
         private BlApi.IBL bl = BlApi.BlFactory.GetBl();
         private DroneListPage dlPage;
@@ -51,23 +51,16 @@ namespace PL
         public DronePage(DroneListPage droneListPage) {
             InitializeComponent();
             dlPage = droneListPage;
-
-            BO.Drone d = new Drone();
-            d.MaxWeight = BO.WeightCategories.Light;
-            d.Status = BO.DroneStatuses.Maintenance;
-            this.DataContext = d;
-
             idDrone.Background = Brushes.Red;
             modelDrone.Background = Brushes.Red;
-            action1.IsEnabled = false;
 
             maxWeightDrone.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             idStationToChrging.ItemsSource = bl.GetStationCharge();
 
-
             DroneAddGrid.Visibility = Visibility.Visible;
             action2.Visibility = Visibility.Hidden;
             updateDrone.Visibility = Visibility.Hidden;
+            parcelInDrone.Visibility = Visibility.Hidden;
 
             action1.Content = "Add Drone";
             action1.Click += new RoutedEventHandler(Add_Click);
@@ -118,15 +111,10 @@ namespace PL
         private void GetId(object sender, RoutedEventArgs e) {
             int num;
             bool error = Int32.TryParse(idDrone.Text, out num);
-            if (!error) {
+            if (!error)
                 idDrone.Background = Brushes.Red;
-                action1.IsEnabled = false;
-            }
-            else {
+            else
                 idDrone.Background = Brushes.White;
-                if (modelDrone.Background != Brushes.Red)
-                    action1.IsEnabled = true;
-            }
         }
 
         /// <summary>
@@ -136,15 +124,12 @@ namespace PL
         /// <param name="e"></param>
         private void UpdateModel(object sender, RoutedEventArgs e) {
             if (modelDrone.Text == "") {
-                updateDrone.IsEnabled = false;
+                //updateDrone.IsEnabled = false;
                 modelDrone.Background = Brushes.Red;
-                action1.IsEnabled = false;
             }
             else {
                 updateDrone.IsEnabled = true;
                 modelDrone.Background = Brushes.White;
-                if (idDrone.Background != Brushes.Red)
-                    action1.IsEnabled = true;
             }
         }
         #endregion
@@ -252,7 +237,7 @@ namespace PL
                 StationList st = (StationList)idStationToChrging.SelectedItem;
                 droneAdd.Model = modelDrone.Text;
                 MessageBox.Show(bl.AddDrone(droneAdd, st.Id));
-                dlPage.Selector_SelectionChanged();
+                //dlPage.Selector_SelectionChanged();
                 this.NavigationService.GoBack();
             }
             catch (Exception ex) {

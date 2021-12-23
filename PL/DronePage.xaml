@@ -9,8 +9,7 @@
       Title="DronePage">
 
     <Page.Resources>
-        <local:BatteryConvertor x:Key="batteryConvertor"/>
-        <local:DefaultDroneConverter x:Key="defaultDroneConverter"/>
+        <local:BatteryConverter x:Key="batteryConverter"/>
     </Page.Resources>
 
     <Grid Name="MainGrid">
@@ -20,11 +19,11 @@
         </Grid.RowDefinitions>
 
         <Image Grid.RowSpan="2" Margin="0,0,0,0" Stretch="Fill" Source="img\dronesImage.jpg"/>
-        <TextBox FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="idDrone" Text="{Binding Path=Id, Converter={StaticResource defaultDroneConverter}}" TextWrapping="Wrap" TextChanged="GetId" Margin="146,112,480,398"/>
+        <TextBox FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="idDrone" Text="{Binding Path=Id}" TextWrapping="Wrap" TextChanged="GetId" Margin="146,107,480,398"/>
         <TextBox  FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="modelDrone" Text="{Binding Path=Model}" TextWrapping="Wrap" TextChanged="UpdateModel" Margin="146,176,427,324"/>
-        <ComboBox FontSize="20" HorizontalAlignment="Left" FontFamily="/font/#Fuzzy Bubbles" SelectedItem="{Binding Path=MaxWeight}" Name="maxWeightDrone" Width="286" Margin="146,250,0,250"/>
-        <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="batteryDrone" Text="{Binding Path=Battery, Converter={StaticResource defaultDroneConverter}}" TextWrapping="Wrap" Margin="146,318,427,192"/>
-        <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="statusDrone" Text="{Binding Path=Status}" TextWrapping="Wrap" Margin="146,386,427,124"/>
+        <ComboBox FontSize="20" SelectedIndex="0" HorizontalAlignment="Left" FontFamily="/font/#Fuzzy Bubbles" SelectedItem="{Binding Path=MaxWeight, FallbackValue='0'}" Name="maxWeightDrone" Width="286" Margin="146,250,0,250"/>
+        <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="batteryDrone" Text="{Binding Path=Battery, Converter={StaticResource batteryConverter}}" TextWrapping="Wrap" Margin="146,318,427,192"/>
+        <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="statusDrone" Text="{Binding Path=Status, FallbackValue='Maintenance'}" TextWrapping="Wrap" Margin="146,386,427,124"/>
         <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="locationDrone" Text="{Binding Path=CLocation}" TextWrapping="Wrap" Margin="102,420,321,41"/>
         <TextBlock FontSize="15" FontFamily="/font/#Fuzzy Bubbles" Name="parcelDrone" Text="{Binding Path=PTransfer}" TextWrapping="Wrap" Margin="434,91,17,63"/>
         <Button Name="parcelInDrone" Background="PowderBlue" Content="Open Parcel" BorderBrush="Black" FontFamily="/font/#Alef" Click="ParcelInDrone" FontWeight="Bold" Grid.Column="0" FontSize="18" Margin="533,458,0,10" HorizontalAlignment="Left" Width="216">
@@ -60,8 +59,8 @@
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding ElementName=idDrone, Path=Background}" Value="White" />
-                                    <Condition Binding="{Binding ElementName=modelDrone, Path=Background}" Value="White" />
+                                    <Condition Binding="{Binding Path=Background, ElementName=idDrone}" Value="White" />
+                                    <Condition Binding="{Binding Path=Background, ElementName=modelDrone}" Value="White" />
                                 </MultiDataTrigger.Conditions>
                                 <Setter Property="IsEnabled" Value="True" />
                             </MultiDataTrigger>
@@ -83,6 +82,20 @@
                         <Setter Property="CornerRadius" Value="25,25,25,25"/>
                         <Setter Property="Margin" Value="10,8,10,8"/>
                     </Style>
+                    <Style TargetType="Button">
+                        <Setter Property="IsEnabled" Value="False" />
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Path=Text, ElementName=modelDrone}" Value="" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Background" Value="Red" />
+                                <Setter Property="IsEnabled" Value="False" />
+                            </MultiDataTrigger>
+                            
+                        </Style.Triggers>
+                    </Style>
+
                 </Button.Resources>
             </Button>
         </Grid>
@@ -90,7 +103,7 @@
         <!--Display Page of Drone Addition (partial)-->
         <Grid Name="DroneAddGrid" Visibility="Hidden">
             <TextBlock FontWeight="Bold" FontSize="25" FontFamily="/font/#Alef" Text="Choose Station for Drone:" TextWrapping="Wrap"  Margin="204,438,250,27"/>
-            <ComboBox SelectedIndex="0" FontSize="16" HorizontalAlignment="Left" Grid.Row="0"  FontFamily="/font/#Fuzzy Bubbles" Name="idStationToChrging" Width="252" Margin="216,474,0,35"/>
+            <ComboBox DisplayMemberPath="Id" SelectedIndex="0" FontSize="16" HorizontalAlignment="Left" Grid.Row="0"  FontFamily="/font/#Fuzzy Bubbles" Name="idStationToChrging" Width="252" Margin="216,474,0,35"/>
         </Grid>
     </Grid>
 </Page>

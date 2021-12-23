@@ -9,7 +9,7 @@ using System.Globalization;
 
 namespace PL
 {
-    class BatteryConvertor : IValueConverter
+    class InvertBooleanConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             return Math.Round((double)value, 0).ToString() + "%";
