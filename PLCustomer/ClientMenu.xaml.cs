@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 
 namespace PLCustomer
 {
-    
+
     /// <summary>
-    /// Interaction logic for CustomerPage.xaml
+    /// Interaction logic for ClientMenu.xaml
     /// </summary>
-    public partial class CustomerPage : Page
+    public partial class ClientMenu : Page
     {
         private BlApi.IBL bl = BlApi.BlFactory.GetBl();
         private BO.Customer cu;
@@ -33,10 +33,11 @@ namespace PLCustomer
         /// </summary>
         /// <param name="bl">Data Base</param>
         /// <param name="droneListPage">Pointer to the Drone List Page</param>
-        public CustomerPage(MainPage customerListPage) {
+        public ClientMenu(MainPage mainPage) {
             InitializeComponent();
-            clPage = customerListPage;
+            clPage = mainPage;
 
+            updateCustomer.Visibility = Visibility.Hidden;
 
             idCustomer.Background = Brushes.Red;
             nameCustomer.Background = Brushes.Red;
@@ -44,11 +45,21 @@ namespace PLCustomer
             latiCustomer.Background = Brushes.Red;
             phoneCustomer.Background = Brushes.Red;
 
-            action1.IsEnabled = true;
+            updateCustomer.IsEnabled = false;
             phoneCustomer.Text = "+972-5????????";
 
-            action1.Content = "Add Customer";
-            action1.Click += new RoutedEventHandler(Add_Click);
+            updateCustomer.Content = "Update Customer";
+            updateCustomer.Click += new RoutedEventHandler(Update_Click);
+        }
+        private void Update_Click(object sender, RoutedEventArgs e) {
+            MessageBox.Show(bl.UpdateCustomer(cu.Id, nameCustomer.Text, phoneCustomer.Text));
+            updateCustomer.IsEnabled = false;
+        }
+        private void Add_Click(object sender, RoutedEventArgs e) {
+            MessageBox.Show(bl.UpdateCustomer(cu.Id, nameCustomer.Text, phoneCustomer.Text));///////////////
+            ///////////
+            //////////change to adding a parcel
+            updateCustomer.IsEnabled = false;
         }
 
         private void CheckAddCustomer() {
@@ -131,37 +142,6 @@ namespace PLCustomer
             CheckAddCustomer();
         }
 
-
-        /// <summary>
-        /// If the add button has been pressed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Add_Click(object sender, RoutedEventArgs e) {
-            try {
-                BO.Customer customerAdd = new BO.Customer();
-                customerAdd.Location = new BO.Location();
-                Int32.TryParse(idCustomer.Text, out numInt);
-                customerAdd.Id = numInt;
-                customerAdd.Name = nameCustomer.Text;
-                customerAdd.Phone = phoneCustomer.Text;
-                Double.TryParse(longCustomer.Text, out numDouble);
-                customerAdd.Location.Longitude = numDouble;
-                Double.TryParse(latiCustomer.Text, out numDouble);
-                customerAdd.Location.Lattitude = numDouble;
-                MessageBox.Show(bl.AddCustomer(customerAdd));
-                this.NavigationService.GoBack();
-            }
-            catch (Exception ex) {
-                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        /// <summary>
-        /// If the users wants to go back
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void Cancel_Click(object sender, RoutedEventArgs e) {
             this.NavigationService.GoBack();
         }
