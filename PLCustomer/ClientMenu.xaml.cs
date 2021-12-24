@@ -56,10 +56,7 @@ namespace PLCustomer
             updateCustomer.IsEnabled = false;
         }
         private void Add_Click(object sender, RoutedEventArgs e) {
-            MessageBox.Show(bl.UpdateCustomer(cu.Id, nameCustomer.Text, phoneCustomer.Text));///////////////
-            ///////////
-            //////////change to adding a parcel
-            updateCustomer.IsEnabled = false;
+            this.NavigationService.Navigate(new ParcelPage(this));
         }
 
         private void CheckAddCustomer() {
