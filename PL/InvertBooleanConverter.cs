@@ -12,7 +12,7 @@ namespace PL
     class InvertBooleanConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-            return Math.Round((double)value, 0).ToString() + "%";
+            return !(bool)value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {

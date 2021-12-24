@@ -52,7 +52,6 @@ namespace PL
             InitializeComponent();
             dlPage = droneListPage;
             idDrone.Background = Brushes.Red;
-            modelDrone.Background = Brushes.Red;
 
             maxWeightDrone.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             idStationToChrging.ItemsSource = bl.GetStationCharge();
@@ -75,7 +74,6 @@ namespace PL
 
             idDrone.IsEnabled = false;
             maxWeightDrone.IsEnabled = false;
-            updateDrone.IsEnabled = false;
 
             //If the choosen drone is in delivery
             if (dr.Status == DroneStatuses.Delivery)
@@ -116,22 +114,6 @@ namespace PL
             else
                 idDrone.Background = Brushes.White;
         }
-
-        /// <summary>
-        /// Changes the button according to if the drone's model changed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UpdateModel(object sender, RoutedEventArgs e) {
-            if (modelDrone.Text == "") {
-                //updateDrone.IsEnabled = false;
-                modelDrone.Background = Brushes.Red;
-            }
-            else {
-                updateDrone.IsEnabled = true;
-                modelDrone.Background = Brushes.White;
-            }
-        }
         #endregion
 
         #region possible functions for buttons (Drone View)
@@ -143,7 +125,6 @@ namespace PL
         private void Update_Click(object sender, RoutedEventArgs e) {
             dr.Model = modelDrone.Text;
             MessageBox.Show(bl.UpdateDrone(dr.Id, dr.Model));
-            updateDrone.IsEnabled = false;
         }
 
         /// <summary>

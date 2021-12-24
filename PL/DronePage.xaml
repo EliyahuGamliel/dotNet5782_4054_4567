@@ -20,7 +20,18 @@
 
         <Image Grid.RowSpan="2" Margin="0,0,0,0" Stretch="Fill" Source="img\dronesImage.jpg"/>
         <TextBox FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="idDrone" Text="{Binding Path=Id}" TextWrapping="Wrap" TextChanged="GetId" Margin="146,107,480,398"/>
-        <TextBox  FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="modelDrone" Text="{Binding Path=Model}" TextWrapping="Wrap" TextChanged="UpdateModel" Margin="146,176,427,324"/>
+        <TextBox  FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="modelDrone" Text="{Binding Path=Model}" TextWrapping="Wrap" Margin="146,176,427,324">
+            <TextBox.Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="Background" Value="White"/>
+                    <Style.Triggers>
+                        <Trigger Property="Text" Value="">
+                            <Setter Property="Background" Value="Red"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
         <ComboBox FontSize="20" SelectedIndex="0" HorizontalAlignment="Left" FontFamily="/font/#Fuzzy Bubbles" SelectedItem="{Binding Path=MaxWeight, FallbackValue='0'}" Name="maxWeightDrone" Width="286" Margin="146,250,0,250"/>
         <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="batteryDrone" Text="{Binding Path=Battery, Converter={StaticResource batteryConverter}}" TextWrapping="Wrap" Margin="146,318,427,192"/>
         <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="statusDrone" Text="{Binding Path=Status, FallbackValue='Maintenance'}" TextWrapping="Wrap" Margin="146,386,427,124"/>
@@ -55,14 +66,21 @@
                         <Setter Property="Margin" Value="10,8,10,8"/>
                     </Style>
                     <Style TargetType="Button">
-                        <Setter Property="IsEnabled" Value="False" />
+                        <Setter Property="IsEnabled" Value="True" />
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Path=Background, ElementName=idDrone}" Value="White" />
-                                    <Condition Binding="{Binding Path=Background, ElementName=modelDrone}" Value="White" />
+                                    <Condition Binding="{Binding Path=Content, ElementName=action1}" Value="Add Drone" />
+                                    <Condition Binding="{Binding Path=Background, ElementName=idDrone}" Value="Red" />
                                 </MultiDataTrigger.Conditions>
-                                <Setter Property="IsEnabled" Value="True" />
+                                <Setter Property="IsEnabled" Value="False" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Path=Content, ElementName=action1}" Value="Add Drone" />
+                                    <Condition Binding="{Binding Path=Background, ElementName=modelDrone}" Value="Red" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="IsEnabled" Value="False" />
                             </MultiDataTrigger>
                         </Style.Triggers>
                     </Style>
@@ -76,23 +94,18 @@
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button Background="PowderBlue" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" FontSize="18" Name="updateDrone" Content="Update Drone"  Grid.Column="3" IsEnabled="False" Click="Update_Click">
+            <Button Background="PowderBlue" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" FontSize="18" Name="updateDrone" Content="Update Drone"  Grid.Column="3" Click="Update_Click">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="25,25,25,25"/>
                         <Setter Property="Margin" Value="10,8,10,8"/>
                     </Style>
                     <Style TargetType="Button">
-                        <Setter Property="IsEnabled" Value="False" />
+                        <Setter Property="IsEnabled" Value="True" />
                         <Style.Triggers>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Path=Text, ElementName=modelDrone}" Value="" />
-                                </MultiDataTrigger.Conditions>
-                                <Setter Property="Background" Value="Red" />
+                            <DataTrigger Binding="{Binding Path=Background, ElementName=modelDrone}" Value="Red">
                                 <Setter Property="IsEnabled" Value="False" />
-                            </MultiDataTrigger>
-                            
+                            </DataTrigger>
                         </Style.Triggers>
                     </Style>
 
