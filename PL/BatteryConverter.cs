@@ -12,7 +12,7 @@ namespace PL
     class BatteryConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-            return !(bool)value;
+            return Math.Round((double)value, 0).ToString() + "%";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
