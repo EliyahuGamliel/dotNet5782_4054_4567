@@ -51,7 +51,6 @@ namespace PL
         public DronePage(DroneListPage droneListPage) {
             InitializeComponent();
             dlPage = droneListPage;
-            idDrone.Background = Brushes.Red;
 
             maxWeightDrone.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             idStationToChrging.ItemsSource = bl.GetStationCharge();
@@ -74,12 +73,6 @@ namespace PL
 
             idDrone.IsEnabled = false;
             maxWeightDrone.IsEnabled = false;
-
-            //If the choosen drone is in delivery
-            if (dr.Status == DroneStatuses.Delivery)
-                parcelInDrone.IsEnabled = true;
-            else
-                parcelInDrone.IsEnabled = false;
         }
 
         /// <summary>
@@ -99,22 +92,6 @@ namespace PL
             else
                 ChangeAssignSend();
         }
-
-        #region check valid input and the results
-        /// <summary>
-        /// Check if what captured in the "Id of Drone" filed is valid
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void GetId(object sender, RoutedEventArgs e) {
-            int num;
-            bool error = Int32.TryParse(idDrone.Text, out num);
-            if (!error)
-                idDrone.Background = Brushes.Red;
-            else
-                idDrone.Background = Brushes.White;
-        }
-        #endregion
 
         #region possible functions for buttons (Drone View)
         /// <summary>

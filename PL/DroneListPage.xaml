@@ -86,7 +86,7 @@
                 </Style>
             </MediaElement.Style>
         </MediaElement>
-        <ListView ItemsSource="{Binding }" Background="LightCyan" FontFamily="/font/#Alef" x:Name="DroneListView" Width="auto" Grid.Row="1" Height="auto" MouseDoubleClick="DroneActions" Margin="0,0,565,0">
+        <ListView ItemsSource="{Binding}" Background="LightCyan" FontFamily="/font/#Alef" x:Name="DroneListView" Width="auto" Grid.Row="1" Height="auto" MouseDoubleClick="DroneActions" Margin="0,0,565,0">
             <ListView.Resources>
                 <Style TargetType="GridViewColumnHeader">
                     <Setter Property="Visibility" Value="Hidden"/>
@@ -119,6 +119,5 @@
                 </GroupStyle>
             </ListView.GroupStyle>
         </ListView>
-        <Frame x:Name="DronePage" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Page>

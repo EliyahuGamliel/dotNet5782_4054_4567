@@ -20,12 +20,21 @@ namespace PL
     /// </summary>
     public partial class ParcelPage : Page
     {
-        public ParcelPage() {
+        public ParcelPage(int? id) {
             InitializeComponent();
         }
 
         public ParcelPage(BO.Parcel parcel) {
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// If the users wants to go back
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Exit_Click(object sender, RoutedEventArgs e) {
+            this.NavigationService.GoBack();
         }
     }
 }

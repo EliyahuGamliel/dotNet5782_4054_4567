@@ -31,7 +31,7 @@ namespace PL
             InitializeComponent();
             clPage = customerListPage;
             cu = customer;
-
+            this.DataContext = cu;
             InitializeData();
         }
 
@@ -43,17 +43,6 @@ namespace PL
         public CustomerPage(CustomerListPage customerListPage) {
             InitializeComponent();
             clPage = customerListPage;
-
-            updateCustomer.Visibility = Visibility.Hidden;
-
-            idCustomer.Background = Brushes.Red;
-            nameCustomer.Background = Brushes.Red;
-            longCustomer.Background = Brushes.Red;
-            latiCustomer.Background = Brushes.Red;
-            phoneCustomer.Background = Brushes.Red;
-
-            action1.IsEnabled = false;
-            phoneCustomer.Text = "+972-5????????";
 
             action1.Content = "Add Customer";
             action1.Click += new RoutedEventHandler(Add_Click);
@@ -72,103 +61,13 @@ namespace PL
             view1.GroupDescriptions.Add(groupDescription);
             view2.GroupDescriptions.Add(groupDescription);
 
-            longCustomer.TextChanged -= new TextChangedEventHandler(GetLong);
-            latiCustomer.TextChanged -= new TextChangedEventHandler(GetLati);
-
-            idCustomer.Text = cu.Id.ToString();
-            nameCustomer.Text = cu.Name;
-            phoneCustomer.Text = cu.Phone;
-            longCustomer.Text = cu.Location.LongitudeBonus(cu.Location.Longitude);
-            latiCustomer.Text = cu.Location.LattitudeBonus(cu.Location.Lattitude);
-
             idCustomer.IsEnabled = false;
             longCustomer.IsEnabled = false;
             latiCustomer.IsEnabled = false;
-            updateCustomer.IsEnabled = false;
-        }
 
-        #region check valid input and the results
-
-        private void CheckAddCustomer() {
-            if (new[] { nameCustomer, idCustomer, phoneCustomer, latiCustomer, longCustomer }.All(x => x.Background != Brushes.Red))
-                action1.IsEnabled = true;
-            else
-                action1.IsEnabled = false;
+            action1.Content = "Update Customer";
+            action1.Click += new RoutedEventHandler(Update_Click);
         }
-
-        /// <summary>
-        /// Check if what captured in the "Id of Drone" filed is valid
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void GetId(object sender, RoutedEventArgs e) {
-            bool error = Int32.TryParse(idCustomer.Text, out numInt);
-            if (!error)
-                idCustomer.Background = Brushes.Red;
-            else
-                idCustomer.Background = Brushes.White;
-            CheckAddCustomer();
-        }
-
-        /// <summary>
-        /// Changes the button according to if the drone's model changed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void GetName(object sender, RoutedEventArgs e) {
-            if (nameCustomer.Text == "") {
-                updateCustomer.IsEnabled = false;
-                nameCustomer.Background = Brushes.Red;
-            }
-            else {
-                updateCustomer.IsEnabled = true;
-                nameCustomer.Background = Brushes.White;
-            }
-            CheckAddCustomer();
-        }
-
-        private void GetPhone(object sender, TextChangedEventArgs e) {
-            string num = phoneCustomer.Text;
-            int check;
-            bool error = true;
-            if (num.Length != 14 || num[0] != '+' || num[1] != '9' || num[2] != '7' || num[3] != '2' || num[4] != '-' || num[5] != '5')
-                error = false;
-            else {
-                string output = num.Substring(num.IndexOf("+") + 6, 4);
-                error = Int32.TryParse(output, out check);
-                if (error) {
-                    output = num.Substring(num.IndexOf("+") + 10, 4);
-                    error = Int32.TryParse(output, out check);
-                }
-            }
-            if (phoneCustomer.Text == "")
-                phoneCustomer.Text = "+972-5????????";
-            else if (!error) {
-                phoneCustomer.Background = Brushes.Red;
-            }
-            else
-                phoneCustomer.Background = Brushes.White;
-            CheckAddCustomer();
-        }
-
-        private void GetLong(object sender, TextChangedEventArgs e) {
-            bool error = Double.TryParse(longCustomer.Text, out numDouble);
-            if (!error)
-                longCustomer.Background = Brushes.Red;
-            else
-                longCustomer.Background = Brushes.White;
-            CheckAddCustomer();
-        }
-
-        private void GetLati(object sender, TextChangedEventArgs e) {
-            bool error = Double.TryParse(latiCustomer.Text, out numDouble);
-            if (!error)
-                latiCustomer.Background = Brushes.Red;
-            else
-                latiCustomer.Background = Brushes.White;
-            CheckAddCustomer();
-        }
-        #endregion
 
         /// <summary>
         /// If the update button has been pressed
@@ -177,7 +76,6 @@ namespace PL
         /// <param name="e"></param>
         private void Update_Click(object sender, RoutedEventArgs e) {
             MessageBox.Show(bl.UpdateCustomer(cu.Id, nameCustomer.Text, phoneCustomer.Text));
-            updateCustomer.IsEnabled = false;
         }
 
         /// <summary>
@@ -214,13 +112,11 @@ namespace PL
             this.NavigationService.GoBack();
         }
 
-
-        private void ParcelInDrone(object sender, RoutedEventArgs e) {
-
-        }
-
         private void OpenParcel(object sender, MouseButtonEventArgs e) {
-
+            if ((sender as ListView).SelectedItem != null) {
+                BO.ParcelInCustomer p = (BO.ParcelInCustomer)(sender as ListView).SelectedItem;
+                this.NavigationService.Navigate(new ParcelPage(bl.GetParcelById(p.Id)));
+            }
         }
     }
 }

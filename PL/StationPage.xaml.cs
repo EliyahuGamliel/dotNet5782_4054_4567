@@ -24,5 +24,9 @@ namespace PL
         {
             InitializeComponent();
         }
+
+        public StationPage(BO.Station station) {
+            InitializeComponent();
+        }
     }
 }
