@@ -9,8 +9,10 @@
       Title="MainPage">
 
     <Grid>
-        <Frame x:Name="DroneListPage" NavigationUIVisibility="Hidden" />
+        
         <Image x:Name="droneWithoutParcel"  Margin="0,0,0,0" Stretch="Fill" Source="img\login.jpg"/>
+        
+
         <Button Background="LightSkyBlue"  FontFamily="/font/#Alef" FontSize="26" FontWeight="Bold" Content="Sign In" Click="SignIn" Margin="336,448,304,101">
             <Button.Resources>
                 <Style TargetType="Border">
