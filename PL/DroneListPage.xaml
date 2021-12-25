@@ -54,14 +54,14 @@
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button BorderBrush="Black" Margin="10,8,10,8" Background="Red" FontFamily="font/#Alef"  FontSize="18" Content="Change Display" Grid.Column="1" Click="ChangeViewList">
+            <Button BorderBrush="Black" Margin="10,8,10,8" Background="Red" FontFamily="font/#Alef"  FontSize="18" Content="Change Display" Grid.Column="0" Click="ChangeViewList">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="25,25,25,25"/>
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button BorderBrush="Black" Margin="15,8,15,8" Background="Red" FontFamily="font/#Alef"  FontSize="18" Content="Reset Filter" Grid.Column="0" Click="Reset_Click">
+            <Button BorderBrush="Black" Margin="15,8,15,8" Background="Red" FontFamily="font/#Alef"  FontSize="18" Content="Reset Filter" Grid.Column="1" Click="Reset_Click">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="25,25,25,25"/>
