@@ -94,14 +94,14 @@ namespace PL
         }
 
         #region possible functions for buttons (Drone View)
+
         /// <summary>
         /// If the update button has been pressed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Update_Click(object sender, RoutedEventArgs e) {
-            dr.Model = modelDrone.Text;
-            MessageBox.Show(bl.UpdateDrone(dr.Id, dr.Model));
+            MessageBox.Show(bl.UpdateDrone(dr.Id, modelDrone.Text));
         }
 
         /// <summary>

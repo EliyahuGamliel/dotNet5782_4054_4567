@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using BO;
 using BlApi;
 
@@ -24,7 +25,7 @@ namespace PL
     public partial class DroneListPage : Page
     {
         private BlApi.IBL bl = BlFactory.GetBl();
-        static ObservableCollection<BO.DroneList> droneList;
+        private ObservableCollection<BO.DroneList> droneList;
         private bool isGroup;
 
         /// <summary>
@@ -41,14 +42,20 @@ namespace PL
             foreach (var item in Enum.GetValues(typeof(WeightCategories)))
                 MaxWeightSelector.Items.Add(item);
             MaxWeightSelector.Items.Add("All");
-            droneList = new ObservableCollection<DroneList>();
-
-            foreach (var item in bl.GetDrones()) {
-                droneList.Add(item);
-            }
+            droneList = new ObservableCollection<DroneList>(bl.GetDrones());
+            droneList.CollectionChanged += this.OnCollectionChanged;
             this.DataContext = droneList;
 
             //DroneListView.ItemsSource = bl.GetDrones();
+        }
+
+        private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
+            if (e.NewItems != null) {
+                foreach (BO.DroneList newItem in e.NewItems) {
+                    droneList.Add(newItem);
+                }
+                this.DataContext = droneList;
+            }
         }
 
         /// <summary>

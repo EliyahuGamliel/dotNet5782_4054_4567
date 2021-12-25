@@ -29,6 +29,8 @@ namespace PL
 
         public ParcelPage(BO.Parcel parcel) {
             InitializeComponent();
+            targetIdParcel.ItemsSource = bl.GetCustomers();
+            senderIdParcel.ItemsSource = bl.GetCustomers();
             weightParcel.ItemsSource = Enum.GetValues(typeof(BO.WeightCategories));
             priorityParcel.ItemsSource = Enum.GetValues(typeof(BO.Priorities));
             pa = parcel;
