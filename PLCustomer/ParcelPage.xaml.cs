@@ -22,7 +22,7 @@ namespace PLCustomer
     {
         private BlApi.IBL bl = BlApi.BlFactory.GetBl();
         private BO.Customer cu;
-        private MainPage clPage;
+        private ClientMenu clPage;
 
         private int numInt;
         private double numDouble;
@@ -32,9 +32,9 @@ namespace PLCustomer
         /// </summary>
         /// <param name="bl">Data Base</param>
         /// <param name="droneListPage">Pointer to the Drone List Page</param>
-        public ParcelPage(MainPage customerListPage) {
+        public ParcelPage(ClientMenu clientMenu) {
             InitializeComponent();
-            clPage = customerListPage;
+            clPage = clientMenu;
 
 
             

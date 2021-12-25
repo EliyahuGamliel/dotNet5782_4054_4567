@@ -36,6 +36,7 @@ namespace PLCustomer
 
         private void SignIn(object sender, RoutedEventArgs e) {
 
+            this.NavigationService.Navigate(new ClientMenu(this));
         }
     }
 }
