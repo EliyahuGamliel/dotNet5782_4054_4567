@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BO;
+using BlApi;
 
 namespace PLCustomer
 {
@@ -33,20 +35,15 @@ namespace PLCustomer
         /// </summary>
         /// <param name="bl">Data Base</param>
         /// <param name="droneListPage">Pointer to the Drone List Page</param>
-        public ClientMenu(MainPage mainPage) {
+        public ClientMenu(Customer c, MainPage mainPage) {
             InitializeComponent();
             clPage = mainPage;
+            CustomerForListView.ItemsSource = c.ForCustomer;
+            CustomerFromListView.ItemsSource = c.FromCustomer;
+            this.DataContext = c;
 
-            updateCustomer.Visibility = Visibility.Hidden;
 
-            idCustomer.Background = Brushes.Red;
-            nameCustomer.Background = Brushes.Red;
-            longCustomer.Background = Brushes.Red;
-            latiCustomer.Background = Brushes.Red;
-            phoneCustomer.Background = Brushes.Red;
 
-            updateCustomer.IsEnabled = false;
-            phoneCustomer.Text = "+972-5????????";
 
             updateCustomer.Content = "Update Customer";
             updateCustomer.Click += new RoutedEventHandler(Update_Click);

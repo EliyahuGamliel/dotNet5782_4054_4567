@@ -35,8 +35,14 @@ namespace PLCustomer
         }
 
         private void SignIn(object sender, RoutedEventArgs e) {
-
-            this.NavigationService.Navigate(new ClientMenu(this));
+            int iD;
+            Int32.TryParse(Username.Text, out iD);
+            try {
+                this.NavigationService.Navigate(new ClientMenu(bl.GetCustomerById(iD), this));
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }
