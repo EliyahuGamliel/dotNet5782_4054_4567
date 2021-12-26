@@ -22,7 +22,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
             <StackPanel Grid.Column="1" Margin="0,0,54,0">
-                <Label FontFamily="font/#Alef" FontSize="20" Content="Drone Status:" FontWeight="Bold"/>
+                <Label FontFamily="font/#Alef" FontSize="20" Content="Parcel Status:" FontWeight="Bold"/>
                 <ComboBox FontFamily="font/#Alef" FontSize="16" Name="StatusSelector"
                       SelectionChanged="Selector_SelectionChanged"/>
             </StackPanel>

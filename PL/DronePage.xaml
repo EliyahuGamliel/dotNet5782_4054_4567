@@ -135,7 +135,6 @@
 
         <!--Display Page of Drone Addition (partial)-->
         <Grid Name="DroneAddGrid" Visibility="Hidden">
-
             <TextBlock FontWeight="Bold" FontSize="25" FontFamily="/font/#Alef" Text="Choose Station for Drone:" TextWrapping="Wrap"  Margin="204,438,250,27"/>
             <ComboBox SelectedIndex="0" FontSize="16" HorizontalAlignment="Left" Grid.Row="0"  FontFamily="/font/#Fuzzy Bubbles" Name="idStationToChrging" Width="252" Margin="216,474,0,35">
                 <ComboBox.ItemTemplate>

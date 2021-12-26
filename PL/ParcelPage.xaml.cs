@@ -23,7 +23,7 @@ namespace PL
         private BO.Parcel pa;
         private BlApi.IBL bl = BlApi.BlFactory.GetBl();
 
-        public ParcelPage(int? id) {
+        public ParcelPage() {
             InitializeComponent();
         }
 

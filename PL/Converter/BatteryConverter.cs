@@ -12,6 +12,8 @@ namespace PL
     class BatteryConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+            if (value == null)
+                return "";
             return Math.Round((double)value, 0).ToString() + "%";
         }
 

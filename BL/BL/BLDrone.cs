@@ -16,32 +16,35 @@ namespace BL
         /// <param name="d">Object of drone to add</param>
         /// <param name="idStation">The ID number of the station where the drone will be located</param>
         /// <returns>Notice if the addition was successful</returns>
-        public string AddDrone(DroneList d, int idStation) {
+        public string AddDrone(BO.Drone d, int idStation) {
             try {
-                CheckValidId(d.Id);
+                CheckValidId(d.Id.Value);
                 DO.Station s = data.GetStationById(idStation);
+                BO.DroneList dr = new BO.DroneList();
                 CheckLegelChoice((int)d.MaxWeight);
-                d.CLocation = new Location();
-                d.Battery = rand.Next(20,41);
-                d.Status = DroneStatuses.Maintenance;
-                d.CLocation.Lattitude = s.Lattitude;
-                d.CLocation.Longitude = s.Longitude;
-                d.ParcelId = 0;
+                dr.Id = d.Id.Value;
+                dr.Model = d.Model;
+                dr.CLocation = new Location();
+                dr.Battery = rand.Next(20,41);
+                dr.Status = DroneStatuses.Maintenance;
+                dr.CLocation.Lattitude = s.Lattitude;
+                dr.CLocation.Longitude = s.Longitude;
+                dr.ParcelId = 0;
 
                 if (s.ChargeSlots == 0)
                     throw new StationIsFull();
 
-                DO.Drone dr = new DO.Drone();
-                dr.Id = d.Id;
-                dr.Model = d.Model;
-                dr.MaxWeight = (DO.WeightCategories)((int)d.MaxWeight);
-                data.AddDrone(dr);
-                dronesList.Add(d);
+                DO.Drone drone = new DO.Drone();
+                drone.Id = dr.Id;
+                drone.Model = dr.Model;
+                drone.MaxWeight = (DO.WeightCategories)((int)dr.MaxWeight);
+                data.AddDrone(drone);
+                dronesList.Add(dr);
 
                 int chargeSlots = ChargeSlotsCatched(idStation) + s.ChargeSlots;
 
                 DO.DroneCharge dc = new DO.DroneCharge();
-                dc.DroneId = d.Id;
+                dc.DroneId = d.Id.Value;
                 dc.StationId = idStation;
                 dc.Start = DateTime.Now;
                 data.AddDroneCharge(dc);
@@ -50,7 +53,7 @@ namespace BL
                 return "The addition was successful\n";
             }
             catch (DO.IdExistException) {
-                throw new BO.IdExistException(d.Id);
+                throw new BO.IdExistException(d.Id.Value);
             }
         }
 

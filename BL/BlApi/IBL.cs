@@ -24,7 +24,7 @@ namespace BlApi
         /// <param name="d">Object of drone to add</param>
         /// <param name="idStation">The ID number of the station where the drone will be located</param>
         /// <returns>Notice if the addition was successful</returns>
-        string AddDrone(DroneList d, int idStation);
+        string AddDrone(BO.Drone d, int idStation);
 
         /// <summary>
         /// If everything is fine, add a parcel to the list of parcels, else throw exception

@@ -23,9 +23,6 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        //Keeps track of the page we are at so we will know if we can close the window - Bonus
-        internal bool ExitBonus { set; get; }
-
         /// <summary>
         /// The ctor
         /// </summary>
@@ -33,22 +30,7 @@ namespace PL
         {
             InitializeComponent();
             //Open in the window new Page
-            MainPage.Content = new MainPage(this);
-        }
-
-        /// <summary>
-        /// checks if we can close the windows using CurrentPageBonus- bonus
-        /// </summary>
-        /// <param name="e">The closing event</param>
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            //Checks of we are at the mainpage - Bonus
-            if (ExitBonus != true)
-            {
-                base.OnClosing(e);
-                e.Cancel = true;
-                MessageBox.Show("Cannot Close! Log Out", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            MainPage.Content = new MainPage();
         }
     }
 }

@@ -16,13 +16,12 @@ namespace BO
         public DroneStatuses Status { get; set; }
         public Location CLocation { get; set; }
         public int ParcelId { get; set; }
-        public bool Active { get; set; }
 
         /// <summary><returns>
         /// The function returns a string to print on all entity data
         /// </returns></summary>
         public override string ToString() {
-            string str = $"Id: {Id}\nBattery: {Math.Round(Battery, 0)}%\nModel: {Model}\nMaxWeight: {MaxWeight}\nStatus: {Status}\nParcelId: ";
+            string str = $"Id: {Id}\nBattery: {Math.Round((decimal)Battery, 0)}%\nModel: {Model}\nMaxWeight: {MaxWeight}\nStatus: {Status}\nParcelId: ";
             if (ParcelId == 0)
                 str += "not exist";
             else

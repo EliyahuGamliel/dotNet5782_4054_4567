@@ -61,8 +61,8 @@ namespace BL
                 if (chosenp.DroneId != 0) {
                     pa.Drone = new DroneInParcel();
                     BO.Drone d = GetDroneById(chosenp.DroneId);
-                    pa.Drone.Battery = d.Battery;
-                    pa.Drone.Id = d.Id;
+                    pa.Drone.Battery = d.Battery.Value;
+                    pa.Drone.Id = d.Id.Value;
                     pa.Drone.CLocation = d.CLocation;
                 }
 
