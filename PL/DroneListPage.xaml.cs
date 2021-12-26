@@ -43,19 +43,9 @@ namespace PL
                 MaxWeightSelector.Items.Add(item);
             MaxWeightSelector.Items.Add("All");
             droneList = new ObservableCollection<DroneList>(bl.GetDrones());
-            droneList.CollectionChanged += this.OnCollectionChanged;
             this.DataContext = droneList;
 
             //DroneListView.ItemsSource = bl.GetDrones();
-        }
-
-        private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
-            if (e.NewItems != null) {
-                foreach (BO.DroneList newItem in e.NewItems) {
-                    droneList.Add(newItem);
-                }
-                this.DataContext = droneList;
-            }
         }
 
         /// <summary>
@@ -63,10 +53,11 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void Selector_SelectionChanged(object sender = null, SelectionChangedEventArgs e = null)
+        private void Selector_SelectionChanged(object sender = null, SelectionChangedEventArgs e = null)
         {
-            DroneListView.ItemsSource = null;
-            DroneListView.ItemsSource = bl.GetDroneByFilter(MaxWeightSelector.SelectedItem, StatusSelector.SelectedItem);
+            //DroneListView.ItemsSource = null;
+            droneList = new ObservableCollection<DroneList>(bl.GetDroneByFilter(MaxWeightSelector.SelectedItem, StatusSelector.SelectedItem));
+            this.DataContext = droneList;
             SaveDisplay();
         }
 
@@ -77,9 +68,14 @@ namespace PL
         /// <param name="e"></param>
         private void AddDrone_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new DronePage(this));
+            DronePage dronePage = new DronePage();
+            dronePage.Unloaded += UpdateList;
+            this.NavigationService.Navigate(dronePage);
         }
-
+         private void UpdateList(object sender, EventArgs e) {
+            droneList = new ObservableCollection<DroneList>(bl.GetDroneByFilter(MaxWeightSelector.SelectedItem, StatusSelector.SelectedItem));
+            this.DataContext = droneList;
+        }
         /// <summary>
         /// If the user wants to go back
         /// </summary>
@@ -113,7 +109,7 @@ namespace PL
             if (DroneListView.SelectedItem != null)
             {
                 DroneList d = (DroneList)DroneListView.SelectedItem;
-                this.NavigationService.Navigate(new DronePage(bl.GetDroneById(d.Id), this));
+                this.NavigationService.Navigate(new DronePage(bl.GetDroneById(d.Id)));
             }
         }
 

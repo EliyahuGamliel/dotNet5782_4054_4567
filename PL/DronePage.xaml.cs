@@ -22,10 +22,9 @@ namespace PL
     /// </summary>
     public partial class DronePage : Page
     {
-        static Drone dr;
+        private Drone dr;
         private Parcel pa;
         private BlApi.IBL bl = BlApi.BlFactory.GetBl();
-        private DroneListPage dlPage;
 
         /// <summary>
         /// The first ctor (Drone Actions)
@@ -33,9 +32,8 @@ namespace PL
         /// <param name="bl">Data Base</param>
         /// <param name="drone">The drone to make on it actions</param>
         /// <param name="droneListPage">Pointer to the Drone List Page</param>
-        public DronePage(Drone drone, DroneListPage droneListPage) {
+        public DronePage(Drone drone) {
             InitializeComponent();
-            dlPage = droneListPage;
             dr = drone;
             maxWeightDrone.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             if (dr.Status == DroneStatuses.Delivery)
@@ -48,9 +46,8 @@ namespace PL
         /// The second constructor (Drone Add)
         /// </summary>
         /// <param name="droneListPage">Pointer to the Drone List Page</param>
-        public DronePage(DroneListPage droneListPage) {
+        public DronePage() {
             InitializeComponent();
-            dlPage = droneListPage;
 
             maxWeightDrone.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             idStationToChrging.ItemsSource = bl.GetStationCharge();
@@ -209,7 +206,6 @@ namespace PL
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Exit_Click(object sender, RoutedEventArgs e) {
-            dlPage.Selector_SelectionChanged();
             this.NavigationService.GoBack();
         }
 
