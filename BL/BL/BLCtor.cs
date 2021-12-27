@@ -34,6 +34,7 @@ namespace BL
                 dl.Id = item.Id;
                 dl.MaxWeight = (BO.WeightCategories)(int)item.MaxWeight;
                 dl.Model = item.Model;
+                dl.Active = true;
 
                 IEnumerable<DO.Parcel> parcelslist = data.GetParcelByFilter(p => true);
                 foreach (var itemParcel in parcelslist)

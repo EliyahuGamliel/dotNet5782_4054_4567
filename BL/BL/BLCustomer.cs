@@ -47,7 +47,7 @@ namespace BL
                 chosenc.Name = nameCustomer;
                 //If input is received
                 chosenc.Phone = phoneCustomer;
-                data.UpdateCustomer(chosenc, phoneCustomer);
+                data.UpdateCustomer(chosenc);
                 return "The update was successful\n";
             }
             catch (DO.IdNotExistException) {

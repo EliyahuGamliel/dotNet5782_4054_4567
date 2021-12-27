@@ -22,19 +22,14 @@ namespace PL
     /// </summary>
     public partial class MainPage : Page
     {
-        private IBL bl;
-        internal MainWindow mWindow;
+        private IBL bl = BlApi.BlFactory.GetBl();
 
         /// <summary>
         /// The ctor of the main page 
         /// </summary>
         /// <param name="mainWindow">Pointer to the Main Window</param>
-        public MainPage(MainWindow mainWindow) {
-            //Set the value of "CurrentPageBonus" to be "MainPage" to allow the window to close - Bonus
-            mainWindow.ExitBonus = true;
+        public MainPage() {
             InitializeComponent();
-            bl = BlApi.BlFactory.GetBl();
-            mWindow = mainWindow;
         }
 
         /// <summary>
@@ -45,7 +40,6 @@ namespace PL
         private void DroneList(object sender, RoutedEventArgs e) {
             this.NavigationService.Navigate(new DroneListPage());
         }
-
 
         private void CustomerList(object sender, RoutedEventArgs e) {
             this.NavigationService.Navigate(new CustomerListPage());

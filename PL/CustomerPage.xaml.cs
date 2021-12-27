@@ -22,14 +22,12 @@ namespace PL
     {
         private BlApi.IBL bl = BlApi.BlFactory.GetBl();
         private BO.Customer cu;
-        private CustomerListPage clPage;
 
         private int numInt;
         private double numDouble;
 
-        public CustomerPage(BO.Customer customer, CustomerListPage customerListPage) {
+        public CustomerPage(BO.Customer customer) {
             InitializeComponent();
-            clPage = customerListPage;
             cu = customer;
             this.DataContext = cu;
             InitializeData();
@@ -40,9 +38,8 @@ namespace PL
         /// </summary>
         /// <param name="bl">Data Base</param>
         /// <param name="droneListPage">Pointer to the Drone List Page</param>
-        public CustomerPage(CustomerListPage customerListPage) {
+        public CustomerPage() {
             InitializeComponent();
-            clPage = customerListPage;
 
             action1.Content = "Add Customer";
             action1.Click += new RoutedEventHandler(Add_Click);

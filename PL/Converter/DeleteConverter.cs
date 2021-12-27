@@ -9,12 +9,12 @@ using System.Globalization;
 
 namespace PL
 {
-    class BatteryConverter : IValueConverter
+    class DeleteConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             if (value == null)
-                return "";
-            return Math.Round((double)value, 0).ToString() + "%";
+                return false;
+            return true;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {

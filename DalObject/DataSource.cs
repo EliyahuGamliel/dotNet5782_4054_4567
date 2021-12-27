@@ -58,6 +58,7 @@ namespace Dal
                 adst.Name = $"{rid}";
                 adst.Longitude = rando.NextDouble() + rando.Next(-180, 180);
                 adst.Lattitude = rando.NextDouble() + rando.Next(-90, 90);
+                adst.Active = true;
                 Stations.Add(adst);
             }
 
@@ -94,6 +95,7 @@ namespace Dal
                 cust.Phone = phone;
                 cust.Longitude = rando.NextDouble() + rando.Next(-180, 180);
                 cust.Lattitude = rando.NextDouble() + rando.Next(-90, 90);
+                cust.Active = true;
                 Customers.Add(cust);
             }
 
@@ -116,6 +118,7 @@ namespace Dal
                 d.Id = rid;
                 d.Model = ("Minip" + i);
                 d.MaxWeight = (WeightCategories)(rando.Next(0, 3));
+                d.Active = true;
                 Drones.Add(d);
             }
 
@@ -188,6 +191,7 @@ namespace Dal
                 }
                 p.SenderId = Customers[ind].Id;
                 p.Priority = (Priorities)(rando.Next(0, 3));
+                p.Active = true;
                 Parcels.Add(p);//add all the randomized fields as a last parcel
             }
         }

@@ -22,7 +22,7 @@ namespace BO
         /// The function returns a string to print on all entity data
         /// </returns></summary>
         public override string ToString() {
-            string str = $"Id: {Id}\nBattery: {Math.Round(Battery, 0)}%\nModel: {Model}\nMaxWeight: {MaxWeight}\nStatus: {Status}\nParcelId: ";
+            string str = $"Id: {Id}\nBattery: {Math.Round((decimal)Battery, 0)}%\nModel: {Model}\nMaxWeight: {MaxWeight}\nStatus: {Status}\nParcelId: ";
             if (ParcelId == 0)
                 str += "not exist";
             else

@@ -23,12 +23,14 @@ namespace PL
         private BO.Parcel pa;
         private BlApi.IBL bl = BlApi.BlFactory.GetBl();
 
-        public ParcelPage(int? id) {
+        public ParcelPage() {
             InitializeComponent();
         }
 
         public ParcelPage(BO.Parcel parcel) {
             InitializeComponent();
+            targetIdParcel.ItemsSource = bl.GetCustomers();
+            senderIdParcel.ItemsSource = bl.GetCustomers();
             weightParcel.ItemsSource = Enum.GetValues(typeof(BO.WeightCategories));
             priorityParcel.ItemsSource = Enum.GetValues(typeof(BO.Priorities));
             pa = parcel;

@@ -16,8 +16,8 @@
 
         <Image Grid.RowSpan="2" Margin="0,0,0,0" Stretch="Fill" Source="img\parcelImage.jpg"/>
         <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="idDrone" Text="{Binding Path=Id}" TextWrapping="Wrap" Margin="85,81,541,424"/>
-        <ComboBox FontSize="20" SelectedIndex="0" HorizontalAlignment="Left" FontFamily="/font/#Fuzzy Bubbles" SelectedItem="{Binding Path=Weight, FallbackValue='0'}" Name="weightParcel" Width="264" Margin="85,208,0,292"/>
-        <ComboBox FontSize="20" SelectedIndex="0" HorizontalAlignment="Left" FontFamily="/font/#Fuzzy Bubbles" SelectedItem="{Binding Path=Priority, FallbackValue='0'}" Name="priorityParcel" Width="264" Margin="85,144,0,356"/>
+        <ComboBox FontSize="20" SelectedIndex="0" HorizontalAlignment="Left" FontFamily="/font/#Fuzzy Bubbles" SelectedItem="{Binding Path=Priority, FallbackValue='0'}" Name="priorityParcel" Width="264" Margin="85,208,0,292"/>
+        <ComboBox FontSize="20" SelectedIndex="0" HorizontalAlignment="Left" FontFamily="/font/#Fuzzy Bubbles" SelectedItem="{Binding Path=Weight, FallbackValue='0'}" Name="weightParcel" Width="264" Margin="85,144,0,356"/>
         <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="requestedParcel" Text="{Binding Path=Requested, FallbackValue='Now'}" TextWrapping="Wrap" Margin="88,278,485,232"/>
         <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="scheduledParcel" Text="{Binding Path=Scheduled}" TextWrapping="Wrap" Margin="91,347,482,163"/>
         <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="pickupParcel" Text="{Binding Path=PickedUp}" TextWrapping="Wrap" Margin="91,418,482,91"/>
@@ -91,6 +91,34 @@
 
                 </Button.Resources>
             </Button>
+        </Grid>
+
+        <!--Display Page of Parcel Addition (partial)-->
+        <Grid Name="DroneParcelGrid" Visibility="Visible">
+            <ComboBox Name="senderIdParcel" SelectedIndex="0" FontSize="16" HorizontalAlignment="Left" Grid.Row="0"  FontFamily="/font/#Fuzzy Bubbles" Width="252" Margin="408,88,0,399">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <Run Text="Id: "/>
+                            <Run Text="{Binding Id}"/>
+                            <Run Text="&#xA;Name: "/>
+                            <Run Text="{Binding Name}"/>
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <ComboBox Name="targetIdParcel" SelectedIndex="0" FontSize="16" HorizontalAlignment="Left" Grid.Row="0"  FontFamily="/font/#Fuzzy Bubbles" Width="252" Margin="408,88,0,399">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <Run Text="Id: "/>
+                            <Run Text="{Binding Id}"/>
+                            <Run Text="&#xA;Name: "/>
+                            <Run Text="{Binding Name}"/>
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
         </Grid>
     </Grid>
 </Page>

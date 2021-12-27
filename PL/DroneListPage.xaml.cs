@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,16 +23,14 @@ namespace PL
     public partial class DroneListPage : Page
     {
         private BlApi.IBL bl = BlFactory.GetBl();
-        static ObservableCollection<BO.DroneList> droneList;
+        private ObservableCollection<BO.DroneList> droneList;
         private bool isGroup;
 
         /// <summary>
         /// The ctor
         /// </summary>
         /// <param name="bl">Data Base</param>
-        /// <param name="mainPage">Pointer to the Main Page</param>
-        public DroneListPage()
-        {
+        public DroneListPage() {
             InitializeComponent();
             foreach (var item in Enum.GetValues(typeof(DroneStatuses)))
                 StatusSelector.Items.Add(item);
@@ -41,14 +38,9 @@ namespace PL
             foreach (var item in Enum.GetValues(typeof(WeightCategories)))
                 MaxWeightSelector.Items.Add(item);
             MaxWeightSelector.Items.Add("All");
-            droneList = new ObservableCollection<DroneList>();
 
-            foreach (var item in bl.GetDrones()) {
-                droneList.Add(item);
-            }
+            droneList = new ObservableCollection<DroneList>(bl.GetDrones());
             this.DataContext = droneList;
-
-            //DroneListView.ItemsSource = bl.GetDrones();
         }
 
         /// <summary>
@@ -56,10 +48,8 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void Selector_SelectionChanged(object sender = null, SelectionChangedEventArgs e = null)
-        {
-            DroneListView.ItemsSource = null;
-            DroneListView.ItemsSource = bl.GetDroneByFilter(MaxWeightSelector.SelectedItem, StatusSelector.SelectedItem);
+        private void Selector_SelectionChanged(object sender = null, SelectionChangedEventArgs e = null) {
+            UpdateList();
             SaveDisplay();
         }
 
@@ -68,9 +58,17 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void AddDrone_Click(object sender, RoutedEventArgs e)
-        {
-            this.NavigationService.Navigate(new DronePage(this));
+        private void AddDrone(object sender, RoutedEventArgs e) {
+            DronePage dronePage = new DronePage();
+            dronePage.Unloaded += UpdateList;
+            this.NavigationService.Navigate(dronePage);
+        }
+
+        private void UpdateList(object sender = null, EventArgs e = null) {
+            droneList.Clear();
+            foreach (var item in bl.GetDroneByFilter(MaxWeightSelector.SelectedItem, StatusSelector.SelectedItem)) {
+                droneList.Add(item);
+            }
         }
 
         /// <summary>
@@ -78,8 +76,7 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Exit_Click(object sender, RoutedEventArgs e)
-        {
+        private void ReturnBack(object sender, RoutedEventArgs e) {
             this.NavigationService.GoBack();
         }
 
@@ -88,12 +85,19 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Reset_Click(object sender, RoutedEventArgs e)
-        {
-            DroneListView.ItemsSource = null;
-            DroneListView.ItemsSource = bl.GetDrones();
+        private void Reset(object sender, RoutedEventArgs e) {
             StatusSelector.SelectedItem = null;
             MaxWeightSelector.SelectedItem = null;
+            UpdateList();
+        }
+
+        private void DeleteDrone(object sender, RoutedEventArgs e) {
+            try {
+                MessageBox.Show(bl.DeleteDrone((DroneList)DroneListView.SelectedItem));
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         /// <summary>
@@ -101,39 +105,31 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DroneActions(object sender, MouseButtonEventArgs e)
-        {
-            if (DroneListView.SelectedItem != null)
-            {
+        private void DroneActions(object sender, MouseButtonEventArgs e) {
+            if (DroneListView.SelectedItem != null) {
                 DroneList d = (DroneList)DroneListView.SelectedItem;
-                this.NavigationService.Navigate(new DronePage(bl.GetDroneById(d.Id), this));
+                this.NavigationService.Navigate(new DronePage(bl.GetDroneById(d.Id)));
             }
         }
 
-        private void ChangeViewList(object sender = null, RoutedEventArgs e = null)
-        {
+        private void ChangeViewList(object sender = null, RoutedEventArgs e = null) {
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(DroneListView.ItemsSource);
             PropertyGroupDescription groupDescription = new PropertyGroupDescription("Status");
-            if (view.GroupDescriptions.Count != 0)
-            {
+            if (view.GroupDescriptions.Count != 0) {
                 isGroup = false;
                 view.GroupDescriptions.Clear();
             }
-            else
-            {
+            else {
                 isGroup = true;
                 view.GroupDescriptions.Add(groupDescription);
             }
         }
 
-        private void SaveDisplay()
-        {
+        private void SaveDisplay() {
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(DroneListView.ItemsSource);
             PropertyGroupDescription groupDescription = new PropertyGroupDescription("Status");
-            if (isGroup)
-            {
-                if (view.GroupDescriptions.Count != 0)
-                {
+            if (isGroup) {
+                if (view.GroupDescriptions.Count != 0) {
                     view.GroupDescriptions.Clear();
                     view.GroupDescriptions.Add(groupDescription);
                 }

@@ -59,7 +59,7 @@ namespace DalApi
         /// </summary>
         /// <param name="c">Object of customer to update</param>
         /// <param name="phone">Object.phone of customer to update</param>
-        void UpdateCustomer(Customer c, string phone);
+        void UpdateCustomer(Customer c);
 
         /// <summary>
         /// If all is fine, update the parcel in a list of parcels
@@ -74,11 +74,15 @@ namespace DalApi
         /// If everything is fine, delete a droneCharge from the list of dronesCharge
         /// </summary>
         /// <param name="d">Object of droneCharge to delete</param>
-        void DeleteDroneCharge(DroneCharge d);
+        void DeleteDroneCharge(DroneCharge droneCharge);
         
-        void DeleteStation(DO.Station s);
+        void DeleteStation(DO.Station station);
 
-        void DeleteParcel(DO.Parcel p);
+        void DeleteCustomer(DO.Customer customer);
+
+        void DeleteParcel(DO.Parcel parcel);
+
+        void DeleteDrone(DO.Drone drone);
 
         #endregion
 

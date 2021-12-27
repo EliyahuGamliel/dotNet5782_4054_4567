@@ -16,6 +16,7 @@ namespace Dal
         /// <param name="c">Object of customer to add</param>
         public void AddCustomer(Customer c) {
             CheckExistId(DataSource.Customers, c.Id);
+            c.Active = true;
             DataSource.Customers.Add(c);
         }
 
@@ -24,7 +25,7 @@ namespace Dal
         /// </summary>
         /// <param name="c">Object of customer to update</param>
         /// <param name="phone">Object.phone of customer to update</param>
-        public void UpdateCustomer(Customer c, string phone) {
+        public void UpdateCustomer(Customer c) {
             CheckNotExistId(DataSource.Customers, c.Id);
             Customer cu = DataSource.Customers.Find(cus => c.Id == cus.Id);
             int index = DataSource.Customers.IndexOf(cu);
@@ -41,7 +42,7 @@ namespace Dal
             Customer c = DataSource.Customers.Find(cu => Id == cu.Id);
             return c;
         }
-
+        
         /// <summary>
         /// Returns all the customers that fit the filter
         /// </summary>
@@ -49,6 +50,12 @@ namespace Dal
         /// <returns>The Ienumerable to the customers</returns>
         public IEnumerable<Customer> GetCustomerByFilter(Predicate<Customer> cutomerList) {
             return DataSource.Customers.FindAll(cutomerList);
+        }
+
+        public void DeleteCustomer(Customer customer) {
+            int index = DataSource.Customers.FindIndex(c => c.Id == customer.Id && c.Active == customer.Active);
+            customer.Active = false;
+            DataSource.Customers[index] = customer;
         }
     }
 }
