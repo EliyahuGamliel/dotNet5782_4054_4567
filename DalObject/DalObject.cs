@@ -43,7 +43,7 @@ namespace Dal
         /// <summary>
         /// Ctor of DalObject - Uses the function Initialize() in order to initialise the data
         /// </summary>
-        DalObject() { DataSource.Initialize(); }
+        public DalObject() { DataSource.Initialize(); }
 
         /// <summary>
         /// Checks if the ״id״ already exists, if there is an error return

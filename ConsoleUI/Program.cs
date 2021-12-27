@@ -4,14 +4,14 @@ namespace ConsoleUI
 {
     class Program
     {
-        static IDAL.IDAL data;
+        static DalApi.IDal data;
 
         /// <summary>
         /// The main function
         /// </summary>
         static void Main(string[] args)
         {
-            data = new DalObject.DalObject();
+            data = new Dal.DalObject();
             MainMenu();
         }
 
