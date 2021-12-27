@@ -26,7 +26,7 @@ namespace PL
         private int numInt;
         private double numDouble;
 
-        public CustomerPage(BO.Customer customer, CustomerListPage customerListPage) {
+        public CustomerPage(BO.Customer customer) {
             InitializeComponent();
             cu = customer;
             this.DataContext = cu;
@@ -38,7 +38,7 @@ namespace PL
         /// </summary>
         /// <param name="bl">Data Base</param>
         /// <param name="droneListPage">Pointer to the Drone List Page</param>
-        public CustomerPage(CustomerListPage customerListPage) {
+        public CustomerPage() {
             InitializeComponent();
 
             action1.Content = "Add Customer";

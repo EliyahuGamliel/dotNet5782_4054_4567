@@ -43,7 +43,7 @@ namespace PL
             maxWeightDrone.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             if (dr.Status == DroneStatuses.Delivery)
                 pa = bl.GetParcelById(dr.PTransfer.Id);
-            
+
             this.DataContext = dr;
 
             if (drone == null) {
@@ -58,16 +58,19 @@ namespace PL
             else {
                 idDrone.IsEnabled = false;
                 maxWeightDrone.IsEnabled = false;
-                InitializeButtons();
+                Initialize();
             }
         }
 
         /// <summary>
         /// Initialise all the buttons of actions
         /// </summary>
-        private void InitializeButtons() {
+        private void Initialize() {
+            dr = bl.GetDroneById(dr.Id.Value);
+            this.DataContext = dr;
             //If the choosen drone is in delivery
             if (dr.Status == DroneStatuses.Delivery) {
+                pa = bl.GetParcelById(dr.PTransfer.Id);
                 action2.Visibility = Visibility.Hidden;
                 if (pa.PickedUp == null)
                     ChangePickUP();
@@ -102,10 +105,7 @@ namespace PL
                 action2.Visibility = Visibility.Hidden;
                 action1.Click -= new RoutedEventHandler(Assign_Click);
                 action2.Click -= new RoutedEventHandler(Send_Click);
-                ChangePickUP();
-                dr = bl.GetDroneById(dr.Id.Value);
-
-                //InitializeData();
+                Initialize();
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -121,10 +121,7 @@ namespace PL
         private void PickUp_Click(object sender, RoutedEventArgs e) {
             MessageBox.Show(bl.PickUpDroneParcel(dr.Id.Value));
             action1.Click -= new RoutedEventHandler(PickUp_Click);
-            ChangeDelivery();
-            dr = bl.GetDroneById(dr.Id.Value);
-
-            //InitializeData();
+            Initialize();
         }
 
         /// <summary>
@@ -135,10 +132,7 @@ namespace PL
         private void Deliver_Click(object sender, RoutedEventArgs e) {
             MessageBox.Show(bl.DeliverParcelCustomer(dr.Id.Value));
             action1.Click -= new RoutedEventHandler(Deliver_Click);
-            ChangeAssignSend();
-            dr = bl.GetDroneById(dr.Id.Value);
-
-            //InitializeData();
+            Initialize();
         }
 
         /// <summary>
@@ -151,10 +145,7 @@ namespace PL
                 MessageBox.Show(bl.SendDrone(dr.Id.Value));
                 action2.Click -= new RoutedEventHandler(Send_Click);
                 action1.Click -= new RoutedEventHandler(Assign_Click);
-                ChangeRelese();
-                dr = bl.GetDroneById(dr.Id.Value);
-
-                ///InitializeData();
+                Initialize();
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -170,10 +161,7 @@ namespace PL
         private void Release_Click(object sender, RoutedEventArgs e) {
             MessageBox.Show(bl.ReleasDrone(dr.Id.Value));
             action2.Click -= new RoutedEventHandler(Release_Click);
-            ChangeAssignSend();
-            dr = bl.GetDroneById(dr.Id.Value);
-
-            //InitializeData();
+            Initialize();
         }
         #endregion
 
@@ -183,7 +171,7 @@ namespace PL
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Add_Click(object sender, RoutedEventArgs e) {
-            try  {
+            try {
                 StationList st = (StationList)idStationToChrging.SelectedItem;
                 MessageBox.Show(bl.AddDrone(dr, st.Id));
                 this.NavigationService.GoBack();

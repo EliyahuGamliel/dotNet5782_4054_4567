@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace PL
 {
@@ -22,29 +22,25 @@ namespace PL
     public partial class CustomerListPage : Page
     {
         private BlApi.IBL bl = BlApi.BlFactory.GetBl();
-        private readonly BackgroundWorker worker = new BackgroundWorker();
+        private ObservableCollection<BO.CustomerList> customerList;
 
-        public CustomerListPage()
-        {
+        public CustomerListPage() {
             InitializeComponent();
-            worker.DoWork += Worker_DoWork;
-            CustomerListView.ItemsSource = bl.GetCustomers();
+            customerList = new ObservableCollection<BO.CustomerList>(bl.GetCustomers());
+            this.DataContext = customerList;
         }
 
-        private void Worker_DoWork(object sender, DoWorkEventArgs e) {
-            CustomerListView.ItemsSource = null;
-            CustomerListView.ItemsSource = bl.GetCustomers();
+        private void AddCustomer(object sender, RoutedEventArgs e) {
+            CustomerPage customerPage = new CustomerPage();
+            customerPage.Unloaded += UpdateList;
+            this.NavigationService.Navigate(customerPage);
         }
 
-
-        /// <summary>
-        /// Navigates to the "DronePage" - drone add page
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void AddCustomer(object sender, RoutedEventArgs e)
-        {
-            this.NavigationService.Navigate(new CustomerPage(this));
+        private void UpdateList(object sender = null, EventArgs e = null) {
+            customerList.Clear();
+            foreach (var item in bl.GetCustomers()) {
+                customerList.Add(item);
+            }
         }
 
         /// <summary>
@@ -52,8 +48,7 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Exit(object sender, RoutedEventArgs e)
-        {
+        private void ReturnBack(object sender, RoutedEventArgs e) {
             this.NavigationService.GoBack();
         }
 
@@ -62,12 +57,19 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CustomerActions(object sender, MouseButtonEventArgs e)
-        {
-            if (CustomerListView.SelectedItem != null)
-            {
+        private void CustomerActions(object sender, MouseButtonEventArgs e) {
+            if (CustomerListView.SelectedItem != null) {
                 BO.CustomerList c = (BO.CustomerList)CustomerListView.SelectedItem;
-                this.NavigationService.Navigate(new CustomerPage(bl.GetCustomerById(c.Id), this));
+                this.NavigationService.Navigate(new CustomerPage(bl.GetCustomerById(c.Id)));
+            }
+        }
+
+        private void DeleteCustomer(object sender, RoutedEventArgs e) {
+            try {
+                //MessageBox.Show(bl.DeleteCustomer((BO.CustomerList)CustomerListView.SelectedItem));
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

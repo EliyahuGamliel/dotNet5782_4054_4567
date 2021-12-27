@@ -219,5 +219,18 @@ namespace BL
                 return dronesList.FindAll(d => d.MaxWeight == (BO.WeightCategories)weight);
             return dronesList.FindAll(d => d.Status == (DroneStatuses)status && d.MaxWeight == (BO.WeightCategories)weight);   
         }
+
+        public string DeleteDrone(BO.DroneList drone) {
+            //CHECK
+            int index = dronesList.IndexOf(drone);
+            drone.Active = false;
+            dronesList[index] = drone;
+            DO.Drone dr = new DO.Drone();
+            dr.Id = drone.Id;
+            dr.Model = drone.Model;
+            dr.MaxWeight = (DO.WeightCategories)((int)drone.MaxWeight);
+            data.DeleteDrone(dr);
+            return "The update was successful\n";
+        }
     }
 }

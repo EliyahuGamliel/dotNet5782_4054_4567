@@ -11,6 +11,7 @@ namespace BlApi
     /// </summary>
     public interface IBL
     {
+        #region Addition
         /// <summary>
         /// If everything is fine, add a station to the list of stations, else throw exception
         /// </summary>
@@ -41,7 +42,9 @@ namespace BlApi
         /// <param name="c">Object of customer to add</param>
         /// <returns>Notice if the addition was successful</returns>
         string AddCustomer(BO.Customer c);
+        #endregion
 
+        #region Update
         /// If all is fine, update the drone in a list of drones, else throw exception
         /// </summary>
         /// <param name="id">The ID of the drone for updating</param>
@@ -71,6 +74,9 @@ namespace BlApi
         /// </summary>
         /// <param name="DroneId">ID of the drone to assign a parcel</param>
         /// <returns>Notice if the addition was successful</returns>
+        #endregion
+
+        #region DroneAction
         string AssignDroneParcel(int DroneId);
 
         /// <summary>
@@ -100,7 +106,9 @@ namespace BlApi
         /// <param name="idDrone">ID of the drone relese from charging</param>
         /// <returns>Notice if the addition was successful</returns>
         string ReleasDrone(int id);
+        #endregion
 
+        #region Getting
         /// <summary>
         /// If all is fine, return a parcel object by id, else throw exception
         /// </summary>
@@ -172,10 +180,14 @@ namespace BlApi
         /// <param name="status">The status value of the required drones</param>
         /// <returns>Return list of drones by filter</returns>
         IEnumerable<DroneList> GetDroneByFilter(object weight, object status);
+        #endregion
 
+        #region Delete
         string DeleteParcel(int id);
 
+        string DeleteDrone(BO.DroneList drone);
 
         string DeleteStation(int id);
+        #endregion
     }
 }

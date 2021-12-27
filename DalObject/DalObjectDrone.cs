@@ -50,12 +50,19 @@ namespace Dal
             return DataSource.Drones.FindAll(droneList);
         }
 
+        public void DeleteDrone(DO.Drone drone) {
+            int index = DataSource.Customers.FindIndex(c => c.Id == drone.Id && c.Active == true);
+            drone.Active = false;
+            DataSource.Drones[index] = drone;
+        }
+
+
         /// <summary>
         /// Returns an array with all fields of power consumption
         /// </summary>
         /// <returns>Returns an array with all fields of power consumption</returns>
-        public double[] DroneElectricityUse(){
-            double[] arr = new double[5]; 
+        public double[] DroneElectricityUse() {
+            double[] arr = new double[5];
             arr[0] = DataSource.Config.Avaliable;
             arr[1] = DataSource.Config.WeightLight;
             arr[2] = DataSource.Config.WeightMedium;

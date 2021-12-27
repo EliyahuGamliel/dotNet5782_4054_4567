@@ -8,6 +8,17 @@
       d:DesignHeight="640" d:DesignWidth="800"
       Title="CustomerListPage">
 
+    <Page.Resources>
+        <local:DeleteConverter x:Key="deleteConverter"/>
+        <Style x:Key="Design" TargetType="Button">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="25,25,25,25"/>
+                </Style>
+            </Style.Resources>
+        </Style>
+    </Page.Resources>
+
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
@@ -26,9 +37,7 @@
             <Label FontFamily="font/#Alef" FontSize="48" Content="IC &amp; EG" Grid.Column="0" FontWeight="Bold"/>
             <Button BorderBrush="Black" Background="PowderBlue" FontFamily="font/#Alef"  FontSize="18" Content="Add Customer" Grid.Column="3" Click="AddCustomer" Margin="18,8,18,8">
                 <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="25,25,25,25"/>
-                    </Style>
+
                 </Button.Resources>
             </Button>
         </Grid>
@@ -40,10 +49,16 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
             <Label Grid.Column="0"/>
-            <Button BorderBrush="Black" Margin="10,8,10,8" Background="Red" FontFamily="font/#Alef"  FontSize="18" Content="Return Back" Grid.Column="3" Click="Exit">
+            <Button Style="{DynamicResource Design}" BorderBrush="Black" Margin="10,8,10,8" Background="Red" FontFamily="font/#Alef"  FontSize="18" Content="Return Back" Grid.Column="3" Click="ReturnBack"/>
+            <Button BorderBrush="Black" Margin="15,8,15,8" Background="Red" FontFamily="font/#Alef"  FontSize="18" Content="Delete Customer" Grid.Column="2" Click="DeleteCustomer">
                 <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="25,25,25,25"/>
+                    <Style TargetType="Button"  BasedOn="{StaticResource Design}">
+                        <Setter Property="IsEnabled" Value="False"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=CustomerListView, Path=SelectedItem, Converter={StaticResource deleteConverter}}" Value="True">
+                                <Setter Property="IsEnabled" Value="True"/>
+                            </DataTrigger>
+                        </Style.Triggers>
                     </Style>
                 </Button.Resources>
             </Button>
@@ -65,7 +80,7 @@
                 </Style>
             </MediaElement.Style>
         </MediaElement>
-        <ListView Background="LightCyan" FontFamily="/font/#Alef" x:Name="CustomerListView" Width="auto" Height="auto" MouseDoubleClick="CustomerActions" Margin="0,0,528,0" Grid.Row="1">
+        <ListView ItemsSource="{Binding}" Background="LightCyan" FontFamily="/font/#Alef" x:Name="CustomerListView" Width="auto" Height="auto" MouseDoubleClick="CustomerActions" Margin="0,0,528,0" Grid.Row="1">
             <ListView.Resources>
                 <Style TargetType="GridViewColumnHeader">
                     <Setter Property="Visibility" Value="Hidden"/>

@@ -16,6 +16,7 @@ namespace BO
         public DroneStatuses Status { get; set; }
         public Location CLocation { get; set; }
         public int ParcelId { get; set; }
+        public bool Active { get; set; }
 
         /// <summary><returns>
         /// The function returns a string to print on all entity data
