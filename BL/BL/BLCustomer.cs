@@ -17,19 +17,20 @@ namespace BL
         /// <returns>Notice if the addition was successful</returns>
         public string AddCustomer(BO.Customer c) {
             try {
-                CheckValidId(c.Id);
+                CheckValidId(c.Id.Value);
                 DO.Customer cu = new DO.Customer();
-                cu.Id = c.Id;
+                cu.Active = true;
+                cu.Id = c.Id.Value;
                 cu.Name = c.Name;
                 cu.Phone = c.Phone;
-                cu.Lattitude = c.Location.Lattitude;
-                cu.Longitude = c.Location.Longitude;
+                cu.Lattitude = c.Location.Lattitude.Value;
+                cu.Longitude = c.Location.Longitude.Value;
                 CheckLegelLocation(cu.Longitude, cu.Lattitude);
                 data.AddCustomer(cu);
                 return "The addition was successful\n";
             }
             catch (DO.IdExistException) {
-                throw new BO.IdExistException(c.Id);
+                throw new BO.IdExistException(c.Id.Value);
             }
         }
 
@@ -120,7 +121,7 @@ namespace BL
         /// </summary>
         /// <returns>Returns the list of customers</returns>
         public IEnumerable<CustomerList> GetCustomers() {
-            return ConvertToBL(data.GetCustomerByFilter(c => true));
+            return ConvertToBL(data.GetCustomerByFilter(c => c.Active));
         }
 
         /// <summary>
@@ -148,6 +149,12 @@ namespace BL
                 customer.Add(cu);
             }
             return customer;
+        }
+
+        public string DeleteCustomer(int customerID) {
+            CheckDeleteCustomer(customerID);
+            data.DeleteCustomer(customerID);
+            return "The delete was successful\n";
         }
     }
 }

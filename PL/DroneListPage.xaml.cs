@@ -22,14 +22,13 @@ namespace PL
     /// </summary>
     public partial class DroneListPage : Page
     {
-        private BlApi.IBL bl = BlFactory.GetBl();
-        private ObservableCollection<BO.DroneList> droneList;
+        private IBL bl = BlFactory.GetBl();
+        private ObservableCollection<DroneList> droneList;
         private bool isGroup;
 
         /// <summary>
         /// The ctor
         /// </summary>
-        /// <param name="bl">Data Base</param>
         public DroneListPage() {
             InitializeComponent();
             foreach (var item in Enum.GetValues(typeof(DroneStatuses)))
@@ -46,8 +45,6 @@ namespace PL
         /// <summary>
         /// If the selected choice in the combo box changed
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void Selector_SelectionChanged(object sender = null, SelectionChangedEventArgs e = null) {
             UpdateList();
             SaveDisplay();
@@ -88,12 +85,12 @@ namespace PL
         private void Reset(object sender, RoutedEventArgs e) {
             StatusSelector.SelectedItem = null;
             MaxWeightSelector.SelectedItem = null;
-            UpdateList();
         }
 
         private void DeleteDrone(object sender, RoutedEventArgs e) {
             try {
                 MessageBox.Show(bl.DeleteDrone((DroneList)DroneListView.SelectedItem));
+                UpdateList();
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -108,7 +105,9 @@ namespace PL
         private void DroneActions(object sender, MouseButtonEventArgs e) {
             if (DroneListView.SelectedItem != null) {
                 DroneList d = (DroneList)DroneListView.SelectedItem;
-                this.NavigationService.Navigate(new DronePage(bl.GetDroneById(d.Id)));
+                DronePage dronePage = new DronePage(bl.GetDroneById(d.Id));
+                dronePage.Unloaded += UpdateList;
+                this.NavigationService.Navigate(dronePage);
             }
         }
 

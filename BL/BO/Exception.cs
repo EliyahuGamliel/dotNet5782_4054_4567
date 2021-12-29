@@ -16,8 +16,7 @@ namespace BO
         /// If the the id exists it assigns the other id
         /// </summary>
         /// <param name="ID">the id</param>
-        public IdExistException(int ID)
-        {
+        public IdExistException(int ID) {
             this.id = ID;
         }
 
@@ -25,8 +24,7 @@ namespace BO
         /// Returns a matching string for the exption
         /// </summary>
         /// <returns>a printable matching string</returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             return "IdExistException: The ID " + id + " already exist\n";
         }
     }
@@ -39,8 +37,7 @@ namespace BO
         /// If the id is not valid then it assigns the id
         /// </summary>
         /// <param name="ID">the id</param>
-        public IdNotValid(int ID)
-        {
+        public IdNotValid(int ID) {
             this.id = ID;
         }
 
@@ -48,8 +45,7 @@ namespace BO
         /// Returns a matching string for the exption
         /// </summary>
         /// <returns>a printable matching string</returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             return "IdNotValid: The ID must be a positive number (" + id + ")\n";
         }
     }
@@ -66,8 +62,7 @@ namespace BO
         /// If the id doesnt exists it assigns the id
         /// </summary>
         /// <param name="ID">the id</param>
-        public IdNotExistException(int ID)
-        {
+        public IdNotExistException(int ID) {
             this.id = ID;
         }
 
@@ -75,8 +70,7 @@ namespace BO
         /// Returns a matching string for the exption
         /// </summary>
         /// <returns>a printable matching string</returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             return "IdNotExistException: The ID " + id + " doesn't exist\n";
         }
     }
@@ -93,8 +87,7 @@ namespace BO
         /// If the choice is not legal then it assigns the choice
         /// </summary>
         /// <param name="choice">the choice</param>
-        public ChoiceNotLegal(int choice)
-        {
+        public ChoiceNotLegal(int choice) {
             this.choice = choice;
         }
 
@@ -102,8 +95,7 @@ namespace BO
         /// Returns a matching string for the exption
         /// </summary>
         /// <returns>a printable matching string</returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             return "ChoiceNotLegal: The choice it is not in the options (" + choice + ")\n";
         }
     }
@@ -120,8 +112,7 @@ namespace BO
         /// If the the customer already exists the it assigns the id
         /// </summary>
         /// <param name="id">the id</param>
-        public SameCustomerException(int id)
-        {
+        public SameCustomerException(int id) {
             this.id = id;
         }
 
@@ -129,8 +120,7 @@ namespace BO
         /// Returns a matching string for the exption
         /// </summary>
         /// <returns>a printable matching string</returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             return "SameCustomersException: The TargetId is like the SenderID (" + id + ")\n";
         }
     }
@@ -146,8 +136,7 @@ namespace BO
         /// Returns a matching string for the exption
         /// </summary>
         /// <returns>a printable matching string</returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             return "DroneCanNotSend: The Drone cann't send to charge\n";
         }
     }
@@ -163,8 +152,7 @@ namespace BO
         /// Returns a matching string for the exption
         /// </summary>
         /// <returns>a printable matching string</returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             return "DroneCanNotRelese: The Drone isn't in charge\n";
         }
     }
@@ -181,8 +169,7 @@ namespace BO
         /// If the time is not legal then it assigns the time
         /// </summary>
         /// <param name="time">the time</param>
-        public TimeNotLegal(double time)
-        {
+        public TimeNotLegal(double time) {
             this.time = time;
         }
 
@@ -190,8 +177,7 @@ namespace BO
         /// Returns a matching string for the exption
         /// </summary>
         /// <returns>a printable matching string</returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             return "TimeNotLegal: The Drone cann't relese frome charging, because the time is not legal (" + time + ")\n";
         }
     }
@@ -207,8 +193,7 @@ namespace BO
         /// Returns a matching string for the exption
         /// </summary>
         /// <returns>a printable matching string</returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             return "DroneCanNotAssigan: The Drone cann't assign to parcel\n";
         }
     }
@@ -224,8 +209,7 @@ namespace BO
         /// Returns a matching string for the exption
         /// </summary>
         /// <returns>a printable matching string</returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             return "DroneCanNotPickUp: The Drone cann't pick up the parcel\n";
         }
     }
@@ -241,8 +225,7 @@ namespace BO
         /// Returns a matching string for the exption
         /// </summary>
         /// <returns>a printable matching string</returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             return "DroneCanNotDeliver: The Drone cann't deliver the parcel\n";
         }
     }
@@ -258,8 +241,7 @@ namespace BO
         /// Returns a matching string for the exption
         /// </summary>
         /// <returns>a printable matching string</returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             return "StationIsFull: The Drone cann't send/add because the station is full\n";
         }
     }
@@ -278,8 +260,7 @@ namespace BO
         /// </summary>
         /// <param name="longitude">the longitude</param>
         /// <param name="latitude">the latitude</param>
-        public LocationNotLegal(double longitude, double latitude)
-        {
+        public LocationNotLegal(double longitude, double latitude) {
             this.longitude = longitude;
             this.latitude = latitude;
         }
@@ -288,9 +269,8 @@ namespace BO
         /// Returns a matching string for the exption
         /// </summary>
         /// <returns>a printable matching string</returns>
-        public override string ToString()
-        {
-            return "LocationNotLegal: The Location doesn't exist (" + longitude +  ", " + latitude + ")\n";
+        public override string ToString() {
+            return "LocationNotLegal: The Location doesn't exist (" + longitude + ", " + latitude + ")\n";
         }
     }
 
@@ -306,8 +286,7 @@ namespace BO
         /// If the chargeslot is not legal the it assigns the charge slots
         /// </summary>
         /// <param name="chargeSlots"></param>
-        public ChargeSlotsNotLegal(int chargeSlots)
-        {
+        public ChargeSlotsNotLegal(int chargeSlots) {
             this.chargeSlots = chargeSlots;
         }
 
@@ -315,8 +294,7 @@ namespace BO
         /// Returns a matching string for the exption
         /// </summary>
         /// <returns>a printable matching string</returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             return "ChargeSlotsNotLegal: The station cann't add/update, because the chargeSlots is not legal (" + chargeSlots + ")\n";
         }
     }
@@ -325,19 +303,7 @@ namespace BO
     public class CanntDeleteStation : Exception
     {
         public int Id { get; private set; }
-
-        /// <summary>
-        /// If the chargeslot is not legal the it assigns the charge slots
-        /// </summary>
-        /// <param name="chargeSlots"></param>
-        public CanntDeleteStation(int id) {
-            this.Id = id;
-        }
-
-        /// <summary>
-        /// Returns a matching string for the exption
-        /// </summary>
-        /// <returns>a printable matching string</returns>
+        public CanntDeleteStation(int id) { this.Id = id; }
         public override string ToString() {
             return "CanntDeleteStation: The station (" + Id + ") cann't delete, because the chargeSlots is not empty\n";
         }
@@ -347,21 +313,19 @@ namespace BO
     public class CanntDeleteCustomer : Exception
     {
         public int Id { get; private set; }
-
-        /// <summary>
-        /// If the chargeslot is not legal the it assigns the charge slots
-        /// </summary>
-        /// <param name="chargeSlots"></param>
-        public CanntDeleteCustomer(int id) {
-            this.Id = id;
-        }
-
-        /// <summary>
-        /// Returns a matching string for the exption
-        /// </summary>
-        /// <returns>a printable matching string</returns>
+        public CanntDeleteCustomer(int id) { this.Id = id; }
         public override string ToString() {
             return "CanntDeleteCustomer: The customer (" + Id + ") cann't delete, because s/he have parcels in the way\n";
+        }
+    }
+
+    [Serializable]
+    public class CanntDeleteDrone : Exception
+    {
+        public int Id { get; private set; }
+        public CanntDeleteDrone(int id) { this.Id = id; }
+        public override string ToString() {
+            return "CanntDeleteDrone: The drone (" + Id + ") cann't delete, because it isn't available\n";
         }
     }
 }

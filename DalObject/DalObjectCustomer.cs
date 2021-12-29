@@ -52,8 +52,9 @@ namespace Dal
             return DataSource.Customers.FindAll(cutomerList);
         }
 
-        public void DeleteCustomer(Customer customer) {
-            int index = DataSource.Customers.FindIndex(c => c.Id == customer.Id && c.Active == customer.Active);
+        public void DeleteCustomer(int customerID) {
+            Customer customer = DataSource.Customers.Find(c => c.Id == customerID && c.Active);
+            int index = DataSource.Customers.IndexOf(customer);
             customer.Active = false;
             DataSource.Customers[index] = customer;
         }

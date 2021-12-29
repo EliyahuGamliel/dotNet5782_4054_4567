@@ -15,7 +15,7 @@ namespace Dal
         /// </summary>
         /// <param name="d">Object of droneCharge to add</param>
         public void AddDroneCharge(DroneCharge d) {
-  
+            d.Active = true;
             DataSource.DroneCharges.Add(d);
         }
 
@@ -26,7 +26,9 @@ namespace Dal
         public void DeleteDroneCharge(DroneCharge d) {
             CheckNotExistId(DataSource.Drones, d.DroneId);
             CheckNotExistId(DataSource.Stations, d.StationId);
-            DataSource.DroneCharges.Remove(d);
+            int index = DataSource.DroneCharges.IndexOf(d);
+            d.Active = false;
+            DataSource.DroneCharges[index] = d;
         }
 
         public DroneCharge GetDroneChargeById(int Id)

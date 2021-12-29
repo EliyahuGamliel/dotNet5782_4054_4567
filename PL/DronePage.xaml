@@ -11,6 +11,14 @@
     <Page.Resources>
         <local:BatteryConverter x:Key="batteryConverter"/>
         <local:IntCheckConverter x:Key="intCheckConverter"/>
+        <Style x:Key="Design" TargetType="Button">
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="25,25,25,25"/>
+                </Style>
+            </Style.Resources>
+        </Style>
     </Page.Resources>
 
     <Grid Name="MainGrid">
@@ -51,11 +59,7 @@
         <TextBlock FontSize="15" FontFamily="/font/#Fuzzy Bubbles" Name="parcelDrone" Text="{Binding Path=PTransfer}" TextWrapping="Wrap" Margin="434,91,17,63"/>
         <Button Name="parcelInDrone" Background="PowderBlue" Content="Open Parcel" BorderBrush="Black" FontFamily="/font/#Alef" Click="ParcelInDrone" FontWeight="Bold" Grid.Column="0" FontSize="18" Margin="533,458,0,10" HorizontalAlignment="Left" Width="216">
             <Button.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="25,25,25,25"/>
-                    <Setter Property="Margin" Value="10,8,10,8"/>
-                </Style>
-                <Style TargetType="Button">
+                <Style TargetType="Button" BasedOn="{StaticResource Design}">
                     <Setter Property="IsEnabled" Value="True"/>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Path=Text, ElementName=parcelDrone}" Value="">
@@ -72,20 +76,10 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button BorderBrush="Black" Margin="10,8,10,8" Background="Red" FontFamily="font/#Alef" FontWeight="Bold"  FontSize="18" Content="Return Back" Click="Exit_Click">
+            <Button Style="{DynamicResource Design}" BorderBrush="Black" Margin="10,8,10,8" Background="Red" FontFamily="font/#Alef" FontWeight="Bold"  FontSize="18" Content="Return Back" Click="Exit_Click"/>
+            <Button Name="action1" Margin="10,8,10,8" Background="PowderBlue" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" Grid.Column="1" FontSize="18" Content="">
                 <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="25,25,25,25"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
-            <Button Name="action1" Background="PowderBlue" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" Grid.Column="1" FontSize="18" Content="">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="25,25,25,25"/>
-                        <Setter Property="Margin" Value="10,8,10,8"/>
-                    </Style>
-                    <Style TargetType="Button">
+                    <Style TargetType="Button" BasedOn="{StaticResource Design}">
                         <Setter Property="IsEnabled" Value="True" />
                         <Style.Triggers>
                             <MultiDataTrigger>
@@ -106,21 +100,10 @@
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button Name="action2" Background="PowderBlue" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" Grid.Column="2" FontSize="18" Content="">
+            <Button Name="action2" Style="{DynamicResource Design}" Margin="10,8,10,8" Background="PowderBlue" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" Grid.Column="2" FontSize="18" Content=""/>
+            <Button Background="PowderBlue" Margin="10,8,10,8" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" FontSize="18" Name="updateDrone" Content="Update Drone"  Grid.Column="3" Click="Update_Click">
                 <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="25,25,25,25"/>
-                        <Setter Property="Margin" Value="10,8,10,8"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
-            <Button Background="PowderBlue" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" FontSize="18" Name="updateDrone" Content="Update Drone"  Grid.Column="3" Click="Update_Click">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="25,25,25,25"/>
-                        <Setter Property="Margin" Value="10,8,10,8"/>
-                    </Style>
-                    <Style TargetType="Button">
+                    <Style TargetType="Button" BasedOn="{StaticResource Design}">
                         <Setter Property="IsEnabled" Value="True" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Path=Background, ElementName=modelDrone}" Value="Red">

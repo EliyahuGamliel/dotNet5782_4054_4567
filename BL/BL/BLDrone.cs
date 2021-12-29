@@ -24,6 +24,7 @@ namespace BL
                 CheckLegelChoice((int)d.MaxWeight);
                 dr.Id = d.Id.Value;
                 dr.Model = d.Model;
+                dr.Active = true;
                 dr.CLocation = new Location();
                 dr.Battery = rand.Next(20,41);
                 dr.Status = DroneStatuses.Maintenance;
@@ -46,6 +47,7 @@ namespace BL
                 DO.DroneCharge dc = new DO.DroneCharge();
                 dc.DroneId = d.Id.Value;
                 dc.StationId = idStation;
+                dc.Active = true;
                 dc.Start = DateTime.Now;
                 data.AddDroneCharge(dc);
 
@@ -101,6 +103,7 @@ namespace BL
             DO.DroneCharge dc = new DO.DroneCharge();
             dc.DroneId = d.Id;
             dc.StationId = st.Id;
+            dc.Active = true;
             dc.Start = DateTime.Now;
             data.AddDroneCharge(dc);
             return "The update was successful\n";
@@ -200,7 +203,7 @@ namespace BL
         /// </summary>
         /// <returns>Returns the list of drones</returns>
         public IEnumerable<DroneList> GetDrones(){
-            return dronesList;
+            return dronesList.FindAll(d => d.Active);
         }
 
         /// <summary>
@@ -212,25 +215,26 @@ namespace BL
         public IEnumerable<DroneList> GetDroneByFilter(object weight, object status)
         {
             if (weight is null or "All" && status is null or "All")
-                return dronesList;
+                return dronesList.FindAll(d => d.Active);
             else if (weight is null or "All")
-                return dronesList.FindAll(d => d.Status == (DroneStatuses)status);
+                return dronesList.FindAll(d => d.Status == (DroneStatuses)status && d.Active);
             else if (status is null or "All")
-                return dronesList.FindAll(d => d.MaxWeight == (BO.WeightCategories)weight);
-            return dronesList.FindAll(d => d.Status == (DroneStatuses)status && d.MaxWeight == (BO.WeightCategories)weight);   
+                return dronesList.FindAll(d => d.MaxWeight == (BO.WeightCategories)weight && d.Active);
+            return dronesList.FindAll(d => d.Status == (DroneStatuses)status && d.MaxWeight == (BO.WeightCategories)weight && d.Active);   
         }
 
         public string DeleteDrone(BO.DroneList drone) {
-            //CHECK
+            CheckDeleteDrone(drone);
             int index = dronesList.IndexOf(drone);
             drone.Active = false;
             dronesList[index] = drone;
             DO.Drone dr = new DO.Drone();
+            dr.Active = false;
             dr.Id = drone.Id;
             dr.Model = drone.Model;
             dr.MaxWeight = (DO.WeightCategories)((int)drone.MaxWeight);
             data.DeleteDrone(dr);
-            return "The update was successful\n";
+            return "The delete was successful\n";
         }
     }
 }

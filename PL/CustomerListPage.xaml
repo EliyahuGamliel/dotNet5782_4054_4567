@@ -35,11 +35,7 @@
 
 
             <Label FontFamily="font/#Alef" FontSize="48" Content="IC &amp; EG" Grid.Column="0" FontWeight="Bold"/>
-            <Button BorderBrush="Black" Background="PowderBlue" FontFamily="font/#Alef"  FontSize="18" Content="Add Customer" Grid.Column="3" Click="AddCustomer" Margin="18,8,18,8">
-                <Button.Resources>
-
-                </Button.Resources>
-            </Button>
+            <Button BorderBrush="Black" Style="{DynamicResource Design}" Background="PowderBlue" FontFamily="font/#Alef"  FontSize="18" Content="Add Customer" Grid.Column="3" Click="AddCustomer" Margin="18,8,18,8"/>
         </Grid>
         <Grid Name="DownGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="2" VerticalAlignment="Stretch" Width="auto">
             <Grid.ColumnDefinitions>

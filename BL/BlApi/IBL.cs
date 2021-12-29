@@ -187,6 +187,8 @@ namespace BlApi
 
         string DeleteDrone(BO.DroneList drone);
 
+        string DeleteCustomer(int customerID);
+
         string DeleteStation(int id);
         #endregion
     }

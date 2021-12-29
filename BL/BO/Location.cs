@@ -7,16 +7,16 @@ namespace BO
     /// <summary>
     /// Defining the "Location" class
     /// </summary>
-    public class Location
+    public class Location 
     {
-        public double Longitude { get; set; }
-        public double Lattitude { get; set; }
+        public double? Longitude { get; set; }
+        public double? Lattitude { get; set; }
 
         /// <summary><returns>
         /// The function returns a string to print on all entity data
         /// </returns></summary>
         public override string ToString()
-        { return $"\n      Longitude: {LongitudeBonus(Longitude)}\n      Lattitude: {LattitudeBonus(Lattitude)}\n"; }
+        { return $"\n      Longitude: {LongitudeBonus(Longitude.Value)}\n      Lattitude: {LattitudeBonus(Lattitude.Value)}\n"; }
 
         /// <summary>
         /// The function gets a longitube and turns it into a longitube at base 60

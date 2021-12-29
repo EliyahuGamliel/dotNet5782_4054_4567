@@ -78,7 +78,7 @@ namespace DalApi
         
         void DeleteStation(DO.Station station);
 
-        void DeleteCustomer(DO.Customer customer);
+        void DeleteCustomer(int customerID);
 
         void DeleteParcel(DO.Parcel parcel);
 

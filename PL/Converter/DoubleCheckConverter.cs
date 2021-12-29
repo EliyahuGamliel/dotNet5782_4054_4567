@@ -12,11 +12,16 @@ namespace PL
     class DoubleCheckConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-            double num;
+            /*double num;
             bool error = Double.TryParse(value.ToString(), out num);
             if (!error)
                 return false;
-            return true;
+            return true;*/
+            string num = (string)value;
+            if (num.Contains("°") && num.Contains("'") && num.Contains("\"")) {
+                return true;
+            }
+            return false;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {

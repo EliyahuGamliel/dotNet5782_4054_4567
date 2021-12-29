@@ -78,9 +78,9 @@ namespace BL
         /// <returns>Returns the distance between two locations</returns>
         private double DistanceTo(Location l1, Location l2)
         {
-            double rlat1 = Math.PI * l1.Lattitude / 180;
-            double rlat2 = Math.PI * l2.Lattitude / 180;
-            double theta = l1.Longitude - l2.Longitude;
+            double rlat1 = Math.PI * l1.Lattitude.Value / 180;
+            double rlat2 = Math.PI * l2.Lattitude.Value / 180;
+            double theta = l1.Longitude.Value - l2.Longitude.Value;
             double rtheta = Math.PI * theta / 180;
             double dist = Math.Sin(rlat1) * Math.Sin(rlat2) + Math.Cos(rlat1) * Math.Cos(rlat2) * Math.Cos(rtheta);
             dist = Math.Acos(dist);
@@ -96,7 +96,7 @@ namespace BL
         /// <returns>the number of taken slots</returns>
         private int ChargeSlotsCatched(int idStation)
         {
-            return data.GetDroneChargeByFilter(dc => dc.StationId == idStation).Count();
+            return data.GetDroneChargeByFilter(dc => dc.StationId == idStation && dc.Active).Count();
         }
 
         /// <summary>
@@ -178,6 +178,19 @@ namespace BL
         {
             if (90 < Lattitude || -90 > Lattitude || 180 < Longitude || -180 > Longitude)
                 throw new LocationNotLegal(Longitude, Lattitude);
+        }
+
+        private void CheckDeleteDrone(BO.DroneList drone) {
+            if (drone.Status != DroneStatuses.Available)
+                throw new CanntDeleteDrone(drone.Id);
+        }
+
+        private void CheckDeleteCustomer(int customerID) {
+            BO.Customer customer = GetCustomerById(customerID);
+            foreach (var item in customer.ForCustomer) {
+                if(item.Status != Statuses.Provided)
+                    throw new CanntDeleteCustomer(customerID);
+            }
         }
     }
 }

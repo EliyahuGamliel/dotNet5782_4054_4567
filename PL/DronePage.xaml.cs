@@ -22,16 +22,14 @@ namespace PL
     /// </summary>
     public partial class DronePage : Page
     {
-        private Drone dr = new Drone();
+        private Drone dr;
         private Parcel pa;
-        private BlApi.IBL bl = BlApi.BlFactory.GetBl();
+        private IBL bl = BlFactory.GetBl();
 
         /// <summary>
-        /// The first ctor (Drone Actions)
+        /// The ctor
         /// </summary>
-        /// <param name="bl">Data Base</param>
         /// <param name="drone">The drone to make on it actions</param>
-        /// <param name="droneListPage">Pointer to the Drone List Page</param>
         public DronePage(Drone drone = null) {
             InitializeComponent();
             if (drone == null)

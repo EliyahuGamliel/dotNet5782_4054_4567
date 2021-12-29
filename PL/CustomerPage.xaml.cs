@@ -11,7 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
+using BlApi;
+using BO;
 
 namespace PL
 {
@@ -20,41 +21,35 @@ namespace PL
     /// </summary>
     public partial class CustomerPage : Page
     {
-        private BlApi.IBL bl = BlApi.BlFactory.GetBl();
-        private BO.Customer cu;
+        private IBL bl = BlFactory.GetBl();
+        private Customer cu;
 
-        private int numInt;
-        private double numDouble;
-
-        public CustomerPage(BO.Customer customer) {
+        public CustomerPage(Customer customer = null) {
             InitializeComponent();
-            cu = customer;
-            this.DataContext = cu;
-            InitializeData();
-        }
-
-        /// <summary>
-        /// The second constructor (Drone Add)
-        /// </summary>
-        /// <param name="bl">Data Base</param>
-        /// <param name="droneListPage">Pointer to the Drone List Page</param>
-        public CustomerPage() {
-            InitializeComponent();
-
-            action1.Content = "Add Customer";
-            action1.Click += new RoutedEventHandler(Add_Click);
+            if (customer == null) {
+                cu = new Customer();
+                cu.Location = new Location();
+                action1.Content = "Add Customer";
+                action1.Click += new RoutedEventHandler(Add_Click);
+                this.DataContext = cu;
+            }
+            else {
+                cu = customer;
+                this.DataContext = cu;
+                InitializeData();
+            }
         }
 
         /// <summary>
         /// Initialise all the data and some of the graphics
         /// </summary>
         private void InitializeData() {
-            CustomerForListView.ItemsSource = cu.ForCustomer;
-            CustomerFromListView.ItemsSource = cu.FromCustomer;
+            //CustomerForListView.ItemsSource = cu.ForCustomer;
+            //CustomerFromListView.ItemsSource = cu.FromCustomer;
 
             PropertyGroupDescription groupDescription = new PropertyGroupDescription("Status");
-            CollectionView view1 = (CollectionView)CollectionViewSource.GetDefaultView(CustomerForListView.ItemsSource);
-            CollectionView view2 = (CollectionView)CollectionViewSource.GetDefaultView(CustomerFromListView.ItemsSource);
+            CollectionView view1 = (CollectionView)CollectionViewSource.GetDefaultView(cu.ForCustomer);
+            CollectionView view2 = (CollectionView)CollectionViewSource.GetDefaultView(cu.FromCustomer);
             view1.GroupDescriptions.Add(groupDescription);
             view2.GroupDescriptions.Add(groupDescription);
 
@@ -72,7 +67,7 @@ namespace PL
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Update_Click(object sender, RoutedEventArgs e) {
-            MessageBox.Show(bl.UpdateCustomer(cu.Id, nameCustomer.Text, phoneCustomer.Text));
+            MessageBox.Show(bl.UpdateCustomer(cu.Id.Value, nameCustomer.Text, phoneCustomer.Text));
         }
 
         /// <summary>
@@ -82,17 +77,7 @@ namespace PL
         /// <param name="e"></param>
         private void Add_Click(object sender, RoutedEventArgs e) {
             try {
-                BO.Customer customerAdd = new BO.Customer();
-                customerAdd.Location = new BO.Location();
-                Int32.TryParse(idCustomer.Text, out numInt);
-                customerAdd.Id = numInt;
-                customerAdd.Name = nameCustomer.Text;
-                customerAdd.Phone = phoneCustomer.Text;
-                Double.TryParse(longCustomer.Text, out numDouble);
-                customerAdd.Location.Longitude = numDouble;
-                Double.TryParse(latiCustomer.Text, out numDouble);
-                customerAdd.Location.Lattitude = numDouble;
-                MessageBox.Show(bl.AddCustomer(customerAdd));
+                MessageBox.Show(bl.AddCustomer(cu));
                 this.NavigationService.GoBack();
             }
             catch (Exception ex) {

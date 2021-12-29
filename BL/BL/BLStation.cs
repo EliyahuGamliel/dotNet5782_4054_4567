@@ -22,8 +22,8 @@ namespace BL
                 DO.Station st = new DO.Station();
                 st.Id = s.Id;
                 st.Name = s.Name;
-                st.Longitude = s.Location.Longitude;
-                st.Lattitude = s.Location.Lattitude;
+                st.Longitude = s.Location.Longitude.Value;
+                st.Lattitude = s.Location.Lattitude.Value;
                 CheckLegelLocation(st.Longitude, st.Lattitude);
                 st.ChargeSlots = s.ChargeSlots;
                 if (st.ChargeSlots < 0)

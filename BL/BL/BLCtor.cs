@@ -22,7 +22,7 @@ namespace BL
             WeightHeavy = data.DroneElectricityUse()[3];
             ChargingRate = data.DroneElectricityUse()[4];
 
-            IEnumerable<DO.Drone> droneslist = data.GetDroneByFilter(d => true);
+            IEnumerable<DO.Drone> droneslist = data.GetDroneByFilter(d => d.Active);
             
             foreach (var item in droneslist)
             {
@@ -94,6 +94,7 @@ namespace BL
                         DO.DroneCharge droneCharge = new DO.DroneCharge();
                         droneCharge.DroneId = dl.Id;
                         droneCharge.StationId = st.Id;
+                        droneCharge.Active = true;
                         data.AddDroneCharge(droneCharge);
 
                         UpdateStation(st.Id, "", st.ChargeSlots - 1 + ChargeSlotsCatched(st.Id));

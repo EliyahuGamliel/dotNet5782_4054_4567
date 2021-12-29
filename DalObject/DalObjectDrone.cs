@@ -16,6 +16,7 @@ namespace Dal
         /// <param name="d">Object of drone to add</param>
         public void AddDrone(Drone d) {
             CheckExistId(DataSource.Drones, d.Id);
+            d.Active = true;
             DataSource.Drones.Add(d);
         }
 
@@ -51,8 +52,7 @@ namespace Dal
         }
 
         public void DeleteDrone(DO.Drone drone) {
-            int index = DataSource.Customers.FindIndex(c => c.Id == drone.Id && c.Active == true);
-            drone.Active = false;
+            int index = DataSource.Drones.FindIndex(d => d.Id == drone.Id && d.Active);
             DataSource.Drones[index] = drone;
         }
 

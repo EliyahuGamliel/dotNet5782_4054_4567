@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
+using BO;
+using BlApi;
 
 namespace PL
 {
@@ -21,12 +23,12 @@ namespace PL
     /// </summary>
     public partial class CustomerListPage : Page
     {
-        private BlApi.IBL bl = BlApi.BlFactory.GetBl();
-        private ObservableCollection<BO.CustomerList> customerList;
+        private IBL bl = BlFactory.GetBl();
+        private ObservableCollection<CustomerList> customerList;
 
         public CustomerListPage() {
             InitializeComponent();
-            customerList = new ObservableCollection<BO.CustomerList>(bl.GetCustomers());
+            customerList = new ObservableCollection<CustomerList>(bl.GetCustomers());
             this.DataContext = customerList;
         }
 
@@ -59,14 +61,18 @@ namespace PL
         /// <param name="e"></param>
         private void CustomerActions(object sender, MouseButtonEventArgs e) {
             if (CustomerListView.SelectedItem != null) {
-                BO.CustomerList c = (BO.CustomerList)CustomerListView.SelectedItem;
-                this.NavigationService.Navigate(new CustomerPage(bl.GetCustomerById(c.Id)));
+                CustomerList c = (CustomerList)CustomerListView.SelectedItem;
+                CustomerPage customerPage = new CustomerPage(bl.GetCustomerById(c.Id));
+                customerPage.Unloaded += UpdateList;
+                this.NavigationService.Navigate(customerPage);
             }
         }
 
         private void DeleteCustomer(object sender, RoutedEventArgs e) {
             try {
-                //MessageBox.Show(bl.DeleteCustomer((BO.CustomerList)CustomerListView.SelectedItem));
+                CustomerList customer = (CustomerList)CustomerListView.SelectedItem;
+                MessageBox.Show(bl.DeleteCustomer(customer.Id));
+                UpdateList();
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);

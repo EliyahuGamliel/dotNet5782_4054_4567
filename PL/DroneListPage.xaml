@@ -35,13 +35,11 @@
             </Grid.ColumnDefinitions >
             <StackPanel Grid.Column="1" Margin="0,0,54,0">
                 <Label FontFamily="font/#Alef" FontSize="20" Content="Drone Status:" FontWeight="Bold"/>
-                <ComboBox FontFamily="font/#Alef" FontSize="16" Name="StatusSelector"
-                      SelectionChanged="Selector_SelectionChanged"/>
+                <ComboBox FontFamily="font/#Alef" FontSize="16" Name="StatusSelector" SelectionChanged="Selector_SelectionChanged"/>
             </StackPanel>
             <StackPanel Grid.Column="2" Margin="0,0,10,0">
                 <Label FontFamily="font/#Alef" FontSize="20" Content="Drone Max Weight:" FontWeight="Bold"/>
-                <ComboBox FontFamily="font/#Alef" FontSize="16" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="MaxWeightSelector"
-                      SelectionChanged="Selector_SelectionChanged"/>
+                <ComboBox FontFamily="font/#Alef" FontSize="16" Grid.Column="2" Name="MaxWeightSelector" SelectionChanged="Selector_SelectionChanged"/>
             </StackPanel>
             <Label FontFamily="font/#Alef" FontSize="48" Content="IC &amp; EG" Grid.Column="0" FontWeight="Bold"/>
             <Button Style="{DynamicResource Design}" BorderBrush="Black" Background="PowderBlue" FontFamily="font/#Alef"  FontSize="18" Content="Add Drone" Grid.Column="3" Click="AddDrone" Margin="18,8,18,8"/>
@@ -87,7 +85,7 @@
                 </Style>
             </MediaElement.Style>
         </MediaElement>
-        <ListView ItemsSource="{Binding}" Background="LightCyan" FontFamily="/font/#Alef" x:Name="DroneListView" Width="auto" Grid.Row="1" Height="auto" MouseDoubleClick="DroneActions" Margin="0,0,565,0">
+        <ListView ItemsSource="{Binding FallbackValue='Null'}" Background="LightCyan" FontFamily="/font/#Alef" x:Name="DroneListView" Width="auto" Grid.Row="1" Height="auto" MouseDoubleClick="DroneActions" Margin="0,0,565,0">
             <ListView.Resources>
                 <Style TargetType="GridViewColumnHeader">
                     <Setter Property="Visibility" Value="Hidden"/>
@@ -96,7 +94,7 @@
             <ListView.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.ContainerStyle>
-                        <Style TargetType="{x:Type GroupItem}">
+                        <Style TargetType="GroupItem">
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate>
