@@ -32,7 +32,7 @@
                       SelectionChanged="Selector_SelectionChanged"/>
             </StackPanel>
             <Label FontFamily="font/#Alef" FontSize="48" Content="IC &amp; EG" Grid.Column="0" FontWeight="Bold"/>
-            <Button BorderBrush="Black" Background="PowderBlue" FontFamily="font/#Alef"  FontSize="18" Content="Add Drone" Grid.Column="3" Click="AddDrone_Click" Margin="18,8,18,8">
+            <Button BorderBrush="Black" Background="PowderBlue" FontFamily="font/#Alef"  FontSize="18" Content="Add Parcel" Grid.Column="3" Click="AddDrone_Click" Margin="18,8,18,8">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="25,25,25,25"/>
@@ -70,7 +70,7 @@
                 </Button.Resources>
             </Button>
         </Grid>
-        <MediaElement Height="auto" HorizontalAlignment="Right" Source="img\droneList.gif" Margin="150,0,0,0" Grid.Row="1">
+        <MediaElement Height="auto" HorizontalAlignment="Left" Source="img\parcelsGif.gif" Margin="116,0,0,0" Grid.Row="1" Width="684">
             <MediaElement.Style>
                 <Style TargetType="MediaElement">
                     <Style.Triggers>
@@ -78,7 +78,7 @@
                             <EventTrigger.Actions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <MediaTimeline Source="img\droneList.gif" Duration="0:0:1" RepeatBehavior="Forever"/>
+                                        <MediaTimeline Source="img\parcelsGif.gif" Duration="0:0:1" RepeatBehavior="Forever"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger.Actions>
@@ -87,7 +87,7 @@
                 </Style>
             </MediaElement.Style>
         </MediaElement>
-        <ListView ItemsSource="{Binding}" Background="LightCyan" FontFamily="/font/#Alef" x:Name="DroneListView" Width="auto" Grid.Row="1" Height="auto" MouseDoubleClick="DroneActions" Margin="0,0,565,0">
+        <ListView ItemsSource="{Binding}" Background="LightCyan" FontFamily="/font/#Alef" x:Name="DroneListView" Width="auto" Height="auto" MouseDoubleClick="DroneActions" Margin="0,71,597,71" Grid.RowSpan="3">
             <ListView.Resources>
                 <Style TargetType="GridViewColumnHeader">
                     <Setter Property="Visibility" Value="Hidden"/>

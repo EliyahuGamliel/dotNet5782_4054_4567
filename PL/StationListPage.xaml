@@ -53,7 +53,7 @@
                 </Button.Resources>
             </Button>
         </Grid>
-        <MediaElement Height="auto" HorizontalAlignment="Right" Source="img\droneList.gif" Margin="150,0,0,0" Grid.Row="1">
+        <MediaElement Height="auto" HorizontalAlignment="Right" Source="img\stationsGif.gif" Margin="150,0,0,0" Grid.Row="1">
             <MediaElement.Style>
                 <Style TargetType="MediaElement">
                     <Style.Triggers>
@@ -61,7 +61,7 @@
                             <EventTrigger.Actions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <MediaTimeline Source="img\droneList.gif" Duration="0:0:1" RepeatBehavior="Forever"/>
+                                        <MediaTimeline Source="img\stationsGif.gif" Duration="0:0:1" RepeatBehavior="Forever"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger.Actions>
