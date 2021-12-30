@@ -112,7 +112,7 @@ namespace PL
         }
 
         private void ChangeViewList(object sender = null, RoutedEventArgs e = null) {
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(DroneListView.ItemsSource);
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(droneList);
             PropertyGroupDescription groupDescription = new PropertyGroupDescription("Status");
             if (view.GroupDescriptions.Count != 0) {
                 isGroup = false;

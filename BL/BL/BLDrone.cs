@@ -91,18 +91,18 @@ namespace BL
 
             DroneList d = dronesList.Find(dr => idDrone == dr.Id);
             int index = dronesList.IndexOf(d);
-            double battery = CheckDroneCannotSend(data.GetStationByFilter(s => true).Where(s => s.ChargeSlots > 0), d);
+            double battery = CheckDroneCannotSend(data.GetStationByFilter(s => s.Active).Where(s => s.ChargeSlots > 0), d);
             d.Status = DroneStatuses.Maintenance;
             BO.Station st = new BO.Station();
             st = ReturnCloseStation(data.GetStationByFilter(s => true), d.CLocation);
             d.CLocation = st.Location;
             d.Battery = d.Battery - battery;
             dronesList[index] = d;
-            UpdateStation(st.Id, "", st.ChargeSlots - 1);
+            UpdateStation(st.Id.Value, "", st.ChargeSlots - 1);
 
             DO.DroneCharge dc = new DO.DroneCharge();
             dc.DroneId = d.Id;
-            dc.StationId = st.Id;
+            dc.StationId = st.Id.Value;
             dc.Active = true;
             dc.Start = DateTime.Now;
             data.AddDroneCharge(dc);
@@ -134,11 +134,11 @@ namespace BL
 
             BO.Station st = new BO.Station();
             st = ReturnCloseStation(data.GetStationByFilter(s => true), d.CLocation);
-            int chargeSlots = ChargeSlotsCatched(st.Id) + st.ChargeSlots;
+            int chargeSlots = ChargeSlotsCatched(st.Id.Value) + st.ChargeSlots.Value;
 
             data.DeleteDroneCharge(dc);
 
-            UpdateStation(st.Id, "", chargeSlots);
+            UpdateStation(st.Id.Value, "", chargeSlots);
             return "The update was successful\n";
         }
 

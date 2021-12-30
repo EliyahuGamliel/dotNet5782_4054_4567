@@ -8,8 +8,20 @@
       d:DesignHeight="640" d:DesignWidth="800"
       Title="ParcelListPage">
 
+    <Page.Resources>
+        <local:DeleteConverter x:Key="deleteConverter"/>
+        <Style x:Key="Design" TargetType="Button">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="25,25,25,25"/>
+                </Style>
+            </Style.Resources>
+        </Style>
+    </Page.Resources>
+
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
+            <RowDefinition Height="50*"/>
             <RowDefinition Height="50*"/>
             <RowDefinition Height="350*"/>
             <RowDefinition Height="50*"/>
@@ -22,25 +34,40 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
             <StackPanel Grid.Column="1" Margin="0,0,54,0">
-                <Label FontFamily="font/#Alef" FontSize="20" Content="Parcel Status:" FontWeight="Bold"/>
+                <Label FontFamily="font/#Alef" FontSize="18" Content="Parcel Status:" FontWeight="Bold"/>
                 <ComboBox FontFamily="font/#Alef" FontSize="16" Name="StatusSelector"
-                      SelectionChanged="Selector_SelectionChanged"/>
+                      SelectionChanged="Selector_SelectionChanged" Height="25"/>
             </StackPanel>
-            <StackPanel Grid.Column="2" Margin="0,0,10,0">
-                <Label FontFamily="font/#Alef" FontSize="20" Content="Drone Max Weight:" FontWeight="Bold"/>
-                <ComboBox FontFamily="font/#Alef" FontSize="16" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="MaxWeightSelector"
-                      SelectionChanged="Selector_SelectionChanged"/>
+            <StackPanel Grid.Column="2" Margin="0,0,54,0">
+                <Label FontFamily="font/#Alef" FontSize="18" Content="Parcel Weight:" FontWeight="Bold"/>
+                <ComboBox FontFamily="font/#Alef" FontSize="16" Grid.Column="2" HorizontalAlignment="Stretch" Name="WeightSelector"
+                      SelectionChanged="Selector_SelectionChanged" Height="25"/>
             </StackPanel>
             <Label FontFamily="font/#Alef" FontSize="48" Content="IC &amp; EG" Grid.Column="0" FontWeight="Bold"/>
-            <Button BorderBrush="Black" Background="PowderBlue" FontFamily="font/#Alef"  FontSize="18" Content="Add Parcel" Grid.Column="3" Click="AddDrone_Click" Margin="18,8,18,8">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="25,25,25,25"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
+            <Button Style="{DynamicResource Design}" BorderBrush="Black" Background="PowderBlue" FontFamily="font/#Alef"  FontSize="18" Content="Add Parcel" Grid.Column="3" Click="AddParcel_Click" Margin="18,8,18,8"/>
         </Grid>
-        <Grid Name="DownGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="2" VerticalAlignment="Stretch" Width="auto">
+        <Grid Name="Up2Grid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="1" VerticalAlignment="Stretch" Width="auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions >
+            <StackPanel Grid.Column="1" Margin="0,0,54,0">
+                <Label FontFamily="font/#Alef" FontSize="18" Content="Parcel Priorty:" FontWeight="Bold"/>
+                <ComboBox FontFamily="font/#Alef" FontSize="16" Name="PriortySelector"
+                      SelectionChanged="Selector_SelectionChanged" Height="25"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2" Margin="0,0,54,0">
+                <Label FontFamily="font/#Alef" FontSize="18" Content="From:" FontWeight="Bold"/>
+                <DatePicker Name="fromDate" SelectedDateChanged="Selector_SelectionChanged"/>
+            </StackPanel>
+            <StackPanel Grid.Column="3" Margin="0,0,54,0">
+                <Label FontFamily="font/#Alef" FontSize="18" Content="To:" FontWeight="Bold"/>
+                <DatePicker Name="toDate" SelectedDateChanged="Selector_SelectionChanged"/>
+            </StackPanel>
+        </Grid>
+        <Grid Name="DownGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="3" VerticalAlignment="Stretch" Width="auto">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -48,29 +75,23 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
             <Label Grid.Column="0"/>
-            <Button BorderBrush="Black" Margin="10,8,10,8" Background="Red" FontFamily="font/#Alef"  FontSize="18" Content="Return Back" Grid.Column="3" Click="Exit_Click">
+            <Button Style="{DynamicResource Design}" BorderBrush="Black" Margin="10,8,10,8" Background="Red" FontFamily="font/#Alef"  FontSize="18" Content="Return Back" Grid.Column="3" Click="Exit_Click"/>
+            <Button Style="{DynamicResource Design}" BorderBrush="Black" Margin="10,8,10,8" Background="Red" FontFamily="font/#Alef"  FontSize="18" Content="Change Display" Grid.Column="0" Click="ChangeViewList"/>
+            <Button Style="{DynamicResource Design}" BorderBrush="Black" Margin="15,8,15,8" Background="Red" FontFamily="font/#Alef"  FontSize="18" Content="Reset Filter" Grid.Column="1" Click="Reset_Click"/>
+            <Button BorderBrush="Black" Margin="15,8,15,8" Background="Red" FontFamily="font/#Alef"  FontSize="18" Content="Delete Parcel" Grid.Column="2" Click="DeleteParcel">
                 <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="25,25,25,25"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
-            <Button BorderBrush="Black" Margin="10,8,10,8" Background="Red" FontFamily="font/#Alef"  FontSize="18" Content="Change Display" Grid.Column="0" Click="ChangeViewList">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="25,25,25,25"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
-            <Button BorderBrush="Black" Margin="15,8,15,8" Background="Red" FontFamily="font/#Alef"  FontSize="18" Content="Reset Filter" Grid.Column="1" Click="Reset_Click">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="25,25,25,25"/>
+                    <Style TargetType="Button"  BasedOn="{StaticResource Design}">
+                        <Setter Property="IsEnabled" Value="False"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=ParcelListView, Path=SelectedItem, Converter={StaticResource deleteConverter}}" Value="True">
+                                <Setter Property="IsEnabled" Value="True"/>
+                            </DataTrigger>
+                        </Style.Triggers>
                     </Style>
                 </Button.Resources>
             </Button>
         </Grid>
-        <MediaElement Height="auto" HorizontalAlignment="Left" Source="img\parcelsGif.gif" Margin="116,0,0,0" Grid.Row="1" Width="684">
+        <MediaElement Height="auto" HorizontalAlignment="Left" Source="img\parcelsGif.gif" Margin="128,0,0,0" Grid.Row="2" Width="669">
             <MediaElement.Style>
                 <Style TargetType="MediaElement">
                     <Style.Triggers>
@@ -87,7 +108,7 @@
                 </Style>
             </MediaElement.Style>
         </MediaElement>
-        <ListView ItemsSource="{Binding}" Background="LightCyan" FontFamily="/font/#Alef" x:Name="DroneListView" Width="auto" Height="auto" MouseDoubleClick="DroneActions" Margin="0,71,597,71" Grid.RowSpan="3">
+        <ListView ItemsSource="{Binding}" Background="LightCyan" FontFamily="/font/#Alef" x:Name="ParcelListView" Width="auto" Height="auto" MouseDoubleClick="ParcelActions" Margin="0,0,597,0" Grid.Row="2">
             <ListView.Resources>
                 <Style TargetType="GridViewColumnHeader">
                     <Setter Property="Visibility" Value="Hidden"/>
@@ -108,9 +129,7 @@
                                                     <TextBlock Foreground="Gray" FontStyle="Italic" FontSize="14" Text="  item(s)" />
                                                 </StackPanel>
                                             </Expander.Header>
-                                            <Expander.Content>
-                                                <ItemsPresenter/>
-                                            </Expander.Content>
+                                            <ItemsPresenter/>
                                         </Expander>
                                     </ControlTemplate>
                                 </Setter.Value>

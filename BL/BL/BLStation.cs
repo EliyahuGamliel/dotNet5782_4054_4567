@@ -18,14 +18,14 @@ namespace BL
         /// <returns>Notice if the addition was successful</returns>
         public string AddStation(BO.Station s) {
             try {
-                CheckValidId(s.Id);
+                CheckValidId(s.Id.Value);
                 DO.Station st = new DO.Station();
-                st.Id = s.Id;
+                st.Id = s.Id.Value;
                 st.Name = s.Name;
                 st.Longitude = s.Location.Longitude.Value;
                 st.Lattitude = s.Location.Lattitude.Value;
                 CheckLegelLocation(st.Longitude, st.Lattitude);
-                st.ChargeSlots = s.ChargeSlots;
+                st.ChargeSlots = s.ChargeSlots.Value;
                 if (st.ChargeSlots < 0)
                     throw new ChargeSlotsNotLegal(st.ChargeSlots);
                 st.Active = true;
@@ -33,7 +33,7 @@ namespace BL
                 return "The addition was successful\n";
             }
             catch (DO.IdExistException) {
-                throw new BO.IdExistException(s.Id);
+                throw new BO.IdExistException(s.Id.Value);
             }
         }
 

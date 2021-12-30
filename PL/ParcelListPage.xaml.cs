@@ -14,6 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using BlApi;
+using BO;
 
 namespace PL
 {
@@ -22,44 +24,56 @@ namespace PL
     /// </summary>
     public partial class ParcelListPage : Page
     {
-        private BlApi.IBL bl = BlApi.BlFactory.GetBl();
-        private ObservableCollection<BO.ParcelList> parcelList;
+        private IBL bl = BlFactory.GetBl();
+        private ObservableCollection<ParcelList> parcelList;
         private string Group = "";
 
         public ParcelListPage()
         {
             InitializeComponent();
-            foreach (var item in Enum.GetValues(typeof(BO.Statuses)))
+            foreach (var item in Enum.GetValues(typeof(Statuses)))
                 StatusSelector.Items.Add(item);
             StatusSelector.Items.Add("All");
-            foreach (var item in Enum.GetValues(typeof(BO.WeightCategories)))
-                MaxWeightSelector.Items.Add(item);
-            MaxWeightSelector.Items.Add("All");
+            foreach (var item in Enum.GetValues(typeof(Priorities)))
+                PriortySelector.Items.Add(item);
+            PriortySelector.Items.Add("All");
+            foreach (var item in Enum.GetValues(typeof(WeightCategories)))
+                WeightSelector.Items.Add(item);
+            WeightSelector.Items.Add("All");
 
             parcelList = new ObservableCollection<BO.ParcelList>(bl.GetParcels());
             this.DataContext = parcelList;
         }
-        
+
+        private void UpdateList(object sender = null, EventArgs e = null) {
+            while (parcelList.Count != 0) {
+                ParcelList pa = parcelList.First();
+                parcelList.Remove(pa);
+            }
+            foreach (var item in bl.GetParcelByFilter(WeightSelector.SelectedItem, StatusSelector.SelectedItem, PriortySelector.SelectedItem, fromDate.SelectedDate, toDate.SelectedDate)) {
+                parcelList.Add(item);
+            }
+        }
+
         /// <summary>
         /// If the selected choice in the combo box changed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         public void Selector_SelectionChanged(object sender = null, SelectionChangedEventArgs e = null) {
-            parcelList.Clear();
-            //foreach (var item in bl.GetParcelByFilter(MaxWeightSelector.SelectedItem, StatusSelector.SelectedItem)) {
-              //  parcelList.Add(item);
-            //}
+            UpdateList();
             SaveDisplay();
         }
 
         /// <summary>
-        /// Navigates to the "DronePage" - drone add page
+        /// 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void AddDrone_Click(object sender, RoutedEventArgs e) {
-            this.NavigationService.Navigate(new ParcelPage());
+        private void AddParcel_Click(object sender, RoutedEventArgs e) {
+            ParcelPage parcelPage = new ParcelPage();
+            parcelPage.Unloaded += UpdateList;
+            this.NavigationService.Navigate(parcelPage);
         }
 
         /// <summary>
@@ -77,10 +91,11 @@ namespace PL
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Reset_Click(object sender, RoutedEventArgs e) {
-            DroneListView.ItemsSource = null;
-            DroneListView.ItemsSource = bl.GetDrones();
             StatusSelector.SelectedItem = null;
-            MaxWeightSelector.SelectedItem = null;
+            WeightSelector.SelectedItem = null;
+            PriortySelector.SelectedItem = null;
+            toDate.SelectedDate = null;
+            fromDate.SelectedDate = null;
         }
 
         /// <summary>
@@ -88,15 +103,28 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DroneActions(object sender, MouseButtonEventArgs e) {
-            if (DroneListView.SelectedItem != null) {
-                BO.ParcelList p = (BO.ParcelList)DroneListView.SelectedItem;
-                this.NavigationService.Navigate(new ParcelPage(bl.GetParcelById(p.Id)));
+        private void ParcelActions(object sender, MouseButtonEventArgs e) {
+            if (ParcelListView.SelectedItem != null) {
+                ParcelList p = (ParcelList)ParcelListView.SelectedItem;
+                ParcelPage parcelPage = new ParcelPage(bl.GetParcelById(p.Id));
+                parcelPage.Unloaded += UpdateList;
+                this.NavigationService.Navigate(parcelPage);
+            }
+        }
+
+        private void DeleteParcel(object sender, RoutedEventArgs e) {
+            try {
+                ParcelList parcel = (ParcelList)ParcelListView.SelectedItem;
+                MessageBox.Show(bl.DeleteParcel(parcel.Id));
+                parcelList.Remove(parcel);
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         private void ChangeViewList(object sender = null, RoutedEventArgs e = null) {
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(DroneListView.ItemsSource);
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ParcelListView.ItemsSource);
             view.GroupDescriptions.Clear();
             if (Group == "TargetId")
                 Group = "";
@@ -112,9 +140,9 @@ namespace PL
 
 
         private void SaveDisplay() {
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(DroneListView.ItemsSource);
-            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Status");
-            if (Group == "") {
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ParcelListView.ItemsSource);
+            PropertyGroupDescription groupDescription = new PropertyGroupDescription(Group);
+            if (Group != "") {
                 if (view.GroupDescriptions.Count != 0) {
                     view.GroupDescriptions.Clear();
                     view.GroupDescriptions.Add(groupDescription);
@@ -125,4 +153,6 @@ namespace PL
         }
 
     }
+
+
 }

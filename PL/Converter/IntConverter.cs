@@ -9,21 +9,28 @@ using System.Globalization;
 
 namespace PL
 {
-    class DoubleCheckConverter : IValueConverter
+    class IntConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             if (value is not null) {
-                double num;
-                bool error = Double.TryParse(value.ToString(), out num);
+                int num;
+                bool error = Int32.TryParse(value.ToString(), out num);
                 if (!error)
-                    return false;
-                return true;
+                    return null;
+                return num;
             }
-            return false;
+            return null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
-            throw new NotImplementedException();
+            if (value is not null) {
+                int num;
+                bool error = Int32.TryParse(value.ToString(), out num);
+                if (!error)
+                    return null;
+                return num;
+            }
+            return null;
         }
     }
 }

@@ -12,7 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 using BlApi;
+using BO;
 
 namespace PL
 {
@@ -21,21 +23,34 @@ namespace PL
     /// </summary>
     public partial class StationListPage : Page
     {
-        private BlApi.IBL bl = BlFactory.GetBl();
-        private bool isGroup;
-        public StationListPage()
-        {
+        private IBL bl = BlFactory.GetBl();
+        private ObservableCollection<StationList> stationList;
+
+        public StationListPage() {
             InitializeComponent();
-            StationListView.ItemsSource = bl.GetStations();
+            stationList = new ObservableCollection<StationList>(bl.GetStations());
+            this.DataContext = stationList;
         }
 
         /// <summary>
-        /// Navigates to the "DronePage" - drone add page
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void AddStation(object sender, RoutedEventArgs e) {
-            this.NavigationService.Navigate(new StationPage());
+            StationPage stationPage = new StationPage();
+            stationPage.Unloaded += UpdateList;
+            this.NavigationService.Navigate(stationPage);
+        }
+        
+        private void UpdateList(object sender = null, EventArgs e = null) {
+            while (stationList.Count != 0) {
+                StationList st = stationList.First();
+                stationList.Remove(st);
+            }
+            foreach (var item in bl.GetStations()) {
+                stationList.Add(item);
+            }
         }
 
         /// <summary>
@@ -54,35 +69,31 @@ namespace PL
         /// <param name="e"></param>
         private void StationActions(object sender, MouseButtonEventArgs e) {
             if (StationListView.SelectedItem != null) {
-                BO.StationList s = (BO.StationList)StationListView.SelectedItem;
-                this.NavigationService.Navigate(new StationPage(bl.GetStationById(s.Id)));
+                StationList s = (StationList)StationListView.SelectedItem;
+                StationPage stationPage = new StationPage(bl.GetStationById(s.Id));
+                stationPage.Unloaded += UpdateList;
+                this.NavigationService.Navigate(stationPage);
+            }
+        }
+
+        private void DeleteStation(object sender, RoutedEventArgs e) {
+            try {
+                StationList station = (StationList)StationListView.SelectedItem;
+                MessageBox.Show(bl.DeleteStation(station.Id));
+                stationList.Remove(station);
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         private void ChangeViewList(object sender = null, RoutedEventArgs e = null) {
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(StationListView.ItemsSource);
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(stationList);
             PropertyGroupDescription groupDescription = new PropertyGroupDescription("ChargeSlots");
-            if (view.GroupDescriptions.Count != 0) {
-                isGroup = false;
+            if (view.GroupDescriptions.Count != 0) 
                 view.GroupDescriptions.Clear();
-            }
-            else {
-                isGroup = true;
+            else
                 view.GroupDescriptions.Add(groupDescription);
-            }
-        }
-
-        private void SaveDisplay() {
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(StationListView.ItemsSource);
-            PropertyGroupDescription groupDescription = new PropertyGroupDescription("ChargeSlots");
-            if (isGroup) {
-                if (view.GroupDescriptions.Count != 0) {
-                    view.GroupDescriptions.Clear();
-                    view.GroupDescriptions.Add(groupDescription);
-                }
-                else
-                    view.GroupDescriptions.Add(groupDescription);
-            }
         }
     }
 }

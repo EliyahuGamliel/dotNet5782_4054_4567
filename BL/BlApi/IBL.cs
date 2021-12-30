@@ -180,6 +180,8 @@ namespace BlApi
         /// <param name="status">The status value of the required drones</param>
         /// <returns>Return list of drones by filter</returns>
         IEnumerable<DroneList> GetDroneByFilter(object weight, object status);
+
+        IEnumerable<ParcelList> GetParcelByFilter(object weight, object status, object priorty, object fromate, object toDate);
         #endregion
 
         #region Delete

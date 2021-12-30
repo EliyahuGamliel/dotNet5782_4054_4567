@@ -8,6 +8,17 @@
       d:DesignHeight="640" d:DesignWidth="800"
       Title="StationListPage">
 
+    <Page.Resources>
+        <local:DeleteConverter x:Key="deleteConverter"/>
+        <Style x:Key="Design" TargetType="Button">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="25,25,25,25"/>
+                </Style>
+            </Style.Resources>
+        </Style>
+    </Page.Resources>
+
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
@@ -22,13 +33,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
             <Label FontFamily="font/#Alef" FontSize="48" Content="IC &amp; EG" Grid.Column="0" FontWeight="Bold"/>
-            <Button BorderBrush="Black" Background="PowderBlue" FontFamily="font/#Alef"  FontSize="18" Content="Add Station" Grid.Column="3" Click="AddStation" Margin="18,8,18,8">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="25,25,25,25"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
+            <Button  Style="{DynamicResource Design}" BorderBrush="Black" Background="PowderBlue" FontFamily="font/#Alef"  FontSize="18" Content="Add Station" Grid.Column="3" Click="AddStation" Margin="18,8,18,8"/>
         </Grid>
         <Grid Name="DownGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="2" VerticalAlignment="Stretch" Width="auto">
             <Grid.ColumnDefinitions>
@@ -38,22 +43,22 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
             <Label Grid.Column="0"/>
-            <Button BorderBrush="Black" Margin="10,8,10,8" Background="Red" FontFamily="font/#Alef"  FontSize="18" Content="Return Back" Grid.Column="3" Click="Exit_Click">
+            <Button  Style="{DynamicResource Design}" BorderBrush="Black" Margin="10,8,10,8" Background="Red" FontFamily="font/#Alef"  FontSize="18" Content="Return Back" Grid.Column="3" Click="Exit_Click"/>
+            <Button BorderBrush="Black" Margin="15,8,15,8" Background="Red" FontFamily="font/#Alef"  FontSize="18" Content="Delete Station" Grid.Column="2" Click="DeleteStation">
                 <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="25,25,25,25"/>
+                    <Style TargetType="Button"  BasedOn="{StaticResource Design}">
+                        <Setter Property="IsEnabled" Value="False"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=StationListView, Path=SelectedItem, Converter={StaticResource deleteConverter}}" Value="True">
+                                <Setter Property="IsEnabled" Value="True"/>
+                            </DataTrigger>
+                        </Style.Triggers>
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button BorderBrush="Black" Margin="10,8,10,8" Background="Red" FontFamily="font/#Alef"  FontSize="18" Content="Change Display" Grid.Column="0" Click="ChangeViewList">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="25,25,25,25"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
+            <Button Style="{DynamicResource Design}" BorderBrush="Black" Margin="10,8,10,8" Background="Red" FontFamily="font/#Alef"  FontSize="18" Content="Change Display" Grid.Column="0" Click="ChangeViewList"/>
         </Grid>
-        <MediaElement Height="auto" HorizontalAlignment="Right" Source="img\stationsGif.gif" Margin="150,0,0,0" Grid.Row="1">
+        <MediaElement Height="auto" Source="img\stationsGif.gif" Margin="150,0,0,0" Grid.Row="1">
             <MediaElement.Style>
                 <Style TargetType="MediaElement">
                     <Style.Triggers>
@@ -70,7 +75,7 @@
                 </Style>
             </MediaElement.Style>
         </MediaElement>
-        <ListView Background="LightCyan" FontFamily="/font/#Alef" x:Name="StationListView" Width="auto" Grid.Row="1" Height="auto" MouseDoubleClick="StationActions" Margin="0,0,565,0">
+        <ListView ItemsSource="{Binding}" Background="LightCyan" FontFamily="/font/#Alef" x:Name="StationListView" Width="auto" Grid.Row="1" Height="auto" MouseDoubleClick="StationActions" Margin="0,0,565,0">
             <ListView.Resources>
                 <Style TargetType="GridViewColumnHeader">
                     <Setter Property="Visibility" Value="Hidden"/>
@@ -92,9 +97,7 @@
                                                     <TextBlock Foreground="Gray" FontStyle="Italic" FontSize="14" Text="  item(s)" />
                                                 </StackPanel>
                                             </Expander.Header>
-                                            <Expander.Content>
-                                                <ItemsPresenter/>
-                                            </Expander.Content>
+                                            <ItemsPresenter/>
                                         </Expander>
                                     </ControlTemplate>
                                 </Setter.Value>

@@ -11,6 +11,7 @@
     <Page.Resources>
         <local:BatteryConverter x:Key="batteryConverter"/>
         <local:IntCheckConverter x:Key="intCheckConverter"/>
+        <local:IntConverter x:Key="intConverter"/>
         <Style x:Key="Design" TargetType="Button">
             <Setter Property="BorderBrush" Value="Black"/>
             <Style.Resources>
@@ -28,7 +29,7 @@
         </Grid.RowDefinitions>
 
         <Image Grid.RowSpan="2" Margin="0,0,0,0" Stretch="Fill" Source="img\dronesImage.jpg"/>
-        <TextBox FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="idDrone" Text="{Binding Path=Id}" TextWrapping="Wrap" Margin="146,107,480,398">
+        <TextBox FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="idDrone" Text="{Binding Path=Id, Converter={StaticResource intConverter}}" TextWrapping="Wrap" Margin="146,107,480,398">
             <TextBox.Style>
                 <Style TargetType="TextBox">
                     <Setter Property="Background" Value="White"/>

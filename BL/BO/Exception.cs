@@ -328,4 +328,14 @@ namespace BO
             return "CanntDeleteDrone: The drone (" + Id + ") cann't delete, because it isn't available\n";
         }
     }
+
+    [Serializable]
+    public class CanntDeleteParcel : Exception
+    {
+        public int Id { get; private set; }
+        public CanntDeleteParcel(int id) { this.Id = id; }
+        public override string ToString() {
+            return "CanntDeleteParcel: The parcel (" + Id + ") cann't delete, because it is already associated\n";
+        }
+    }
 }

@@ -60,7 +60,7 @@ namespace BL
             IEnumerable<DO.Parcel> parcelslist = data.GetParcelByFilter(p => ((BO.WeightCategories)p.Weight <= d.MaxWeight) &&
                 (ReturnBattery(3, d.CLocation, GetCustomerById(p.SenderId).Location) +
                 ReturnBattery((int)p.Weight, GetCustomerById(p.SenderId).Location, GetCustomerById(p.TargetId).Location) +
-                ReturnBattery(3, GetCustomerById(p.TargetId).Location, ReturnCloseStation(data.GetStationByFilter(s => true), GetCustomerById(p.TargetId).Location).Location)
+                ReturnBattery(3, GetCustomerById(p.TargetId).Location, ReturnCloseStation(data.GetStationByFilter(s => s.Active), GetCustomerById(p.TargetId).Location).Location)
                 <= d.Battery) &&
                 p.Scheduled == null);
 

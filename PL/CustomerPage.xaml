@@ -10,10 +10,12 @@
 
     <Page.Resources>
         <local:IntCheckConverter x:Key="intCheckConverter"/>
+        <local:IntConverter x:Key="intConverter"/>
         <local:LatitudeConverter x:Key="latitudeConverter"/>
         <local:LongitudeConverter x:Key="longitudeConverter"/>
         <local:DoubleCheckConverter x:Key="doubleCheckConverter"/>
         <local:PhoneCheckConverter x:Key="phoneCheckConverter"/>
+        <local:PhoneConverter x:Key="phoneConverter"/>
         <Style x:Key="Design" TargetType="Button">
             <Setter Property="BorderBrush" Value="Black"/>
             <Style.Resources>
@@ -31,7 +33,7 @@
         </Grid.RowDefinitions>
 
         <Image Grid.RowSpan="2" Margin="0,0,0,0" Stretch="Fill" Source="img\customerImage.jpg"/>
-        <TextBox FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="idCustomer" Text="{Binding Path=Id}" TextWrapping="Wrap"  Margin="64,99,484,411">
+        <TextBox FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="idCustomer" Text="{Binding Path=Id, Converter={StaticResource intConverter}}" TextWrapping="Wrap"  Margin="64,99,484,411">
             <TextBox.Style>
                 <Style TargetType="TextBox">
                     <Setter Property="Background" Value="White"/>
@@ -55,7 +57,7 @@
                 </Style>
             </TextBox.Style>
         </TextBox>
-        <TextBox FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="phoneCustomer" Text="{Binding Path=Phone, FallbackValue='+972-5????????'}" TextWrapping="Wrap" Margin="65,252,452,258">
+        <TextBox FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="phoneCustomer" Text="{Binding Path=Phone, Converter={StaticResource phoneConverter}}" TextWrapping="Wrap" Margin="65,252,452,258">
             <TextBox.Style>
                 <Style TargetType="TextBox">
                     <Setter Property="Background" Value="Red"/>
@@ -72,7 +74,7 @@
                 <Style TargetType="TextBox">
                     <Setter Property="Background" Value="Red"/>
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding Path=Text, ElementName=longCustomer, Converter={StaticResource doubleCheckConverter}}" Value="True">
+                        <DataTrigger Binding="{Binding Path=Location.Longitude, Converter={StaticResource doubleCheckConverter}}" Value="True">
                             <Setter Property="Background" Value="White" />
                         </DataTrigger>
                         <Trigger Property="IsEnabled" Value="False">
@@ -87,7 +89,7 @@
                 <Style TargetType="TextBox">
                     <Setter Property="Background" Value="Red"/>
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding Path=Text, ElementName=latiCustomer, Converter={StaticResource doubleCheckConverter}}" Value="True">
+                        <DataTrigger Binding="{Binding Path=Location.Lattitude, Converter={StaticResource doubleCheckConverter}}" Value="True">
                             <Setter Property="Background" Value="White" />
                         </DataTrigger>
                         <Trigger Property="IsEnabled" Value="False">

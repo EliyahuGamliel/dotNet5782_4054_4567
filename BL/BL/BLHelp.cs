@@ -53,6 +53,8 @@ namespace BL
         /// <returns>Returns a station object</returns>
         private BO.Station ReturnCloseStation(IEnumerable<DO.Station> s, Location drone)
         {
+            if (s.Count() == 0)
+                throw new DroneCannotAssigan();
             DO.Station st = s.OrderBy(sta => DistanceTo(ReturnLocation(sta), drone)).First();
             return GetStationById(st.Id);
         }
@@ -146,6 +148,9 @@ namespace BL
         /// <returns>Nothing</returns>
         private double CheckDroneCannotSend(IEnumerable<DO.Station> list, DroneList dl)
         {
+            if (list.Count() == 0)
+                throw new DroneCannotSend();
+
             Location lst = new Location();
             Location locationStation = new Location();
             bool cntsn = false;

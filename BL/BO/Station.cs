@@ -10,10 +10,10 @@ namespace BO
     /// </summary>
     public class Station
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string Name { get; set; }
         public Location Location { get; set; }
-        public int ChargeSlots { get; set; }
+        public int? ChargeSlots { get; set; }
         public List<DroneCharge> DCharge { get; set; }
 
         /// <summary><returns>

@@ -16,6 +16,6 @@ namespace BO
         /// The function returns a string to print on all entity data
         /// </returns></summary>
         public override string ToString()
-        { return $"\n    Id: {Id}\n    Battery: {Math.Round(Battery, 3)}%\n"; }
+        { return $"\n    Id: {Id}\n    Battery: {Math.Round(Battery, 0)}%\n"; }
     }
 }

@@ -55,8 +55,7 @@ namespace Dal
         private void CheckExistId <T>(List<T> list, int id) {
             foreach (var item in list) {
                 int idobject = (int)(typeof(T).GetProperty("Id").GetValue(item, null));
-                bool active = (bool)(typeof(T).GetProperty("Active").GetValue(item, null));
-                if (idobject == id && active == true)
+                if (idobject == id)
                     throw new IdExistException(id);   
             }
         }

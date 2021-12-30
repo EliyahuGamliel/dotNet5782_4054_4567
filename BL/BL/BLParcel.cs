@@ -123,8 +123,29 @@ namespace BL
             return parcel;
         }
 
+        public IEnumerable<ParcelList> GetParcelByFilter(object weight, object status, object priorty, object fromDate, object toDate) {
+            IEnumerable<ParcelList> parcelLists;
+            if (fromDate is not null && toDate is not null)
+                parcelLists = ConvertToBL(data.GetParcelByFilter(p => p.Requested <= (DateTime)toDate && p.Requested >= (DateTime)fromDate));
+            else if (fromDate is not null)
+                parcelLists = ConvertToBL(data.GetParcelByFilter(p => p.Requested >= (DateTime)fromDate));
+            else if (toDate is not null)
+                parcelLists = ConvertToBL(data.GetParcelByFilter(p => p.Requested <= (DateTime)toDate));
+            else
+                parcelLists = GetParcels();
+            if (status is not null or "All")
+                parcelLists = parcelLists.Where(p => p.Status == (Statuses)status);
+            if (weight is not null or "All")
+                parcelLists = parcelLists.Where(p => p.Weight == (BO.WeightCategories)weight);
+            if (priorty is not null or "All")
+                parcelLists = parcelLists.Where(p => p.Priority == (BO.Priorities)priorty);
+            return parcelLists;
+        }
+
         public string DeleteParcel(int id) {
             DO.Parcel p = data.GetParcelById(id);
+            if (p.Scheduled != null)
+                throw new CanntDeleteParcel(p.Id);
             p.Active = false;
             data.DeleteParcel(p);
             return "The delete was successful\n";
