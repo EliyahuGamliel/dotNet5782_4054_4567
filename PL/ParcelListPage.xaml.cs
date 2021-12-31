@@ -28,8 +28,7 @@ namespace PL
         private ObservableCollection<ParcelList> parcelList;
         private string Group = "";
 
-        public ParcelListPage()
-        {
+        public ParcelListPage() {
             InitializeComponent();
             foreach (var item in Enum.GetValues(typeof(Statuses)))
                 StatusSelector.Items.Add(item);
@@ -50,7 +49,8 @@ namespace PL
                 ParcelList pa = parcelList.First();
                 parcelList.Remove(pa);
             }
-            foreach (var item in bl.GetParcelByFilter(WeightSelector.SelectedItem, StatusSelector.SelectedItem, PriortySelector.SelectedItem, fromDate.SelectedDate, toDate.SelectedDate)) {
+            foreach (var item in bl.GetParcelByFilter(WeightSelector.SelectedItem, StatusSelector.SelectedItem,
+                                            PriortySelector.SelectedItem, fromDate.SelectedDate, toDate.SelectedDate)) {
                 parcelList.Add(item);
             }
         }
@@ -126,13 +126,19 @@ namespace PL
         private void ChangeViewList(object sender = null, RoutedEventArgs e = null) {
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ParcelListView.ItemsSource);
             view.GroupDescriptions.Clear();
-            if (Group == "TargetId")
+            if (Group == "TargetId") {
                 Group = "";
+                textGroup.Content = "";
+            }
             else {
-                if (Group == "SenderId")
+                if (Group == "SenderId") {
                     Group = "TargetId";
-                else
+                    textGroup.Content = "Grouping By TargetID:";
+                }
+                else {
                     Group = "SenderId";
+                    textGroup.Content = "Grouping By SenderID:";
+                }
                 PropertyGroupDescription groupDescription = new PropertyGroupDescription(Group);
                 view.GroupDescriptions.Add(groupDescription);
             }
@@ -151,8 +157,5 @@ namespace PL
                     view.GroupDescriptions.Add(groupDescription);
             }
         }
-
     }
-
-
 }

@@ -133,11 +133,11 @@ namespace BL
                 parcelLists = ConvertToBL(data.GetParcelByFilter(p => p.Requested <= (DateTime)toDate));
             else
                 parcelLists = GetParcels();
-            if (status is not null or "All")
+            if (status is not null and not "All")
                 parcelLists = parcelLists.Where(p => p.Status == (Statuses)status);
-            if (weight is not null or "All")
+            if (weight is not null and not "All")
                 parcelLists = parcelLists.Where(p => p.Weight == (BO.WeightCategories)weight);
-            if (priorty is not null or "All")
+            if (priorty is not null and not "All")
                 parcelLists = parcelLists.Where(p => p.Priority == (BO.Priorities)priorty);
             return parcelLists;
         }

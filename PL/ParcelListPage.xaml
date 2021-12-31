@@ -53,6 +53,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
+            <Label FontFamily="font/#Alef" Name="textGroup" FontSize="16" Content="" Grid.Column="0" FontWeight="Bold" Margin="0,22,0,0"/>
             <StackPanel Grid.Column="1" Margin="0,0,54,0">
                 <Label FontFamily="font/#Alef" FontSize="18" Content="Parcel Priorty:" FontWeight="Bold"/>
                 <ComboBox FontFamily="font/#Alef" FontSize="16" Name="PriortySelector"
@@ -60,11 +61,23 @@
             </StackPanel>
             <StackPanel Grid.Column="2" Margin="0,0,54,0">
                 <Label FontFamily="font/#Alef" FontSize="18" Content="From:" FontWeight="Bold"/>
-                <DatePicker Name="fromDate" SelectedDateChanged="Selector_SelectionChanged"/>
+                <DatePicker DisplayDateStart="" Name="fromDate" SelectedDateChanged="Selector_SelectionChanged">
+                    <DatePicker.Style>
+                        <Style TargetType="DatePicker">
+                            <Setter Property="DisplayDateEnd" Value="{Binding Path=SelectedDate, ElementName=toDate}"/>
+                        </Style>
+                    </DatePicker.Style>
+                </DatePicker>
             </StackPanel>
             <StackPanel Grid.Column="3" Margin="0,0,54,0">
                 <Label FontFamily="font/#Alef" FontSize="18" Content="To:" FontWeight="Bold"/>
-                <DatePicker Name="toDate" SelectedDateChanged="Selector_SelectionChanged"/>
+                <DatePicker Name="toDate" SelectedDateChanged="Selector_SelectionChanged">
+                    <DatePicker.Style>
+                        <Style TargetType="DatePicker">
+                            <Setter Property="DisplayDateStart" Value="{Binding Path=SelectedDate, ElementName=fromDate}"/>
+                        </Style>
+                    </DatePicker.Style>
+                </DatePicker>
             </StackPanel>
         </Grid>
         <Grid Name="DownGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="3" VerticalAlignment="Stretch" Width="auto">
@@ -108,7 +121,7 @@
                 </Style>
             </MediaElement.Style>
         </MediaElement>
-        <ListView ItemsSource="{Binding}" Background="LightCyan" FontFamily="/font/#Alef" x:Name="ParcelListView" Width="auto" Height="auto" MouseDoubleClick="ParcelActions" Margin="0,0,597,0" Grid.Row="2">
+        <ListView ItemsSource="{Binding}" Background="LightCyan" FontFamily="/font/#Alef" x:Name="ParcelListView" Width="auto" Height="auto" MouseDoubleClick="ParcelActions" Margin="0,0,567,0" Grid.Row="2">
             <ListView.Resources>
                 <Style TargetType="GridViewColumnHeader">
                     <Setter Property="Visibility" Value="Hidden"/>
