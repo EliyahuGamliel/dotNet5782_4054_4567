@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BO;
+using BlApi;
 
 namespace PL
 {
@@ -20,21 +22,30 @@ namespace PL
     /// </summary>
     public partial class ParcelPage : Page
     {
-        private BO.Parcel pa;
-        private BlApi.IBL bl = BlApi.BlFactory.GetBl();
+        private Parcel pa;
+        private IBL bl = BlFactory.GetBl();
 
-        public ParcelPage() {
+        public ParcelPage(Parcel parcel = null) {
             InitializeComponent();
-        }
+            if (parcel == null) {
+                pa = new Parcel();
 
-        public ParcelPage(BO.Parcel parcel) {
-            InitializeComponent();
+                action1.Content = "Add Parcel";
+                action1.Click += new RoutedEventHandler(Add_Click);
+            }
+            else {
+                pa = parcel;
+
+                action1.Content = "Update Parcel";
+                action1.Click += new RoutedEventHandler(Update_Click);
+            }
             targetIdParcel.ItemsSource = bl.GetCustomers();
             senderIdParcel.ItemsSource = bl.GetCustomers();
             weightParcel.ItemsSource = Enum.GetValues(typeof(BO.WeightCategories));
             priorityParcel.ItemsSource = Enum.GetValues(typeof(BO.Priorities));
             pa = parcel;
-            InitializeData();
+            //InitializeData();
+            this.DataContext = pa;
         }
 
         /// <summary>
@@ -42,16 +53,29 @@ namespace PL
         /// </summary>
         private void InitializeData() {
             pa = bl.GetParcelById(pa.Id);
-            this.DataContext = pa;
+            
 
         }
 
-        /// <summary>
-        /// If the update button has been pressed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void Update_Click(object sender, RoutedEventArgs e) {
+            MessageBox.Show(bl.UpdateParcel(pa.Id, pa.Priority));
+        }
+
+        private void Add_Click(object sender, RoutedEventArgs e) {
+            try {
+                MessageBox.Show(bl.AddParcel(pa, pa.Sender.Id, pa.Target.Id));
+                this.NavigationService.GoBack();
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void ParcelInDrone(object sender, RoutedEventArgs e) {
+
+        }
+
+        private void DroneInParcel(object sender, RoutedEventArgs e) {
 
         }
 
@@ -62,6 +86,10 @@ namespace PL
         /// <param name="e"></param>
         private void Exit_Click(object sender, RoutedEventArgs e) {
             this.NavigationService.GoBack();
+        }
+
+        private void DroneInParcel(object sender, MouseEventArgs e) {
+
         }
     }
 }

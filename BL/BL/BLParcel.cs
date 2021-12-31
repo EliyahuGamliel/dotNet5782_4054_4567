@@ -41,6 +41,13 @@ namespace BL
             }
         }
 
+        public string UpdateParcel(int id, BO.Priorities priorty) {
+            DO.Parcel pa = data.GetParcelById(id);
+            pa.Priority = (DO.Priorities)(int)priorty;
+            data.UpdateParcel(pa);
+            return "The update was successful\n";
+        }
+
         /// <summary>
         /// If all is fine, return a parcel object by id, else throw exception
         /// </summary>

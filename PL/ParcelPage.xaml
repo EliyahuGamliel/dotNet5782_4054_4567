@@ -8,6 +8,17 @@
       d:DesignHeight="640" d:DesignWidth="800"
       Title="ParcelPage">
 
+    <Page.Resources>
+        <Style x:Key="Design" TargetType="Button">
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="25,25,25,25"/>
+                </Style>
+            </Style.Resources>
+        </Style>
+    </Page.Resources>
+
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="400*"/>
@@ -32,65 +43,8 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button BorderBrush="Black" Margin="10,8,10,8" Background="Red" FontFamily="font/#Alef" FontWeight="Bold"  FontSize="18" Content="Return Back" Click="Exit_Click">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="25,25,25,25"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
-            <Button Name="action1" Background="PowderBlue" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" Grid.Column="1" FontSize="18" Content="">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="25,25,25,25"/>
-                        <Setter Property="Margin" Value="10,8,10,8"/>
-                    </Style>
-                    <Style TargetType="Button">
-                        <Setter Property="IsEnabled" Value="True" />
-                        <Style.Triggers>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Path=Content, ElementName=action1}" Value="Add Drone" />
-                                    <Condition Binding="{Binding Path=Background, ElementName=idDrone}" Value="Red" />
-                                </MultiDataTrigger.Conditions>
-                                <Setter Property="IsEnabled" Value="False" />
-                            </MultiDataTrigger>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Path=Content, ElementName=action1}" Value="Add Drone" />
-                                    <Condition Binding="{Binding Path=Background, ElementName=modelDrone}" Value="Red" />
-                                </MultiDataTrigger.Conditions>
-                                <Setter Property="IsEnabled" Value="False" />
-                            </MultiDataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Resources>
-            </Button>
-            <Button Name="action2" Background="PowderBlue" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" Grid.Column="2" FontSize="18" Content="">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="25,25,25,25"/>
-                        <Setter Property="Margin" Value="10,8,10,8"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
-            <Button Background="PowderBlue" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" FontSize="18" Name="updateDrone" Content="Update Drone"  Grid.Column="3" Click="Update_Click">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="25,25,25,25"/>
-                        <Setter Property="Margin" Value="10,8,10,8"/>
-                    </Style>
-                    <Style TargetType="Button">
-                        <Setter Property="IsEnabled" Value="True" />
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=Background, ElementName=modelDrone}" Value="Red">
-                                <Setter Property="IsEnabled" Value="False" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-
-                </Button.Resources>
-            </Button>
+            <Button Style="{DynamicResource Design}" BorderBrush="Black" Margin="10,8,10,8" Background="Red" FontFamily="font/#Alef" FontWeight="Bold"  FontSize="18" Content="Return Back" Click="Exit_Click"/>
+            <Button Style="{DynamicResource Design}" Background="PowderBlue"  Margin="10,8,10,8" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" FontSize="18" Name="action1" Content="" Grid.Column="3"/>
         </Grid>
 
         <!--Display Page of Parcel Addition (partial)-->
@@ -107,7 +61,7 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <ComboBox Name="targetIdParcel" SelectedIndex="0" FontSize="16" HorizontalAlignment="Left" Grid.Row="0"  FontFamily="/font/#Fuzzy Bubbles" Width="252" Margin="408,88,0,399">
+            <ComboBox Name="targetIdParcel" SelectedIndex="0" FontSize="16" HorizontalAlignment="Left" Grid.Row="0"  FontFamily="/font/#Fuzzy Bubbles" Width="252" Margin="410,66,0,390">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock>
