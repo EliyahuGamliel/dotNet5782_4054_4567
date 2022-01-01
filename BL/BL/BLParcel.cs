@@ -24,7 +24,7 @@ namespace BL
                 CheckLegelChoice((int)p.Weight);
                 CheckLegelChoice((int)p.Priority);
                 DO.Parcel pa = new DO.Parcel();
-
+                pa.Active = true;
                 pa.SenderId = SenderId;
                 pa.TargetId = TargetId;
                 pa.Weight = (DO.WeightCategories)(int)p.Weight;
@@ -34,7 +34,7 @@ namespace BL
                 return $"The number of parcel: {Id - 1}\n";
             }
             catch (DO.IdExistException) {
-                throw new BO.IdExistException(p.Id);
+                throw new BO.IdExistException(p.Id.Value );
             }
             catch (DO.IdNotExistException exp) {
                 throw new BO.IdNotExistException(exp.id);
@@ -99,7 +99,7 @@ namespace BL
         /// </summary>
         /// <returns>Returns the list of parcels</returns>
         public IEnumerable<ParcelList> GetParcels() {
-            return ConvertToBL(data.GetParcelByFilter(pa => true));
+            return ConvertToBL(data.GetParcelByFilter(pa => pa.Active));
         }
 
         /// <summary>
@@ -133,11 +133,11 @@ namespace BL
         public IEnumerable<ParcelList> GetParcelByFilter(object weight, object status, object priorty, object fromDate, object toDate) {
             IEnumerable<ParcelList> parcelLists;
             if (fromDate is not null && toDate is not null)
-                parcelLists = ConvertToBL(data.GetParcelByFilter(p => p.Requested <= (DateTime)toDate && p.Requested >= (DateTime)fromDate));
+                parcelLists = ConvertToBL(data.GetParcelByFilter(p => p.Requested <= (DateTime)toDate && p.Requested >= (DateTime)fromDate && p.Active));
             else if (fromDate is not null)
-                parcelLists = ConvertToBL(data.GetParcelByFilter(p => p.Requested >= (DateTime)fromDate));
+                parcelLists = ConvertToBL(data.GetParcelByFilter(p => p.Requested >= (DateTime)fromDate && p.Active));
             else if (toDate is not null)
-                parcelLists = ConvertToBL(data.GetParcelByFilter(p => p.Requested <= (DateTime)toDate));
+                parcelLists = ConvertToBL(data.GetParcelByFilter(p => p.Requested <= (DateTime)toDate && p.Active));
             else
                 parcelLists = GetParcels();
             if (status is not null and not "All")

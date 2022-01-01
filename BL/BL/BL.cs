@@ -57,7 +57,7 @@ namespace BL
             int index = dronesList.IndexOf(d);
 
             //Removed all the parcels that cann't assign to the Drone
-            IEnumerable<DO.Parcel> parcelslist = data.GetParcelByFilter(p => ((BO.WeightCategories)p.Weight <= d.MaxWeight) &&
+            IEnumerable<DO.Parcel> parcelslist = data.GetParcelByFilter(p => p.Active && ((BO.WeightCategories)p.Weight <= d.MaxWeight) &&
                 (ReturnBattery(3, d.CLocation, GetCustomerById(p.SenderId).Location) +
                 ReturnBattery((int)p.Weight, GetCustomerById(p.SenderId).Location, GetCustomerById(p.TargetId).Location) +
                 ReturnBattery(3, GetCustomerById(p.TargetId).Location, ReturnCloseStation(data.GetStationByFilter(s => s.Active), GetCustomerById(p.TargetId).Location).Location)

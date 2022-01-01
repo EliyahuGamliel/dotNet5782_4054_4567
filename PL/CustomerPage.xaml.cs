@@ -96,7 +96,7 @@ namespace PL
 
         private void OpenParcel(object sender, MouseButtonEventArgs e) {
             if ((sender as ListView).SelectedItem != null) {
-                BO.ParcelInCustomer p = (BO.ParcelInCustomer)(sender as ListView).SelectedItem;
+                ParcelInCustomer p = (ParcelInCustomer)(sender as ListView).SelectedItem;
                 this.NavigationService.Navigate(new ParcelPage(bl.GetParcelById(p.Id)));
             }
         }

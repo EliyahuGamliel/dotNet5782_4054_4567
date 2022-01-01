@@ -27,43 +27,44 @@ namespace PL
 
         public ParcelPage(Parcel parcel = null) {
             InitializeComponent();
+
+            targetIdParcel.ItemsSource = bl.GetCustomers();
+            senderIdParcel.ItemsSource = bl.GetCustomers();
+            weightParcel.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            priorityParcel.ItemsSource = Enum.GetValues(typeof(Priorities));
+
             if (parcel == null) {
                 pa = new Parcel();
-
+                pa.Requested = DateTime.Now;
                 action1.Content = "Add Parcel";
                 action1.Click += new RoutedEventHandler(Add_Click);
             }
             else {
                 pa = parcel;
-
+                weightParcel.IsEnabled = false;
                 action1.Content = "Update Parcel";
                 action1.Click += new RoutedEventHandler(Update_Click);
             }
-            targetIdParcel.ItemsSource = bl.GetCustomers();
-            senderIdParcel.ItemsSource = bl.GetCustomers();
-            weightParcel.ItemsSource = Enum.GetValues(typeof(BO.WeightCategories));
-            priorityParcel.ItemsSource = Enum.GetValues(typeof(BO.Priorities));
-            pa = parcel;
-            //InitializeData();
             this.DataContext = pa;
         }
 
         /// <summary>
         /// Initialise all the data and some of the graphics
         /// </summary>
-        private void InitializeData() {
-            pa = bl.GetParcelById(pa.Id);
-            
-
+        private void UpdateParcel(object sender, RoutedEventArgs e) {
+            pa = bl.GetParcelById(pa.Id.Value );
+            this.DataContext = pa;
         }
 
         private void Update_Click(object sender, RoutedEventArgs e) {
-            MessageBox.Show(bl.UpdateParcel(pa.Id, pa.Priority));
+            MessageBox.Show(bl.UpdateParcel(pa.Id.Value , pa.Priority));
         }
 
         private void Add_Click(object sender, RoutedEventArgs e) {
             try {
-                MessageBox.Show(bl.AddParcel(pa, pa.Sender.Id, pa.Target.Id));
+                CustomerList targetC = (CustomerList)targetIdParcel.SelectedItem;
+                CustomerList senderC = (CustomerList)senderIdParcel.SelectedItem;
+                MessageBox.Show(bl.AddParcel(pa, senderC.Id, targetC.Id));
                 this.NavigationService.GoBack();
             }
             catch (Exception ex) {
@@ -71,12 +72,22 @@ namespace PL
             }
         }
 
-        private void ParcelInDrone(object sender, RoutedEventArgs e) {
+        private void TargetInParcel(object sender, RoutedEventArgs e) {
+            CustomerPage customerPage = new CustomerPage(bl.GetCustomerById(pa.Target.Id));
+            customerPage.Unloaded += UpdateParcel;
+            this.NavigationService.Navigate(customerPage);
+        }
 
+        private void SenderInParcel(object sender, RoutedEventArgs e) {
+            CustomerPage customerPage = new CustomerPage(bl.GetCustomerById(pa.Sender.Id));
+            customerPage.Unloaded += UpdateParcel;
+            this.NavigationService.Navigate(customerPage);
         }
 
         private void DroneInParcel(object sender, RoutedEventArgs e) {
-
+            DronePage dronePage = new DronePage(bl.GetDroneById(pa.Drone.Id));
+            dronePage.Unloaded += UpdateParcel;
+            this.NavigationService.Navigate(dronePage);
         }
 
         /// <summary>
@@ -86,10 +97,6 @@ namespace PL
         /// <param name="e"></param>
         private void Exit_Click(object sender, RoutedEventArgs e) {
             this.NavigationService.GoBack();
-        }
-
-        private void DroneInParcel(object sender, MouseEventArgs e) {
-
         }
     }
 }

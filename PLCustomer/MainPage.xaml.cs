@@ -22,23 +22,22 @@ namespace PLCustomer
     /// </summary>
     public partial class MainPage : Page
     {
-        private IBL bl;
+        private IBL bl = BlFactory.GetBl();
 
         public MainPage() {
             //Set the value of "CurrentPageBonus" to be "MainPage" to allow the window to close - Bonus
             InitializeComponent();
-            bl = BlApi.BlFactory.GetBl();
         }
 
         private void SignUp(object sender, RoutedEventArgs e) {
-            this.NavigationService.Navigate(new CustomerPage(this));
+            this.NavigationService.Navigate(new CustomerPage());
         }
 
         private void SignIn(object sender, RoutedEventArgs e) {
             int iD;
             Int32.TryParse(Username.Text, out iD);
             try {
-                this.NavigationService.Navigate(new ClientMenu(bl.GetCustomerById(iD), this));
+                this.NavigationService.Navigate(new CustomerPage(bl.GetCustomerById(iD)));
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);

@@ -47,8 +47,6 @@ namespace PL
             if (drone == null) {
                 DroneAddGrid.Visibility = Visibility.Visible;
                 action2.Visibility = Visibility.Hidden;
-                updateDrone.Visibility = Visibility.Hidden;
-                parcelInDrone.Visibility = Visibility.Hidden;
 
                 action1.Content = "Add Drone";
                 action1.Click += new RoutedEventHandler(Add_Click);
