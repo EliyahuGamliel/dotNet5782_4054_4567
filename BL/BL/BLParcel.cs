@@ -31,7 +31,7 @@ namespace BL
                 pa.Priority = (DO.Priorities)(int)p.Priority;
                 pa.Requested = DateTime.Now;
                 int Id = data.AddParcel(pa);
-                return $"The number of parcel: {Id - 1}\n";
+                return $"The number of parcel: {Id}\n";
             }
             catch (DO.IdExistException) {
                 throw new BO.IdExistException(p.Id.Value );

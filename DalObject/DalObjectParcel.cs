@@ -21,7 +21,7 @@ namespace Dal
             p.Id = DataSource.Config.NumberID;
             DataSource.Parcels.Add(p);
             DataSource.Config.NumberID += 1;
-            return DataSource.Config.NumberID;
+            return DataSource.Config.NumberID - 1;
         }
 
         /// <summary>

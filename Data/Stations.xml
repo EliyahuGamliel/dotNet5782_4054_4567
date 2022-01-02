@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfStation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Station>
+    <Id>12</Id>
+    <Name>123</Name>
+    <Longitude>12</Longitude>
+    <Lattitude>23</Lattitude>
+    <ChargeSlots>23</ChargeSlots>
+    <Active>true</Active>
+  </Station>
+</ArrayOfStation>

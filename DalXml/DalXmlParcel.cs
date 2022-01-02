@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DO;
 using DalApi;
+using System.Xml.Linq;
 
 namespace Dal
 {
@@ -15,7 +16,11 @@ namespace Dal
             ////////////////////////////////////////check for same id error
             l.Add(p);
             Write<Parcel>(l);
-            return 1;
+            XElement configRoot = XElement.Load(@"xml\config.xml");
+            int numberID = Int32.Parse(configRoot.Element("NumberID").Value);
+            configRoot.Element("NumberID").SetValue(numberID + 1);
+            configRoot.Save(@"xml\config.xml");
+            return numberID;
         }
 
         public void UpdateParcel(Parcel p) {
