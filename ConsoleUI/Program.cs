@@ -1,5 +1,7 @@
 using System;
-
+using Dal;
+using DalApi;
+using DO;
 namespace ConsoleUI
 {
     class Program
@@ -129,69 +131,66 @@ namespace ConsoleUI
             {
                 //For adding a station
                 case 1:
-                    int name1;
-                    int chargeslots;
-                    Console.WriteLine("Enter Id: ");
-                    Int32.TryParse(Console.ReadLine(), out id);
-                    Console.WriteLine("Enter Name: ");
-                    Int32.TryParse(Console.ReadLine(), out name1);
-                    Console.WriteLine("Enter Longitude: ");
-                    Double.TryParse(Console.ReadLine(), out longitude);
-                    Console.WriteLine("Enter Latitude: ");
-                    Double.TryParse(Console.ReadLine(), out latitude);
+
+                    Station s = new Station();
+                    Console.WriteLine("Enter the longitude of the station");
+                    s.Longitude = GetDouble();
+                    Console.WriteLine("Enter the lattitude of the station");
+                    s.Lattitude = GetDouble();
+                    Console.WriteLine("Enter the Station's Name: ");
+                    s.Name = Console.ReadLine();
+                    Console.WriteLine("Enter Station Id: ");
+                    s.Id = GetInt();
                     Console.WriteLine("Enter ChargeSlots: ");
-                    Int32.TryParse(Console.ReadLine(), out chargeslots);
-                    data.AddStation(id, name1, longitude, latitude, chargeslots);
+                    s.ChargeSlots = GetInt();
+
+                    data.AddStation(s);
                     break;
                 
                 //For adding a drone
                 case 2:
-                    int maxw, ds;
-                    double battery;
-                    Console.WriteLine("Enter Id: ");
-                    Int32.TryParse(Console.ReadLine(), out id);
-                    Console.WriteLine("Enter model: ");
-                    string model = Console.ReadLine();
-                    Console.WriteLine("Enter the number of maxWeight: \n0) Light\n1) Medium\n2) Heavy");
-                    Int32.TryParse(Console.ReadLine(), out maxw);
-                    Console.WriteLine("Enter the number of status: \n0) Available\n1) Maintenance\n2) Delivery");
-                    Int32.TryParse(Console.ReadLine(), out ds);
-                    Console.WriteLine("Enter battery: ");
-                    Double.TryParse(Console.ReadLine(), out battery);
-                    data.AddDrone(id, model, maxw, ds, battery);
+
+                    Drone d = new Drone();
+                    Console.WriteLine("Enter drone's Id: ");
+                    d.Id = GetInt();
+                    Console.WriteLine("Enter the drone's model: ");
+                    d.Model = Console.ReadLine();
+                    Console.WriteLine("Enter the max weight of the drone (1\\2\\3)");
+                    d.MaxWeight = (WeightCategories)GetInt();
+                    data.AddDrone(d);
                     break;
 
                 //For adding a customer
                 case 3:
-                    Console.WriteLine("Enter the id: ");
-                    Int32.TryParse(Console.ReadLine(), out id);
-                    Console.WriteLine("Enter the name: ");
-                    name = Console.ReadLine();
-                    Console.WriteLine("Enter the phone: ");
-                    string phone = Console.ReadLine();
-                    Console.WriteLine("Enter the longitude: ");
-                    Double.TryParse(Console.ReadLine(), out longitude);
-                    Console.WriteLine("Enter the lattitude: ");
-                    Double.TryParse(Console.ReadLine(), out latitude);
-                    data.AddCustomer(id, name, phone, longitude, latitude);
+                    Customer c = new Customer();
+                    Console.WriteLine("Enter the longitude of the customer");
+                    c.Longitude = GetDouble();
+                    Console.WriteLine("Enter the lattitude of the customer");
+                    c.Lattitude = GetDouble();
+                    Console.WriteLine("Enter the customer's Name: ");
+                    c.Name = Console.ReadLine();
+                    Console.WriteLine("Enter customer's Id: ");
+                    c.Id = GetInt();
+                    Console.WriteLine("Enter customer's phone number: ");
+                    c.Phone = Console.ReadLine();
+                    data.AddCustomer(c);
                     break;
 
                 //For adding a parcel
                 case 4:
-                    int senderId, targetId, wh, pr, droneId;
-                    Console.WriteLine("Enter Id: ");
-                    Int32.TryParse(Console.ReadLine(), out id);
-                    Console.WriteLine("Enter senderId: ");
-                    Int32.TryParse(Console.ReadLine(), out senderId);
-                    Console.WriteLine("Enter targetId: ");
-                    Int32.TryParse(Console.ReadLine(), out targetId);
-                    Console.WriteLine("Enter the number of weight: \n0) Light\n1) Medium\n2) Heavy");
-                    Int32.TryParse(Console.ReadLine(), out wh);
-                    Console.WriteLine("Enter the number of priority: \n0) Normal\n1) Fast\n2) Emergency");
-                    Int32.TryParse(Console.ReadLine(), out pr);
-                    Console.WriteLine("Enter droneId: ");
-                    Int32.TryParse(Console.ReadLine(), out droneId);
-                    data.AddParcel(id, senderId, targetId, wh, pr, droneId);
+                    Parcel p = new Parcel();
+                    Console.WriteLine("Enter parcel's Id: ");
+                    p.Id = GetInt();
+                    Console.WriteLine("Enter the drone Id for the parcel");
+                    p.DroneId = GetInt();
+                    Console.WriteLine("Enter the target Id for the parcel");
+                    p.TargetId = GetInt();
+                    Console.WriteLine("Enter the sender Id for the parcel");
+                    p.SenderId = GetInt();
+                    Console.WriteLine("Enter the max weight of the drone (1\\2\\3)");
+                    p.Weight = (WeightCategories)GetInt();
+                    data.AddParcel(p);
+
                     break;
             }
         }
@@ -212,21 +211,21 @@ namespace ConsoleUI
                     Int32.TryParse(Console.ReadLine(), out id);
                     Console.WriteLine("Enter Id of Drone: ");
                     Int32.TryParse(Console.ReadLine(), out idDrone);
-                    data.AssignDroneParcel(idDrone, idDrone);
+                    //data.AssignDroneParcel(idDrone, idDrone);
                     break;
                 
                 //For collection of a parcel by the drone
                 case 2:
                     Console.WriteLine("Enter Id of Parcel: ");
                     Int32.TryParse(Console.ReadLine(), out id);
-                    data.PickUpDroneParcel(id);
+                    //data.PickUpDroneParcel(id);
                     break;
 
                 //For delivering a parcel to the customer
                 case 3:
                     Console.WriteLine("Enter Id of Parcel: ");
                     Int32.TryParse(Console.ReadLine(), out id);
-                    data.DeliverParcelCustomer(id);
+                    //data.DeliverParcelCustomer(id);
                     break;
 
                 //For sending a drone for charging at a base station
@@ -236,14 +235,14 @@ namespace ConsoleUI
                     Int32.TryParse(Console.ReadLine(), out id);
                     Console.WriteLine("Enter Id of Station: ");
                     Int32.TryParse(Console.ReadLine(), out idStation);
-                    data.SendDrone(id, idStation);
+                    //data.SendDrone(id, idStation);
                     break;
                 
                 //For releasing a drone from charging at a base station
                 case 5:
                     Console.WriteLine("Enter Id of Drone: ");
                     Int32.TryParse(Console.ReadLine(), out id);
-                    data.ReleasDrone(id);
+                    //data.ReleasDrone(id);
                     break;
             }
         }
@@ -329,6 +328,34 @@ namespace ConsoleUI
                     Console.WriteLine($"The distance from the station is: {data.DistancePrint(lat, lon, 's', ID)}\n");
                     break;
             }
+        }
+
+        /// <summary>
+        /// keep getting numbers till it gets a legal one
+        /// </summary>
+        /// <returns> a legal int </returns>
+        private static int GetInt() {
+            int num;
+            bool error = Int32.TryParse(Console.ReadLine(), out num);
+            while (!error) {
+                Console.WriteLine("you didnt enter an int, please try again");
+                error = Int32.TryParse(Console.ReadLine(), out num);
+            }
+            return num;
+        }
+
+        /// <summary>
+        /// keep getting numbers till it gets a legal one
+        /// </summary>
+        /// <returns>a legal double</returns>
+        private static double GetDouble() {
+            double num;
+            bool error = Double.TryParse(Console.ReadLine(), out num);
+            while (!error) {
+                Console.WriteLine("You didnt enter a double, please try again");
+                error = Double.TryParse(Console.ReadLine(), out num);
+            }
+            return num;
         }
     }
 }

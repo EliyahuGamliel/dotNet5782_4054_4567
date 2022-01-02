@@ -28,7 +28,9 @@ namespace Dal
         }
 
         public void UpdateCustomer(Customer c) {
-            ;
+            
+
+
         }
 
         public void DeleteCustomer(int customerID) {
