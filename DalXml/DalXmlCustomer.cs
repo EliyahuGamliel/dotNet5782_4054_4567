@@ -25,16 +25,21 @@ namespace Dal
             Write<Customer>(l);
 
         }
-        public void DeleteCustomer(Customer customer) {
-            throw new NotImplementedException();
+        public void DeleteCustomer(Customer c) {
+            List<Customer> l = Read<Customer>();
+            l[Update<Customer>(l, c)] = c;
+            Write<Customer>(l);
         }
 
         public Customer GetCustomerById(int Id) {
-            throw new NotImplementedException();
+            List<Customer> l = Read<Customer> ();
+            return l.Find(l => l.Id == Id);
+            
         }
 
         public IEnumerable<Customer> GetCustomerByFilter(Predicate<Customer> cutomerList) {
-            throw new NotImplementedException();
+            List<Customer> l = Read<Customer>();
+            return l.FindAll(cutomerList);
         }
     }
 }

@@ -24,16 +24,20 @@ namespace Dal
             Write<Parcel>(l);
         }
 
-        public void DeleteParcel(Parcel parcel) {
-            throw new NotImplementedException();
+        public void DeleteParcel(Parcel p) {
+            List<Parcel> l = Read<Parcel>();
+            l[Update<Parcel>(l, p)] = p;
+            Write<Parcel>(l);
         }
 
         public Parcel GetParcelById(int Id) {
-            throw new NotImplementedException();
+            List<Parcel> l = Read<Parcel>();
+            return l.Find(l => l.Id == Id);
         }
 
         public IEnumerable<Parcel> GetParcelByFilter(Predicate<Parcel> parcelList) {
-            throw new NotImplementedException();
+            List<Parcel> l = Read<Parcel>();
+            return l.FindAll(parcelList);
         }
     }
 }

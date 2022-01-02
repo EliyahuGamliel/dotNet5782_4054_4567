@@ -24,16 +24,20 @@ namespace Dal
             Write<Station>(l);
         }
 
-        public void DeleteStation(Station station) {
-            throw new NotImplementedException();
+        public void DeleteStation(Station s) {
+            List<Station> l = Read<Station>();
+            l[Update<Station>(l, s)] = s;
+            Write<Station>(l);
         }
 
         public Station GetStationById(int Id) {
-            throw new NotImplementedException();
+            List<Station> l = Read<Station>();
+            return l.Find(l => l.Id == Id);
         }
 
         public IEnumerable<Station> GetStationByFilter(Predicate<Station> stationList) {
-            throw new NotImplementedException();
+            List<Station> l = Read<Station>();
+            return l.FindAll(stationList);
         }
     }
 }

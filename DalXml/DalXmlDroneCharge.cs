@@ -17,16 +17,20 @@ namespace Dal
             Write<DroneCharge>(l);
         }
 
-        public void DeleteDroneCharge(DroneCharge droneCharge) {
-            throw new NotImplementedException();
+        public void DeleteDroneCharge(DroneCharge dc) {
+            List<DroneCharge> l = Read<DroneCharge>();
+            l[Update<DroneCharge>(l, dc)] = dc;
+            Write<DroneCharge>(l);
         }
 
         public DroneCharge GetDroneChargeById(int Id) {
-            throw new NotImplementedException();
+            List<DroneCharge> l = Read<DroneCharge>();
+            return l.Find(l => l.DroneId == Id);
         }
 
         public IEnumerable<DroneCharge> GetDroneChargeByFilter(Predicate<DroneCharge> droneChargeList) {
-            throw new NotImplementedException();
+            List<DroneCharge> l = Read<DroneCharge>();
+            return l.FindAll(droneChargeList);
         }
     }
 }
