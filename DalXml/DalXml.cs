@@ -120,9 +120,7 @@ namespace Dal
         }
 
         public int AddParcel(Parcel p) {
-            var rootParcel = XElement.Load("Parcel.xml");
-            rootParcel.Element("Parcels").Add(new XElement("Name", "Eliyahu"));
-            return 0;
+            throw new NotImplementedException();
         }
 
         
