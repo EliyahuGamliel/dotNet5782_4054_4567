@@ -62,7 +62,10 @@ namespace PL
         }
 
         private void UpdateList(object sender = null, EventArgs e = null) {
-            droneList.Clear();
+            while (droneList.Count != 0) {
+                DroneList dr = droneList.First();
+                droneList.Remove(dr);
+            }
             foreach (var item in bl.GetDroneByFilter(MaxWeightSelector.SelectedItem, StatusSelector.SelectedItem)) {
                 droneList.Add(item);
             }

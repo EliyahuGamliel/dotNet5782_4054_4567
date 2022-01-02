@@ -12,11 +12,14 @@ namespace PLCustomer
     class DoubleCheckConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-            double num;
-            bool error = Double.TryParse(value.ToString(), out num);
-            if (!error)
-                return false;
-            return true;
+            if (value is not null) {
+                double num;
+                bool error = Double.TryParse(value.ToString(), out num);
+                if (!error)
+                    return false;
+                return true;
+            }
+            return false;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
