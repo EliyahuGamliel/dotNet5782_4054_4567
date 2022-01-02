@@ -10,7 +10,7 @@ using System.IO;
 
 namespace Dal
 {
-    sealed partial class DalXmlCustomer
+    partial class DalXml : IDal
     {
         public void AddCustomer(Customer c) {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(Customer));
