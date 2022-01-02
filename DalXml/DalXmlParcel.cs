@@ -10,14 +10,17 @@ namespace Dal
 {
     partial class DalXml : IDal
     {
-        public int AddParcel(Parcel p) {
-            var rootParcel = XElement.Load("Parcel.xml");
-            rootParcel.Element("Parcels").Add(new XElement("Name", "Eliyahu"));
-            return 0;
+        public void AddParcel(Parcel p) {
+            List<Parcel> l = Read<Parcel>();
+            ////////////////////////////////////////check for same id error
+            l.Add(p);
+            Write<Parcel>(l);
         }
 
         public void UpdateParcel(Parcel p) {
-            throw new NotImplementedException();
+            List<Parcel> l = Read<Parcel>();
+            l[Update<Parcel>(l, p)] = p;
+            Write<Parcel>(l);
         }
 
         public void DeleteParcel(Parcel parcel) {

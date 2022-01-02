@@ -11,7 +11,10 @@ namespace Dal
     partial class DalXml : IDal
     {
         public void AddDroneCharge(DroneCharge d) {
-            throw new NotImplementedException();
+            List<DroneCharge> l = Read<DroneCharge>();
+            ////////////////////////////////////////check for same id error
+            l.Add(d);
+            Write<DroneCharge>(l);
         }
 
         public void DeleteDroneCharge(DroneCharge droneCharge) {

@@ -13,26 +13,18 @@ namespace Dal
     partial class DalXml : IDal
     {
         public void AddCustomer(Customer c) {
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(Customer));
-            TextWriter textWriter = new StreamWriter("CustomerData");
-
-            try {
-                xmlSerializer.Serialize(textWriter, c);
-            }
-            catch (Exception err) {
-                throw err;
-            }
-            finally {
-                textWriter.Close();
-            }
+            List<Customer> l = Read<Customer>();
+            ////////////////////////////////////////check for same id error
+            l.Add(c);
+            Write<Customer>(l);
         }
 
         public void UpdateCustomer(Customer c) {
-            
-
+            List<Customer> l = Read<Customer>();
+            l[Update<Customer>(l, c)] = c;
+            Write<Customer>(l);
 
         }
-
         public void DeleteCustomer(int customerID) {
             throw new NotImplementedException();
         }
