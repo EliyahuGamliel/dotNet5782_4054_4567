@@ -23,7 +23,7 @@ namespace BL
             ChargingRate = data.DroneElectricityUse()[4];
 
             IEnumerable<DO.Drone> droneslist = data.GetDroneByFilter(d => d.Active);
-            
+             
             foreach (var item in droneslist)
             {
                 bool NotDel = true;

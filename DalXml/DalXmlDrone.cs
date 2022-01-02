@@ -73,21 +73,19 @@ namespace Dal
                          Active = bool.Parse(d.Element("Active").Value)
                      }).ToList().FindAll(droneList);
             }
-            catch { return null; }
+            catch { return new List<Drone>(); }
         }
 
         public double[] DroneElectricityUse() {
             try {
-                XElement configRoot = XElement.Load(@"xml\config.xml");
-                return
-                    (from c in configRoot.Elements()
-                     select new double[5] {
-                         double.Parse(c.Element("Avaliable").Value),
-                         double.Parse(c.Element("WeightLight").Value),
-                         double.Parse(c.Element("WeightMedium").Value),
-                         double.Parse(c.Element("WeightHeavy").Value),
-                         double.Parse(c.Element("ChargingRate").Value),
-                     }).First().ToArray();
+                XElement configRoot = XElement.Load(@"xml/config.xml");
+                return new double[5] {
+                         double.Parse(configRoot.Element("Avaliable").Value),
+                         double.Parse(configRoot.Element("WeightLight").Value),
+                         double.Parse(configRoot.Element("WeightMedium").Value),
+                         double.Parse(configRoot.Element("WeightHeavy").Value),
+                         double.Parse(configRoot.Element("ChargingRate").Value),
+                     };
             }
             catch { return null; }
         }
