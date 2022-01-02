@@ -12,7 +12,7 @@ using System.Xml.Linq;
 
 namespace Dal
 {
-    internal sealed partial class DalXml : IDal
+    sealed partial class DalXml : IDal
     {
         /// <summary>
         /// Ctor for the compiler
@@ -125,9 +125,7 @@ namespace Dal
             return 0;
         }
 
-        public void AddCustomer(Customer c) {
-            throw new NotImplementedException();
-        }
+        
 
         public void AddDroneCharge(DroneCharge d) {
             throw new NotImplementedException();
@@ -138,10 +136,6 @@ namespace Dal
         }
 
         public void UpdateStation(Station s) {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateCustomer(Customer c) {
             throw new NotImplementedException();
         }
 
@@ -157,9 +151,7 @@ namespace Dal
             throw new NotImplementedException();
         }
 
-        public void DeleteCustomer(int customerID) {
-            throw new NotImplementedException();
-        }
+        
 
         public void DeleteParcel(Parcel parcel) {
             throw new NotImplementedException();
@@ -169,9 +161,7 @@ namespace Dal
             throw new NotImplementedException();
         }
 
-        public Customer GetCustomerById(int Id) {
-            throw new NotImplementedException();
-        }
+        
 
         public DroneCharge GetDroneChargeById(int Id) {
             throw new NotImplementedException();
@@ -197,9 +187,7 @@ namespace Dal
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Customer> GetCustomerByFilter(Predicate<Customer> cutomerList) {
-            throw new NotImplementedException();
-        }
+        
 
         public IEnumerable<Parcel> GetParcelByFilter(Predicate<Parcel> parcelList) {
             throw new NotImplementedException();
