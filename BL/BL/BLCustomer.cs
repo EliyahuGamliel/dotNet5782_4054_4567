@@ -153,7 +153,9 @@ namespace BL
 
         public string DeleteCustomer(int customerID) {
             CheckDeleteCustomer(customerID);
-            data.DeleteCustomer(customerID);
+            DO.Customer cu = data.GetCustomerById(customerID);
+            cu.Active = false;
+            data.DeleteCustomer(cu);
             return "The delete was successful\n";
         }
     }

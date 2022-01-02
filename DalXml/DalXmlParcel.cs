@@ -10,11 +10,12 @@ namespace Dal
 {
     partial class DalXml : IDal
     {
-        public void AddParcel(Parcel p) {
+        public int AddParcel(Parcel p) {
             List<Parcel> l = Read<Parcel>();
             ////////////////////////////////////////check for same id error
             l.Add(p);
             Write<Parcel>(l);
+            return 1;
         }
 
         public void UpdateParcel(Parcel p) {

@@ -110,7 +110,5 @@ namespace Dal
 
             return index;
         }
-            throw new NotImplementedException();
-        }
     }
 }

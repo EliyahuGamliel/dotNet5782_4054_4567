@@ -25,7 +25,7 @@ namespace Dal
             Write<Customer>(l);
 
         }
-        public void DeleteCustomer(int customerID) {
+        public void DeleteCustomer(Customer customer) {
             throw new NotImplementedException();
         }
 
