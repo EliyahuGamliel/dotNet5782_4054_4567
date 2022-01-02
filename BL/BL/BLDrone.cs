@@ -94,7 +94,7 @@ namespace BL
             double battery = CheckDroneCannotSend(data.GetStationByFilter(s => s.Active).Where(s => s.ChargeSlots > 0), d);
             d.Status = DroneStatuses.Maintenance;
             BO.Station st = new BO.Station();
-            st = ReturnCloseStation(data.GetStationByFilter(s => true), d.CLocation);
+            st = ReturnCloseStation(data.GetStationByFilter(s => s.Active), d.CLocation);
             d.CLocation = st.Location;
             d.Battery = d.Battery - battery;
             dronesList[index] = d;
@@ -133,7 +133,7 @@ namespace BL
             dronesList[index] = d;
 
             BO.Station st = new BO.Station();
-            st = ReturnCloseStation(data.GetStationByFilter(s => true), d.CLocation);
+            st = ReturnCloseStation(data.GetStationByFilter(s => s.Active), d.CLocation);
             int chargeSlots = ChargeSlotsCatched(st.Id.Value) + st.ChargeSlots.Value;
 
             data.DeleteDroneCharge(dc);

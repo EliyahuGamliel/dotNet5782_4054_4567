@@ -12,125 +12,68 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BO;
+using BlApi;
 
 namespace PLCustomer
 {
-    
     /// <summary>
     /// Interaction logic for CustomerPage.xaml
     /// </summary>
     public partial class CustomerPage : Page
     {
-        private BlApi.IBL bl = BlApi.BlFactory.GetBl();
-        private BO.Customer cu;
-        private MainPage clPage;
+        private IBL bl = BlFactory.GetBl();
+        private Customer cu;
+        private Parcel pa;
 
-        private int numInt;
-        private double numDouble;
-
-        /// <summary>
-        /// The second constructor (Drone Add)
-        /// </summary>
-        /// <param name="bl">Data Base</param>
-        /// <param name="droneListPage">Pointer to the Drone List Page</param>
-        public CustomerPage(MainPage customerListPage) {
+        public CustomerPage(Customer customer = null) {
             InitializeComponent();
-            clPage = customerListPage;
-
-
-            idCustomer.Background = Brushes.Red;
-            nameCustomer.Background = Brushes.Red;
-            longCustomer.Background = Brushes.Red;
-            latiCustomer.Background = Brushes.Red;
-            phoneCustomer.Background = Brushes.Red;
-
-            action1.IsEnabled = true;
-            phoneCustomer.Text = "+972-5????????";
-
-            action1.Content = "Add Customer";
-            action1.Click += new RoutedEventHandler(Add_Click);
-        }
-
-        private void CheckAddCustomer() {
-            if (new[] { nameCustomer, idCustomer, phoneCustomer, latiCustomer, longCustomer }.All(x => x.Background != Brushes.Red))
-                action1.IsEnabled = true;
-            else
-                action1.IsEnabled = false;
+            if (customer == null) {
+                cu = new Customer();
+                cu.Location = new Location();
+                action1.Content = "Add Customer";
+                action1.Click += new RoutedEventHandler(Add_Click);
+                this.DataContext = cu;
+            }
+            else {
+                cu = customer;
+                InitializeData();
+            }
         }
 
         /// <summary>
-        /// Check if what captured in the "Id of Drone" filed is valid
+        /// Initialise all the data and some of the graphics
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void GetId(object sender, RoutedEventArgs e) {
-            bool error = Int32.TryParse(idCustomer.Text, out numInt);
-            if (!error)
-                idCustomer.Background = Brushes.Red;
-            else
-                idCustomer.Background = Brushes.White;
-            CheckAddCustomer();
+        private void InitializeData() {
+            this.DataContext = cu;
+
+            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Status");
+            CollectionView view1 = (CollectionView)CollectionViewSource.GetDefaultView(cu.ForCustomer);
+            CollectionView view2 = (CollectionView)CollectionViewSource.GetDefaultView(cu.FromCustomer);
+            view1.GroupDescriptions.Add(groupDescription);
+            view2.GroupDescriptions.Add(groupDescription);
+
+            idCustomer.IsEnabled = false;
+            longCustomer.IsEnabled = false;
+            latiCustomer.IsEnabled = false;
+
+            action1.Content = "Update Customer";
+            action1.Click += new RoutedEventHandler(Update_Click);
+        }
+
+        private void UpdateCustomer(object sender = null, RoutedEventArgs e = null) {
+            cu = bl.GetCustomerById(cu.Id.Value);
+            InitializeData();
         }
 
         /// <summary>
-        /// Changes the button according to if the drone's model changed
+        /// If the update button has been pressed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void GetName(object sender, RoutedEventArgs e) {
-            if (nameCustomer.Text == "") {
-                action1.IsEnabled = false;
-                nameCustomer.Background = Brushes.Red;
-            }
-            else {
-                action1.IsEnabled = true;
-                nameCustomer.Background = Brushes.White;
-            }
-            CheckAddCustomer();
+        private void Update_Click(object sender, RoutedEventArgs e) {
+            MessageBox.Show(bl.UpdateCustomer(cu.Id.Value, nameCustomer.Text, phoneCustomer.Text));
         }
-
-        private void GetPhone(object sender, TextChangedEventArgs e) {
-            string num = phoneCustomer.Text;
-            int check;
-            bool error = true;
-            if (num.Length != 14 || num[0] != '+' || num[1] != '9' || num[2] != '7' || num[3] != '2' || num[4] != '-' || num[5] != '5')
-                error = false;
-            else {
-                string output = num.Substring(num.IndexOf("+") + 6, 4);
-                error = Int32.TryParse(output, out check);
-                if (error) {
-                    output = num.Substring(num.IndexOf("+") + 10, 4);
-                    error = Int32.TryParse(output, out check);
-                }
-            }
-            if (phoneCustomer.Text == "")
-                phoneCustomer.Text = "+972-5????????";
-            else if (!error) {
-                phoneCustomer.Background = Brushes.Red;
-            }
-            else
-                phoneCustomer.Background = Brushes.White;
-            CheckAddCustomer();
-        }
-
-        private void GetLong(object sender, TextChangedEventArgs e) {
-            bool error = Double.TryParse(longCustomer.Text, out numDouble);
-            if (!error)
-                longCustomer.Background = Brushes.Red;
-            else
-                longCustomer.Background = Brushes.White;
-            CheckAddCustomer();
-        }
-
-        private void GetLati(object sender, TextChangedEventArgs e) {
-            bool error = Double.TryParse(latiCustomer.Text, out numDouble);
-            if (!error)
-                latiCustomer.Background = Brushes.Red;
-            else
-                latiCustomer.Background = Brushes.White;
-            CheckAddCustomer();
-        }
-
 
         /// <summary>
         /// If the add button has been pressed
@@ -139,17 +82,7 @@ namespace PLCustomer
         /// <param name="e"></param>
         private void Add_Click(object sender, RoutedEventArgs e) {
             try {
-                BO.Customer customerAdd = new BO.Customer();
-                customerAdd.Location = new BO.Location();
-                Int32.TryParse(idCustomer.Text, out numInt);
-                customerAdd.Id = numInt;
-                customerAdd.Name = nameCustomer.Text;
-                customerAdd.Phone = phoneCustomer.Text;
-                Double.TryParse(longCustomer.Text, out numDouble);
-                customerAdd.Location.Longitude = numDouble;
-                Double.TryParse(latiCustomer.Text, out numDouble);
-                customerAdd.Location.Lattitude = numDouble;
-                MessageBox.Show(bl.AddCustomer(customerAdd));
+                MessageBox.Show(bl.AddCustomer(cu));
                 this.NavigationService.GoBack();
             }
             catch (Exception ex) {
@@ -162,17 +95,61 @@ namespace PLCustomer
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Cancel_Click(object sender, RoutedEventArgs e) {
+        private void Exit_Click(object sender, RoutedEventArgs e) {
             this.NavigationService.GoBack();
         }
 
-
-        private void ParcelInDrone(object sender, RoutedEventArgs e) {
-
+        private void AddParcel(object sender, RoutedEventArgs e) {
+            ParcelPage parcelPage = new ParcelPage(null, cu);
+            parcelPage.Unloaded += UpdateCustomer;
+            this.NavigationService.Navigate(parcelPage);
         }
 
         private void OpenParcel(object sender, MouseButtonEventArgs e) {
+            if ((sender as ListView).SelectedItem != null) {
+                ParcelInCustomer p = (ParcelInCustomer)(sender as ListView).SelectedItem;
+                ParcelPage parcelPage = new ParcelPage(bl.GetParcelById(p.Id));
+                parcelPage.Unloaded += UpdateCustomer;
+                this.NavigationService.Navigate(parcelPage);
+            }
+        }
 
+        private void GetParcel(object sender, SelectionChangedEventArgs e) {
+            if (CustomerForListView.SelectedItem != null) {
+                ParcelInCustomer p = (ParcelInCustomer)CustomerForListView.SelectedItem;
+                if (p.Status == Statuses.Associated) {
+                    CustomerFromListView.SelectedItem = null;
+                    action2.Click -= PickUp;
+                    action2.Content = "Get Parcel";
+                    action2.Click += Deliver;
+                }
+            }
+            else
+                action2.Content = "";
+        }
+
+        private void CollectParcel(object sender, SelectionChangedEventArgs e) {
+            if (CustomerFromListView.SelectedItem != null) {
+                ParcelInCustomer p = (ParcelInCustomer)CustomerFromListView.SelectedItem;
+                if (p.Status == Statuses.Associated) {
+                    CustomerForListView.SelectedItem = null;
+                    action2.Click -= Deliver;
+                    action2.Content = "Collect Parcel";
+                    action2.Click += PickUp;
+                }
+            }
+            else
+                action2.Content = "";
+        }
+
+        private void PickUp(object sender, RoutedEventArgs e) {
+            MessageBox.Show(bl.PickUpDroneParcel(pa.Drone.Id));
+            UpdateCustomer();
+        }
+
+        private void Deliver(object sender, RoutedEventArgs e) {
+            MessageBox.Show(bl.DeliverParcelCustomer(pa.Drone.Id));
+            UpdateCustomer();
         }
     }
 }

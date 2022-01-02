@@ -58,13 +58,25 @@
         <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="statusDrone" Text="{Binding Path=Status, FallbackValue='Maintenance'}" TextWrapping="Wrap" Margin="146,386,427,124"/>
         <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="locationDrone" Text="{Binding Path=CLocation}" TextWrapping="Wrap" Margin="102,420,321,41"/>
         <TextBlock FontSize="15" FontFamily="/font/#Fuzzy Bubbles" Name="parcelDrone" Text="{Binding Path=PTransfer}" TextWrapping="Wrap" Margin="434,91,17,63"/>
-        <Button Name="parcelInDrone" Background="PowderBlue" Content="Open Parcel" BorderBrush="Black" FontFamily="/font/#Alef" Click="ParcelInDrone" FontWeight="Bold" Grid.Column="0" FontSize="18" Margin="533,458,0,10" HorizontalAlignment="Left" Width="216">
+        <Button Margin="557,477,0,10" Name="parcelInDrone" Background="PowderBlue" Content="Open Parcel" BorderBrush="Black" FontFamily="/font/#Alef" Click="ParcelInDrone" FontWeight="Bold" Grid.Column="0" FontSize="18" HorizontalAlignment="Left" Width="216">
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleX="-20.586"/>
+                    <RotateTransform/>
+                    <TranslateTransform X="-15.378"/>
+                </TransformGroup>
+            </Button.RenderTransform>
             <Button.Resources>
                 <Style TargetType="Button" BasedOn="{StaticResource Design}">
                     <Setter Property="IsEnabled" Value="True"/>
+                    <Setter Property="Visibility" Value="Visible"/>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Path=Text, ElementName=parcelDrone}" Value="">
                             <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Path=Text, ElementName=batteryDrone}" Value="">
+                            <Setter Property="Visibility" Value="Hidden"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
@@ -105,10 +117,14 @@
             <Button Background="PowderBlue" Margin="10,8,10,8" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" FontSize="18" Name="updateDrone" Content="Update Drone"  Grid.Column="3" Click="Update_Click">
                 <Button.Resources>
                     <Style TargetType="Button" BasedOn="{StaticResource Design}">
-                        <Setter Property="IsEnabled" Value="True" />
+                        <Setter Property="IsEnabled" Value="True"/>
+                        <Setter Property="Visibility" Value="Visible"/>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Path=Background, ElementName=modelDrone}" Value="Red">
                                 <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=Text, ElementName=batteryDrone}" Value="">
+                                <Setter Property="Visibility" Value="Hidden"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>

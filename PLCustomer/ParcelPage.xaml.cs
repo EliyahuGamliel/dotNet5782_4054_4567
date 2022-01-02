@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BO;
+using BlApi;
 
 namespace PLCustomer
 {
@@ -20,24 +22,63 @@ namespace PLCustomer
     /// </summary>
     public partial class ParcelPage : Page
     {
-        private BlApi.IBL bl = BlApi.BlFactory.GetBl();
-        private BO.Customer cu;
-        private ClientMenu clPage;
+        private Parcel pa;
+        private Customer cu;
+        private IBL bl = BlFactory.GetBl();
 
-        private int numInt;
-        private double numDouble;
+        public ParcelPage(Parcel parcel = null, Customer customer = null) {
+            InitializeComponent();
+
+            targetIdParcel.ItemsSource = bl.GetCustomers();
+            weightParcel.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            priorityParcel.ItemsSource = Enum.GetValues(typeof(Priorities));
+
+            if (parcel == null) {
+                pa = new Parcel();
+                cu = customer;
+                pa.Requested = DateTime.Now;
+                action1.Content = "Add Parcel";
+                action1.Click += new RoutedEventHandler(Add_Click);
+            }
+            else {
+                pa = parcel;
+                weightParcel.IsEnabled = false;
+                action1.Content = "Update Parcel";
+                action1.Click += new RoutedEventHandler(Update_Click);
+            }
+            this.DataContext = pa;
+        }
 
         /// <summary>
-        /// The second constructor (Drone Add)
+        /// Initialise all the data and some of the graphics
         /// </summary>
-        /// <param name="bl">Data Base</param>
-        /// <param name="droneListPage">Pointer to the Drone List Page</param>
-        public ParcelPage(ClientMenu clientMenu) {
-            InitializeComponent();
-            clPage = clientMenu;
+        private void UpdateParcel(object sender, RoutedEventArgs e) {
+            pa = bl.GetParcelById(pa.Id.Value);
+            this.DataContext = pa;
+        }
 
+        private void Update_Click(object sender, RoutedEventArgs e) {
+            MessageBox.Show(bl.UpdateParcel(pa.Id.Value, pa.Priority));
+        }
 
-            
+        private void Add_Click(object sender, RoutedEventArgs e) {
+            try {
+                CustomerList targetC = (CustomerList)targetIdParcel.SelectedItem;
+                MessageBox.Show(bl.AddParcel(pa, cu.Id.Value, targetC.Id));
+                this.NavigationService.GoBack();
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        /// <summary>
+        /// If the users wants to go back
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Exit_Click(object sender, RoutedEventArgs e) {
+            this.NavigationService.GoBack();
         }
     }
 }

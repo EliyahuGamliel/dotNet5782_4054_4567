@@ -47,8 +47,6 @@ namespace PL
             if (drone == null) {
                 DroneAddGrid.Visibility = Visibility.Visible;
                 action2.Visibility = Visibility.Hidden;
-                updateDrone.Visibility = Visibility.Hidden;
-                parcelInDrone.Visibility = Visibility.Hidden;
 
                 action1.Content = "Add Drone";
                 action1.Click += new RoutedEventHandler(Add_Click);
@@ -63,7 +61,7 @@ namespace PL
         /// <summary>
         /// Initialise all the buttons of actions
         /// </summary>
-        private void Initialize() {
+        private void Initialize(object sender = null, RoutedEventArgs e = null) {
             dr = bl.GetDroneById(dr.Id.Value);
             this.DataContext = dr;
             //If the choosen drone is in delivery
@@ -229,7 +227,9 @@ namespace PL
         #endregion
 
         private void ParcelInDrone(object sender, RoutedEventArgs e) {
-            this.NavigationService.Navigate(new ParcelPage(bl.GetParcelById(dr.PTransfer.Id)));
+            ParcelPage parcelPage = new ParcelPage(bl.GetParcelById(dr.PTransfer.Id));
+            parcelPage.Unloaded += Initialize;
+            this.NavigationService.Navigate(parcelPage);
         }
     }
 }

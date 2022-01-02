@@ -8,25 +8,47 @@
       d:DesignHeight="640" d:DesignWidth="800"
       Title="MainPage">
 
-    <Grid>
-        
-        <Image x:Name="droneWithoutParcel"  Margin="0,0,0,0" Stretch="Fill" Source="img\login.jpg"/>
-        
+    <Page.Resources>
+        <local:IntCheckConverter x:Key="intCheckConverter"/>
+        <Style x:Key="Design" TargetType="Button">
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="25,25,25,25"/>
+                </Style>
+            </Style.Resources>
+        </Style>
+    </Page.Resources>
 
-        <Button Background="LightSkyBlue"  FontFamily="/font/#Alef" FontSize="26" FontWeight="Bold" Content="Sign In" Click="SignIn" Margin="336,448,304,101">
+    <Grid>
+        <Image x:Name="droneWithoutParcel"  Margin="0,0,0,0" Stretch="Fill" Source="img\login.jpg"/>
+        <Button Background="LightSkyBlue" FontFamily="/font/#Alef" FontSize="26" FontWeight="Bold" Content="Sign In" Click="SignIn" Margin="336,448,304,101">
             <Button.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="25,25,25,25"/>
+                <Style TargetType="Button" BasedOn="{StaticResource Design}">
+                    <Setter Property="IsEnabled" Value="True" />
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=Background, ElementName=Username}" Value="Red" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="IsEnabled" Value="False" />
+                        </MultiDataTrigger>
+                    </Style.Triggers>
                 </Style>
             </Button.Resources>
         </Button>
-        <Button Background="LightSkyBlue"  FontFamily="/font/#Alef" FontSize="26" FontWeight="Bold" Content="Sign Up" Click="SignUp" Margin="520,448,120,101">
-            <Button.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="25,25,25,25"/>
+        <Button Background="LightSkyBlue" Style="{DynamicResource Design}"  FontFamily="/font/#Alef" FontSize="26" FontWeight="Bold" Content="Sign Up" Click="SignUp" Margin="520,448,120,101"/>
+        <TextBox x:Name="Username" Margin="345,273,150,0" FontFamily="/font/#Alef" Text="" FontSize="26" TextWrapping="Wrap" VerticalAlignment="Top" Height="39">
+            <TextBox.Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="Background" Value="White"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=Text, ElementName=Username, Converter={StaticResource intCheckConverter}}" Value="False">
+                            <Setter Property="Background" Value="Red" />
+                        </DataTrigger>
+                    </Style.Triggers>
                 </Style>
-            </Button.Resources>
-        </Button>
-        <TextBox x:Name="Username" Margin="345,273,150,0" FontFamily="/font/#Alef" Text="" FontSize="26" TextWrapping="Wrap" VerticalAlignment="Top" Height="39"/>
+            </TextBox.Style>
+        </TextBox>
     </Grid>
 </Page>

@@ -39,7 +39,10 @@ namespace PL
         }
 
         private void UpdateList(object sender = null, EventArgs e = null) {
-            customerList.Clear();
+            while (customerList.Count != 0) {
+                CustomerList cu = customerList.First();
+                customerList.Remove(cu);
+            }
             foreach (var item in bl.GetCustomers()) {
                 customerList.Add(item);
             }

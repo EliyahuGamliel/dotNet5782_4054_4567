@@ -35,7 +35,6 @@ namespace PL
             }
             else {
                 cu = customer;
-                this.DataContext = cu;
                 InitializeData();
             }
         }
@@ -44,8 +43,7 @@ namespace PL
         /// Initialise all the data and some of the graphics
         /// </summary>
         private void InitializeData() {
-            //CustomerForListView.ItemsSource = cu.ForCustomer;
-            //CustomerFromListView.ItemsSource = cu.FromCustomer;
+            this.DataContext = cu;
 
             PropertyGroupDescription groupDescription = new PropertyGroupDescription("Status");
             CollectionView view1 = (CollectionView)CollectionViewSource.GetDefaultView(cu.ForCustomer);
@@ -60,6 +58,13 @@ namespace PL
             action1.Content = "Update Customer";
             action1.Click += new RoutedEventHandler(Update_Click);
         }
+
+
+        private void UpdateCustomer(object sender, RoutedEventArgs e) {
+            cu = bl.GetCustomerById(cu.Id.Value);
+            InitializeData();
+        }
+
 
         /// <summary>
         /// If the update button has been pressed
@@ -96,8 +101,10 @@ namespace PL
 
         private void OpenParcel(object sender, MouseButtonEventArgs e) {
             if ((sender as ListView).SelectedItem != null) {
-                BO.ParcelInCustomer p = (BO.ParcelInCustomer)(sender as ListView).SelectedItem;
-                this.NavigationService.Navigate(new ParcelPage(bl.GetParcelById(p.Id)));
+                ParcelInCustomer p = (ParcelInCustomer)(sender as ListView).SelectedItem;
+                ParcelPage parcelPage = new ParcelPage(bl.GetParcelById(p.Id));
+                parcelPage.Unloaded += UpdateCustomer;
+                this.NavigationService.Navigate(parcelPage);
             }
         }
     }

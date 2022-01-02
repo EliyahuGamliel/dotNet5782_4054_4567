@@ -74,6 +74,8 @@ namespace BlApi
         /// </summary>
         /// <param name="DroneId">ID of the drone to assign a parcel</param>
         /// <returns>Notice if the addition was successful</returns>
+
+        string UpdateParcel(int id, BO.Priorities priorty);
         #endregion
 
         #region DroneAction

@@ -8,6 +8,17 @@
       d:DesignHeight="640" d:DesignWidth="800"
       Title="ParcelPage">
 
+    <Page.Resources>
+        <Style x:Key="Design" TargetType="Button">
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="25,25,25,25"/>
+                </Style>
+            </Style.Resources>
+        </Style>
+    </Page.Resources>
+
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="400*"/>
@@ -15,16 +26,88 @@
         </Grid.RowDefinitions>
 
         <Image Grid.RowSpan="2" Margin="0,0,0,0" Stretch="Fill" Source="img\parcelImage.jpg"/>
-        <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="idDrone" Text="{Binding Path=Id}" TextWrapping="Wrap" Margin="85,81,541,424"/>
+        <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="idParcel" Text="{Binding Path=Id}" TextWrapping="Wrap" Margin="85,81,541,424"/>
         <ComboBox FontSize="20" SelectedIndex="0" HorizontalAlignment="Left" FontFamily="/font/#Fuzzy Bubbles" SelectedItem="{Binding Path=Priority, FallbackValue='0'}" Name="priorityParcel" Width="264" Margin="85,208,0,292"/>
         <ComboBox FontSize="20" SelectedIndex="0" HorizontalAlignment="Left" FontFamily="/font/#Fuzzy Bubbles" SelectedItem="{Binding Path=Weight, FallbackValue='0'}" Name="weightParcel" Width="264" Margin="85,144,0,356"/>
-        <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="requestedParcel" Text="{Binding Path=Requested, FallbackValue='Now'}" TextWrapping="Wrap" Margin="88,278,485,232"/>
+        <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="requestedParcel" Text="{Binding Path=Requested}" TextWrapping="Wrap" Margin="88,278,485,232"/>
         <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="scheduledParcel" Text="{Binding Path=Scheduled}" TextWrapping="Wrap" Margin="91,347,482,163"/>
         <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="pickupParcel" Text="{Binding Path=PickedUp}" TextWrapping="Wrap" Margin="91,418,482,91"/>
         <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="deliveryDrone" Text="{Binding Path=Delivered}" TextWrapping="Wrap" Margin="91,486,482,24"/>
         <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="droneParcel" Text="{Binding Path=Drone}" TextWrapping="Wrap" Margin="377,288,44,93"/>
         <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="senderParcel" Text="{Binding Path=Sender}" TextWrapping="Wrap" Margin="343,56,78,402"/>
         <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="targetParcel" Text="{Binding Path=Target}" TextWrapping="Wrap" Margin="343,166,78,295"/>
+        <Button Background="PowderBlue" Margin="613,479,4,8" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" FontSize="18" Name="target" Content="Open Sender" Click="SenderInParcel">
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleX="-20.586"/>
+                    <RotateTransform/>
+                    <TranslateTransform X="-15.378"/>
+                </TransformGroup>
+            </Button.RenderTransform>
+            <Button.Resources>
+                <Style TargetType="Button" BasedOn="{StaticResource Design}">
+                    <Setter Property="IsEnabled" Value="True"/>
+                    <Setter Property="Visibility" Value="Visible"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=Text, ElementName=senderParcel}" Value="">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Path=Text, ElementName=idParcel}" Value="">
+                            <Setter Property="Visibility" Value="Hidden"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button Background="PowderBlue"  Margin="519,419,98,68" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" FontSize="18" Name="sender" Content="Open Drone" RenderTransformOrigin="0.5,0.5" Click="DroneInParcel">
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleX="-20.586"/>
+                    <RotateTransform/>
+                    <TranslateTransform X="-15.378"/>
+                </TransformGroup>
+            </Button.RenderTransform>
+            <Button.Resources>
+                <Style TargetType="Button" BasedOn="{StaticResource Design}">
+                    <Setter Property="IsEnabled" Value="True"/>
+                    <Setter Property="Visibility" Value="Visible"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=Text, ElementName=droneParcel}" Value="">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Path=Text, ElementName=idParcel}" Value="">
+                            <Setter Property="Visibility" Value="Hidden"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button Background="PowderBlue"   Margin="427,479,190,8" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" FontSize="18" Name="drone" Content="Open Target" Click="TargetInParcel">
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleX="-20.586"/>
+                    <RotateTransform/>
+                    <TranslateTransform X="-15.378"/>
+                </TransformGroup>
+            </Button.RenderTransform>
+            <Button.Resources>
+                <Style TargetType="Button" BasedOn="{StaticResource Design}">
+                    <Setter Property="IsEnabled" Value="True"/>
+                    <Setter Property="Visibility" Value="Visible"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=Text, ElementName=targetParcel}" Value="">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Path=Text, ElementName=idParcel}" Value="">
+                            <Setter Property="Visibility" Value="Hidden"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Resources>
+        </Button>
         <Grid Name="DownGrid" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -32,70 +115,23 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button BorderBrush="Black" Margin="10,8,10,8" Background="Red" FontFamily="font/#Alef" FontWeight="Bold"  FontSize="18" Content="Return Back" Click="Exit_Click">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="25,25,25,25"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
-            <Button Name="action1" Background="PowderBlue" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" Grid.Column="1" FontSize="18" Content="">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="25,25,25,25"/>
-                        <Setter Property="Margin" Value="10,8,10,8"/>
-                    </Style>
-                    <Style TargetType="Button">
-                        <Setter Property="IsEnabled" Value="True" />
-                        <Style.Triggers>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Path=Content, ElementName=action1}" Value="Add Drone" />
-                                    <Condition Binding="{Binding Path=Background, ElementName=idDrone}" Value="Red" />
-                                </MultiDataTrigger.Conditions>
-                                <Setter Property="IsEnabled" Value="False" />
-                            </MultiDataTrigger>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Path=Content, ElementName=action1}" Value="Add Drone" />
-                                    <Condition Binding="{Binding Path=Background, ElementName=modelDrone}" Value="Red" />
-                                </MultiDataTrigger.Conditions>
-                                <Setter Property="IsEnabled" Value="False" />
-                            </MultiDataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Resources>
-            </Button>
-            <Button Name="action2" Background="PowderBlue" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" Grid.Column="2" FontSize="18" Content="">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="25,25,25,25"/>
-                        <Setter Property="Margin" Value="10,8,10,8"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
-            <Button Background="PowderBlue" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" FontSize="18" Name="updateDrone" Content="Update Drone"  Grid.Column="3" Click="Update_Click">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="25,25,25,25"/>
-                        <Setter Property="Margin" Value="10,8,10,8"/>
-                    </Style>
-                    <Style TargetType="Button">
-                        <Setter Property="IsEnabled" Value="True" />
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=Background, ElementName=modelDrone}" Value="Red">
-                                <Setter Property="IsEnabled" Value="False" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-
-                </Button.Resources>
-            </Button>
+            <Button Style="{DynamicResource Design}" BorderBrush="Black" Margin="10,8,10,8" Background="Red" FontFamily="font/#Alef" FontWeight="Bold"  FontSize="18" Content="Return Back" Click="Exit_Click"/>
+            <Button Style="{DynamicResource Design}" Background="PowderBlue"  Margin="10,8,10,8" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" FontSize="18" Name="action1" Content="" Grid.Column="3"/>
         </Grid>
 
         <!--Display Page of Parcel Addition (partial)-->
-        <Grid Name="DroneParcelGrid" Visibility="Visible">
-            <ComboBox Name="senderIdParcel" SelectedIndex="0" FontSize="16" HorizontalAlignment="Left" Grid.Row="0"  FontFamily="/font/#Fuzzy Bubbles" Width="252" Margin="408,88,0,399">
+        <Grid Name="DroneParcelGrid">
+            <Grid.Resources>
+                <Style TargetType="Grid">
+                    <Setter Property="Visibility" Value="Hidden"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=Text, ElementName=idParcel}" Value="">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Resources>
+            <ComboBox Name="senderIdParcel" SelectedIndex="0" FontSize="16" HorizontalAlignment="Left" Grid.Row="0"  FontFamily="/font/#Fuzzy Bubbles" Width="252" Margin="408,80,0,407">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock>
@@ -107,7 +143,7 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <ComboBox Name="targetIdParcel" SelectedIndex="0" FontSize="16" HorizontalAlignment="Left" Grid.Row="0"  FontFamily="/font/#Fuzzy Bubbles" Width="252" Margin="408,88,0,399">
+            <ComboBox Name="targetIdParcel" SelectedIndex="0" FontSize="16" HorizontalAlignment="Left" Grid.Row="0"  FontFamily="/font/#Fuzzy Bubbles" Width="252" Margin="408,192,0,295">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock>
