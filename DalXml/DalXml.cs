@@ -8,11 +8,39 @@ using System.Xml;
 using System.IO;
 using DO;
 using DalApi;
+using System.Xml.Linq;
 
 namespace Dal
 {
-    internal sealed partial class DalXml
+    internal sealed partial class DalXml : IDal
     {
+        /// <summary>
+        /// Ctor for the compiler
+        /// </summary>
+        static DalXml() { }
+
+        class Nested
+        {
+            internal static volatile DalXml _instance = null;
+            internal static readonly object _lock = new object();
+            static Nested() { }
+        }
+
+        public static DalXml Instance
+        {
+            get
+            {
+                if (Nested._instance == null) {
+                    lock (Nested._lock) {
+                        if (Nested._instance == null) {
+                            Nested._instance = new DalXml();
+                        }
+                    }
+                }
+                return Nested._instance;
+            }
+        }
+
         public DalXml() { }
         Dictionary<Type, string> fileNames = new Dictionary<Type, string>() {
                 {typeof(Customer) , "Customers.xml"},
@@ -81,6 +109,108 @@ namespace Dal
                 listy[index] = updater;
 
             return index;
+        }
+
+        public void AddStation(Station s) {
+            throw new NotImplementedException();
+        }
+
+        public void AddDrone(Drone d) {
+            throw new NotImplementedException();
+        }
+
+        public int AddParcel(Parcel p) {
+            var rootParcel = XElement.Load("Parcel.xml");
+            rootParcel.Element("Parcels").Add(new XElement("Name", "Eliyahu"));
+            return 0;
+        }
+
+        public void AddCustomer(Customer c) {
+            throw new NotImplementedException();
+        }
+
+        public void AddDroneCharge(DroneCharge d) {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateDrone(Drone d) {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateStation(Station s) {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateCustomer(Customer c) {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateParcel(Parcel p) {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteDroneCharge(DroneCharge droneCharge) {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteStation(Station station) {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteCustomer(int customerID) {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteParcel(Parcel parcel) {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteDrone(Drone drone) {
+            throw new NotImplementedException();
+        }
+
+        public Customer GetCustomerById(int Id) {
+            throw new NotImplementedException();
+        }
+
+        public DroneCharge GetDroneChargeById(int Id) {
+            throw new NotImplementedException();
+        }
+
+        public Drone GetDroneById(int Id) {
+            throw new NotImplementedException();
+        }
+
+        public Parcel GetParcelById(int Id) {
+            throw new NotImplementedException();
+        }
+
+        public Station GetStationById(int Id) {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Station> GetStationByFilter(Predicate<Station> stationList) {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Drone> GetDroneByFilter(Predicate<Drone> droneList) {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Customer> GetCustomerByFilter(Predicate<Customer> cutomerList) {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Parcel> GetParcelByFilter(Predicate<Parcel> parcelList) {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<DroneCharge> GetDroneChargeByFilter(Predicate<DroneCharge> droneChargeList) {
+            throw new NotImplementedException();
+        }
+
+        public double[] DroneElectricityUse() {
+            throw new NotImplementedException();
         }
     }
 }
