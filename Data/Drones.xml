@@ -6,4 +6,28 @@
     <MaxWeight>Light</MaxWeight>
     <Model>123</Model>
   </drone>
+  <drone>
+    <Active>true</Active>
+    <Id>32</Id>
+    <MaxWeight>Light</MaxWeight>
+    <Model>kjn</Model>
+  </drone>
+  <drone>
+    <Active>true</Active>
+    <Id>32</Id>
+    <MaxWeight>Light</MaxWeight>
+    <Model>ff</Model>
+  </drone>
+  <drone>
+    <Active>true</Active>
+    <Id>32</Id>
+    <MaxWeight>Light</MaxWeight>
+    <Model>ff</Model>
+  </drone>
+  <drone>
+    <Active>true</Active>
+    <Id>3260</Id>
+    <MaxWeight>Light</MaxWeight>
+    <Model>ff</Model>
+  </drone>
 </drone>

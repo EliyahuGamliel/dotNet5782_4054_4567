@@ -12,10 +12,10 @@ namespace Dal
     partial class DalXml : IDal
     {
         public int AddParcel(Parcel p) {
-            List<Parcel> l = Read<Parcel>();
-            ////////////////////////////////////////check for same id error
-            l.Add(p);
-            Write<Parcel>(l);
+            List<Parcel> lp = Read<Parcel>();
+            CheckExistId<Parcel>(lp, p.Id);
+            lp.Add(p);
+            Write<Parcel>(lp);
             XElement configRoot = XElement.Load(@"xml\config.xml");
             int numberID = Int32.Parse(configRoot.Element("NumberID").Value);
             configRoot.Element("NumberID").SetValue(numberID + 1);
@@ -24,20 +24,24 @@ namespace Dal
         }
 
         public void UpdateParcel(Parcel p) {
-            List<Parcel> l = Read<Parcel>();
-            l[Update<Parcel>(l, p)] = p;
-            Write<Parcel>(l);
+            List<Parcel> lp = Read<Parcel>();
+            CheckNotExistId<Parcel>(lp, p.Id);
+
+            lp[Update<Parcel>(lp, p)] = p;
+            Write<Parcel>(lp);
         }
 
         public void DeleteParcel(Parcel p) {
-            List<Parcel> l = Read<Parcel>();
-            l[Update<Parcel>(l, p)] = p;
-            Write<Parcel>(l);
+            List<Parcel> lp = Read<Parcel>();
+            CheckNotExistId<Parcel>(lp, p.Id);
+            lp[Update<Parcel>(lp, p)] = p;
+            Write<Parcel>(lp);
         }
 
         public Parcel GetParcelById(int Id) {
-            List<Parcel> l = Read<Parcel>();
-            return l.Find(l => l.Id == Id);
+            List<Parcel> lp = Read<Parcel>();
+            CheckNotExistId<Parcel>(lp, Id);
+            return lp.Find(lp => lp.Id == Id);
         }
 
         public IEnumerable<Parcel> GetParcelByFilter(Predicate<Parcel> parcelList) {

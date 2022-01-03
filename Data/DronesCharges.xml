@@ -6,4 +6,16 @@
     <Start>2022-01-03T15:33:52.1451331+02:00</Start>
     <Active>true</Active>
   </DroneCharge>
+  <DroneCharge>
+    <DroneId>32</DroneId>
+    <StationId>12</StationId>
+    <Start>2022-01-03T16:01:42.563659+02:00</Start>
+    <Active>true</Active>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>3260</DroneId>
+    <StationId>12</StationId>
+    <Start>2022-01-03T16:01:59.4882578+02:00</Start>
+    <Active>true</Active>
+  </DroneCharge>
 </ArrayOfDroneCharge>

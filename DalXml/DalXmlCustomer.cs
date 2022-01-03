@@ -13,20 +13,22 @@ namespace Dal
     partial class DalXml : IDal
     {
         public void AddCustomer(Customer c) {
-            List<Customer> l = Read<Customer>();
-            ////////////////////////////////////////check for same id error
-            l.Add(c);
-            Write<Customer>(l);
+            List<Customer> lc = Read<Customer>();
+            CheckExistId<Customer>(lc, c.Id);
+            lc.Add(c);
+            Write<Customer>(lc);
         }
 
         public void UpdateCustomer(Customer c) {
-            List<Customer> l = Read<Customer>();
-            l[Update<Customer>(l, c)] = c;
-            Write<Customer>(l);
+            List<Customer> lc = Read<Customer>();
+            CheckNotExistId<Customer>(lc, c.Id);
+            lc[Update<Customer>(lc, c)] = c;
+            Write<Customer>(lc);
 
         }
         public void DeleteCustomer(Customer c) {
             List<Customer> customerList = Read<Customer>();
+            CheckNotExistId<Customer>(customerList, c.Id);
             customerList[Update<Customer>(customerList, c)] = c;
             Write<Customer>(customerList);
         }

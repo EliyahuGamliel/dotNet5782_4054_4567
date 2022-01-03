@@ -12,27 +12,30 @@ namespace Dal
     {
 
         public void AddStation(Station s) {
-            List<Station> l = Read<Station>();
-            ////////////////////////////////////////check for same id error
-            l.Add(s);
-            Write<Station>(l);
+            List<Station> ls = Read<Station>();
+            CheckExistId<Station>(ls, s.Id);
+            ls.Add(s);
+            Write<Station>(ls);
         }
 
         public void UpdateStation(Station s) {
-            List<Station> l = Read<Station>();
-            l[Update<Station>(l, s)] = s;
-            Write<Station>(l);
+            List<Station> ls = Read<Station>();
+            CheckNotExistId<Station>(ls, s.Id);
+            ls[Update<Station>(ls, s)] = s;
+            Write<Station>(ls);
         }
 
         public void DeleteStation(Station s) {
-            List<Station> l = Read<Station>();
-            l[Update<Station>(l, s)] = s;
-            Write<Station>(l);
+            List<Station> ls = Read<Station>();
+            CheckNotExistId<Station>(ls, s.Id);
+            ls[Update<Station>(ls, s)] = s;
+            Write<Station>(ls);
         }
 
         public Station GetStationById(int Id) {
-            List<Station> l = Read<Station>();
-            return l.Find(l => l.Id == Id);
+            List<Station> ls = Read<Station>();
+            CheckNotExistId<Station>(ls, Id);
+            return ls.Find(ls => ls.Id == Id);
         }
 
         public IEnumerable<Station> GetStationByFilter(Predicate<Station> stationList) {
