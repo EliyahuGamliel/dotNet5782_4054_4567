@@ -5,17 +5,19 @@ using BO;
 using BlApi;
 using DO;
 using DalApi;
+using System.Runtime.CompilerServices;
 
 namespace BL
 {
     public partial class BL : IBL
-    { 
+    {
         /// <summary>
         /// If everything is fine, add a drone to the list of drones, else throw exception
         /// </summary>
         /// <param name="d">Object of drone to add</param>
         /// <param name="idStation">The ID number of the station where the drone will be located</param>
         /// <returns>Notice if the addition was successful</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public string AddDrone(BO.Drone d, int idStation) {
             try {
                 CheckValidId(d.Id.Value);
@@ -66,6 +68,7 @@ namespace BL
         /// <param name="id">The ID of the drone for updating</param>
         /// <param name="model">The new model for the drone update</param>
         /// <returns>Notice if the addition was successful</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public string UpdateDrone(int id, string model) {
             try {
                 DO.Drone dr = data.GetDroneById(id);
@@ -87,6 +90,7 @@ namespace BL
         /// </summary>
         /// <param name="idDrone">ID of the drone sent for charging</param>
         /// <returns>Notice if the addition was successful</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public string SendDrone(int idDrone) {
             CheckNotExistId(dronesList, idDrone);
 
@@ -116,6 +120,7 @@ namespace BL
         /// <param name="idDrone">ID of the drone relese from charging</param>
         /// <param name="time">The time the drone was in charge (in hours)</param>
         /// <returns>Notice if the addition was successful</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public String ReleasDrone(int idDrone){
             CheckNotExistId(dronesList, idDrone);
 
@@ -149,6 +154,7 @@ namespace BL
         /// </summary>
         /// <param name="Id">The id of the requested drone</param>
         /// <returns>The object of the requested drone</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Drone GetDroneById(int Id) {
             CheckNotExistId(dronesList, Id);
             BO.Drone dr = new BO.Drone();
@@ -199,11 +205,12 @@ namespace BL
             }
             return dr;
         }
-        
+
         /// <summary>
         /// Returns the list of drones
         /// </summary>
         /// <returns>Returns the list of drones</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneList> GetDrones(){
             return dronesList.FindAll(d => d.Active);
         }
@@ -214,6 +221,7 @@ namespace BL
         /// <param name="weight">The weight value of the required drones</param>
         /// <param name="status">The status value of the required drones</param>
         /// <returns>Return list of drones by filter</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneList> GetDroneByFilter(object weight, object status)
         {
             if (weight is null or "All" && status is null or "All")
@@ -225,6 +233,7 @@ namespace BL
             return dronesList.FindAll(d => d.Status == (DroneStatuses)status && d.MaxWeight == (BO.WeightCategories)weight && d.Active);   
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public string DeleteDrone(BO.DroneList drone) {
             CheckDeleteDrone(drone);
             int index = dronesList.IndexOf(drone);

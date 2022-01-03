@@ -5,39 +5,42 @@ using System.Text;
 using System.Threading.Tasks;
 using DO;
 using DalApi;
+using System.Runtime.CompilerServices;
 
 namespace Dal
 {
     partial class DalXml : IDal
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDroneCharge(DroneCharge dc) {
-            List<DroneCharge> ldc = Read<DroneCharge>();
-            ldc.Add(dc);
-            Write<DroneCharge>(ldc);
+            List<DroneCharge> droneCharges = Read<DroneCharge>();
+            droneCharges.Add(dc);
+            Write<DroneCharge>(droneCharges);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteDroneCharge(DroneCharge dc) {
-            List<DroneCharge> l = Read<DroneCharge>();
+            List<DroneCharge> droneCharges = Read<DroneCharge>();
             var DroneId = typeof(DroneCharge).GetProperty("DroneId");
-
             CheckNotExistId(dc.DroneId);
-            int index = l.FindIndex(x => (int)DroneId.GetValue(x, null) == (int)DroneId.GetValue(dc, null) && x.Active);
+            int index = droneCharges.FindIndex(x => (int)DroneId.GetValue(x, null) == (int)DroneId.GetValue(dc, null) && x.Active);
             if (index != -1)
-                l[index] = dc;
-
-            l[index] = dc;
-            Write<DroneCharge>(l);
+                droneCharges[index] = dc;
+            //droneCharges[index] = dc;
+            Write<DroneCharge>(droneCharges);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public DroneCharge GetDroneChargeById(int Id) {
-            List<DroneCharge> ldc = Read<DroneCharge>();
+            List<DroneCharge> droneCharges = Read<DroneCharge>();
             CheckNotExistId(Id);
-            return ldc.Find(ldc => ldc.DroneId == Id && ldc.Active);
+            return droneCharges.Find(dc => dc.DroneId == Id && dc.Active);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneCharge> GetDroneChargeByFilter(Predicate<DroneCharge> droneChargeList) {
-            List<DroneCharge> ldc = Read<DroneCharge>();
-            return ldc.FindAll(droneChargeList);
+            List<DroneCharge> droneCharges = Read<DroneCharge>();
+            return droneCharges.FindAll(droneChargeList);
         }
 
         private void CheckNotExistId(int dcid) {

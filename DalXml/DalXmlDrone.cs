@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DO;
 using DalApi;
 using System.Xml.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Dal
 {
@@ -13,6 +14,8 @@ namespace Dal
     {
         XElement droneRoot;
         string dronesPath = @"Data\Drones.xml";
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(Drone d) {
             try {
                 droneRoot = XElement.Load(dronesPath); }
@@ -33,6 +36,7 @@ namespace Dal
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDrone(Drone d) {
             XElement droneRoot = XElement.Load(dronesPath);
             XElement e = (from drone in droneRoot.Elements()
@@ -42,6 +46,7 @@ namespace Dal
             droneRoot.Save(dronesPath);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteDrone(Drone drone) {
             XElement droneRoot = XElement.Load(dronesPath);
             XElement e = (from d in droneRoot.Elements()
@@ -51,6 +56,7 @@ namespace Dal
             droneRoot.Save(dronesPath);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone GetDroneById(int Id) {
             try {
                 XElement droneRoot = XElement.Load(dronesPath);
@@ -67,6 +73,7 @@ namespace Dal
             catch { throw new IdNotExistException(Id); }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Drone> GetDroneByFilter(Predicate<Drone> droneList) {
             try {
                 XElement droneRoot = XElement.Load(@"Data\Drones.xml");
@@ -82,6 +89,7 @@ namespace Dal
             catch { return new List<Drone>(); }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double[] DroneElectricityUse() {
             try {
                 XElement configRoot = XElement.Load(@"xml/config.xml");

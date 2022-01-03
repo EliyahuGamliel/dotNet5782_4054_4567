@@ -6,6 +6,7 @@ using BO;
 using BlApi;
 using DO;
 using DalApi;
+using System.Runtime.CompilerServices;
 
 namespace BL
 {
@@ -16,6 +17,7 @@ namespace BL
         /// </summary>
         /// <param name="s">Object of station to add</param>
         /// <returns>Notice if the addition was successful</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public string AddStation(BO.Station s) {
             try {
                 CheckValidId(s.Id.Value);
@@ -44,6 +46,7 @@ namespace BL
         /// <param name="name">If requested - the new name for the station update</param>
         /// <param name="chargeSlots">If requested - the number of charge slots for the station update</param>
         /// <returns>Notice if the addition was successful</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public string UpdateStation(int id, string name, int? chargeSlots) {
             try {
                 DO.Station s = data.GetStationById(id);
@@ -67,6 +70,7 @@ namespace BL
         /// </summary>
         /// <param name="Id">The id of the requested station</param>
         /// <returns>The object of the requested station</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Station GetStationById(int Id) {
             try {
                 DO.Station chosens = data.GetStationById(Id);
@@ -98,6 +102,7 @@ namespace BL
         /// Returns the list of stations
         /// </summary>
         /// <returns>Returns the list of stations</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<StationList> GetStations() {
             return ConvertToBL(data.GetStationByFilter(st => st.Active));
         }
@@ -106,6 +111,7 @@ namespace BL
         /// Returns a list of all stations that have available chargeSlots
         /// </summary>
         /// <returns>Returns a list of all stations that have available chargeSlots</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<StationList> GetStationCharge() {
             return ConvertToBL(data.GetStationByFilter(st => st.ChargeSlots > 0 && st.Active));
         }
@@ -128,6 +134,7 @@ namespace BL
             return station;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public string DeleteStation(int id) {
             DO.Station s = data.GetStationById(id);
             if (ChargeSlotsCatched(s.Id) != 0)

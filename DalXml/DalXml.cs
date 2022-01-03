@@ -9,6 +9,7 @@ using System.IO;
 using DO;
 using DalApi;
 using System.Xml.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Dal
 {

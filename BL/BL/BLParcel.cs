@@ -5,6 +5,7 @@ using BO;
 using BlApi;
 using DO;
 using DalApi;
+using System.Runtime.CompilerServices;
 
 namespace BL
 {
@@ -17,6 +18,7 @@ namespace BL
         /// <param name="SenderId">The ID of the sender of the parcel</param>
         /// <param name="TargetId">The ID of the target of the parcel</param>
         /// <returns>Notice if the addition was successful</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public string AddParcel(BO.Parcel p, int SenderId, int TargetId) {
             try {
                 if (SenderId == TargetId)
@@ -41,6 +43,7 @@ namespace BL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public string UpdateParcel(int id, BO.Priorities priorty) {
             DO.Parcel pa = data.GetParcelById(id);
             pa.Priority = (DO.Priorities)(int)priorty;
@@ -53,6 +56,7 @@ namespace BL
         /// </summary>
         /// <param name="Id">The id of the requested parcel</param>
         /// <returns>The object of the requested parcel</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Parcel GetParcelById(int Id) {
             try {
                 DO.Parcel chosenp = data.GetParcelById(Id);
@@ -98,6 +102,7 @@ namespace BL
         /// Returns the list of parcels
         /// </summary>
         /// <returns>Returns the list of parcels</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ParcelList> GetParcels() {
             return ConvertToBL(data.GetParcelByFilter(pa => pa.Active));
         }
@@ -106,6 +111,7 @@ namespace BL
         /// Returns a list of all unassigned parcels
         /// </summary>
         /// <returns>Returns a list of all unassigned parcels</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ParcelList> GetParcelDrone() {
             return ConvertToBL(data.GetParcelByFilter(pa => pa.Scheduled == null));
         }
@@ -130,6 +136,7 @@ namespace BL
             return parcel;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ParcelList> GetParcelByFilter(object weight, object status, object priorty, object fromDate, object toDate) {
             IEnumerable<ParcelList> parcelLists;
             if (fromDate is not null && toDate is not null)
@@ -149,6 +156,7 @@ namespace BL
             return parcelLists;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public string DeleteParcel(int id) {
             DO.Parcel p = data.GetParcelById(id);
             if (p.Scheduled != null)

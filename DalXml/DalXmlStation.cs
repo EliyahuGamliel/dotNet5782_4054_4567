@@ -5,42 +5,47 @@ using System.Text;
 using System.Threading.Tasks;
 using DO;
 using DalApi;
+using System.Runtime.CompilerServices;
 
 namespace Dal
 {
     partial class DalXml : IDal
     {
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddStation(Station s) {
-            List<Station> ls = Read<Station>();
-            CheckExistId<Station>(ls, s.Id);
-            ls.Add(s);
-            Write<Station>(ls);
+            List<Station> stations = Read<Station>();
+            CheckExistId<Station>(stations, s.Id);
+            stations.Add(s);
+            Write<Station>(stations);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateStation(Station s) {
-            List<Station> ls = Read<Station>();
-            CheckNotExistId<Station>(ls, s.Id);
-            ls[Update<Station>(ls, s)] = s;
-            Write<Station>(ls);
+            List<Station> stations = Read<Station>();
+            CheckNotExistId<Station>(stations, s.Id);
+            stations[Update<Station>(stations, s)] = s;
+            Write<Station>(stations);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteStation(Station s) {
-            List<Station> ls = Read<Station>();
-            CheckNotExistId<Station>(ls, s.Id);
-            ls[Update<Station>(ls, s)] = s;
-            Write<Station>(ls);
+            List<Station> stations = Read<Station>();
+            CheckNotExistId<Station>(stations, s.Id);
+            stations[Update<Station>(stations, s)] = s;
+            Write<Station>(stations);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Station GetStationById(int Id) {
-            List<Station> ls = Read<Station>();
-            CheckNotExistId<Station>(ls, Id);
-            return ls.Find(ls => ls.Id == Id);
+            List<Station> stations = Read<Station>();
+            CheckNotExistId<Station>(stations, Id);
+            return stations.Find(ls => ls.Id == Id);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Station> GetStationByFilter(Predicate<Station> stationList) {
-            List<Station> l = Read<Station>();
-            return l.FindAll(stationList);
+            List<Station> stations = Read<Station>();
+            return stations.FindAll(stationList);
         }
     }
 }

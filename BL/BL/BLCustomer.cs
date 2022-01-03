@@ -5,6 +5,7 @@ using BO;
 using BlApi;
 using DO;
 using DalApi;
+using System.Runtime.CompilerServices;
 
 namespace BL
 {
@@ -15,6 +16,7 @@ namespace BL
         /// </summary>
         /// <param name="c">Object of customer to add</param>
         /// <returns>Notice if the addition was successful</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public string AddCustomer(BO.Customer c) {
             try {
                 CheckValidId(c.Id.Value);
@@ -26,7 +28,9 @@ namespace BL
                 cu.Lattitude = c.Location.Lattitude.Value;
                 cu.Longitude = c.Location.Longitude.Value;
                 CheckLegelLocation(cu.Longitude, cu.Lattitude);
-                data.AddCustomer(cu);
+                lock (data) {
+                    data.AddCustomer(cu);
+                }
                 return "The addition was successful\n";
             }
             catch (DO.IdExistException) {
@@ -41,15 +45,18 @@ namespace BL
         /// <param name="nameCustomer">If requested - the new name for the customer update</param>
         /// <param name="phoneCustomer">If requested - the new phone for the customer update</param>
         /// <returns>Notice if the addition was successful</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public string UpdateCustomer(int id, string nameCustomer, string phoneCustomer) {
             try {
-                DO.Customer chosenc = data.GetCustomerById(id);
-                //If input is received
-                chosenc.Name = nameCustomer;
-                //If input is received
-                chosenc.Phone = phoneCustomer;
-                data.UpdateCustomer(chosenc);
-                return "The update was successful\n";
+                lock (data) {
+                    DO.Customer chosenc = data.GetCustomerById(id);
+                    //If input is received
+                    chosenc.Name = nameCustomer;
+                    //If input is received
+                    chosenc.Phone = phoneCustomer;
+                    data.UpdateCustomer(chosenc);
+                    return "The update was successful\n";
+                }
             }
             catch (DO.IdNotExistException) {
                 throw new BO.IdNotExistException(id);
@@ -61,55 +68,58 @@ namespace BL
         /// </summary>
         /// <param name="Id">The id of the requested customer</param>
         /// <returns>The object of the requested customer</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Customer GetCustomerById(int Id) {
             try {
-                DO.Customer chosenc = data.GetCustomerById(Id);
-                BO.Customer cu = new BO.Customer();
-                cu.ForCustomer = new List<ParcelInCustomer>();
-                cu.FromCustomer = new List<ParcelInCustomer>();
-                cu.Location = new Location();
-                cu.Id = chosenc.Id;
-                cu.Name = chosenc.Name;
-                cu.Phone = chosenc.Phone;
-                cu.Location.Longitude = chosenc.Longitude;
-                cu.Location.Lattitude = chosenc.Lattitude;
+                lock (data) {
+                    DO.Customer chosenc = data.GetCustomerById(Id);
+                    BO.Customer cu = new BO.Customer();
+                    cu.ForCustomer = new List<ParcelInCustomer>();
+                    cu.FromCustomer = new List<ParcelInCustomer>();
+                    cu.Location = new Location();
+                    cu.Id = chosenc.Id;
+                    cu.Name = chosenc.Name;
+                    cu.Phone = chosenc.Phone;
+                    cu.Location.Longitude = chosenc.Longitude;
+                    cu.Location.Lattitude = chosenc.Lattitude;
 
-                foreach (var item in data.GetParcelByFilter(p => p.TargetId == cu.Id)) {
-                    //If the customer is the target of the parcel
-                    ParcelInCustomer pc = new ParcelInCustomer();
-                    pc.CParcel = new CustomerInParcel();
-                    pc.Id = item.Id;
-                    pc.Priority = (BO.Priorities)(int)item.Priority;
-                    pc.Weight = (BO.WeightCategories)(int)item.Weight;
-                    pc.Status = (Statuses)ReturnStatus(item);
+                    foreach (var item in data.GetParcelByFilter(p => p.TargetId == cu.Id)) {
+                        //If the customer is the target of the parcel
+                        ParcelInCustomer pc = new ParcelInCustomer();
+                        pc.CParcel = new CustomerInParcel();
+                        pc.Id = item.Id;
+                        pc.Priority = (BO.Priorities)(int)item.Priority;
+                        pc.Weight = (BO.WeightCategories)(int)item.Weight;
+                        pc.Status = (Statuses)ReturnStatus(item);
 
-                    CustomerInParcel cp = new CustomerInParcel();
-                    cp.Id = item.SenderId;
-                    DO.Customer customerhelp = data.GetCustomerById(cp.Id);
-                    cp.Name = customerhelp.Name;
-                    pc.CParcel = cp;
+                        CustomerInParcel cp = new CustomerInParcel();
+                        cp.Id = item.SenderId;
+                        DO.Customer customerhelp = data.GetCustomerById(cp.Id);
+                        cp.Name = customerhelp.Name;
+                        pc.CParcel = cp;
 
-                    cu.ForCustomer.Add(pc);
+                        cu.ForCustomer.Add(pc);
+                    }
+
+                    foreach (var item in data.GetParcelByFilter(p => p.SenderId == cu.Id)) {
+                        //If the customer is the sender of the parcel
+                        ParcelInCustomer pc = new ParcelInCustomer();
+                        pc.CParcel = new CustomerInParcel();
+                        pc.Id = item.Id;
+                        pc.Priority = (BO.Priorities)(int)item.Priority;
+                        pc.Weight = (BO.WeightCategories)(int)item.Weight;
+                        pc.Status = (Statuses)ReturnStatus(item);
+
+                        CustomerInParcel cp = new CustomerInParcel();
+                        cp.Id = item.TargetId;
+                        DO.Customer customerhelp = data.GetCustomerById(cp.Id);
+                        cp.Name = customerhelp.Name;
+                        pc.CParcel = cp;
+
+                        cu.FromCustomer.Add(pc);
+                    }
+                    return cu;
                 }
-
-                foreach (var item in data.GetParcelByFilter(p => p.SenderId == cu.Id)) {
-                    //If the customer is the sender of the parcel
-                    ParcelInCustomer pc = new ParcelInCustomer();
-                    pc.CParcel = new CustomerInParcel();
-                    pc.Id = item.Id;
-                    pc.Priority = (BO.Priorities)(int)item.Priority;
-                    pc.Weight = (BO.WeightCategories)(int)item.Weight;
-                    pc.Status = (Statuses)ReturnStatus(item);
-
-                    CustomerInParcel cp = new CustomerInParcel();
-                    cp.Id = item.TargetId;
-                    DO.Customer customerhelp = data.GetCustomerById(cp.Id);
-                    cp.Name = customerhelp.Name;
-                    pc.CParcel = cp;
-
-                    cu.FromCustomer.Add(pc);
-                }
-                return cu;
             }
             catch (DO.IdNotExistException) {
                 throw new BO.IdNotExistException(Id);
@@ -120,8 +130,11 @@ namespace BL
         /// Returns the list of customers
         /// </summary>
         /// <returns>Returns the list of customers</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<CustomerList> GetCustomers() {
-            return ConvertToBL(data.GetCustomerByFilter(c => c.Active));
+            lock (data) {
+                return ConvertToBL(data.GetCustomerByFilter(c => c.Active));
+            }
         }
 
         /// <summary>
@@ -151,12 +164,15 @@ namespace BL
             return customer;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public string DeleteCustomer(int customerID) {
-            CheckDeleteCustomer(customerID);
-            DO.Customer cu = data.GetCustomerById(customerID);
-            cu.Active = false;
-            data.DeleteCustomer(cu);
-            return "The delete was successful\n";
+            lock (data) {
+                CheckDeleteCustomer(customerID);
+                DO.Customer cu = data.GetCustomerById(customerID);
+                cu.Active = false;
+                data.DeleteCustomer(cu);
+                return "The delete was successful\n";
+            }
         }
     }
 }
