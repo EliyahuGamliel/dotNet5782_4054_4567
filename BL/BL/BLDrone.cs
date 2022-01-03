@@ -38,6 +38,7 @@ namespace BL
                 DO.Drone drone = new DO.Drone();
                 drone.Id = dr.Id;
                 drone.Model = dr.Model;
+                drone.Active = true;
                 drone.MaxWeight = (DO.WeightCategories)((int)dr.MaxWeight);
                 data.AddDrone(drone);
                 dronesList.Add(dr);

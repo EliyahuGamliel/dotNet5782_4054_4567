@@ -16,7 +16,6 @@ namespace Dal
         /// <param name="d">Object of drone to add</param>
         public void AddDrone(Drone d) {
             CheckExistId(DataSource.Drones, d.Id);
-            d.Active = true;
             DataSource.Drones.Add(d);
         }
 

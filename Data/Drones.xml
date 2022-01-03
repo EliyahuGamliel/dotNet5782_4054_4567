@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<drone>
+  <drone>
+    <Active>false</Active>
+    <Id>123</Id>
+    <MaxWeight>Light</MaxWeight>
+    <Model>123</Model>
+  </drone>
+  <drone>
+    <Active>true</Active>
+    <Id>1231212123</Id>
+    <MaxWeight>Light</MaxWeight>
+    <Model>124</Model>
+  </drone>
+</drone>

@@ -15,8 +15,11 @@ namespace Dal
         string dronesPath = @"Data\Drones.xml";
         public void AddDrone(Drone d) {
             try {
-                XElement droneRoot = XElement.Load(dronesPath);
-                droneRoot.Add(new XElement("drone",
+                droneRoot = XElement.Load(dronesPath); }
+            catch { droneRoot = new XElement("drone"); }
+
+            try { 
+            droneRoot.Add(new XElement("drone",
                     new XElement("Active", d.Active),
                     new XElement("Id", d.Id),
                     new XElement("MaxWeight", d.MaxWeight),
