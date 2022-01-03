@@ -9,12 +9,11 @@ using DO;
 namespace BL
 {
     public partial class BL : IBL
-    {       
+    {
         /// <summary>
         /// BL constructor
         /// </summary>
-        public BL()
-        {
+        public BL() {
             data = DalApi.DalFactory.GetDal();
             Avaliable = data.DroneElectricityUse()[0];
             WeightLight = data.DroneElectricityUse()[1];
@@ -23,9 +22,8 @@ namespace BL
             ChargingRate = data.DroneElectricityUse()[4];
 
             IEnumerable<DO.Drone> droneslist = data.GetDroneByFilter(d => d.Active);
-             
-            foreach (var item in droneslist)
-            {
+
+            foreach (var item in droneslist) {
                 bool NotDel = true;
                 double minbattery = 0;
 
@@ -37,22 +35,18 @@ namespace BL
                 dl.Active = true;
 
                 IEnumerable<DO.Parcel> parcelslist = data.GetParcelByFilter(p => true);
-                foreach (var itemParcel in parcelslist)
-                {
+                foreach (var itemParcel in parcelslist) {
                     //If the parcel is associated with the drone and also the parcrel in the middle of the shipment
-                    if (itemParcel.DroneId == dl.Id && itemParcel.Delivered == null)
-                    {
+                    if (itemParcel.DroneId == dl.Id && itemParcel.Delivered == null) {
                         dl.Status = DroneStatuses.Delivery;
                         dl.ParcelId = itemParcel.Id;
                         //If the parcel was only associated
-                        if (itemParcel.PickedUp == null)
-                        {
+                        if (itemParcel.PickedUp == null) {
                             BO.Customer customer = GetCustomerById(itemParcel.SenderId);
                             dl.CLocation = ReturnCloseStation(data.GetStationByFilter(s => true), customer.Location).Location;
                         }
                         //If the parcel was also collected
-                        else
-                        {
+                        else {
                             BO.Customer customer = GetCustomerById(itemParcel.SenderId);
                             dl.CLocation = customer.Location;
                         }
@@ -76,14 +70,13 @@ namespace BL
                         break;
                     }
                 }
-                //If the drone is not in delivery mode (no parcel associated with it)
-                if (NotDel)
-                {
+                //If the drone is not in delivery mode (no parcel associated with it) and (for xml) wasn't before in charge
+                if (NotDel && data.GetDroneChargeByFilter(dc => dc.Active && dc.DroneId == dl.Id).Count() == 0) {
                     //The drone mode is randomized
                     dl.Status = (DroneStatuses)rand.Next(0, 2);
                     //If the situation that came out is: maintenance
-                    if (dl.Status == DroneStatuses.Maintenance)
-                    {
+                    if (dl.Status == DroneStatuses.Maintenance || GetCustomers().Where(cus => cus.ParcelsGet > 0).Count() == 0) {
+                        dl.Status = DroneStatuses.Maintenance;
                         IEnumerable<DO.Station> stationslist = data.GetStationByFilter(sta => sta.ChargeSlots > 0);
                         int counter = stationslist.Count();
                         //The drone is at a random station
@@ -95,14 +88,14 @@ namespace BL
                         droneCharge.DroneId = dl.Id;
                         droneCharge.StationId = st.Id;
                         droneCharge.Active = true;
+                        droneCharge.Start = DateTime.Now;
                         data.AddDroneCharge(droneCharge);
 
                         UpdateStation(st.Id, "", st.ChargeSlots - 1 + ChargeSlotsCatched(st.Id));
                         dl.Battery = rand.NextDouble() + rand.Next(0, 20);
                     }
                     //If the situation that came out is: available
-                    else
-                    {
+                    else {
                         IEnumerable<CustomerList> customerslist = GetCustomers().Where(cus => cus.ParcelsGet > 0);
                         int counter = customerslist.Count();
                         //The drone is at a random customer Location
@@ -116,6 +109,12 @@ namespace BL
                         minbattery = ReturnBattery(3, dl.CLocation, lst);
                         dl.Battery = rand.NextDouble() + rand.Next((int)minbattery + 1, 100);
                     }
+                }
+                else {
+                    DO.DroneCharge dCharge = data.GetDroneChargeByFilter(dc => dc.Active && dc.DroneId == dl.Id).First();
+                    dl.CLocation = GetStationById(dCharge.StationId).Location;
+                    dl.Status = DroneStatuses.Maintenance;
+                    dl.Battery = rand.NextDouble() + rand.Next(0, 20);
                 }
                 dronesList.Add(dl);
             }

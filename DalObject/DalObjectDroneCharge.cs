@@ -15,7 +15,6 @@ namespace Dal
         /// </summary>
         /// <param name="d">Object of droneCharge to add</param>
         public void AddDroneCharge(DroneCharge d) {
-            d.Active = true;
             DataSource.DroneCharges.Add(d);
         }
 
@@ -33,7 +32,7 @@ namespace Dal
 
         public DroneCharge GetDroneChargeById(int Id)
         {
-            DroneCharge dC = DataSource.DroneCharges.Find(d => Id == d.DroneId);
+            DroneCharge dC = DataSource.DroneCharges.Find(d => Id == d.DroneId && d.Active);
             return dC;
         }
 

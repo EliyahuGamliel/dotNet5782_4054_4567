@@ -127,6 +127,7 @@ namespace BL
 
             d.Status = DroneStatuses.Available;
             DO.DroneCharge dc = data.GetDroneChargeById(d.Id);
+            dc.Active = false;
             TimeSpan time = DateTime.Now - dc.Start;
             d.Battery = d.Battery +  (time.TotalSeconds * ChargingRate);
             if (d.Battery > 100)
@@ -134,7 +135,7 @@ namespace BL
             dronesList[index] = d;
 
             BO.Station st = new BO.Station();
-            st = ReturnCloseStation(data.GetStationByFilter(s => s.Active), d.CLocation);
+            st = GetStationById(dc.StationId);
             int chargeSlots = ChargeSlotsCatched(st.Id.Value) + st.ChargeSlots.Value;
 
             data.DeleteDroneCharge(dc);

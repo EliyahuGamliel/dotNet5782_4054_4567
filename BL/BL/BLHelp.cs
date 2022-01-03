@@ -85,7 +85,7 @@ namespace BL
             double theta = l1.Longitude.Value - l2.Longitude.Value;
             double rtheta = Math.PI * theta / 180;
             double dist = Math.Sin(rlat1) * Math.Sin(rlat2) + Math.Cos(rlat1) * Math.Cos(rlat2) * Math.Cos(rtheta);
-            dist = Math.Acos(dist);
+            dist = Math.Acos((int)dist);
             dist = dist * 180 / Math.PI;
             dist = dist * 60 * 1.1515;
             return Math.Round(dist * 1.609344, 2);

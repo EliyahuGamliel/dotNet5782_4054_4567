@@ -338,4 +338,12 @@ namespace BO
             return "CanntDeleteParcel: The parcel (" + Id + ") cann't delete, because it is already associated\n";
         }
     }
+
+    [Serializable]
+    public class StationsNotExist : Exception
+    {
+        public override string ToString() {
+            return "StationsNotExist: problem in the program - there is no station\n";
+        }
+    }
 }

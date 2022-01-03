@@ -32,7 +32,7 @@ namespace Dal
 
         public DroneCharge GetDroneChargeById(int Id) {
             List<DroneCharge> l = Read<DroneCharge>();
-            return l.Find(l => l.DroneId == Id);
+            return l.Find(l => l.DroneId == Id && l.Active);
         }
 
         public IEnumerable<DroneCharge> GetDroneChargeByFilter(Predicate<DroneCharge> droneChargeList) {
