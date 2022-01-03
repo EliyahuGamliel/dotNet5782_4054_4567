@@ -50,9 +50,9 @@ namespace BL
                 if (name != "")
                     s.Name = name;
                 if (chargeSlots != null) {
-                    if (chargeSlots < 0 || ChargeSlotsCatched(id) > chargeSlots)
+                    if (chargeSlots < 0)
                         throw new ChargeSlotsNotLegal((int)chargeSlots);
-                    s.ChargeSlots = (int)chargeSlots - ChargeSlotsCatched(s.Id);
+                    s.ChargeSlots = (int)chargeSlots;
                 }
                 data.UpdateStation(s);
                 return "The update was successful\n";

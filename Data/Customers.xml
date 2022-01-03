@@ -1,3 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfCustomer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Customer>
+    <Id>1</Id>
+    <Name>123</Name>
+    <Phone>+972-532559635</Phone>
+    <Longitude>12</Longitude>
+    <Lattitude>12</Lattitude>
+    <Active>true</Active>
+  </Customer>
+  <Customer>
+    <Id>2</Id>
+    <Name>23</Name>
+    <Phone>+972-555555555</Phone>
+    <Longitude>56</Longitude>
+    <Lattitude>78</Lattitude>
+    <Active>true</Active>
+  </Customer>
 </ArrayOfCustomer>

@@ -22,7 +22,7 @@ namespace Dal
             var DroneId = typeof(DroneCharge).GetProperty("DroneId");
 
             //int index = l.FindIndex(x => (int)Id.GetValue(x, null) == (int)Id.GetValue(dc, null));
-            int index = l.FindIndex(x => (int)DroneId.GetValue(x, null) == (int)DroneId.GetValue(dc, null));
+            int index = l.FindIndex(x => (int)DroneId.GetValue(x, null) == (int)DroneId.GetValue(dc, null) && x.Active);
             if (index != -1)
                 l[index] = dc;
 

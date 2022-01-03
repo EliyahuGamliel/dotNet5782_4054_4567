@@ -26,14 +26,15 @@ namespace Dal
 
         }
         public void DeleteCustomer(Customer c) {
-            List<Customer> l = Read<Customer>();
-            l[Update<Customer>(l, c)] = c;
-            Write<Customer>(l);
+            List<Customer> customerList = Read<Customer>();
+            customerList[Update<Customer>(customerList, c)] = c;
+            Write<Customer>(customerList);
         }
 
         public Customer GetCustomerById(int Id) {
-            List<Customer> l = Read<Customer> ();
-            return l.Find(l => l.Id == Id);
+            List<Customer> customerList = Read<Customer> ();
+            CheckNotExistId<Customer>(customerList, Id);
+            return customerList.Find(c => c.Id == Id);
             
         }
 

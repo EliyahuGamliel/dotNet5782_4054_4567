@@ -3,13 +3,7 @@
   <DroneCharge>
     <DroneId>123</DroneId>
     <StationId>12</StationId>
-    <Start>2022-01-03T14:21:34.3459926+02:00</Start>
-    <Active>false</Active>
-  </DroneCharge>
-  <DroneCharge>
-    <DroneId>123</DroneId>
-    <StationId>12</StationId>
-    <Start>2022-01-03T14:21:34.3459926+02:00</Start>
+    <Start>2022-01-03T15:33:52.1451331+02:00</Start>
     <Active>true</Active>
   </DroneCharge>
 </ArrayOfDroneCharge>

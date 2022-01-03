@@ -51,7 +51,12 @@ namespace PL
         }
 
         private void Update_Click(object sender, RoutedEventArgs e) {
-            MessageBox.Show(bl.UpdateStation(st.Id.Value, nameStation.Text, st.ChargeSlots.Value));
+            try {
+                MessageBox.Show(bl.UpdateStation(st.Id.Value, nameStation.Text, st.ChargeSlots.Value));
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void Add_Click(object sender, RoutedEventArgs e) {

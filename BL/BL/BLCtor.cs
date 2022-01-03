@@ -91,7 +91,7 @@ namespace BL
                         droneCharge.Start = DateTime.Now;
                         data.AddDroneCharge(droneCharge);
 
-                        UpdateStation(st.Id, "", st.ChargeSlots - 1 + ChargeSlotsCatched(st.Id));
+                        UpdateStation(st.Id, "", st.ChargeSlots - 1);
                         dl.Battery = rand.NextDouble() + rand.Next(0, 20);
                     }
                     //If the situation that came out is: available
@@ -110,7 +110,7 @@ namespace BL
                         dl.Battery = rand.NextDouble() + rand.Next((int)minbattery + 1, 100);
                     }
                 }
-                else {
+                else if (NotDel) {
                     DO.DroneCharge dCharge = data.GetDroneChargeByFilter(dc => dc.Active && dc.DroneId == dl.Id).First();
                     dl.CLocation = GetStationById(dCharge.StationId).Location;
                     dl.Status = DroneStatuses.Maintenance;
