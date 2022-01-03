@@ -12,4 +12,10 @@
     <MaxWeight>Light</MaxWeight>
     <Model>124</Model>
   </drone>
+  <drone>
+    <Active>true</Active>
+    <Id>3260</Id>
+    <MaxWeight>Light</MaxWeight>
+    <Model>sf</Model>
+  </drone>
 </drone>

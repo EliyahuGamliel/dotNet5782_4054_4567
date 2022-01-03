@@ -19,7 +19,14 @@ namespace Dal
 
         public void DeleteDroneCharge(DroneCharge dc) {
             List<DroneCharge> l = Read<DroneCharge>();
-            l[Update<DroneCharge>(l, dc)] = dc;
+            var DroneId = typeof(DroneCharge).GetProperty("DroneId");
+
+            //int index = l.FindIndex(x => (int)Id.GetValue(x, null) == (int)Id.GetValue(dc, null));
+            int index = l.FindIndex(x => (int)DroneId.GetValue(x, null) == (int)DroneId.GetValue(dc, null));
+            if (index != -1)
+                l[index] = dc;
+
+            l[index] = dc;
             Write<DroneCharge>(l);
         }
 
