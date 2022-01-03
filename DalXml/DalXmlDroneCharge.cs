@@ -12,8 +12,6 @@ namespace Dal
     {
         public void AddDroneCharge(DroneCharge dc) {
             List<DroneCharge> ldc = Read<DroneCharge>();
-
-            CheckExistId(dc.DroneId);
             ldc.Add(dc);
             Write<DroneCharge>(ldc);
         }
@@ -40,17 +38,6 @@ namespace Dal
         public IEnumerable<DroneCharge> GetDroneChargeByFilter(Predicate<DroneCharge> droneChargeList) {
             List<DroneCharge> ldc = Read<DroneCharge>();
             return ldc.FindAll(droneChargeList);
-        }
-
-        private void CheckExistId(int dcid) {
-            List<DroneCharge> ldc = Read<DroneCharge>();
-
-            foreach (var item in ldc) {
-
-                int idobject = (int)(typeof(DroneCharge).GetProperty("DroneId").GetValue(item, null));
-                if (idobject == dcid)
-                    throw new IdExistException(dcid);
-            }
         }
 
         private void CheckNotExistId(int dcid) {

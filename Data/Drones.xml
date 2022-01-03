@@ -2,32 +2,14 @@
 <drone>
   <drone>
     <Active>true</Active>
-    <Id>123</Id>
+    <Id>12</Id>
     <MaxWeight>Light</MaxWeight>
-    <Model>123</Model>
+    <Model>Mavuc</Model>
   </drone>
   <drone>
     <Active>true</Active>
-    <Id>32</Id>
+    <Id>1</Id>
     <MaxWeight>Light</MaxWeight>
-    <Model>kjn</Model>
-  </drone>
-  <drone>
-    <Active>true</Active>
-    <Id>32</Id>
-    <MaxWeight>Light</MaxWeight>
-    <Model>ff</Model>
-  </drone>
-  <drone>
-    <Active>true</Active>
-    <Id>32</Id>
-    <MaxWeight>Light</MaxWeight>
-    <Model>ff</Model>
-  </drone>
-  <drone>
-    <Active>true</Active>
-    <Id>3260</Id>
-    <MaxWeight>Light</MaxWeight>
-    <Model>ff</Model>
+    <Model>1</Model>
   </drone>
 </drone>

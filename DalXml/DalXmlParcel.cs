@@ -14,10 +14,11 @@ namespace Dal
         public int AddParcel(Parcel p) {
             List<Parcel> lp = Read<Parcel>();
             CheckExistId<Parcel>(lp, p.Id);
-            lp.Add(p);
-            Write<Parcel>(lp);
             XElement configRoot = XElement.Load(@"xml\config.xml");
             int numberID = Int32.Parse(configRoot.Element("NumberID").Value);
+            p.Id = numberID;
+            lp.Add(p);
+            Write<Parcel>(lp);
             configRoot.Element("NumberID").SetValue(numberID + 1);
             configRoot.Save(@"xml\config.xml");
             return numberID;

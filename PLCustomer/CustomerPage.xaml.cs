@@ -24,7 +24,7 @@ namespace PLCustomer
     {
         private IBL bl = BlFactory.GetBl();
         private Customer cu;
-        private Parcel pa;
+        private ParcelInCustomer pa;
 
         public CustomerPage(Customer customer = null) {
             InitializeComponent();
@@ -107,8 +107,8 @@ namespace PLCustomer
 
         private void OpenParcel(object sender, MouseButtonEventArgs e) {
             if ((sender as ListView).SelectedItem != null) {
-                ParcelInCustomer p = (ParcelInCustomer)(sender as ListView).SelectedItem;
-                ParcelPage parcelPage = new ParcelPage(bl.GetParcelById(p.Id));
+                pa = (ParcelInCustomer)(sender as ListView).SelectedItem;
+                ParcelPage parcelPage = new ParcelPage(bl.GetParcelById(pa.Id));
                 parcelPage.Unloaded += UpdateCustomer;
                 this.NavigationService.Navigate(parcelPage);
             }
@@ -116,9 +116,9 @@ namespace PLCustomer
 
         private void GetParcel(object sender, SelectionChangedEventArgs e) {
             if (CustomerForListView.SelectedItem != null) {
-                ParcelInCustomer p = (ParcelInCustomer)CustomerForListView.SelectedItem;
-                if (p.Status == Statuses.Associated) {
-                    CustomerFromListView.SelectedItem = null;
+                pa = (ParcelInCustomer)CustomerForListView.SelectedItem;
+                CustomerFromListView.SelectedItem = null;
+                if (pa.Status == Statuses.Collected) {
                     action2.Click -= PickUp;
                     action2.Content = "Get Parcel";
                     action2.Click += Deliver;
@@ -130,9 +130,9 @@ namespace PLCustomer
 
         private void CollectParcel(object sender, SelectionChangedEventArgs e) {
             if (CustomerFromListView.SelectedItem != null) {
-                ParcelInCustomer p = (ParcelInCustomer)CustomerFromListView.SelectedItem;
-                if (p.Status == Statuses.Associated) {
-                    CustomerForListView.SelectedItem = null;
+                pa = (ParcelInCustomer)CustomerFromListView.SelectedItem;
+                CustomerForListView.SelectedItem = null;
+                if (pa.Status == Statuses.Associated) {
                     action2.Click -= Deliver;
                     action2.Content = "Collect Parcel";
                     action2.Click += PickUp;
@@ -143,12 +143,14 @@ namespace PLCustomer
         }
 
         private void PickUp(object sender, RoutedEventArgs e) {
-            MessageBox.Show(bl.PickUpDroneParcel(pa.Drone.Id));
+            Parcel p = bl.GetParcelById(pa.Id);
+            MessageBox.Show(bl.PickUpDroneParcel(p.Drone.Id));
             UpdateCustomer();
         }
 
         private void Deliver(object sender, RoutedEventArgs e) {
-            MessageBox.Show(bl.DeliverParcelCustomer(pa.Drone.Id));
+            Parcel p = bl.GetParcelById(pa.Id);
+            MessageBox.Show(bl.DeliverParcelCustomer(p.Drone.Id));
             UpdateCustomer();
         }
     }

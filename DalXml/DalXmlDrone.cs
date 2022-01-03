@@ -18,16 +18,19 @@ namespace Dal
                 droneRoot = XElement.Load(dronesPath); }
             catch { droneRoot = new XElement("drone"); }
 
-            try { 
-            droneRoot.Add(new XElement("drone",
-                    new XElement("Active", d.Active),
-                    new XElement("Id", d.Id),
-                    new XElement("MaxWeight", d.MaxWeight),
-                    new XElement("Model", d.Model)
-                    ));
+            try {
+                GetDroneById(d.Id);
+                throw new IdExistException(d.Id);
+            }
+            catch {
+                droneRoot.Add(new XElement("drone",
+                new XElement("Active", d.Active),
+                new XElement("Id", d.Id),
+                new XElement("MaxWeight", d.MaxWeight),
+                new XElement("Model", d.Model)
+                ));
                 droneRoot.Save(dronesPath);
             }
-            catch { throw new IdExistException(d.Id); }
         }
 
         public void UpdateDrone(Drone d) {

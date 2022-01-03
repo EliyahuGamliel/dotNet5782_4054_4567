@@ -53,8 +53,7 @@ namespace Dal
         List<T> Read<T>() {
             XmlReader Reader;
             List<T> Data;
-            XmlSerializer Ser = new XmlSerializer(typeof(List<T>));
-            
+            XmlSerializer Ser = new XmlSerializer(typeof(List<T>));    
 
             try {
                 Reader = new XmlTextReader(Path.Combine("Data", fileNames[typeof(T)]));
@@ -80,6 +79,7 @@ namespace Dal
                 return new List<T>();
             }
         }
+
         void Write<T>(List<T> data) {
             XmlSerializer ser = new XmlSerializer(typeof(List<T>));
 

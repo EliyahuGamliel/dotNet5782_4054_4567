@@ -77,7 +77,7 @@ namespace BL
                     //If the situation that came out is: maintenance
                     if (dl.Status == DroneStatuses.Maintenance || GetCustomers().Where(cus => cus.ParcelsGet > 0).Count() == 0) {
                         dl.Status = DroneStatuses.Maintenance;
-                        IEnumerable<DO.Station> stationslist = data.GetStationByFilter(sta => sta.ChargeSlots > 0);
+                        IEnumerable<DO.Station> stationslist = data.GetStationByFilter(sta => sta.ChargeSlots > 0 && sta.Active);
                         int counter = stationslist.Count();
                         //The drone is at a random station
                         int stIndex = rand.Next(0, counter);
