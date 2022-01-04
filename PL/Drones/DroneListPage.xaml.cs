@@ -109,13 +109,13 @@ namespace PL
             if (DroneListView.SelectedItem != null) {
                 DroneList d = (DroneList)DroneListView.SelectedItem;
                 DronePage dronePage = new DronePage(bl.GetDroneById(d.Id));
-                dronePage.Unloaded += UpdateList;
+                dronePage.OnClose += UpdateList;
                 //this.NavigationService.Navigate(dronePage);
                 var window = new Window {
                     Content = dronePage,
                     Height = 640,
                     Width = 800,
-                    Background = @"img\"
+                    //Background = @"img\"
                 };
                 window.Show();
             }
