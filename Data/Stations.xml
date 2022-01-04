@@ -1,19 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfStation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Station>
-    <Id>12</Id>
-    <Name>12</Name>
-    <Longitude>12</Longitude>
-    <Lattitude>12</Lattitude>
-    <ChargeSlots>15</ChargeSlots>
+    <Id>958544987</Id>
+    <Name>958544987</Name>
+    <Longitude>102.39280907362365</Longitude>
+    <Lattitude>-5.786180210200222</Lattitude>
+    <ChargeSlots>4</ChargeSlots>
     <Active>true</Active>
   </Station>
   <Station>
-    <Id>32</Id>
-    <Name>rr</Name>
-    <Longitude>34</Longitude>
-    <Lattitude>43</Lattitude>
-    <ChargeSlots>55</ChargeSlots>
-    <Active>false</Active>
+    <Id>231066144</Id>
+    <Name>231066144</Name>
+    <Longitude>-86.3520395999551</Longitude>
+    <Lattitude>-57.66148482340457</Lattitude>
+    <ChargeSlots>2</ChargeSlots>
+    <Active>true</Active>
+  </Station>
+  <Station>
+    <Id>661480867</Id>
+    <Name>661480867</Name>
+    <Longitude>149.34953221927842</Longitude>
+    <Lattitude>28.41842678907254</Lattitude>
+    <ChargeSlots>4</ChargeSlots>
+    <Active>true</Active>
+  </Station>
+  <Station>
+    <Id>344722783</Id>
+    <Name>344722783</Name>
+    <Longitude>-20.19034181125012</Longitude>
+    <Lattitude>68.49970523524084</Lattitude>
+    <ChargeSlots>4</ChargeSlots>
+    <Active>true</Active>
+  </Station>
+  <Station>
+    <Id>1267559833</Id>
+    <Name>1267559833</Name>
+    <Longitude>-17.468582385903495</Longitude>
+    <Lattitude>-71.94039413330164</Lattitude>
+    <ChargeSlots>2</ChargeSlots>
+    <Active>true</Active>
   </Station>
 </ArrayOfStation>

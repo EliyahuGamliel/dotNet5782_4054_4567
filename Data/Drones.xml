@@ -1,15 +1,63 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<drone>
-  <drone>
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfDrone xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Drone>
+    <Id>943965121</Id>
+    <Model>Minip0</Model>
+    <MaxWeight>Medium</MaxWeight>
     <Active>true</Active>
-    <Id>12</Id>
+  </Drone>
+  <Drone>
+    <Id>854100526</Id>
+    <Model>Minip1</Model>
     <MaxWeight>Light</MaxWeight>
-    <Model>Mavuc</Model>
-  </drone>
-  <drone>
     <Active>true</Active>
-    <Id>1</Id>
+  </Drone>
+  <Drone>
+    <Id>349675874</Id>
+    <Model>Minip2</Model>
+    <MaxWeight>Medium</MaxWeight>
+    <Active>true</Active>
+  </Drone>
+  <Drone>
+    <Id>1485362661</Id>
+    <Model>Minip3</Model>
+    <MaxWeight>Medium</MaxWeight>
+    <Active>true</Active>
+  </Drone>
+  <Drone>
+    <Id>1863690084</Id>
+    <Model>Minip4</Model>
+    <MaxWeight>Medium</MaxWeight>
+    <Active>true</Active>
+  </Drone>
+  <Drone>
+    <Id>1456544854</Id>
+    <Model>Minip5</Model>
+    <MaxWeight>Medium</MaxWeight>
+    <Active>true</Active>
+  </Drone>
+  <Drone>
+    <Id>629708589</Id>
+    <Model>Minip6</Model>
     <MaxWeight>Light</MaxWeight>
-    <Model>1</Model>
-  </drone>
-</drone>
+    <Active>true</Active>
+  </Drone>
+  <Drone>
+    <Id>1495413961</Id>
+    <Model>Minip7</Model>
+    <MaxWeight>Heavy</MaxWeight>
+    <Active>true</Active>
+  </Drone>
+  <Drone>
+    <Id>1232722895</Id>
+    <Model>Minip8</Model>
+    <MaxWeight>Heavy</MaxWeight>
+    <Active>true</Active>
+  </Drone>
+  <Drone>
+    <Id>1449334385</Id>
+    <Model>Minip9</Model>
+    <MaxWeight>Light</MaxWeight>
+    <Active>true</Active>
+  </Drone>
+</ArrayOfDrone>
