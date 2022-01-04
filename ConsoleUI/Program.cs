@@ -26,11 +26,10 @@ namespace ConsoleUI
                 Console.WriteLine("Enter 2 for update");
                 Console.WriteLine("Enter 3 to show by Id");
                 Console.WriteLine("Enter 4 for the list");
-                Console.WriteLine("Enter 5 to show the distance from the station/customer");
-                Console.WriteLine("Enter 6 to exit");
+                Console.WriteLine("Enter 5 to exit");
                 Int32.TryParse(Console.ReadLine(), out choice);
                 FirstMenu(choice);
-            } while (choice != 6);
+            } while (choice != 5);
         }
         /// <summary>
         /// The first part of the menu
@@ -70,11 +69,6 @@ namespace ConsoleUI
                     break;
 
                 case 5:
-                    Console.WriteLine("Enter 1 to mesure the distance from a customer");
-                    Console.WriteLine("Enter 2 to mesure the distance from a station");
-                    break;
-
-                case 6:
                     Console.WriteLine("Bye Bye!");
                     return;
             }
@@ -116,7 +110,6 @@ namespace ConsoleUI
             switch (num) {
                 //For adding a station
                 case 1:
-
                     Station s = new Station();
                     Console.WriteLine("Enter the longitude of the station");
                     s.Longitude = GetDouble();
@@ -128,13 +121,12 @@ namespace ConsoleUI
                     s.Id = GetInt();
                     Console.WriteLine("Enter ChargeSlots: ");
                     s.ChargeSlots = GetInt();
-
+                    s.Active = true;
                     data.AddStation(s);
                     break;
 
                 //For adding a drone
                 case 2:
-
                     Drone d = new Drone();
                     Console.WriteLine("Enter drone's Id: ");
                     d.Id = GetInt();
@@ -142,6 +134,7 @@ namespace ConsoleUI
                     d.Model = Console.ReadLine();
                     Console.WriteLine("Enter the max weight of the drone (1\\2\\3)");
                     d.MaxWeight = (WeightCategories)GetInt();
+                    d.Active = true;
                     data.AddDrone(d);
                     break;
 
@@ -158,6 +151,7 @@ namespace ConsoleUI
                     c.Id = GetInt();
                     Console.WriteLine("Enter customer's phone number: ");
                     c.Phone = Console.ReadLine();
+                    c.Active = true;
                     data.AddCustomer(c);
                     break;
 
@@ -174,8 +168,8 @@ namespace ConsoleUI
                     p.SenderId = GetInt();
                     Console.WriteLine("Enter the max weight of the drone (1\\2\\3)");
                     p.Weight = (WeightCategories)GetInt();
+                    p.Active = true;
                     data.AddParcel(p);
-
                     break;
             }
         }

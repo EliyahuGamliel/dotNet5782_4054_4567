@@ -93,13 +93,13 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public string SendDrone(int idDrone) {
             CheckNotExistId(dronesList, idDrone);
-
             DroneList d = dronesList.Find(dr => idDrone == dr.Id);
             int index = dronesList.IndexOf(d);
-            double battery = CheckDroneCannotSend(data.GetStationByFilter(s => s.Active).Where(s => s.ChargeSlots > 0), d);
+            IEnumerable<DO.Station> stations = data.GetStationByFilter(s => s.Active && s.ChargeSlots > 0);
+            double battery = CheckDroneCannotSend(stations, d);
             d.Status = DroneStatuses.Maintenance;
             BO.Station st = new BO.Station();
-            st = ReturnCloseStation(data.GetStationByFilter(s => s.Active), d.CLocation);
+            st = ReturnCloseStation(stations, d.CLocation);
             d.CLocation = st.Location;
             d.Battery = d.Battery - battery;
             dronesList[index] = d;
@@ -144,7 +144,7 @@ namespace BL
 
             data.DeleteDroneCharge(dc);
 
-            UpdateStation(st.Id.Value, "", st.ChargeSlots.Value);
+            UpdateStation(st.Id.Value, "", st.ChargeSlots.Value + 1);
             return "The update was successful\n";
         }
 

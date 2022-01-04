@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,9 +22,10 @@ namespace PL
     /// </summary>
     public partial class DroneWindow : Window
     {
-        private Drone dr;
-        private Parcel pa;
-        private IBL bl = BlFactory.GetBl();
+        Drone dr;
+        Parcel pa;
+        IBL bl = BlFactory.GetBl();
+        BackgroundWorker worker;
 
         /// <summary>
         /// The ctor
@@ -230,6 +232,17 @@ namespace PL
             ParcelPage parcelPage = new ParcelPage(bl.GetParcelById(dr.PTransfer.Id));
             parcelPage.Unloaded += Initialize;
             this.HostPage.Content = parcelPage;
+        }
+        
+        
+        private void Simulator(object sender, RoutedEventArgs e) { 
+            if (checkBoxSimulator.IsChecked == true) {
+                
+            }
+            else {
+
+            }
+
         }
     }
 }

@@ -149,5 +149,20 @@
             </ComboBox>
         </Grid>
         <Frame Grid.RowSpan="3" x:Name="HostPage" NavigationUIVisibility="Hidden" />
+        <CheckBox x:Name="checkBoxSimulator" Click="Simulator" FontFamily="/font/#Fuzzy Bubbles" Content="Run Simulator" HorizontalAlignment="Left" Margin="25,27,0,0" VerticalAlignment="Top" Height="23" Width="117">
+            <CheckBox.LayoutTransform>
+                <ScaleTransform ScaleX="2" ScaleY="2"/>
+            </CheckBox.LayoutTransform>
+            <CheckBox.Resources>
+                <Style TargetType="CheckBox">
+                    <Setter Property="Visibility" Value="Visible"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=Content, ElementName=batteryDrone}" Value="">
+                            <Setter Property="Visibility" Value="Hidden"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </CheckBox.Resources>
+        </CheckBox>
     </Grid>
 </Window>
