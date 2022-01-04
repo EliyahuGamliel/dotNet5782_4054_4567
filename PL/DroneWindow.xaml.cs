@@ -10,7 +10,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BO;
 using BlApi;
@@ -18,9 +17,9 @@ using BlApi;
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for DronePage.xaml
+    /// Interaction logic for DroneWindow.xaml
     /// </summary>
-    public partial class DronePage : Page
+    public partial class DroneWindow : Window
     {
         private Drone dr;
         private Parcel pa;
@@ -30,10 +29,11 @@ namespace PL
         /// The ctor
         /// </summary>
         /// <param name="drone">The drone to make on it actions</param>
-        public DronePage(Drone drone = null) {
+        public DroneWindow(Drone drone = null) {
             InitializeComponent();
-            if (drone == null)
+            if (drone == null) {
                 dr = new Drone();
+            }
             else
                 dr = drone;
 
@@ -170,7 +170,7 @@ namespace PL
             try {
                 StationList st = (StationList)idStationToChrging.SelectedItem;
                 MessageBox.Show(bl.AddDrone(dr, st.Id));
-                this.NavigationService.GoBack();
+                this.Close();
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -183,7 +183,7 @@ namespace PL
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Exit_Click(object sender, RoutedEventArgs e) {
-            this.NavigationService.GoBack();
+            this.Close();
         }
 
         #region change the button(s) according the drone status
@@ -229,7 +229,7 @@ namespace PL
         private void ParcelInDrone(object sender, RoutedEventArgs e) {
             ParcelPage parcelPage = new ParcelPage(bl.GetParcelById(dr.PTransfer.Id));
             parcelPage.Unloaded += Initialize;
-            this.NavigationService.Navigate(parcelPage);
+            this.HostPage.Content = parcelPage;
         }
     }
 }

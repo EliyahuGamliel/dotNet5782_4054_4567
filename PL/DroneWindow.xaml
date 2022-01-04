@@ -5,10 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="DroneWindow" Height="640" Width="800">
+        Title="DroneWindow" Height="640" Width="800"
+        ResizeMode="CanMinimize">
 
     <Window.Resources>
         <local:BatteryConverter x:Key="batteryConverter"/>
+        <local:ColorConverter x:Key="colorConverter"/>
         <local:IntCheckConverter x:Key="intCheckConverter"/>
         <local:IntConverter x:Key="intConverter"/>
         <Style x:Key="Design" TargetType="Button">
@@ -53,7 +55,8 @@
             </TextBox.Style>
         </TextBox>
         <ComboBox FontSize="20" SelectedIndex="0" HorizontalAlignment="Left" FontFamily="/font/#Fuzzy Bubbles" SelectedItem="{Binding Path=MaxWeight, FallbackValue='0'}" Name="maxWeightDrone" Width="286" Margin="146,250,0,250"/>
-        <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="batteryDrone" Text="{Binding Path=Battery, Converter={StaticResource batteryConverter}}" TextWrapping="Wrap" Margin="146,318,427,192"/>
+        <ProgressBar Foreground="{Binding Path=Battery, Converter={StaticResource colorConverter}}" HorizontalAlignment="Left" Margin="149,315,0,197" Value="{Binding Path=Battery, TargetNullValue=0.0}" Maximum="100" Width="229"/>
+        <Label Name="batteryDrone" FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Content="{Binding Path=Battery, Converter={StaticResource batteryConverter}}" HorizontalAlignment="Left" Margin="233,312,0,0" VerticalAlignment="Top" Height="47" Width="86"/>
         <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="statusDrone" Text="{Binding Path=Status, FallbackValue='Maintenance'}" TextWrapping="Wrap" Margin="146,386,427,124"/>
         <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="locationDrone" Text="{Binding Path=CLocation}" TextWrapping="Wrap" Margin="102,420,321,41"/>
         <TextBlock FontSize="15" FontFamily="/font/#Fuzzy Bubbles" Name="parcelDrone" Text="{Binding Path=PTransfer}" TextWrapping="Wrap" Margin="434,91,17,63"/>
@@ -74,7 +77,7 @@
                         <DataTrigger Binding="{Binding Path=Text, ElementName=parcelDrone}" Value="">
                             <Setter Property="IsEnabled" Value="False"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Path=Text, ElementName=batteryDrone}" Value="">
+                        <DataTrigger Binding="{Binding Path=Foreground, ElementName=batteryDrone}" Value="Gray">
                             <Setter Property="Visibility" Value="Hidden"/>
                         </DataTrigger>
                     </Style.Triggers>
@@ -122,12 +125,11 @@
                             <DataTrigger Binding="{Binding Path=Background, ElementName=modelDrone}" Value="Red">
                                 <Setter Property="IsEnabled" Value="False" />
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding Path=Text, ElementName=batteryDrone}" Value="">
+                            <DataTrigger Binding="{Binding Path=Content, ElementName=batteryDrone}" Value="">
                                 <Setter Property="Visibility" Value="Hidden"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
-
                 </Button.Resources>
             </Button>
         </Grid>
@@ -146,5 +148,6 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
         </Grid>
+        <Frame Grid.RowSpan="3" x:Name="HostPage" NavigationUIVisibility="Hidden" />
     </Grid>
 </Window>

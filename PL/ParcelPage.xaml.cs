@@ -52,12 +52,12 @@ namespace PL
         /// Initialise all the data and some of the graphics
         /// </summary>
         private void UpdateParcel(object sender, RoutedEventArgs e) {
-            pa = bl.GetParcelById(pa.Id.Value );
+            pa = bl.GetParcelById(pa.Id.Value);
             this.DataContext = pa;
         }
 
         private void Update_Click(object sender, RoutedEventArgs e) {
-            MessageBox.Show(bl.UpdateParcel(pa.Id.Value , pa.Priority));
+            MessageBox.Show(bl.UpdateParcel(pa.Id.Value, pa.Priority));
         }
 
         private void Add_Click(object sender, RoutedEventArgs e) {
@@ -85,9 +85,9 @@ namespace PL
         }
 
         private void DroneInParcel(object sender, RoutedEventArgs e) {
-            DronePage dronePage = new DronePage(bl.GetDroneById(pa.Drone.Id));
+            DroneWindow dronePage = new DroneWindow(bl.GetDroneById(pa.Drone.Id));
             dronePage.Unloaded += UpdateParcel;
-            this.NavigationService.Navigate(dronePage);
+            dronePage.ShowDialog();
         }
 
         /// <summary>
@@ -96,7 +96,10 @@ namespace PL
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Exit_Click(object sender, RoutedEventArgs e) {
-            this.NavigationService.GoBack();
+            if (this.NavigationService.CanGoBack)
+                this.NavigationService.GoBack();
+            else
+                this.Content = null;
         }
     }
 }

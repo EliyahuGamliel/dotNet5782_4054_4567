@@ -139,13 +139,12 @@ namespace BL
                 d.Battery = 100;
             dronesList[index] = d;
 
-            BO.Station st = new BO.Station();
-            st = GetStationById(dc.StationId);
-            int chargeSlots = ChargeSlotsCatched(st.Id.Value) + st.ChargeSlots.Value;
+            BO.Station st = GetStationById(dc.StationId);
+            //int chargeSlots = ChargeSlotsCatched(st.Id.Value) + st.ChargeSlots.Value;
 
             data.DeleteDroneCharge(dc);
 
-            UpdateStation(st.Id.Value, "", chargeSlots);
+            UpdateStation(st.Id.Value, "", st.ChargeSlots.Value);
             return "The update was successful\n";
         }
 

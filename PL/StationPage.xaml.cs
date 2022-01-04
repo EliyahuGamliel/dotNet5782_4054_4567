@@ -81,9 +81,9 @@ namespace PL
         private void OpenDrone(object sender, MouseButtonEventArgs e) {
             if (droneStationListView.SelectedItem != null) {
                 DroneCharge droneCharge = (DroneCharge)droneStationListView.SelectedItem;
-                DronePage dronePage = new DronePage(bl.GetDroneById(droneCharge.Id));
+                DroneWindow dronePage = new DroneWindow(bl.GetDroneById(droneCharge.Id));
                 dronePage.Unloaded += UpdateStation;
-                this.NavigationService.Navigate(dronePage);
+                dronePage.ShowDialog();
             }
         }
 

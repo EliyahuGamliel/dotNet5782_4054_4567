@@ -95,7 +95,7 @@ namespace Dal
             try {
                 ser.Serialize(Writer, data);
             }
-            catch (Exception err) { throw err; }
+            catch (Exception) { throw; }
             finally {
                 Writer.Close();
             }

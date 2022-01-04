@@ -11,8 +11,7 @@ namespace ConsoleUI
         /// <summary>
         /// The main function
         /// </summary>
-        static void Main(string[] args)
-        {
+        static void Main(string[] args) {
             data = new Dal.DalObject();
             MainMenu();
         }
@@ -20,11 +19,9 @@ namespace ConsoleUI
         /// <summary>
         /// The MainMenu
         /// </summary>
-        static void MainMenu()
-        {
+        static void MainMenu() {
             int choice;
-            do
-            {
+            do {
                 Console.WriteLine("Enter 1 for adding");
                 Console.WriteLine("Enter 2 for update");
                 Console.WriteLine("Enter 3 to show by Id");
@@ -33,16 +30,14 @@ namespace ConsoleUI
                 Console.WriteLine("Enter 6 to exit");
                 Int32.TryParse(Console.ReadLine(), out choice);
                 FirstMenu(choice);
-            } while (choice != 6);   
+            } while (choice != 6);
         }
         /// <summary>
         /// The first part of the menu
         /// </summary>
         /// <param name="choice">The first choice of the user</param>
-        static void FirstMenu(int choice)
-        {
-            switch (choice)
-            {
+        static void FirstMenu(int choice) {
+            switch (choice) {
                 case 1:
                     Console.WriteLine("Enter 1 for adding a station to the list");
                     Console.WriteLine("Enter 2 for adding a drone");
@@ -73,12 +68,12 @@ namespace ConsoleUI
                     Console.WriteLine("Enter 5 for the list of parcels that hadn't been assigned to a drone");
                     Console.WriteLine("Enter 6 for the list of stations that have sper place for charging");
                     break;
-                    
+
                 case 5:
                     Console.WriteLine("Enter 1 to mesure the distance from a customer");
                     Console.WriteLine("Enter 2 to mesure the distance from a station");
                     break;
-                    
+
                 case 6:
                     Console.WriteLine("Bye Bye!");
                     return;
@@ -87,16 +82,14 @@ namespace ConsoleUI
             Int32.TryParse(Console.ReadLine(), out secondChoice);
             SecondMenu(choice, secondChoice);
         }
-        
+
         /// <summary>
         /// The second part of the menu
         /// </summary>
         /// <param name="choice">The first choice of the user</param>
         /// <param name="secondChoice">The second choice of the user</param>
-        static void SecondMenu(int choice, int secondChoice)
-        {
-            switch (choice)
-            {
+        static void SecondMenu(int choice, int secondChoice) {
+            switch (choice) {
                 case 1:
                     adding(secondChoice);
                     break;
@@ -112,10 +105,6 @@ namespace ConsoleUI
                 case 4:
                     lists(secondChoice);
                     break;
-
-                case 5:
-                    coordinateMa(secondChoice);
-                    break;
             }
         }
 
@@ -124,11 +113,7 @@ namespace ConsoleUI
         /// </summary>
         /// <param name="num">The second choice of the user</param>
         static void adding(int num) {
-            int id;
-            double longitude, latitude;
-            string name;
-            switch (num)
-            {
+            switch (num) {
                 //For adding a station
                 case 1:
 
@@ -146,7 +131,7 @@ namespace ConsoleUI
 
                     data.AddStation(s);
                     break;
-                
+
                 //For adding a drone
                 case 2:
 
@@ -199,11 +184,9 @@ namespace ConsoleUI
         /// The function takes care of the existing update options
         /// </summary>
         /// <param name="num">The second choice of the user</param>
-        static void update(int num)
-        {
+        static void update(int num) {
             int id;
-            switch (num)
-            {
+            switch (num) {
                 //For associating a parcel with a drone
                 case 1:
                     int idDrone;
@@ -213,7 +196,7 @@ namespace ConsoleUI
                     Int32.TryParse(Console.ReadLine(), out idDrone);
                     //data.AssignDroneParcel(idDrone, idDrone);
                     break;
-                
+
                 //For collection of a parcel by the drone
                 case 2:
                     Console.WriteLine("Enter Id of Parcel: ");
@@ -237,7 +220,7 @@ namespace ConsoleUI
                     Int32.TryParse(Console.ReadLine(), out idStation);
                     //data.SendDrone(id, idStation);
                     break;
-                
+
                 //For releasing a drone from charging at a base station
                 case 5:
                     Console.WriteLine("Enter Id of Drone: ");
@@ -247,12 +230,28 @@ namespace ConsoleUI
             }
         }
 
-        
         static void status(int num) {
             int ID;
             Console.WriteLine("Enter the Id: ");
             Int32.TryParse(Console.ReadLine(), out ID);
-            Console.WriteLine(data.PrintById(ID, num));
+            switch (num) {
+
+                case 1:
+                    Console.WriteLine(data.GetStationById(ID));
+                    break;
+
+                case 2:
+                    Console.WriteLine(data.GetDroneById(ID));
+                    break;
+
+                case 3:
+                    Console.WriteLine(data.GetCustomerById(ID));
+                    break;
+
+                case 4:
+                    Console.WriteLine(data.GetParcelById(ID));
+                    break;
+            }
         }
 
         /// <summary>
@@ -260,72 +259,41 @@ namespace ConsoleUI
         /// </summary>
         /// <param name="num">The second choice of the user</param>
         static void lists(int num) {
-            switch (num)
-            {
+            switch (num) {
                 //For displaying a list of base stations
                 case 1:
-                    foreach (var item in data.PrintListStation())
+                    foreach (var item in data.GetStationByFilter(s => s.Active))
                         Console.WriteLine(item);
                     break;
-                
+
                 //For displaying a list of drones
                 case 2:
-                    foreach (var item in data.PrintListDrone())
+                    foreach (var item in data.GetDroneByFilter(d => d.Active))
                         Console.WriteLine(item);
                     break;
-                
+
                 //For displaying a list of customer
                 case 3:
-                    foreach (var item in data.PrintListCustomer())
+                    foreach (var item in data.GetCustomerByFilter(c => c.Active))
                         Console.WriteLine(item);
                     break;
 
                 //For displaying a list of parcels
                 case 4:
-                    foreach (var item in data.PrintListParcel())
+                    foreach (var item in data.GetParcelByFilter(p => p.Active))
                         Console.WriteLine(item);
                     break;
-                
+
                 //To display a list of parcels that have not yet been associated with a drone
                 case 5:
-                    foreach (var item in data.PrintListParcelDrone())
+                    foreach (var item in data.GetParcelByFilter(p => p.Active && p.Scheduled == null))
                         Console.WriteLine(item);
                     break;
 
                 //For displaying base stations with available charging stations
                 case 6:
-                    foreach (var item in data.PrintListStationCharge())
+                    foreach (var item in data.GetStationByFilter(s => s.Active && s.ChargeSlots > 0))
                         Console.WriteLine(item);
-                    break;
-            }
-        }    
-
-        /// <summary>
-        /// The function prints the distance from a customer or base station (according to the user's decision)
-        /// from a point entered by the user (by longitude and latitude)
-        /// </summary>
-        /// <param name="num">Indicates whether the user has selected "customer" or "station"</param>
-        static void coordinateMa(int num) {///the coordinate distance manager
-            double lat, lon;
-            int ID;
-            Console.WriteLine("Enter the lattitude: ");
-            Double.TryParse(Console.ReadLine(), out lat);
-            Console.WriteLine("Enter the longitude: ");
-            Double.TryParse(Console.ReadLine(), out lon);
-            switch (num)
-            {
-                //The distance from customer
-                case 1:
-                    Console.WriteLine("Enter the Id of customer");
-                    Int32.TryParse(Console.ReadLine(), out ID);
-                    Console.WriteLine($"The distance from the customer is: {data.DistancePrint(lat, lon, 'c', ID)}\n");
-                    break;
-                
-                //The distance from station
-                case 2:
-                    Console.WriteLine("Enter the Id of station");
-                    Int32.TryParse(Console.ReadLine(), out ID);
-                    Console.WriteLine($"The distance from the station is: {data.DistancePrint(lat, lon, 's', ID)}\n");
                     break;
             }
         }

@@ -28,8 +28,7 @@ namespace Dal
         public void DeleteDroneCharge(DroneCharge d) {
             CheckNotExistId(DataSource.Drones, d.DroneId);
             CheckNotExistId(DataSource.Stations, d.StationId);
-            int index = DataSource.DroneCharges.IndexOf(d);
-            d.Active = false;
+            int index = DataSource.DroneCharges.FindIndex(dc => dc.Active && d.DroneId == dc.DroneId);
             DataSource.DroneCharges[index] = d;
         }
 

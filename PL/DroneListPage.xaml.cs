@@ -56,9 +56,9 @@ namespace PL
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void AddDrone(object sender, RoutedEventArgs e) {
-            DronePage dronePage = new DronePage();
+            DroneWindow dronePage = new DroneWindow();
             dronePage.Unloaded += UpdateList;
-            this.NavigationService.Navigate(dronePage);
+            dronePage.ShowDialog();
         }
 
         private void UpdateList(object sender = null, EventArgs e = null) {
@@ -108,16 +108,9 @@ namespace PL
         private void DroneActions(object sender, MouseButtonEventArgs e) {
             if (DroneListView.SelectedItem != null) {
                 DroneList d = (DroneList)DroneListView.SelectedItem;
-                DronePage dronePage = new DronePage(bl.GetDroneById(d.Id));
-                dronePage.OnClose += UpdateList;
-                //this.NavigationService.Navigate(dronePage);
-                var window = new Window {
-                    Content = dronePage,
-                    Height = 640,
-                    Width = 800,
-                    //Background = @"img\"
-                };
-                window.Show();
+                DroneWindow dronePage = new DroneWindow(bl.GetDroneById(d.Id));
+                dronePage.Closed += UpdateList;
+                dronePage.Show();
             }
         }
 
