@@ -11,6 +11,11 @@ namespace BlApi
     /// </summary>
     public interface IBL
     {
+        public delegate void Del();
+        public void ActivateSimulator(int DroneId, Del Func) {
+
+        }
+
         #region Addition
         /// <summary>
         /// If everything is fine, add a station to the list of stations, else throw exception
