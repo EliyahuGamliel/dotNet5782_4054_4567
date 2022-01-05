@@ -18,23 +18,25 @@ namespace BL
         /// <returns>Notice if the addition was successful</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public string AddCustomer(BO.Customer c) {
-            try {
-                CheckValidId(c.Id.Value);
-                DO.Customer cu = new DO.Customer();
-                cu.Active = true;
-                cu.Id = c.Id.Value;
-                cu.Name = c.Name;
-                cu.Phone = c.Phone;
-                cu.Lattitude = c.Location.Lattitude.Value;
-                cu.Longitude = c.Location.Longitude.Value;
-                CheckLegelLocation(cu.Longitude, cu.Lattitude);
-                lock (data) {
-                    data.AddCustomer(cu);
+            lock (data) {
+                try {
+                    CheckValidId(c.Id.Value);
+                    DO.Customer cu = new DO.Customer();
+                    cu.Active = true;
+                    cu.Id = c.Id.Value;
+                    cu.Name = c.Name;
+                    cu.Phone = c.Phone;
+                    cu.Lattitude = c.Location.Lattitude.Value;
+                    cu.Longitude = c.Location.Longitude.Value;
+                    CheckLegelLocation(cu.Longitude, cu.Lattitude);
+                    lock (data) {
+                        data.AddCustomer(cu);
+                    }
+                    return "The addition was successful\n";
                 }
-                return "The addition was successful\n";
-            }
-            catch (DO.IdExistException) {
-                throw new BO.IdExistException(c.Id.Value);
+                catch (DO.IdExistException) {
+                    throw new BO.IdExistException(c.Id.Value);
+                }
             }
         }
 
@@ -47,19 +49,21 @@ namespace BL
         /// <returns>Notice if the addition was successful</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public string UpdateCustomer(int id, string nameCustomer, string phoneCustomer) {
-            try {
-                lock (data) {
-                    DO.Customer chosenc = data.GetCustomerById(id);
-                    //If input is received
-                    chosenc.Name = nameCustomer;
-                    //If input is received
-                    chosenc.Phone = phoneCustomer;
-                    data.UpdateCustomer(chosenc);
-                    return "The update was successful\n";
+            lock (data) {
+                try {
+                    lock (data) {
+                        DO.Customer chosenc = data.GetCustomerById(id);
+                        //If input is received
+                        chosenc.Name = nameCustomer;
+                        //If input is received
+                        chosenc.Phone = phoneCustomer;
+                        data.UpdateCustomer(chosenc);
+                        return "The update was successful\n";
+                    }
                 }
-            }
-            catch (DO.IdNotExistException) {
-                throw new BO.IdNotExistException(id);
+                catch (DO.IdNotExistException) {
+                    throw new BO.IdNotExistException(id);
+                }
             }
         }
 
@@ -143,25 +147,27 @@ namespace BL
         /// <param name="listCustomers">The list we want to convert</param>
         /// <returns>The same list converted to BL</returns>
         private IEnumerable<CustomerList> ConvertToBL(IEnumerable<DO.Customer> listCustomers) {
-            List<CustomerList> customer = new List<CustomerList>();
-            foreach (var item in listCustomers) {
-                CustomerList cu = new CustomerList();
-                cu.Id = item.Id;
-                cu.Name = item.Name;
-                cu.Phone = item.Phone;
+            lock (data) {
+                List<CustomerList> customer = new List<CustomerList>();
+                foreach (var item in listCustomers) {
+                    CustomerList cu = new CustomerList();
+                    cu.Id = item.Id;
+                    cu.Name = item.Name;
+                    cu.Phone = item.Phone;
 
-                IEnumerable<DO.Parcel> listparcels = data.GetParcelByFilter(p => true);
-                //If the customer is the target and the parcel is arrived
-                cu.ParcelsGet = listparcels.Where(p => ReturnStatus(p) == 3 && p.TargetId == cu.Id).Count();
+                    IEnumerable<DO.Parcel> listparcels = data.GetParcelByFilter(p => true);
+                    //If the customer is the target and the parcel is arrived
+                    cu.ParcelsGet = listparcels.Where(p => ReturnStatus(p) == 3 && p.TargetId == cu.Id).Count();
 
-                //If the customer is the sender
-                cu.ParcelsOnlySend = listparcels.Where(p => ReturnStatus(p) == 0 && p.SenderId == cu.Id).Count();
-                cu.ParcelsInTheWay = listparcels.Where(p => (ReturnStatus(p) == 1 || ReturnStatus(p) == 2) && p.SenderId == cu.Id).Count();
-                cu.ParcelsSent = listparcels.Where(p => ReturnStatus(p) == 3 && p.SenderId == cu.Id).Count();
+                    //If the customer is the sender
+                    cu.ParcelsOnlySend = listparcels.Where(p => ReturnStatus(p) == 0 && p.SenderId == cu.Id).Count();
+                    cu.ParcelsInTheWay = listparcels.Where(p => (ReturnStatus(p) == 1 || ReturnStatus(p) == 2) && p.SenderId == cu.Id).Count();
+                    cu.ParcelsSent = listparcels.Where(p => ReturnStatus(p) == 3 && p.SenderId == cu.Id).Count();
 
-                customer.Add(cu);
+                    customer.Add(cu);
+                }
+                return customer;
             }
-            return customer;
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]

@@ -98,7 +98,9 @@ namespace BL
         /// <returns>the number of taken slots</returns>
         private int ChargeSlotsCatched(int idStation)
         {
-            return data.GetDroneChargeByFilter(dc => dc.StationId == idStation && dc.Active).Count();
+            lock (data) {
+                return data.GetDroneChargeByFilter(dc => dc.StationId == idStation && dc.Active).Count();
+            }
         }
 
         /// <summary>

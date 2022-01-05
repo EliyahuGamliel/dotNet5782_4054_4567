@@ -19,23 +19,25 @@ namespace BL
         /// <returns>Notice if the addition was successful</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public string AddStation(BO.Station s) {
-            try {
-                CheckValidId(s.Id.Value);
-                DO.Station st = new DO.Station();
-                st.Id = s.Id.Value;
-                st.Name = s.Name;
-                st.Longitude = s.Location.Longitude.Value;
-                st.Lattitude = s.Location.Lattitude.Value;
-                CheckLegelLocation(st.Longitude, st.Lattitude);
-                st.ChargeSlots = s.ChargeSlots.Value;
-                if (st.ChargeSlots < 0)
-                    throw new ChargeSlotsNotLegal(st.ChargeSlots);
-                st.Active = true;
-                data.AddStation(st);
-                return "The addition was successful\n";
-            }
-            catch (DO.IdExistException) {
-                throw new BO.IdExistException(s.Id.Value);
+            lock (data) {
+                try {
+                    CheckValidId(s.Id.Value);
+                    DO.Station st = new DO.Station();
+                    st.Id = s.Id.Value;
+                    st.Name = s.Name;
+                    st.Longitude = s.Location.Longitude.Value;
+                    st.Lattitude = s.Location.Lattitude.Value;
+                    CheckLegelLocation(st.Longitude, st.Lattitude);
+                    st.ChargeSlots = s.ChargeSlots.Value;
+                    if (st.ChargeSlots < 0)
+                        throw new ChargeSlotsNotLegal(st.ChargeSlots);
+                    st.Active = true;
+                    data.AddStation(st);
+                    return "The addition was successful\n";
+                }
+                catch (DO.IdExistException) {
+                    throw new BO.IdExistException(s.Id.Value);
+                }
             }
         }
 
@@ -48,20 +50,22 @@ namespace BL
         /// <returns>Notice if the addition was successful</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public string UpdateStation(int id, string name, int? chargeSlots) {
-            try {
-                DO.Station s = data.GetStationById(id);
-                if (name != "")
-                    s.Name = name;
-                if (chargeSlots != null) {
-                    if (chargeSlots < 0)
-                        throw new ChargeSlotsNotLegal((int)chargeSlots);
-                    s.ChargeSlots = (int)chargeSlots;
+            lock (data) {
+                try {
+                    DO.Station s = data.GetStationById(id);
+                    if (name != "")
+                        s.Name = name;
+                    if (chargeSlots != null) {
+                        if (chargeSlots < 0)
+                            throw new ChargeSlotsNotLegal((int)chargeSlots);
+                        s.ChargeSlots = (int)chargeSlots;
+                    }
+                    data.UpdateStation(s);
+                    return "The update was successful\n";
                 }
-                data.UpdateStation(s);
-                return "The update was successful\n";
-            }
-            catch (DO.IdNotExistException) {
-                throw new BO.IdNotExistException(id);
+                catch (DO.IdNotExistException) {
+                    throw new BO.IdNotExistException(id);
+                }
             }
         }
 
@@ -72,29 +76,31 @@ namespace BL
         /// <returns>The object of the requested station</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Station GetStationById(int Id) {
-            try {
-                DO.Station chosens = data.GetStationById(Id);
-                BO.Station st = new BO.Station();
-                st.Id = chosens.Id;
-                st.Name = chosens.Name;
-                st.ChargeSlots = chosens.ChargeSlots;
-                st.Location = new Location();
-                st.Location.Longitude = chosens.Longitude;
-                st.Location.Lattitude = chosens.Lattitude;
-                st.DCharge = new List<BO.DroneCharge>();
-                foreach (var item in dronesList.FindAll(d => d.Status == DroneStatuses.Maintenance)) {
-                    //if drone is in charge in this station
-                    if (item.CLocation.Lattitude == st.Location.Lattitude && item.CLocation.Longitude == st.Location.Longitude) {
-                        BO.DroneCharge dc = new BO.DroneCharge();
-                        dc.Id = item.Id;
-                        dc.Battery = item.Battery;
-                        st.DCharge.Add(dc);
+            lock (data) {
+                try {
+                    DO.Station chosens = data.GetStationById(Id);
+                    BO.Station st = new BO.Station();
+                    st.Id = chosens.Id;
+                    st.Name = chosens.Name;
+                    st.ChargeSlots = chosens.ChargeSlots;
+                    st.Location = new Location();
+                    st.Location.Longitude = chosens.Longitude;
+                    st.Location.Lattitude = chosens.Lattitude;
+                    st.DCharge = new List<BO.DroneCharge>();
+                    foreach (var item in dronesList.FindAll(d => d.Status == DroneStatuses.Maintenance)) {
+                        //if drone is in charge in this station
+                        if (item.CLocation.Lattitude == st.Location.Lattitude && item.CLocation.Longitude == st.Location.Longitude) {
+                            BO.DroneCharge dc = new BO.DroneCharge();
+                            dc.Id = item.Id;
+                            dc.Battery = item.Battery;
+                            st.DCharge.Add(dc);
+                        }
                     }
+                    return st;
                 }
-                return st;
-            }
-            catch (DO.IdNotExistException) {
-                throw new BO.IdNotExistException(Id);
+                catch (DO.IdNotExistException) {
+                    throw new BO.IdNotExistException(Id);
+                }
             }
         }
 
@@ -104,7 +110,9 @@ namespace BL
         /// <returns>Returns the list of stations</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<StationList> GetStations() {
-            return ConvertToBL(data.GetStationByFilter(st => st.Active));
+            lock (data) {
+                return ConvertToBL(data.GetStationByFilter(st => st.Active));
+            }
         }
 
         /// <summary>
@@ -113,7 +121,9 @@ namespace BL
         /// <returns>Returns a list of all stations that have available chargeSlots</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<StationList> GetStationCharge() {
-            return ConvertToBL(data.GetStationByFilter(st => st.ChargeSlots > 0 && st.Active));
+            lock (data) {
+                return ConvertToBL(data.GetStationByFilter(st => st.ChargeSlots > 0 && st.Active));
+            }
         }
 
         /// <summary>
@@ -136,12 +146,14 @@ namespace BL
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public string DeleteStation(int id) {
-            DO.Station s = data.GetStationById(id);
-            if (ChargeSlotsCatched(s.Id) != 0)
-                throw new CanntDeleteStation(s.Id);
-            s.Active = false;
-            data.DeleteStation(s);
-            return "The delete was successful\n";
+            lock (data) {
+                DO.Station s = data.GetStationById(id);
+                if (ChargeSlotsCatched(s.Id) != 0)
+                    throw new CanntDeleteStation(s.Id);
+                s.Active = false;
+                data.DeleteStation(s);
+                return "The delete was successful\n";
+            }
         }
     }
 }

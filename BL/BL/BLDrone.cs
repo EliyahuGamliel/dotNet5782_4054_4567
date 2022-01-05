@@ -19,46 +19,48 @@ namespace BL
         /// <returns>Notice if the addition was successful</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public string AddDrone(BO.Drone d, int idStation) {
-            try {
-                CheckValidId(d.Id.Value);
-                DO.Station s = data.GetStationById(idStation);
-                BO.DroneList dr = new BO.DroneList();
-                CheckLegelChoice((int)d.MaxWeight);
-                dr.Id = d.Id.Value;
-                dr.Model = d.Model;
-                dr.Active = true;
-                dr.CLocation = new Location();
-                dr.Battery = rand.Next(20,41);
-                dr.Status = DroneStatuses.Maintenance;
-                dr.CLocation.Lattitude = s.Lattitude;
-                dr.CLocation.Longitude = s.Longitude;
-                dr.ParcelId = 0;
+            lock (data) {
+                try {
+                    CheckValidId(d.Id.Value);
+                    DO.Station s = data.GetStationById(idStation);
+                    BO.DroneList dr = new BO.DroneList();
+                    CheckLegelChoice((int)d.MaxWeight);
+                    dr.Id = d.Id.Value;
+                    dr.Model = d.Model;
+                    dr.Active = true;
+                    dr.CLocation = new Location();
+                    dr.Battery = rand.Next(20, 41);
+                    dr.Status = DroneStatuses.Maintenance;
+                    dr.CLocation.Lattitude = s.Lattitude;
+                    dr.CLocation.Longitude = s.Longitude;
+                    dr.ParcelId = 0;
 
-                if (s.ChargeSlots == 0)
-                    throw new StationIsFull();
+                    if (s.ChargeSlots == 0)
+                        throw new StationIsFull();
 
-                DO.Drone drone = new DO.Drone();
-                drone.Id = dr.Id;
-                drone.Model = dr.Model;
-                drone.Active = true;
-                drone.MaxWeight = (DO.WeightCategories)((int)dr.MaxWeight);
-                data.AddDrone(drone);
-                dronesList.Add(dr);
+                    DO.Drone drone = new DO.Drone();
+                    drone.Id = dr.Id;
+                    drone.Model = dr.Model;
+                    drone.Active = true;
+                    drone.MaxWeight = (DO.WeightCategories)((int)dr.MaxWeight);
+                    data.AddDrone(drone);
+                    dronesList.Add(dr);
 
-                int chargeSlots = ChargeSlotsCatched(idStation) + s.ChargeSlots;
+                    int chargeSlots = ChargeSlotsCatched(idStation) + s.ChargeSlots;
 
-                DO.DroneCharge dc = new DO.DroneCharge();
-                dc.DroneId = d.Id.Value;
-                dc.StationId = idStation;
-                dc.Active = true;
-                dc.Start = DateTime.Now;
-                data.AddDroneCharge(dc);
+                    DO.DroneCharge dc = new DO.DroneCharge();
+                    dc.DroneId = d.Id.Value;
+                    dc.StationId = idStation;
+                    dc.Active = true;
+                    dc.Start = DateTime.Now;
+                    data.AddDroneCharge(dc);
 
-                UpdateStation(idStation, "", chargeSlots);
-                return "The addition was successful\n";
-            }
-            catch (DO.IdExistException) {
-                throw new BO.IdExistException(d.Id.Value);
+                    UpdateStation(idStation, "", chargeSlots);
+                    return "The addition was successful\n";
+                }
+                catch (DO.IdExistException) {
+                    throw new BO.IdExistException(d.Id.Value);
+                }
             }
         }
 
@@ -70,18 +72,20 @@ namespace BL
         /// <returns>Notice if the addition was successful</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public string UpdateDrone(int id, string model) {
-            try {
-                DO.Drone dr = data.GetDroneById(id);
-                dr.Model = model;
-                data.UpdateDrone(dr);
-                DroneList d = dronesList.Find(dro => dro.Id == id);
-                int index = dronesList.IndexOf(d);
-                d.Model = model;
-                dronesList[index] = d;
-                return "The update was successful\n";
-            }
-            catch (DO.IdNotExistException) {
-                throw new BO.IdNotExistException(id);
+            lock (data) {
+                try {
+                    DO.Drone dr = data.GetDroneById(id);
+                    dr.Model = model;
+                    data.UpdateDrone(dr);
+                    DroneList d = dronesList.Find(dro => dro.Id == id);
+                    int index = dronesList.IndexOf(d);
+                    d.Model = model;
+                    dronesList[index] = d;
+                    return "The update was successful\n";
+                }
+                catch (DO.IdNotExistException) {
+                    throw new BO.IdNotExistException(id);
+                }
             }
         }
 
@@ -92,26 +96,28 @@ namespace BL
         /// <returns>Notice if the addition was successful</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public string SendDrone(int idDrone) {
-            CheckNotExistId(dronesList, idDrone);
-            DroneList d = dronesList.Find(dr => idDrone == dr.Id);
-            int index = dronesList.IndexOf(d);
-            IEnumerable<DO.Station> stations = data.GetStationByFilter(s => s.Active && s.ChargeSlots > 0);
-            double battery = CheckDroneCannotSend(stations, d);
-            d.Status = DroneStatuses.Maintenance;
-            BO.Station st = new BO.Station();
-            st = ReturnCloseStation(stations, d.CLocation);
-            d.CLocation = st.Location;
-            d.Battery = d.Battery - battery;
-            dronesList[index] = d;
-            UpdateStation(st.Id.Value, "", st.ChargeSlots - 1);
+            lock (data) {
+                CheckNotExistId(dronesList, idDrone);
+                DroneList d = dronesList.Find(dr => idDrone == dr.Id);
+                int index = dronesList.IndexOf(d);
+                IEnumerable<DO.Station> stations = data.GetStationByFilter(s => s.Active && s.ChargeSlots > 0);
+                double battery = CheckDroneCannotSend(stations, d);
+                d.Status = DroneStatuses.Maintenance;
+                BO.Station st = new BO.Station();
+                st = ReturnCloseStation(stations, d.CLocation);
+                d.CLocation = st.Location;
+                d.Battery = d.Battery - battery;
+                dronesList[index] = d;
+                UpdateStation(st.Id.Value, "", st.ChargeSlots - 1);
 
-            DO.DroneCharge dc = new DO.DroneCharge();
-            dc.DroneId = d.Id;
-            dc.StationId = st.Id.Value;
-            dc.Active = true;
-            dc.Start = DateTime.Now;
-            data.AddDroneCharge(dc);
-            return "The update was successful\n";
+                DO.DroneCharge dc = new DO.DroneCharge();
+                dc.DroneId = d.Id;
+                dc.StationId = st.Id.Value;
+                dc.Active = true;
+                dc.Start = DateTime.Now;
+                data.AddDroneCharge(dc);
+                return "The update was successful\n";
+            }
         }
 
         /// <summary>
@@ -122,30 +128,32 @@ namespace BL
         /// <returns>Notice if the addition was successful</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public String ReleasDrone(int idDrone){
-            CheckNotExistId(dronesList, idDrone);
+            lock (data) {
+                CheckNotExistId(dronesList, idDrone);
 
-            DroneList d = dronesList.Find(dr => idDrone == dr.Id);
-            int index = dronesList.IndexOf(d);
-           
-            if (d.Status != DroneStatuses.Maintenance)
-                throw new DroneCannotRelese();
+                DroneList d = dronesList.Find(dr => idDrone == dr.Id);
+                int index = dronesList.IndexOf(d);
 
-            d.Status = DroneStatuses.Available;
-            DO.DroneCharge dc = data.GetDroneChargeById(d.Id);
-            dc.Active = false;
-            TimeSpan time = DateTime.Now - dc.Start;
-            d.Battery = d.Battery +  (time.TotalSeconds * ChargingRate);
-            if (d.Battery > 100)
-                d.Battery = 100;
-            dronesList[index] = d;
+                if (d.Status != DroneStatuses.Maintenance)
+                    throw new DroneCannotRelese();
 
-            BO.Station st = GetStationById(dc.StationId);
-            //int chargeSlots = ChargeSlotsCatched(st.Id.Value) + st.ChargeSlots.Value;
+                d.Status = DroneStatuses.Available;
+                DO.DroneCharge dc = data.GetDroneChargeById(d.Id);
+                dc.Active = false;
+                TimeSpan time = DateTime.Now - dc.Start;
+                d.Battery = d.Battery + (time.TotalSeconds * ChargingRate);
+                if (d.Battery > 100)
+                    d.Battery = 100;
+                dronesList[index] = d;
 
-            data.DeleteDroneCharge(dc);
+                BO.Station st = GetStationById(dc.StationId);
+                //int chargeSlots = ChargeSlotsCatched(st.Id.Value) + st.ChargeSlots.Value;
 
-            UpdateStation(st.Id.Value, "", st.ChargeSlots.Value + 1);
-            return "The update was successful\n";
+                data.DeleteDroneCharge(dc);
+
+                UpdateStation(st.Id.Value, "", st.ChargeSlots.Value + 1);
+                return "The update was successful\n";
+            }
         }
 
         /// <summary>
@@ -155,54 +163,55 @@ namespace BL
         /// <returns>The object of the requested drone</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Drone GetDroneById(int Id) {
-            CheckNotExistId(dronesList, Id);
-            BO.Drone dr = new BO.Drone();
-            DroneList dl = dronesList.Find(d => d.Id == Id);           
-            dr.Id = dl.Id;
-            dr.MaxWeight = dl.MaxWeight;
-            dr.Model = dl.Model;
-            dr.Status = dl.Status;
-            dr.Battery = dl.Battery;
-            dr.CLocation = dl.CLocation;
+            lock (data) {
+                CheckNotExistId(dronesList, Id);
+                BO.Drone dr = new BO.Drone();
+                DroneList dl = dronesList.Find(d => d.Id == Id);
+                dr.Id = dl.Id;
+                dr.MaxWeight = dl.MaxWeight;
+                dr.Model = dl.Model;
+                dr.Status = dl.Status;
+                dr.Battery = dl.Battery;
+                dr.CLocation = dl.CLocation;
 
-            if (dr.Status == DroneStatuses.Delivery)
-            {
-                ParcelTransfer pt = new ParcelTransfer();
-                DO.Parcel parcel = data.GetParcelByFilter(p => p.Id == dl.ParcelId).First();
-                //If the parcel associated with the drone
-                pt.Id = parcel.Id;
-                pt.Priority = (BO.Priorities)(int)parcel.Priority;
-                pt.Weight = (BO.WeightCategories)(int)parcel.Weight;
-                pt.Status = false;
-                //If the parcel has already been collected
-                if (parcel.PickedUp != null)
-                    pt.Status = true;
+                if (dr.Status == DroneStatuses.Delivery) {
+                    ParcelTransfer pt = new ParcelTransfer();
+                    DO.Parcel parcel = data.GetParcelByFilter(p => p.Id == dl.ParcelId).First();
+                    //If the parcel associated with the drone
+                    pt.Id = parcel.Id;
+                    pt.Priority = (BO.Priorities)(int)parcel.Priority;
+                    pt.Weight = (BO.WeightCategories)(int)parcel.Weight;
+                    pt.Status = false;
+                    //If the parcel has already been collected
+                    if (parcel.PickedUp != null)
+                        pt.Status = true;
 
-                //CustomerInParcel - The Target Customer of Parcel 
-                CustomerInParcel cp1 = new CustomerInParcel();
-                cp1.Id = parcel.TargetId;
-                DO.Customer customerhelp = data.GetCustomerById(cp1.Id);
-                cp1.Name = customerhelp.Name;
-                pt.Recipient = cp1;
-                pt.DestinationLocation = new Location();
-                pt.DestinationLocation.Lattitude = customerhelp.Lattitude;
-                pt.DestinationLocation.Longitude = customerhelp.Longitude;
+                    //CustomerInParcel - The Target Customer of Parcel 
+                    CustomerInParcel cp1 = new CustomerInParcel();
+                    cp1.Id = parcel.TargetId;
+                    DO.Customer customerhelp = data.GetCustomerById(cp1.Id);
+                    cp1.Name = customerhelp.Name;
+                    pt.Recipient = cp1;
+                    pt.DestinationLocation = new Location();
+                    pt.DestinationLocation.Lattitude = customerhelp.Lattitude;
+                    pt.DestinationLocation.Longitude = customerhelp.Longitude;
 
-                //CustomerInParcel - The Sender Customer of Parcel 
-                CustomerInParcel cp2 = new CustomerInParcel();
-                cp2.Id = parcel.SenderId;
-                customerhelp = data.GetCustomerById(cp2.Id);
-                cp2.Name = customerhelp.Name;
-                pt.Sender = cp2;
-                pt.CollectionLocation = new Location();
-                pt.CollectionLocation.Lattitude = customerhelp.Lattitude;
-                pt.CollectionLocation.Longitude = customerhelp.Longitude;
+                    //CustomerInParcel - The Sender Customer of Parcel 
+                    CustomerInParcel cp2 = new CustomerInParcel();
+                    cp2.Id = parcel.SenderId;
+                    customerhelp = data.GetCustomerById(cp2.Id);
+                    cp2.Name = customerhelp.Name;
+                    pt.Sender = cp2;
+                    pt.CollectionLocation = new Location();
+                    pt.CollectionLocation.Lattitude = customerhelp.Lattitude;
+                    pt.CollectionLocation.Longitude = customerhelp.Longitude;
 
-                pt.TransportDistance = DistanceTo(pt.CollectionLocation, pt.DestinationLocation);
+                    pt.TransportDistance = DistanceTo(pt.CollectionLocation, pt.DestinationLocation);
 
-                dr.PTransfer = pt;
+                    dr.PTransfer = pt;
+                }
+                return dr;
             }
-            return dr;
         }
 
         /// <summary>
@@ -234,17 +243,19 @@ namespace BL
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public string DeleteDrone(BO.DroneList drone) {
-            CheckDeleteDrone(drone);
-            int index = dronesList.IndexOf(drone);
-            drone.Active = false;
-            dronesList[index] = drone;
-            DO.Drone dr = new DO.Drone();
-            dr.Active = false;
-            dr.Id = drone.Id;
-            dr.Model = drone.Model;
-            dr.MaxWeight = (DO.WeightCategories)((int)drone.MaxWeight);
-            data.DeleteDrone(dr);
-            return "The delete was successful\n";
+            lock (data) {
+                CheckDeleteDrone(drone);
+                int index = dronesList.IndexOf(drone);
+                drone.Active = false;
+                dronesList[index] = drone;
+                DO.Drone dr = new DO.Drone();
+                dr.Active = false;
+                dr.Id = drone.Id;
+                dr.Model = drone.Model;
+                dr.MaxWeight = (DO.WeightCategories)((int)drone.MaxWeight);
+                data.DeleteDrone(dr);
+                return "The delete was successful\n";
+            }
         }
     }
 }
