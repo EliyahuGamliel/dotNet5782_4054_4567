@@ -51,6 +51,7 @@ namespace Dal
                 {typeof(Station) , "Stations.xml"},
             };
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         List<T> Read<T>() {
             XmlReader Reader;
             List<T> Data;
@@ -81,6 +82,7 @@ namespace Dal
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         void Write<T>(List<T> data) {
             XmlSerializer ser = new XmlSerializer(typeof(List<T>));
 
@@ -101,6 +103,7 @@ namespace Dal
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         static int Update<T>(List<T> listy, T updater) {
             var Id = typeof(T).GetProperty("Id");
 
@@ -112,6 +115,7 @@ namespace Dal
             return index;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         private void CheckExistId<T>(List<T> list, int id) {
             foreach (var item in list) {
                 int idobject = (int)(typeof(T).GetProperty("Id").GetValue(item, null));
@@ -120,6 +124,7 @@ namespace Dal
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         private void CheckNotExistId<T>(List<T> list, int id) {
             foreach (var item in list) {
                 int idobject = (int)(typeof(T).GetProperty("Id").GetValue(item, null));
