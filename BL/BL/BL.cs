@@ -39,7 +39,7 @@ namespace BL
         }
 
         Random rand = new Random();
-        IDal data;
+        internal IDal data;
         List<DroneList> dronesList = new List<DroneList>();
         double Avaliable;
         double WeightLight;
@@ -146,5 +146,10 @@ namespace BL
             data.UpdateParcel(chosenp);
             return "The update was successful\n";
         }
+
+        void PlaySimulator(int Id, Action<BO.ParcelTransfer> updateDrone, Func<bool> stop) {
+
+        }
+
     }
 }

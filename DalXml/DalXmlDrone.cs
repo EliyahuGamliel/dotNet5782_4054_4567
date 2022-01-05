@@ -19,14 +19,14 @@ namespace Dal
         public void AddDrone(Drone d) {
             try {
                 droneRoot = XElement.Load(dronesPath); }
-            catch { droneRoot = new XElement("drone"); }
+            catch { droneRoot = new XElement("ArrayOfDrone"); }
 
             try {
                 GetDroneById(d.Id);
                 throw new IdExistException(d.Id);
             }
             catch {
-                droneRoot.Add(new XElement("drone",
+                droneRoot.Add(new XElement("Drone",
                 new XElement("Active", d.Active),
                 new XElement("Id", d.Id),
                 new XElement("MaxWeight", d.MaxWeight),

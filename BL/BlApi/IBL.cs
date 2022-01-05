@@ -195,5 +195,9 @@ namespace BlApi
 
         string DeleteStation(int id);
         #endregion
+
+        #region Simulator
+        void PlaySimulator(int Id, Action<BO.ParcelTransfer> updateDrone, Func<bool> stop);
+        #endregion
     }
 }
