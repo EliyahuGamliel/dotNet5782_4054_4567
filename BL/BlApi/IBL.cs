@@ -197,7 +197,7 @@ namespace BlApi
         #endregion
 
         #region Simulator
-        void PlaySimulator(int Id, Action<int> updateDrone, Func<bool> stop);
+        void PlaySimulator(int Id, Action updateDrone, Func<bool> stop);
         #endregion
     }
 }

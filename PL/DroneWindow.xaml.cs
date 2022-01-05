@@ -25,7 +25,6 @@ namespace PL
         Drone dr;
         Parcel pa;
         IBL bl = BlFactory.GetBl();
-        BackgroundWorker worker;
 
         /// <summary>
         /// The ctor
@@ -233,14 +232,12 @@ namespace PL
             parcelPage.Unloaded += Initialize;
             this.HostPage.Content = parcelPage;
         }
-        
-        
+
+        BackgroundWorker worker;
+        bool IsRun;
         private void Simulator(object sender, RoutedEventArgs e) { 
             if (checkBoxSimulator.IsChecked == true) {
-
-                bl.PlaySimulator(
-                    dr.Id,
-                    )
+                bl.PlaySimulator(dr.Id.Value, delegate Initialize(), IsRun);
             }
             else {
 
