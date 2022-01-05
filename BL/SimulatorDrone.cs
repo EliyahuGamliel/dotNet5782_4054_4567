@@ -10,51 +10,52 @@ namespace BL
 {
     class SimulatorDrone
     {
-        int DELAY = 500;
+        int DELAY = 1000;
         double SPEED = 100;
 
         public SimulatorDrone(BL bl, int Id, Action updateDrone, Func<bool> stop) {
+            double ChargingRate = bl.data.DroneElectricityUse()[4];
             while (!stop()) {
                 BO.Drone drone = bl.GetDroneById(Id);
-                if (drone.Status == DroneStatuses.Delivery) {
-                    BO.Parcel parcel = bl.GetParcelById(drone.PTransfer.Id);
-                    if (parcel.PickedUp == null) {
-                        bl.PickUpDroneParcel(Id);
-                        updateDrone();
-                        Thread.Sleep(DELAY);
-                    }
-                    else {
-                        bl.DeliverParcelCustomer(Id);
-                        updateDrone();
-                        Thread.Sleep(DELAY);
-                    }
-                }
-                else if (drone.Status == DroneStatuses.Available) {
-                    try {
-                        bl.AssignDroneParcel(Id);
-                        updateDrone();
-                        Thread.Sleep(DELAY);
-                    }
-                    catch {
+                switch (drone.Status) {
+                    case DroneStatuses.Delivery:
+                        BO.Parcel parcel = bl.GetParcelById(drone.PTransfer.Id);
+                        if (parcel.PickedUp == null) {
+                            bl.PickUpDroneParcel(Id);
+                            updateDrone();
+                            Thread.Sleep(DELAY);
+                        }
+                        else {
+                            bl.DeliverParcelCustomer(Id);
+                            updateDrone();
+                            Thread.Sleep(DELAY);
+                        }
+                        break;
+
+                    case DroneStatuses.Available:
                         try {
-                            bl.SendDrone(Id);
+                            bl.AssignDroneParcel(Id);
                             updateDrone();
                             Thread.Sleep(DELAY);
                         }
                         catch {
-                            Thread.Sleep(DELAY);
+                            try {
+                                bl.SendDrone(Id);
+                                updateDrone();
+                                Thread.Sleep(DELAY);
+                            }
+                            catch {
+                                Thread.Sleep(DELAY);
+                            }
                         }
-                    }
-                }
-                else {
-                    if (drone.Battery == 100) {
-                        bl.ReleasDrone(Id);
+                        break;
+
+                    case DroneStatuses.Maintenance:
+                        Thread.Sleep(100000);
                         updateDrone();
+                        bl.ReleasDrone(Id);
                         Thread.Sleep(DELAY);
-                    }
-                    else {
-                        Thread.Sleep(DELAY);
-                    }
+                        break;
                 }
             }
         }

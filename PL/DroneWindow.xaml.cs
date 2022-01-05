@@ -235,13 +235,28 @@ namespace PL
 
         BackgroundWorker worker;
         bool IsRun;
-        private void Simulator(object sender, RoutedEventArgs e) { 
+        private void Simulator(object sender, RoutedEventArgs e) {
+            worker = new BackgroundWorker();
+            worker.DoWork += new DoWorkEventHandler(backgroundWorker1_DoWork);
+            worker.ProgressChanged += UpdateDrone;
+            worker.RunWorkerAsync();
             if (checkBoxSimulator.IsChecked == true) {
-                bl.PlaySimulator(dr.Id.Value, delegate Initialize(), IsRun);
+                IsRun = false;
             }
             else {
-
+                IsRun = true;
             }
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e) {
+            Action updateDrone = UpdateDrone;
+            bl.PlaySimulator(dr.Id.Value, worker.ReportProgress(0), () => IsRun);
+        }
+
+        private void UpdateDrone(object sender, ProgressChangedEventArgs e) {
+            dr = bl.GetDroneById(dr.Id.Value);
+            Initialize();
+            this.DataContext = dr;
 
         }
     }
