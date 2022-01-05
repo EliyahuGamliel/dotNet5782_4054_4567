@@ -237,7 +237,10 @@ namespace PL
         
         private void Simulator(object sender, RoutedEventArgs e) { 
             if (checkBoxSimulator.IsChecked == true) {
-                
+
+                bl.PlaySimulator(
+                    dr.Id,
+                    )
             }
             else {
 

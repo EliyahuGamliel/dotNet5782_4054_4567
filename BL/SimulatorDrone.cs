@@ -8,11 +8,12 @@ using static BL.BL;
 
 namespace BL
 {
-    class Simulator
+    class SimulatorDrone
     {
         int DELAY = 500;
         double SPEED = 100;
-        Simulator(BL bl, int Id, Action<int> updateDrone, Func<bool> stop) {
+
+        public SimulatorDrone(BL bl, int Id, Action<int> updateDrone, Func<bool> stop) {
             while (!stop()) {
                 BO.Drone drone = bl.GetDroneById(Id);
                 if (drone.Status == DroneStatuses.Delivery) {
@@ -59,3 +60,4 @@ namespace BL
         }
     }
 }
+

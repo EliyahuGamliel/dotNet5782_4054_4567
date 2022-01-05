@@ -147,9 +147,8 @@ namespace BL
             return "The update was successful\n";
         }
 
-        void PlaySimulator(int Id, Action<BO.ParcelTransfer> updateDrone, Func<bool> stop) {
-
+        public void PlaySimulator(int Id, Action<int> updateDrone, Func<bool> stop) {
+            SimulatorDrone simulator = new SimulatorDrone(Instance, Id, updateDrone, stop);
         }
-
     }
 }

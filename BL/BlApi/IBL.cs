@@ -11,11 +11,6 @@ namespace BlApi
     /// </summary>
     public interface IBL
     {
-        public delegate void Del();
-        public void ActivateSimulator(int DroneId, Del Func) {
-
-        }
-
         #region Addition
         /// <summary>
         /// If everything is fine, add a station to the list of stations, else throw exception
@@ -202,7 +197,7 @@ namespace BlApi
         #endregion
 
         #region Simulator
-        void PlaySimulator(int Id, Action<BO.ParcelTransfer> updateDrone, Func<bool> stop);
+        void PlaySimulator(int Id, Action<int> updateDrone, Func<bool> stop);
         #endregion
     }
 }
