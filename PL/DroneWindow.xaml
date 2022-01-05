@@ -77,6 +77,9 @@
                         <DataTrigger Binding="{Binding Path=Text, ElementName=parcelDrone}" Value="">
                             <Setter Property="IsEnabled" Value="False"/>
                         </DataTrigger>
+                        <DataTrigger Binding="{Binding Path=IsChecked, ElementName=checkBoxSimulator}" Value="True">
+                            <Setter Property="Visibility" Value="Hidden"/>
+                        </DataTrigger>
                         <DataTrigger Binding="{Binding Path=Foreground, ElementName=batteryDrone}" Value="Gray">
                             <Setter Property="Visibility" Value="Hidden"/>
                         </DataTrigger>
@@ -111,12 +114,26 @@
                                 </MultiDataTrigger.Conditions>
                                 <Setter Property="IsEnabled" Value="False" />
                             </MultiDataTrigger>
+                            <DataTrigger Binding="{Binding Path=IsChecked, ElementName=checkBoxSimulator}" Value="True">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button Name="action2" Style="{DynamicResource Design}" Margin="10,8,10,8" Background="PowderBlue" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" Grid.Column="2" FontSize="18" Content=""/>
-            <Button Background="PowderBlue" Margin="10,8,10,8" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" FontSize="18" Name="updateDrone" Content="Update Drone"  Grid.Column="3" Click="Update_Click">
+            <Button Name="action2" Style="{DynamicResource Design}" Margin="10,8,2,8" Background="PowderBlue" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" Grid.Column="2" FontSize="18" Content="">
+                <Button.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Visibility" Value="Visible"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=IsChecked, ElementName=checkBoxSimulator}" Value="True">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button Background="PowderBlue" Margin="10,8,10,8" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" FontSize="18" Name="updateDrone" Content="Update Drone"  Grid.Column="4" Click="Update_Click">
                 <Button.Resources>
                     <Style TargetType="Button" BasedOn="{StaticResource Design}">
                         <Setter Property="IsEnabled" Value="True"/>
@@ -126,6 +143,9 @@
                                 <Setter Property="IsEnabled" Value="False" />
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Path=Content, ElementName=batteryDrone}" Value="">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=IsChecked, ElementName=checkBoxSimulator}" Value="True">
                                 <Setter Property="Visibility" Value="Hidden"/>
                             </DataTrigger>
                         </Style.Triggers>
