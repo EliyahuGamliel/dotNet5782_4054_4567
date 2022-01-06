@@ -71,7 +71,7 @@ namespace BL
         /// <param name="model">The new model for the drone update</param>
         /// <returns>Notice if the addition was successful</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public string UpdateDrone(int id, string model) {
+        public string UpdateDrone(int id, string model, double? battry = null) {
             lock (data) {
                 try {
                     DO.Drone dr = data.GetDroneById(id);
@@ -80,6 +80,7 @@ namespace BL
                     DroneList d = dronesList.Find(dro => dro.Id == id);
                     int index = dronesList.IndexOf(d);
                     d.Model = model;
+                    if(battry != null) { d.Battery = battry.Value; }
                     dronesList[index] = d;
                     return "The update was successful\n";
                 }

@@ -50,7 +50,7 @@ namespace BlApi
         /// <param name="id">The ID of the drone for updating</param>
         /// <param name="model">The new model for the drone update</param>
         /// <returns>Notice if the addition was successful</returns>
-        string UpdateDrone(int id, string model);
+        string UpdateDrone(int id, string model, double? battry = null);
 
         /// <summary>
         /// If all is fine, update the customer in a list of customers, else throw exception
