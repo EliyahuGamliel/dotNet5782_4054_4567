@@ -80,12 +80,15 @@ namespace BL
         /// <returns>Returns the distance between two locations</returns>
         private double DistanceTo(Location l1, Location l2)
         {
+            if (l1.Lattitude == l2.Lattitude && l1.Longitude == l2.Longitude) {
+                return 0;
+            }
             double rlat1 = Math.PI * l1.Lattitude.Value / 180;
             double rlat2 = Math.PI * l2.Lattitude.Value / 180;
             double theta = l1.Longitude.Value - l2.Longitude.Value;
             double rtheta = Math.PI * theta / 180;
             double dist = Math.Sin(rlat1) * Math.Sin(rlat2) + Math.Cos(rlat1) * Math.Cos(rlat2) * Math.Cos(rtheta);
-            dist = Math.Acos((int)dist);
+            dist = Math.Acos(dist);
             dist = dist * 180 / Math.PI;
             dist = dist * 60 * 1.1515;
             return Math.Round(dist * 1.609344, 2);

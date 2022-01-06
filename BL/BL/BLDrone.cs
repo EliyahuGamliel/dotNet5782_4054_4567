@@ -177,11 +177,13 @@ namespace BL
                 if (dr.Status == DroneStatuses.Delivery) {
                     ParcelTransfer pt = new ParcelTransfer();
                     DO.Parcel parcel = data.GetParcelByFilter(p => p.Id == dl.ParcelId).First();
+
                     //If the parcel associated with the drone
                     pt.Id = parcel.Id;
                     pt.Priority = (BO.Priorities)(int)parcel.Priority;
                     pt.Weight = (BO.WeightCategories)(int)parcel.Weight;
                     pt.Status = false;
+
                     //If the parcel has already been collected
                     if (parcel.PickedUp != null)
                         pt.Status = true;
@@ -206,7 +208,10 @@ namespace BL
                     pt.CollectionLocation.Lattitude = customerhelp.Lattitude;
                     pt.CollectionLocation.Longitude = customerhelp.Longitude;
 
-                    pt.TransportDistance = DistanceTo(pt.CollectionLocation, pt.DestinationLocation);
+                    if (parcel.PickedUp == null)
+                        pt.TransportDistance = DistanceTo(dr.CLocation, pt.CollectionLocation);
+                    else
+                        pt.TransportDistance = DistanceTo(pt.CollectionLocation, pt.DestinationLocation);
 
                     dr.PTransfer = pt;
                 }
