@@ -5,6 +5,7 @@ using BO;
 using BlApi;
 using DO;
 using DalApi;
+using System.Device.Location;
 
 namespace BL
 {
@@ -80,6 +81,10 @@ namespace BL
         /// <returns>Returns the distance between two locations</returns>
         private double DistanceTo(Location l1, Location l2)
         {
+            var coord1 = new GeoCoordinate(l1.Lattitude.Value, l1.Longitude.Value);
+            var coord2 = new GeoCoordinate(l2.Lattitude.Value, l2.Longitude.Value);
+            return Math.Round((coord1.GetDistanceTo(coord2) / 1000), 3);
+            /*
             if (l1.Lattitude == l2.Lattitude && l1.Longitude == l2.Longitude) {
                 return 0;
             }
@@ -92,6 +97,7 @@ namespace BL
             dist = dist * 180 / Math.PI;
             dist = dist * 60 * 1.1515;
             return Math.Round(dist * 1.609344, 2);
+            */
         }
 
         /// <summary>

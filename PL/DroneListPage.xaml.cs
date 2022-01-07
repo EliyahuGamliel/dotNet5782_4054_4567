@@ -108,9 +108,9 @@ namespace PL
         private void DroneActions(object sender, MouseButtonEventArgs e) {
             if (DroneListView.SelectedItem != null) {
                 DroneList d = (DroneList)DroneListView.SelectedItem;
-                DroneWindow dronePage = new DroneWindow(bl.GetDroneById(d.Id));
-                dronePage.Closed += UpdateList;
-                dronePage.Show();
+                DroneWindow droneWindow = new DroneWindow(bl.GetDroneById(d.Id));
+                droneWindow.Unloaded += UpdateList;
+                droneWindow.Show();
             }
         }
 

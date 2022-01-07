@@ -71,7 +71,7 @@ namespace BL
         /// <param name="model">The new model for the drone update</param>
         /// <returns>Notice if the addition was successful</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public string UpdateDrone(int id, string model, double? battry = null/*, Location? loc = null*/) {
+        public string UpdateDrone(int id, string model, double? battry = null, Location loc = null) {
             lock (data) {
                 try {
                     DO.Drone dr = data.GetDroneById(id);
@@ -80,11 +80,11 @@ namespace BL
                     DroneList d = dronesList.Find(dro => dro.Id == id);
                     int index = dronesList.IndexOf(d);
                     d.Model = model;
-                    if(battry != null) { d.Battery = battry.Value; }
-                    /*if(loc != null) {
+                    if(battry != null) { d.Battery = battry.Value > 100 ? 100 : battry.Value ; }
+                    if(loc != null) {
                         d.CLocation.Lattitude = loc.Lattitude.Value;
                         d.CLocation.Longitude = loc.Longitude.Value;
-                    }*/
+                    }
                     dronesList[index] = d;
                     return "The update was successful\n";
                 }
@@ -216,7 +216,7 @@ namespace BL
                     if (parcel.PickedUp == null)
                         pt.TransportDistance = DistanceTo(dr.CLocation, pt.CollectionLocation);
                     else
-                        pt.TransportDistance = DistanceTo(pt.CollectionLocation, pt.DestinationLocation);
+                        pt.TransportDistance = DistanceTo(dr.CLocation, pt.DestinationLocation);
 
                     dr.PTransfer = pt;
                 }
