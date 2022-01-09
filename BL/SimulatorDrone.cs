@@ -23,7 +23,7 @@ namespace BL
                     case DroneStatuses.Delivery:
                         BO.Parcel parcel = bl.GetParcelById(drone.PTransfer.Id);
                         if (parcel.PickedUp == null) {
-                            if (drone.PTransfer.TransportDistance > 1000) {
+                            if (drone.PTransfer.TransportDistance > SPEED) {
                                 Location l = CalculterLocation(drone.CLocation, drone.PTransfer.CollectionLocation, SPEED);
                                 bl.UpdateDrone(Id, drone.Model, drone.Battery - electric[0] * SPEED, l);
                             }
@@ -33,7 +33,7 @@ namespace BL
                             Thread.Sleep(DELAY);
                         }
                         else {
-                            if (drone.PTransfer.TransportDistance > 1000) {
+                            if (drone.PTransfer.TransportDistance > SPEED) {
                                 Location l = CalculterLocation(drone.CLocation, drone.PTransfer.DestinationLocation, SPEED);
                                 switch (drone.PTransfer.Weight) {
                                     case WeightCategories.Light:

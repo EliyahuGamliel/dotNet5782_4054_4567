@@ -57,8 +57,18 @@ namespace PL
         /// <param name="e"></param>
         private void AddDrone(object sender, RoutedEventArgs e) {
             DroneWindow dronePage = new DroneWindow();
-            dronePage.Unloaded += UpdateList;
+            dronePage.DataContextChanged += UpdateList;
             dronePage.ShowDialog();
+        }
+
+        private void UpdateList(object sender, DependencyPropertyChangedEventArgs e) {
+            while (droneList.Count != 0) {
+                DroneList dr = droneList.First();
+                droneList.Remove(dr);
+            }
+            foreach (var item in bl.GetDroneByFilter(MaxWeightSelector.SelectedItem, StatusSelector.SelectedItem)) {
+                droneList.Add(item);
+            }
         }
 
         private void UpdateList(object sender = null, EventArgs e = null) {
@@ -109,7 +119,7 @@ namespace PL
             if (DroneListView.SelectedItem != null) {
                 DroneList d = (DroneList)DroneListView.SelectedItem;
                 DroneWindow droneWindow = new DroneWindow(bl.GetDroneById(d.Id));
-                droneWindow.Closed  += UpdateList;
+                droneWindow.DataContextChanged  += UpdateList;
                 droneWindow.Show();
             }
         }
