@@ -109,7 +109,7 @@ namespace PL
             if (DroneListView.SelectedItem != null) {
                 DroneList d = (DroneList)DroneListView.SelectedItem;
                 DroneWindow droneWindow = new DroneWindow(bl.GetDroneById(d.Id));
-                droneWindow.Unloaded += UpdateList;
+                droneWindow.Closed  += UpdateList;
                 droneWindow.Show();
             }
         }

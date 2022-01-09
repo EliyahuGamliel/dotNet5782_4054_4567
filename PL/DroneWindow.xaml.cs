@@ -256,8 +256,10 @@ namespace PL
         }
 
         private void UpdateDrone() {
+
             dr = bl.GetDroneById(dr.Id.Value);
             this.DataContext = dr;
+            
         }
     }
 }

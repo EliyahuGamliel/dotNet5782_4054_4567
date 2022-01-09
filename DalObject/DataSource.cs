@@ -27,7 +27,7 @@ namespace Dal
             internal static double WeightLight = 0.0012;
             internal static double WeightMedium = 0.002;
             internal static double WeightHeavy = 0.0035;
-            public static double ChargingRate = 1;
+            public static double ChargingRate = 5;
         }
 
         /// <summary>
