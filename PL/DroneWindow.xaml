@@ -94,11 +94,23 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button Style="{DynamicResource Design}" BorderBrush="Black" Margin="10,8,10,8" Background="Red" FontFamily="font/#Alef" FontWeight="Bold"  FontSize="18" Content="Return Back" Click="Exit_Click"/>
+            <Button BorderBrush="Black" Margin="10,8,10,8" Background="Red" FontFamily="font/#Alef" FontWeight="Bold"  FontSize="18" Content="Return Back" Click="Exit_Click">
+                <Button.Resources>
+                    <Style TargetType="Button" BasedOn="{StaticResource Design}">
+                        <Setter Property="Visibility" Value="Visible"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=IsChecked, ElementName=checkBoxSimulator}" Value="True">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Resources>
+            </Button>
             <Button Name="action1" Margin="10,12,10,4" Background="PowderBlue" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" Grid.Column="1" FontSize="18" Content="">
                 <Button.Resources>
                     <Style TargetType="Button" BasedOn="{StaticResource Design}">
                         <Setter Property="IsEnabled" Value="True" />
+                        <Setter Property="Visibility" Value="Visible"/>
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>

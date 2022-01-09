@@ -65,6 +65,7 @@ namespace PL
         private void Initialize(object sender = null, RoutedEventArgs e = null) {
             dr = bl.GetDroneById(dr.Id.Value);
             this.DataContext = dr;
+            IniClick();
             //If the choosen drone is in delivery
             if (dr.Status == DroneStatuses.Delivery) {
                 pa = bl.GetParcelById(dr.PTransfer.Id);
@@ -100,8 +101,6 @@ namespace PL
             try {
                 MessageBox.Show(bl.AssignDroneParcel(dr.Id.Value));
                 action2.Visibility = Visibility.Hidden;
-                action1.Click -= new RoutedEventHandler(Assign_Click);
-                action2.Click -= new RoutedEventHandler(Send_Click);
                 Initialize();
             }
             catch (Exception ex) {
@@ -117,7 +116,6 @@ namespace PL
         /// <param name="e"></param>
         private void PickUp_Click(object sender, RoutedEventArgs e) {
             MessageBox.Show(bl.PickUpDroneParcel(dr.Id.Value));
-            action1.Click -= new RoutedEventHandler(PickUp_Click);
             Initialize();
         }
 
@@ -128,7 +126,6 @@ namespace PL
         /// <param name="e"></param>
         private void Deliver_Click(object sender, RoutedEventArgs e) {
             MessageBox.Show(bl.DeliverParcelCustomer(dr.Id.Value));
-            action1.Click -= new RoutedEventHandler(Deliver_Click);
             Initialize();
         }
 
@@ -140,8 +137,6 @@ namespace PL
         private void Send_Click(object sender, RoutedEventArgs e) {
             try {
                 MessageBox.Show(bl.SendDrone(dr.Id.Value));
-                action2.Click -= new RoutedEventHandler(Send_Click);
-                action1.Click -= new RoutedEventHandler(Assign_Click);
                 Initialize();
             }
             catch (Exception ex) {
@@ -157,7 +152,6 @@ namespace PL
         /// <param name="e"></param>
         private void Release_Click(object sender, RoutedEventArgs e) {
             MessageBox.Show(bl.ReleasDrone(dr.Id.Value));
-            action2.Click -= new RoutedEventHandler(Release_Click);
             Initialize();
         }
         #endregion
@@ -185,6 +179,15 @@ namespace PL
         /// <param name="e"></param>
         private void Exit_Click(object sender, RoutedEventArgs e) {
             this.Close();
+        }
+
+        private void IniClick() {
+            action1.Click -= new RoutedEventHandler(Deliver_Click);
+            action2.Click -= new RoutedEventHandler(Release_Click);
+            action2.Click -= new RoutedEventHandler(Send_Click);
+            action1.Click -= new RoutedEventHandler(Assign_Click);
+            action1.Click -= new RoutedEventHandler(PickUp_Click);
+            action1.Click -= new RoutedEventHandler(Deliver_Click);
         }
 
         #region change the button(s) according the drone status
