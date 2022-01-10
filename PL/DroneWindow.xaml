@@ -57,7 +57,7 @@
         <ComboBox FontSize="20" SelectedIndex="0" HorizontalAlignment="Left" FontFamily="/font/#Fuzzy Bubbles" SelectedItem="{Binding Path=MaxWeight, FallbackValue='0'}" Name="maxWeightDrone" Width="286" Margin="146,250,0,250"/>
         <ProgressBar Foreground="{Binding Path=Battery, Converter={StaticResource colorConverter}}" HorizontalAlignment="Left" Margin="149,315,0,197" Value="{Binding Path=Battery, TargetNullValue=0.0}" Maximum="100" Width="229"/>
         <Label Name="batteryDrone" FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Content="{Binding Path=Battery, Converter={StaticResource batteryConverter}}" HorizontalAlignment="Left" Margin="233,312,0,0" VerticalAlignment="Top" Height="47" Width="86"/>
-        <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="statusDrone" Text="{Binding Path=Status, FallbackValue='Maintenance'}" TextWrapping="Wrap" Margin="146,386,427,124"/>
+        <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="statusDrone" Text="{Binding Path=Status}" TextWrapping="Wrap" Margin="146,386,427,124"/>
         <TextBlock FontSize="20" FontFamily="/font/#Fuzzy Bubbles" Name="locationDrone" Text="{Binding Path=CLocation}" TextWrapping="Wrap" Margin="102,420,321,41"/>
         <TextBlock FontSize="15" FontFamily="/font/#Fuzzy Bubbles" Name="parcelDrone" Text="{Binding Path=PTransfer}" TextWrapping="Wrap" Margin="434,91,17,63"/>
         <Button Margin="557,477,0,10" Name="parcelInDrone" Background="PowderBlue" Content="Open Parcel" BorderBrush="Black" FontFamily="/font/#Alef" Click="ParcelInDrone" FontWeight="Bold" Grid.Column="0" FontSize="18" HorizontalAlignment="Left" Width="216">
@@ -106,7 +106,7 @@
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button Name="action1" Margin="10,12,10,4" Background="PowderBlue" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" Grid.Column="1" FontSize="18" Content="">
+            <Button Name="action1" Margin="10,8,10,8" Background="PowderBlue" FontFamily="/font/#Alef" FontWeight="Bold" Grid.Column="1" FontSize="18" Content="">
                 <Button.Resources>
                     <Style TargetType="Button" BasedOn="{StaticResource Design}">
                         <Setter Property="IsEnabled" Value="True" />
@@ -118,6 +118,13 @@
                                     <Condition Binding="{Binding Path=Background, ElementName=idDrone}" Value="Red" />
                                 </MultiDataTrigger.Conditions>
                                 <Setter Property="IsEnabled" Value="False" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Path=Visibility, ElementName=DroneAddGrid}" Value="Hidden" />
+                                    <Condition Binding="{Binding Path=Text, ElementName=statusDrone}" Value="Maintenance" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Visibility" Value="Hidden" />
                             </MultiDataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
@@ -133,12 +140,18 @@
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button Name="action2" Style="{DynamicResource Design}" Margin="10,8,2,8" Background="PowderBlue" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" Grid.Column="2" FontSize="18" Content="">
+            <Button Name="action2" Margin="10,8,10,8" Background="PowderBlue" BorderBrush="Black" FontFamily="/font/#Alef" FontWeight="Bold" Grid.Column="2" FontSize="18" Content="">
                 <Button.Resources>
-                    <Style TargetType="Button">
+                    <Style TargetType="Button" BasedOn="{StaticResource Design}">
                         <Setter Property="Visibility" Value="Visible"/>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Path=IsChecked, ElementName=checkBoxSimulator}" Value="True">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=Text, ElementName=statusDrone}" Value="Delivery">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=Content, ElementName=batteryDrone}" Value="">
                                 <Setter Property="Visibility" Value="Hidden"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -180,8 +193,7 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
         </Grid>
-        <Frame Grid.RowSpan="3" x:Name="HostPage" NavigationUIVisibility="Hidden" />
-        <CheckBox x:Name="checkBoxSimulator" Click="Simulator" FontFamily="/font/#Fuzzy Bubbles" Content="Run Simulator" HorizontalAlignment="Left" Margin="25,27,0,0" VerticalAlignment="Top" Height="23" Width="117">
+        <CheckBox x:Name="checkBoxSimulator" Checked="SimulatorChecked" Unchecked="SimulatorUnChecked" FontFamily="/font/#Fuzzy Bubbles" Content="Run Simulator" HorizontalAlignment="Left" Margin="25,27,0,0" VerticalAlignment="Top" Height="23" Width="117">
             <CheckBox.LayoutTransform>
                 <ScaleTransform ScaleX="2" ScaleY="2"/>
             </CheckBox.LayoutTransform>
@@ -196,5 +208,6 @@
                 </Style>
             </CheckBox.Resources>
         </CheckBox>
+        <Frame Grid.RowSpan="3" x:Name="HostPage" NavigationUIVisibility="Hidden" />
     </Grid>
 </Window>

@@ -51,7 +51,7 @@ namespace PL
         /// <summary>
         /// Initialise all the data and some of the graphics
         /// </summary>
-        private void UpdateParcel(object sender, RoutedEventArgs e) {
+        private void UpdateParcel(object sender, DependencyPropertyChangedEventArgs e) {
             pa = bl.GetParcelById(pa.Id.Value);
             this.DataContext = pa;
         }
@@ -74,19 +74,19 @@ namespace PL
 
         private void TargetInParcel(object sender, RoutedEventArgs e) {
             CustomerPage customerPage = new CustomerPage(bl.GetCustomerById(pa.Target.Id));
-            customerPage.Unloaded += UpdateParcel;
+            customerPage.DataContextChanged += UpdateParcel;
             this.NavigationService.Navigate(customerPage);
         }
 
         private void SenderInParcel(object sender, RoutedEventArgs e) {
             CustomerPage customerPage = new CustomerPage(bl.GetCustomerById(pa.Sender.Id));
-            customerPage.Unloaded += UpdateParcel;
+            customerPage.DataContextChanged += UpdateParcel;
             this.NavigationService.Navigate(customerPage);
         }
 
         private void DroneInParcel(object sender, RoutedEventArgs e) {
             DroneWindow dronePage = new DroneWindow(bl.GetDroneById(pa.Drone.Id));
-            dronePage.Unloaded += UpdateParcel;
+            dronePage.DataContextChanged += UpdateParcel;
             dronePage.ShowDialog();
         }
 

@@ -34,6 +34,7 @@ namespace PL
             InitializeComponent();
             if (drone == null) {
                 dr = new Drone();
+                dr.Status = DroneStatuses.Maintenance;
             }
             else
                 dr = drone;
@@ -47,7 +48,6 @@ namespace PL
 
             if (drone == null) {
                 DroneAddGrid.Visibility = Visibility.Visible;
-                action2.Visibility = Visibility.Hidden;
 
                 action1.Content = "Add Drone";
                 action1.Click += new RoutedEventHandler(Add_Click);
@@ -69,7 +69,6 @@ namespace PL
             //If the choosen drone is in delivery
             if (dr.Status == DroneStatuses.Delivery) {
                 pa = bl.GetParcelById(dr.PTransfer.Id);
-                action2.Visibility = Visibility.Hidden;
                 if (pa.PickedUp == null)
                     ChangePickUP();
                 else
@@ -100,12 +99,11 @@ namespace PL
         private void Assign_Click(object sender, RoutedEventArgs e) {
             try {
                 MessageBox.Show(bl.AssignDroneParcel(dr.Id.Value));
-                action2.Visibility = Visibility.Hidden;
                 Initialize();
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                action1.Visibility = Visibility.Hidden;
+                //action1.Visibility = Visibility.Hidden;
             }
         }
 
@@ -141,7 +139,7 @@ namespace PL
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                action2.Visibility = Visibility.Hidden;
+                //action2.Visibility = Visibility.Hidden;
             }
         }
 
@@ -212,10 +210,8 @@ namespace PL
         ///and sending drone for charging buttons
         /// </summary>
         private void ChangeAssignSend() {
-            action1.Visibility = Visibility.Visible;
             action1.Content = "Assign the Drone \n      to Parcel";
             action1.Click += new RoutedEventHandler(Assign_Click);
-            action2.Visibility = Visibility.Visible;
             action2.Content = "Send the Drone \n  to Charging";
             action2.Click += new RoutedEventHandler(Send_Click);
         }
@@ -224,7 +220,6 @@ namespace PL
         /// Hides action1 and changes action2 to drone releasing button
         /// </summary>
         private void ChangeRelese() {
-            action1.Visibility = Visibility.Hidden;
             action2.Content = "Release the Drone \n   from Charging";
             action2.Click += new RoutedEventHandler(Release_Click);
         }
@@ -238,7 +233,8 @@ namespace PL
 
         BackgroundWorker worker;
         bool stop;
-        private void Simulator(object sender, RoutedEventArgs e) {
+        private void SimulatorChecked(object sender, RoutedEventArgs e) {
+            stop = false;
             worker = new BackgroundWorker();
             worker.DoWork += backgroundWorker1_DoWork;
             worker.WorkerReportsProgress = true;
@@ -246,17 +242,15 @@ namespace PL
             worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
             worker.ProgressChanged += (sender, args) => UpdateDrone();
             worker.RunWorkerAsync();
-            if (checkBoxSimulator.IsChecked == true) {
-                stop = false;
-            }
-            else {
-                stop = true;
-                Initialize();
-            }
+        }
+
+        private void SimulatorUnChecked(object sender, RoutedEventArgs e) {
+            stop = true;
+            Initialize();
         }
 
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
-         //
+            //
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e) {
@@ -265,10 +259,8 @@ namespace PL
         }
 
         private void UpdateDrone() {
-
             dr = bl.GetDroneById(dr.Id.Value);
             this.DataContext = dr;
-            
         }
     }
 }

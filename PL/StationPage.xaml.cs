@@ -82,12 +82,12 @@ namespace PL
             if (droneStationListView.SelectedItem != null) {
                 DroneCharge droneCharge = (DroneCharge)droneStationListView.SelectedItem;
                 DroneWindow dronePage = new DroneWindow(bl.GetDroneById(droneCharge.Id));
-                dronePage.Unloaded += UpdateStation;
+                dronePage.DataContextChanged += UpdateStation;
                 dronePage.ShowDialog();
             }
         }
 
-        private void UpdateStation(object sender = null, EventArgs e = null) {
+        private void UpdateStation(object sender, DependencyPropertyChangedEventArgs e) {
             st = bl.GetStationById(st.Id.Value);
             this.DataContext = st;
         }
