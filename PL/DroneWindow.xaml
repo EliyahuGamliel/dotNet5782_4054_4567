@@ -87,6 +87,7 @@
                 </Style>
             </Button.Resources>
         </Button>
+        
         <Grid Name="DownGrid" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
