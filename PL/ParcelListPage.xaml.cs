@@ -40,7 +40,7 @@ namespace PL
                 WeightSelector.Items.Add(item);
             WeightSelector.Items.Add("All");
 
-            parcelList = new ObservableCollection<BO.ParcelList>(bl.GetParcels());
+            parcelList = new ObservableCollection<ParcelList>(bl.GetParcels());
             this.DataContext = parcelList;
         }
 

@@ -139,7 +139,7 @@ namespace PL
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                //action2.Visibility = Visibility.Hidden;
+                            
             }
         }
 
@@ -255,7 +255,7 @@ namespace PL
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e) {
             Action updateDrone = () => ((BackgroundWorker)sender).ReportProgress(0);
-            bl.PlaySimulator(dr.Id.Value, updateDrone, () => stop);
+            bl.PlaySimulator(dr.Id.Value, () => worker.ReportProgress(0), () => stop);
         }
 
         private void UpdateDrone() {

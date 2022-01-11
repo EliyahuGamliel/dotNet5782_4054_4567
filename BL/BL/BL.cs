@@ -155,7 +155,7 @@ namespace BL
         }
 
         public void PlaySimulator(int Id, Action updateDrone, Func<bool> stop) {
-            SimulatorDrone simulator = new SimulatorDrone(Instance, Id, updateDrone, stop);
+            new SimulatorDrone(Instance, Id, updateDrone, stop);
         }
     }
 }

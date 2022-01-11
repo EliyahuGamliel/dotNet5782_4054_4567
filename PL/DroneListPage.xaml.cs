@@ -57,7 +57,7 @@ namespace PL
         /// <param name="e"></param>
         private void AddDrone(object sender, RoutedEventArgs e) {
             DroneWindow dronePage = new DroneWindow();
-            dronePage.DataContextChanged += UpdateList;
+            dronePage.Unloaded += UpdateList;
             dronePage.ShowDialog();
         }
 
