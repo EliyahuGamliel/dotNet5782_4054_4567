@@ -29,8 +29,6 @@ namespace BL
                             }
                             else
                                 bl.PickUpDroneParcel(Id);
-                            updateDrone();
-                            Thread.Sleep(DELAY);
                         }
                         else {
                             if (drone.PTransfer.TransportDistance > SPEED) {
@@ -51,22 +49,16 @@ namespace BL
                             }
                             else
                                 bl.DeliverParcelCustomer(Id);
-                            updateDrone();
-                            Thread.Sleep(DELAY);
                         }
                         break;
 
                     case DroneStatuses.Available:
                         try {
                             bl.AssignDroneParcel(Id);
-                            updateDrone();
-                            Thread.Sleep(DELAY);
                         }
                         catch {
                             try {
                                 bl.SendDrone(Id);
-                                updateDrone();
-                                Thread.Sleep(DELAY);
                             }
                             catch {
                                 Thread.Sleep(DELAY);
@@ -80,10 +72,10 @@ namespace BL
                         }
                         else
                             bl.UpdateDrone(Id, drone.Model, drone.Battery + electric[4]);
-                        updateDrone();
-                        Thread.Sleep(DELAY);
                         break;
                 }
+                updateDrone();
+                Thread.Sleep(DELAY);
             }
         }
 

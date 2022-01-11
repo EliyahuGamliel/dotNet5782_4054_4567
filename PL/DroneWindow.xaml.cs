@@ -232,40 +232,44 @@ namespace PL
         }
 
         BackgroundWorker worker;
-        bool stop;
+        bool closeWindow;
         private void SimulatorChecked(object sender, RoutedEventArgs e) {
-            stop = false;
             worker = new BackgroundWorker();
-            worker.DoWork += backgroundWorker1_DoWork;
+            worker.DoWork += worker_DoWork;
+            worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
+            worker.ProgressChanged += worker_PrograssChanged;
             worker.WorkerReportsProgress = true;
             worker.WorkerSupportsCancellation = true;
-            worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
-            worker.ProgressChanged += (sender, args) => UpdateDrone();
             worker.RunWorkerAsync();
         }
 
         private void SimulatorUnChecked(object sender, RoutedEventArgs e) {
-            stop = true;
-            Initialize();
+            closeWindow = false;
+            worker.CancelAsync();
         }
 
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
-            //
+            if (closeWindow)
+                this.Close();
+            else
+                Initialize();
         }
 
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e) {
-            Action updateDrone = () => ((BackgroundWorker)sender).ReportProgress(0);
-            bl.PlaySimulator(dr.Id.Value, () => worker.ReportProgress(0), () => stop);
-        }
-
-        private void UpdateDrone() {
+        private void worker_PrograssChanged(object sender, ProgressChangedEventArgs e) {
             dr = bl.GetDroneById(dr.Id.Value);
             this.DataContext = dr;
         }
 
+        private void worker_DoWork(object sender, DoWorkEventArgs e) {
+            bl.PlaySimulator(dr.Id.Value, () => worker.ReportProgress(0), () => worker.CancellationPending);
+        }
+
         protected override void OnClosing(CancelEventArgs e) {
-            e.Cancel = true;
-            stop = false;
+            if (worker.IsBusy) {
+                e.Cancel = true;
+                closeWindow = true;
+                worker.CancelAsync();
+            }
         }
     }
 }
