@@ -262,5 +262,10 @@ namespace PL
             dr = bl.GetDroneById(dr.Id.Value);
             this.DataContext = dr;
         }
+
+        protected override void OnClosing(CancelEventArgs e) {
+            e.Cancel = true;
+            stop = false;
+        }
     }
 }
