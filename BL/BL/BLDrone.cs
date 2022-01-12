@@ -80,8 +80,8 @@ namespace BL
                     DroneList d = dronesList.Find(dro => dro.Id == id);
                     int index = dronesList.IndexOf(d);
                     d.Model = model;
-                    if(battry != null) { d.Battery = battry.Value > 100 ? 100 : battry.Value ; }
-                    if(loc != null) {
+                    if (battry != null) { d.Battery = battry.Value > 100 ? 100 : battry.Value; }
+                    if (loc != null) {
                         d.CLocation.Lattitude = loc.Lattitude.Value;
                         d.CLocation.Longitude = loc.Longitude.Value;
                     }
@@ -132,16 +132,16 @@ namespace BL
         /// <param name="time">The time the drone was in charge (in hours)</param>
         /// <returns>Notice if the addition was successful</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public String ReleasDrone(int idDrone){
+        public String ReleasDrone(int idDrone) {
+            CheckNotExistId(dronesList, idDrone);
+
+            DroneList d = dronesList.Find(dr => idDrone == dr.Id);
+            int index = dronesList.IndexOf(d);
+
+            if (d.Status != DroneStatuses.Maintenance)
+                throw new DroneCannotRelese();
+
             lock (data) {
-                CheckNotExistId(dronesList, idDrone);
-
-                DroneList d = dronesList.Find(dr => idDrone == dr.Id);
-                int index = dronesList.IndexOf(d);
-
-                if (d.Status != DroneStatuses.Maintenance)
-                    throw new DroneCannotRelese();
-
                 d.Status = DroneStatuses.Available;
                 DO.DroneCharge dc = data.GetDroneChargeById(d.Id);
                 dc.Active = false;
@@ -155,10 +155,10 @@ namespace BL
                 //int chargeSlots = ChargeSlotsCatched(st.Id.Value) + st.ChargeSlots.Value;
 
                 data.DeleteDroneCharge(dc);
-
                 UpdateStation(st.Id.Value, "", st.ChargeSlots.Value + 1);
-                return "The update was successful\n";
             }
+            return "The update was successful\n";
+
         }
 
         /// <summary>
@@ -229,7 +229,7 @@ namespace BL
         /// </summary>
         /// <returns>Returns the list of drones</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public IEnumerable<DroneList> GetDrones(){
+        public IEnumerable<DroneList> GetDrones() {
             return dronesList.FindAll(d => d.Active);
         }
 
@@ -240,15 +240,14 @@ namespace BL
         /// <param name="status">The status value of the required drones</param>
         /// <returns>Return list of drones by filter</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public IEnumerable<DroneList> GetDroneByFilter(object weight, object status)
-        {
+        public IEnumerable<DroneList> GetDroneByFilter(object weight, object status) {
             if (weight is null or "All" && status is null or "All")
                 return dronesList.FindAll(d => d.Active);
             else if (weight is null or "All")
                 return dronesList.FindAll(d => d.Status == (DroneStatuses)status && d.Active);
             else if (status is null or "All")
                 return dronesList.FindAll(d => d.MaxWeight == (BO.WeightCategories)weight && d.Active);
-            return dronesList.FindAll(d => d.Status == (DroneStatuses)status && d.MaxWeight == (BO.WeightCategories)weight && d.Active);   
+            return dronesList.FindAll(d => d.Status == (DroneStatuses)status && d.MaxWeight == (BO.WeightCategories)weight && d.Active);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]

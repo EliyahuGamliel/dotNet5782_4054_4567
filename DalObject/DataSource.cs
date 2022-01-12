@@ -123,7 +123,7 @@ namespace Dal
             }
 
             //Parcel
-            ran = rando.Next(10, 1001);
+            ran = rando.Next(10, 101);
             for (int i = 0; i < ran; ++i)
             {
                 Parcel p = new Parcel();

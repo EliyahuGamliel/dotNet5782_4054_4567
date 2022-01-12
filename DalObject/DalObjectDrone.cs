@@ -61,7 +61,6 @@ namespace Dal
             DataSource.Drones[index] = drone;
         }
 
-
         /// <summary>
         /// Returns an array with all fields of power consumption
         /// </summary>

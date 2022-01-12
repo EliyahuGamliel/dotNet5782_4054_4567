@@ -52,12 +52,13 @@ namespace BL
         /// </summary>
         /// <param name="DroneId">ID of the drone to assign a parcel</param>
         /// <returns>Notice if the addition was successful</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public string AssignDroneParcel(int DroneId) {
-            lock (data) {
-                CheckNotExistId(dronesList, DroneId);
-                DroneList d = dronesList.Find(dr => dr.Id == DroneId);
-                int index = dronesList.IndexOf(d);
+            CheckNotExistId(dronesList, DroneId);
+            DroneList d = dronesList.Find(dr => dr.Id == DroneId);
+            int index = dronesList.IndexOf(d);
 
+            lock (data) {
                 //Removed all the parcels that cann't assign to the Drone
                 IEnumerable<DO.Parcel> parcelslist = data.GetParcelByFilter(p => p.Active && ((BO.WeightCategories)p.Weight <= d.MaxWeight) &&
                     (ReturnBattery(3, d.CLocation, GetCustomerById(p.SenderId).Location) +
@@ -94,8 +95,8 @@ namespace BL
                 parcelchoose.DroneId = d.Id;
 
                 data.UpdateParcel(parcelchoose);
-                return "The update was successful\n";
             }
+            return "The update was successful\n";
         }
 
         /// <summary>
@@ -103,14 +104,14 @@ namespace BL
         /// </summary>
         /// <param name="id">ID of the drone to pickup a parcel</param>
         /// <returns>Notice if the addition was successful</returns>        
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public string PickUpDroneParcel(int id) {
+            CheckNotExistId(dronesList, id);
+            DroneList d = dronesList.Find(dr => dr.Id == id);
+            BO.Drone chosendrone = GetDroneById(id);
+            int index = dronesList.IndexOf(d);
+
             lock (data) {
-
-                CheckNotExistId(dronesList, id);
-                DroneList d = dronesList.Find(dr => dr.Id == id);
-                BO.Drone chosendrone = GetDroneById(id);
-                int index = dronesList.IndexOf(d);
-
                 DO.Parcel chosenp = data.GetParcelById(d.ParcelId);
                 if (ReturnStatus(chosenp) != 1)
                     throw new DroneCannotPickUp();
@@ -121,8 +122,9 @@ namespace BL
                 d.CLocation = chosendrone.PTransfer.CollectionLocation;
                 dronesList[index] = d;
                 data.UpdateParcel(chosenp);
-                return "The update was successful\n";
             }
+            return "The update was successful\n";
+
         }
 
         /// <summary>
@@ -130,13 +132,14 @@ namespace BL
         /// </summary>
         /// <param name="id">ID of the drone to deliver a parcel</param>
         /// <returns>Notice if the addition was successful</returns>   
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public string DeliverParcelCustomer(int id) {
-            lock (data) {
-                CheckNotExistId(dronesList, id);
-                DroneList d = dronesList.Find(dr => dr.Id == id);
-                BO.Drone chosendrone = GetDroneById(id);
-                int index = dronesList.IndexOf(d);
+            CheckNotExistId(dronesList, id);
+            DroneList d = dronesList.Find(dr => dr.Id == id);
+            BO.Drone chosendrone = GetDroneById(id);
+            int index = dronesList.IndexOf(d);
 
+            lock (data) {
                 DO.Parcel chosenp = data.GetParcelById(d.ParcelId);
                 if (ReturnStatus(chosenp) != 2)
                     throw new DroneCannotDeliver();
@@ -150,8 +153,8 @@ namespace BL
                 d.ParcelId = 0;
                 dronesList[index] = d;
                 data.UpdateParcel(chosenp);
-                return "The update was successful\n";
             }
+            return "The update was successful\n";
         }
 
         public void PlaySimulator(int Id, Action updateDrone, Func<bool> stop) {

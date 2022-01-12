@@ -14,9 +14,11 @@ namespace BL
     {
         int DELAY = 1000;
         double SPEED = 1000;
-
+        double[] electric;
         public SimulatorDrone(BL bl, int Id, Action updateDrone, Func<bool> stop) {
-            double[] electric = bl.data.DroneElectricityUse();
+            lock (bl) {
+                electric = bl.data.DroneElectricityUse();
+            }
             while (!stop()) {
                 BO.Drone drone = bl.GetDroneById(Id);
                 switch (drone.Status) {
