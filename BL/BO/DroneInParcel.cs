@@ -1,6 +1,4 @@
 using System;
-using DO;
-using DalApi;
 
 namespace BO
 {
@@ -16,7 +14,6 @@ namespace BO
         /// <summary><returns>
         /// The function returns a string to print on all entity data
         /// </returns></summary>
-        public override string ToString()
-        { return $"    Id: {Id}\n    Battery: {Math.Round(Battery, 0)}%\n    Current Location: {CLocation}"; }
+        public override string ToString() { return $"    Id: {Id}\n    Battery: {Math.Round(Battery, 0)}%\n    Current Location: {CLocation}"; }
     }
 }

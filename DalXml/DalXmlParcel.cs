@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DO;
-using DalApi;
-using System.Xml.Linq;
 using System.Runtime.CompilerServices;
+using System.Xml.Linq;
+using DalApi;
+using DO;
 
 namespace Dal
 {
-    partial class DalXml : IDal
+    internal partial class DalXml : IDal
     {
         [MethodImpl(MethodImplOptions.Synchronized)]
         public int AddParcel(Parcel p) {

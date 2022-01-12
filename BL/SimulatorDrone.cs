@@ -1,20 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using BO;
-using System.Device.Location;
-using static BL.BL;
 using static System.Math;
 
 namespace BL
 {
-    class SimulatorDrone
+    internal class SimulatorDrone
     {
-        int DELAY = 1000;
-        double SPEED = 1000;
-        double[] electric;
+        private int DELAY = 1000;
+        private double SPEED = 1000;
+        private double[] electric;
         public SimulatorDrone(BL bl, int Id, Action updateDrone, Func<bool> stop) {
             electric = bl.data.DroneElectricityUse();
             while (!stop()) {

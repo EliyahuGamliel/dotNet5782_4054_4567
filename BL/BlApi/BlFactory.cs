@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BlApi
+﻿namespace BlApi
 {
     public class BlFactory
     {
-        public static IBL GetBl()
-        {
+        public static IBL GetBl() {
             return BL.BL.Instance;
         }
     }

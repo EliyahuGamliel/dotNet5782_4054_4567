@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using DO;
-using DalApi;
-
 namespace BO
 {
     /// <summary>

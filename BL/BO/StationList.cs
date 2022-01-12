@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using DO;
-using DalApi;
-
 namespace BO
 {
     /// <summary>
@@ -18,7 +13,6 @@ namespace BO
         /// <summary><returns>
         /// The function returns a string to print on all entity data
         /// </returns></summary>
-        public override string ToString()
-        { return $"Id: {Id}\nName: {Name}\nCharge Slots Avaliable: {ChargeSlots}\nCharge Slots Catched: {ChargeSlotsCatched}\n"; }
+        public override string ToString() { return $"Id: {Id}\nName: {Name}\nCharge Slots Avaliable: {ChargeSlots}\nCharge Slots Catched: {ChargeSlotsCatched}\n"; }
     }
 }

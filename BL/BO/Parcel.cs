@@ -1,6 +1,4 @@
 using System;
-using DO;
-using DalApi;
 
 namespace BO
 {
@@ -23,9 +21,8 @@ namespace BO
         /// <summary><returns>
         /// The function returns a string to print on all entity data
         /// </returns></summary>
-        public override string ToString()
-        {
-            string str =  $"Id: {Id}\nWeight: {Weight}\nPriority: {Priority}\nRequested: {Requested}\nScheduled: ";
+        public override string ToString() {
+            string str = $"Id: {Id}\nWeight: {Weight}\nPriority: {Priority}\nRequested: {Requested}\nScheduled: ";
             if (Scheduled != null)
                 str += Scheduled;
             str += $"\nPickedUp: ";
@@ -34,8 +31,8 @@ namespace BO
             str += $"\nDelivered: ";
             if (Delivered != null)
                 str += Delivered;
-            str += $"\nDrone: \n{Drone}Target: {Target}Sender: {Sender}\n"; 
-            return str;    
+            str += $"\nDrone: \n{Drone}Target: {Target}Sender: {Sender}\n";
+            return str;
         }
     }
 }

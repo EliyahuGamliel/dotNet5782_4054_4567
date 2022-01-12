@@ -1,7 +1,4 @@
-using System;
 using System.Collections.Generic;
-using DO;
-using DalApi;
 
 namespace BO
 {
@@ -20,8 +17,7 @@ namespace BO
         /// <summary><returns>
         /// The function returns a string to print on all entity data
         /// </returns></summary>
-        public override string ToString()
-        {
+        public override string ToString() {
             string str = $"Id: {Id}\nName: {Name}\nPhone: {Phone}\nLocation: {Location}Parcels From Customer: \n";
             foreach (var item in FromCustomer)
                 str += item;

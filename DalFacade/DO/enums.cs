@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DO
+﻿namespace DO
 {
     /// <summary>
     /// Set up all the enums relevant to the program

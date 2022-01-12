@@ -15,7 +15,6 @@ namespace DO
         /// <summary><returns>
         /// The function returns a string to print on all entity data
         /// </returns></summary>
-        public override string ToString()
-        { return $"droneId: {DroneId}\nStationld: {StationId}\n"; }
+        public override string ToString() { return $"droneId: {DroneId}\nStationld: {StationId}\n"; }
     }
 }

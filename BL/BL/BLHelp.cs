@@ -1,11 +1,8 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using BO;
-using BlApi;
-using DO;
-using DalApi;
 using System.Device.Location;
+using System.Linq;
+using BO;
 
 namespace BL
 {

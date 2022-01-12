@@ -5,33 +5,34 @@ using BO;
 
 namespace ConsoleUI_BL
 {
-    partial class Program
+    internal partial class Program
     {
         private static IBL logic;
 
         /// <summary>
         /// The main function
         /// </summary>
-        static void Main(string[] args)
-        {
+        private static void Main(string[] args) {
             logic = BlFactory.GetBl();
             MainMenu();
         }
 
-        enum MenuOptions { Exit, Add, Update, Status, ShowList}
-        enum Adding { Exit, Station, Drone, Customer, Parcel }
-        enum Update { Exit, DroneModel, StationDetails, CustomerDetails, SendDrone, ReleaseDrone, AssignParcel, PickParcel, DeliverParcel }
-        enum List { Exit, Stations, Drones, Customers, Parcels, UnAssignmentParcels, AvailableChargingStations }
-        enum Status { Exit, Stations, Drones, Customers, Parcels }
+        private enum MenuOptions { Exit, Add, Update, Status, ShowList }
+
+        private enum Adding { Exit, Station, Drone, Customer, Parcel }
+
+        private enum Update { Exit, DroneModel, StationDetails, CustomerDetails, SendDrone, ReleaseDrone, AssignParcel, PickParcel, DeliverParcel }
+
+        private enum List { Exit, Stations, Drones, Customers, Parcels, UnAssignmentParcels, AvailableChargingStations }
+
+        private enum Status { Exit, Stations, Drones, Customers, Parcels }
 
         /// <summary>
         /// The MainMenu
         /// </summary>
-        private static void MainMenu()
-        {
+        private static void MainMenu() {
             int choice;
-            do
-            {
+            do {
                 Console.WriteLine("\nEnter 1 for adding");
                 Console.WriteLine("Enter 2 for update");
                 Console.WriteLine("Enter 3 to show by Id");
@@ -39,20 +40,17 @@ namespace ConsoleUI_BL
                 Console.WriteLine("Enter 0 to exit");
                 choice = GetInt();
                 FirstMenu(choice);
-            } while ((MenuOptions)choice != MenuOptions.Exit);   
+            } while ((MenuOptions)choice != MenuOptions.Exit);
         }
-        
+
         /// <summary>
         /// The first part of the menu
         /// </summary>
         /// <param name="choice">The first choice of the user</param>
-        private static void FirstMenu(int choice)
-        {
-            try
-            {
+        private static void FirstMenu(int choice) {
+            try {
                 bool legal = true;
-                switch ((MenuOptions)choice)
-                {
+                switch ((MenuOptions)choice) {
                     case MenuOptions.Add:
                         Console.WriteLine("Enter 1 for adding a station");
                         Console.WriteLine("Enter 2 for adding a drone");
@@ -94,7 +92,7 @@ namespace ConsoleUI_BL
                     case MenuOptions.Exit:
                         Console.WriteLine("Bye Bye!");
                         return;
-                    
+
                     default:
                         Console.WriteLine("Enter only numbers between 0-4!\n");
                         legal = false;
@@ -103,29 +101,25 @@ namespace ConsoleUI_BL
                 if (legal) {
                     int secondChoice;
                     secondChoice = GetInt();
-                    if(secondChoice == 0)
+                    if (secondChoice == 0)
                         return;
                     SecondMenu(choice, secondChoice);
                 }
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 Console.WriteLine("Ho no! {0}", e);
             }
         }
-        
+
         /// <summary>
         /// The second part of the menu
         /// </summary>
         /// <param name="choice">The first choice of the user</param>
         /// <param name="secondChoice">The second choice of the user</param>
-        private static void SecondMenu(int choice, int secondChoice)
-        {
-            switch ((MenuOptions)choice)
-            {
+        private static void SecondMenu(int choice, int secondChoice) {
+            switch ((MenuOptions)choice) {
                 case MenuOptions.Add:
-                    while (true)
-                    {
+                    while (true) {
                         if (secondChoice < 5 && secondChoice > -1)
                             break;
                         System.Console.WriteLine("Enter only numbers between 0-4! try again\n");
@@ -135,8 +129,7 @@ namespace ConsoleUI_BL
                     break;
 
                 case MenuOptions.Update:
-                    while (true)
-                    {
+                    while (true) {
                         if (secondChoice < 9 && secondChoice > -1)
                             break;
                         System.Console.WriteLine("Enter only numbers between 0-8! try again\n");
@@ -146,8 +139,7 @@ namespace ConsoleUI_BL
                     break;
 
                 case MenuOptions.Status:
-                    while (true)
-                    {
+                    while (true) {
                         if (secondChoice < 5 && secondChoice > -1)
                             break;
                         System.Console.WriteLine("Enter only numbers between 0-4! try again\n");
@@ -157,8 +149,7 @@ namespace ConsoleUI_BL
                     break;
 
                 case MenuOptions.ShowList:
-                    while (true)
-                    {
+                    while (true) {
                         if (secondChoice < 7 && secondChoice > -1)
                             break;
                         System.Console.WriteLine("Enter only numbers between 0-6! try again\n");
@@ -173,9 +164,8 @@ namespace ConsoleUI_BL
         /// The function takes care of the existing addition options
         /// </summary>
         /// <param name="num">The second choice of the user</param>
-        static void adding(int num) {
-            switch ((Adding)num)
-            {
+        private static void adding(int num) {
+            switch ((Adding)num) {
                 case Adding.Exit:
                     break;
 
@@ -195,9 +185,9 @@ namespace ConsoleUI_BL
                     Console.WriteLine("Enter Charge Slots: ");
                     s.ChargeSlots = GetInt();
                     s.DCharge.Clear();
-                    System.Console.WriteLine(logic.AddStation(s)); 
+                    System.Console.WriteLine(logic.AddStation(s));
                     break;
-                
+
                 //For adding a drone
                 case Adding.Drone:
                     int idStation;
@@ -210,7 +200,7 @@ namespace ConsoleUI_BL
                     d.MaxWeight = (WeightCategories)GetInt();
                     Console.WriteLine("Enter Id of Station to charge the Drone: ");
                     idStation = GetInt();
-                    System.Console.WriteLine(logic.AddDrone(d, idStation)); 
+                    System.Console.WriteLine(logic.AddDrone(d, idStation));
                     break;
 
                 //For adding a customer
@@ -227,7 +217,7 @@ namespace ConsoleUI_BL
                     c.Name = Console.ReadLine();
                     Console.WriteLine("Enter the phone (+972-5????????): ");
                     c.Phone = GetPhone();
-                    System.Console.WriteLine(logic.AddCustomer(c)); 
+                    System.Console.WriteLine(logic.AddCustomer(c));
                     break;
 
                 //For adding a parcel
@@ -241,22 +231,20 @@ namespace ConsoleUI_BL
                     p.Weight = (WeightCategories)GetInt();
                     Console.WriteLine("Enter the number of priority: \n0) Normal\n1) Fast\n2) Emergency");
                     p.Priority = (Priorities)GetInt();
-                    System.Console.WriteLine(logic.AddParcel(p, SenderId, TargetId)); 
+                    System.Console.WriteLine(logic.AddParcel(p, SenderId, TargetId));
                     break;
             }
         }
-        
+
         /// <summary>
         /// The function takes care of the existing update options
         /// </summary>
         /// <param name="num">The second choice of the user</param>
-        static void update(int num)
-        {
+        private static void update(int num) {
             int id;
             string input;
             bool success;
-            switch ((Update)num)
-            {
+            switch ((Update)num) {
                 case Update.Exit:
                     return;
 
@@ -265,7 +253,7 @@ namespace ConsoleUI_BL
                     id = GetInt();
                     Console.WriteLine("Enter new Model to Drone: ");
                     string modelDrone = Console.ReadLine();
-                    System.Console.WriteLine(logic.UpdateDrone(id ,modelDrone));
+                    System.Console.WriteLine(logic.UpdateDrone(id, modelDrone));
                     break;
 
                 case Update.StationDetails:
@@ -278,11 +266,9 @@ namespace ConsoleUI_BL
                     nameStation = Console.ReadLine();
                     Console.WriteLine("Enter a total amount of charge slots: ");
                     input = Console.ReadLine();
-                    if (input != "")
-                    {
+                    if (input != "") {
                         success = int.TryParse(input, out chargeSlotsHelp);
-                        while (!success)
-                        {
+                        while (!success) {
                             Console.WriteLine("you didnt enter an int, please try again");
                             input = Console.ReadLine();
                             if (input != "")
@@ -338,10 +324,9 @@ namespace ConsoleUI_BL
             }
         }
 
-        static void status(int num) {
+        private static void status(int num) {
             int ID;
-            switch ((Status)num)
-            {
+            switch ((Status)num) {
                 case Status.Exit:
                     return;
 
@@ -356,7 +341,7 @@ namespace ConsoleUI_BL
                     ID = GetInt();
                     Console.WriteLine(logic.GetDroneById(ID));
                     break;
-                
+
                 case Status.Customers:
                     Console.WriteLine("Enter the Id: ");
                     ID = GetInt();
@@ -375,10 +360,9 @@ namespace ConsoleUI_BL
         /// The function allows you to view a selected list
         /// </summary>
         /// <param name="num">The second choice of the user</param>
-        
-        static void lists(int num) {
-            switch ((List)num)
-            {
+
+        private static void lists(int num) {
+            switch ((List)num) {
                 case List.Exit:
                     return;
 
@@ -387,19 +371,19 @@ namespace ConsoleUI_BL
                     foreach (var item in logic.GetStations())
                         Console.WriteLine(item);
                     break;
-                
+
                 //For displaying a list of drones
                 case List.Drones:
                     foreach (var item in logic.GetDrones())
                         Console.WriteLine(item);
                     break;
-                
+
                 //For displaying a list of customer
                 case List.Customers:
                     foreach (var item in logic.GetCustomers())
                         Console.WriteLine(item);
                     break;
-            
+
                 //For displaying a list of parcels
                 case List.Parcels:
                     foreach (var item in logic.GetParcels())
@@ -411,13 +395,13 @@ namespace ConsoleUI_BL
                     foreach (var item in logic.GetParcelDrone())
                         Console.WriteLine(item);
                     break;
-                    
+
                 //For displaying base stations with available charging stations
                 case List.AvailableChargingStations:
                     foreach (var item in logic.GetStationCharge())
                         Console.WriteLine(item);
                     break;
             }
-        } 
+        }
     }
 }

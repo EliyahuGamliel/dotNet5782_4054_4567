@@ -1,11 +1,10 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using BO;
-using BlApi;
-using DO;
-using DalApi;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using BlApi;
+using BO;
+using DalApi;
 
 namespace BL
 {
@@ -16,7 +15,7 @@ namespace BL
         /// </summary>
         static BL() { }
 
-        class Nested
+        private class Nested
         {
             internal static volatile BL _instance = null;
             internal static readonly object _lock = new object();
@@ -38,14 +37,14 @@ namespace BL
             }
         }
 
-        Random rand = new Random();
+        private Random rand = new Random();
         internal IDal data;
-        List<DroneList> dronesList = new List<DroneList>();
-        double Avaliable;
-        double WeightLight;
-        double WeightMedium;
-        double WeightHeavy;
-        double ChargingRate;
+        private List<DroneList> dronesList = new List<DroneList>();
+        private double Avaliable;
+        private double WeightLight;
+        private double WeightMedium;
+        private double WeightHeavy;
+        private double ChargingRate;
 
         /// <summary>
         /// /// If all is fine, the drone assign to a parcel, else throw exception

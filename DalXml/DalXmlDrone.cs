@@ -1,24 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DO;
-using DalApi;
-using System.Xml.Linq;
 using System.Runtime.CompilerServices;
+using System.Xml.Linq;
+using DalApi;
+using DO;
 
 namespace Dal
 {
-    partial class DalXml : IDal
+    internal partial class DalXml : IDal
     {
-        XElement droneRoot;
-        string dronesPath = @"Data\Drones.xml";
+        private XElement droneRoot;
+        private string dronesPath = @"Data\Drones.xml";
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(Drone d) {
             try {
-                droneRoot = XElement.Load(dronesPath); }
+                droneRoot = XElement.Load(dronesPath);
+            }
             catch { droneRoot = new XElement("ArrayOfDrone"); }
 
             try {

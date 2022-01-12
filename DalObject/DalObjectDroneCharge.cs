@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using DO;
 using DalApi;
+using DO;
 
 namespace Dal
 {
@@ -33,8 +33,7 @@ namespace Dal
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public DroneCharge GetDroneChargeById(int Id)
-        {
+        public DroneCharge GetDroneChargeById(int Id) {
             DroneCharge dC = DataSource.DroneCharges.Find(d => Id == d.DroneId && d.Active);
             return dC;
         }

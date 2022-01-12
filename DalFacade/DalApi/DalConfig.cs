@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DalApi
 {
-    class DalConfig
+    internal class DalConfig
     {
         internal static string DalName;
         internal static Dictionary<string, string> DalPackages;
@@ -20,10 +18,10 @@ namespace DalApi
                            select pkg
                            ).ToDictionary(p => "" + p.Name, p => p.Value);
             DalNamespaces = (from pkg in dalConfig.Element("dal-packages").Elements()
-                           select pkg
+                             select pkg
                           ).ToDictionary(p => "" + p.Name, p => p.Attribute("namespace").Value);
             DalClasses = (from pkg in dalConfig.Element("dal-packages").Elements()
-                           select pkg
+                          select pkg
                           ).ToDictionary(p => "" + p.Name, p => p.Attribute("class").Value);
 
         }

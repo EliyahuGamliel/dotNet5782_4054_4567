@@ -1,17 +1,15 @@
 using System;
-using Dal;
-using DalApi;
 using DO;
 namespace ConsoleUI
 {
-    class Program
+    internal class Program
     {
-        static DalApi.IDal data;
+        private static DalApi.IDal data;
 
         /// <summary>
         /// The main function
         /// </summary>
-        static void Main(string[] args) {
+        private static void Main(string[] args) {
             data = new Dal.DalObject();
             MainMenu();
         }
@@ -19,7 +17,7 @@ namespace ConsoleUI
         /// <summary>
         /// The MainMenu
         /// </summary>
-        static void MainMenu() {
+        private static void MainMenu() {
             int choice;
             do {
                 Console.WriteLine("Enter 1 for adding");
@@ -31,11 +29,12 @@ namespace ConsoleUI
                 FirstMenu(choice);
             } while (choice != 5);
         }
+
         /// <summary>
         /// The first part of the menu
         /// </summary>
         /// <param name="choice">The first choice of the user</param>
-        static void FirstMenu(int choice) {
+        private static void FirstMenu(int choice) {
             switch (choice) {
                 case 1:
                     Console.WriteLine("Enter 1 for adding a station to the list");
@@ -82,7 +81,7 @@ namespace ConsoleUI
         /// </summary>
         /// <param name="choice">The first choice of the user</param>
         /// <param name="secondChoice">The second choice of the user</param>
-        static void SecondMenu(int choice, int secondChoice) {
+        private static void SecondMenu(int choice, int secondChoice) {
             switch (choice) {
                 case 1:
                     adding(secondChoice);
@@ -106,7 +105,7 @@ namespace ConsoleUI
         /// The function takes care of the existing addition options
         /// </summary>
         /// <param name="num">The second choice of the user</param>
-        static void adding(int num) {
+        private static void adding(int num) {
             switch (num) {
                 //For adding a station
                 case 1:
@@ -178,7 +177,7 @@ namespace ConsoleUI
         /// The function takes care of the existing update options
         /// </summary>
         /// <param name="num">The second choice of the user</param>
-        static void update(int num) {
+        private static void update(int num) {
             int id;
             switch (num) {
                 //For associating a parcel with a drone
@@ -224,7 +223,7 @@ namespace ConsoleUI
             }
         }
 
-        static void status(int num) {
+        private static void status(int num) {
             int ID;
             Console.WriteLine("Enter the Id: ");
             Int32.TryParse(Console.ReadLine(), out ID);
@@ -252,7 +251,7 @@ namespace ConsoleUI
         /// The function allows you to view a selected list
         /// </summary>
         /// <param name="num">The second choice of the user</param>
-        static void lists(int num) {
+        private static void lists(int num) {
             switch (num) {
                 //For displaying a list of base stations
                 case 1:

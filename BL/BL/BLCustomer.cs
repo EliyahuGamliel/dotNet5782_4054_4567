@@ -1,11 +1,8 @@
-using System;
-using System.Linq;
 using System.Collections.Generic;
-using BO;
-using BlApi;
-using DO;
-using DalApi;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using BlApi;
+using BO;
 
 namespace BL
 {

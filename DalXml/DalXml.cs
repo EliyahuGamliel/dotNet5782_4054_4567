@@ -1,26 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
-using System.Xml;
 using System.IO;
-using DO;
-using DalApi;
-using System.Xml.Linq;
 using System.Runtime.CompilerServices;
+using System.Xml;
+using System.Xml.Serialization;
+using DalApi;
+using DO;
 
 namespace Dal
 {
-    sealed partial class DalXml : IDal
+    internal sealed partial class DalXml : IDal
     {
         /// <summary>
         /// Ctor for the compiler
         /// </summary>
         static DalXml() { }
 
-        class Nested
+        private class Nested
         {
             internal static volatile DalXml _instance = null;
             internal static readonly object _lock = new object();
@@ -43,7 +39,8 @@ namespace Dal
         }
 
         public DalXml() { }
-        Dictionary<Type, string> fileNames = new Dictionary<Type, string>() {
+
+        private Dictionary<Type, string> fileNames = new Dictionary<Type, string>() {
                 {typeof(Customer) , "Customers.xml"},
                 {typeof(Drone) , "Drones.xml"},
                 {typeof(DroneCharge) , "DronesCharges.xml"},
@@ -52,10 +49,10 @@ namespace Dal
             };
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        List<T> Read<T>() {
+        private List<T> Read<T>() {
             XmlReader Reader;
             List<T> Data;
-            XmlSerializer Ser = new XmlSerializer(typeof(List<T>));    
+            XmlSerializer Ser = new XmlSerializer(typeof(List<T>));
 
             try {
                 Reader = new XmlTextReader(Path.Combine("Data", fileNames[typeof(T)]));
@@ -83,7 +80,7 @@ namespace Dal
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        void Write<T>(List<T> data) {
+        private void Write<T>(List<T> data) {
             XmlSerializer ser = new XmlSerializer(typeof(List<T>));
 
             TextWriter Writer;
@@ -104,7 +101,7 @@ namespace Dal
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        static int Update<T>(List<T> listy, T updater) {
+        private static int Update<T>(List<T> listy, T updater) {
             var Id = typeof(T).GetProperty("Id");
 
             int index = listy.FindIndex(x => (int)Id.GetValue(x, null) == (int)Id.GetValue(updater, null));
@@ -134,6 +131,6 @@ namespace Dal
             }
             throw new IdNotExistException(id);
         }
-        
+
     }
 }

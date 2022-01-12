@@ -1,19 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.ComponentModel;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using BO;
 using BlApi;
+using BO;
 
 namespace PL
 {
@@ -22,9 +11,9 @@ namespace PL
     /// </summary>
     public partial class DroneWindow : Window
     {
-        Drone dr;
-        Parcel pa;
-        IBL bl = BlFactory.GetBl();
+        private Drone dr;
+        private Parcel pa;
+        private IBL bl = BlFactory.GetBl();
 
         /// <summary>
         /// The ctor
@@ -139,7 +128,7 @@ namespace PL
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                            
+
             }
         }
 
@@ -231,8 +220,8 @@ namespace PL
             this.HostPage.Content = parcelPage;
         }
 
-        BackgroundWorker worker;
-        bool closeWindow;
+        private BackgroundWorker worker;
+        private bool closeWindow;
         private void SimulatorChecked(object sender, RoutedEventArgs e) {
             worker = new BackgroundWorker();
             worker.DoWork += worker_DoWork;

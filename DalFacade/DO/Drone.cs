@@ -1,5 +1,3 @@
-using System;
-
 namespace DO
 {
     /// <summary>
@@ -15,7 +13,6 @@ namespace DO
         /// <summary><returns>
         /// The function returns a string to print on all entity data
         /// </returns></summary>
-        public override string ToString()
-        { return $"Id: {Id}\nModel: {Model}\nMaxWeight: {MaxWeight}\n"; }
+        public override string ToString() { return $"Id: {Id}\nModel: {Model}\nMaxWeight: {MaxWeight}\n"; }
     }
 }

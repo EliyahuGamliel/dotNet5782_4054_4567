@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 
 namespace DO
 {
@@ -10,12 +9,10 @@ namespace DO
     public class IdExistException : Exception
     {
         public int id { get; private set; }
-        public IdExistException(int ID)
-        {
+        public IdExistException(int ID) {
             this.id = ID;
         }
-        public override string ToString()
-        {
+        public override string ToString() {
             return "IdExistException: The ID " + id + " already exist\n";
         }
     }
@@ -27,12 +24,10 @@ namespace DO
     public class IdNotExistException : Exception
     {
         public int id { get; private set; }
-        public IdNotExistException(int ID)
-        {
+        public IdNotExistException(int ID) {
             this.id = ID;
         }
-        public override string ToString()
-        {
+        public override string ToString() {
             return "IdNotExistException: The ID " + id + " doesn't exist\n";
         }
     }

@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using DO;
 using DalApi;
+using DO;
 
 namespace Dal
 {
@@ -31,7 +31,7 @@ namespace Dal
         /// </summary>
         /// <param name="p">Object of parcel to update</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void UpdateParcel(Parcel p){
+        public void UpdateParcel(Parcel p) {
             CheckNotExistId(DataSource.Parcels, p.Id);
             Parcel pa = DataSource.Parcels.Find(par => par.Id == p.Id);
             int index = DataSource.Parcels.IndexOf(pa);

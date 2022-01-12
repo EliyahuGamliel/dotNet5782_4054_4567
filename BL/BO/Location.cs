@@ -1,13 +1,11 @@
 using System;
-using DO;
-using DalApi;
 
 namespace BO
 {
     /// <summary>
     /// Defining the "Location" class
     /// </summary>
-    public class Location 
+    public class Location
     {
         public double? Longitude { get; set; }
         public double? Lattitude { get; set; }
@@ -15,16 +13,14 @@ namespace BO
         /// <summary><returns>
         /// The function returns a string to print on all entity data
         /// </returns></summary>
-        public override string ToString()
-        { return $"\n      Longitude: {LongitudeBonus(Longitude.Value)}\n      Lattitude: {LattitudeBonus(Lattitude.Value)}\n"; }
+        public override string ToString() { return $"\n      Longitude: {LongitudeBonus(Longitude.Value)}\n      Lattitude: {LattitudeBonus(Lattitude.Value)}\n"; }
 
         /// <summary>
         /// The function gets a longitube and turns it into a longitube at base 60
         /// </summary>
         /// <param name="num">The number to change</param>
         /// <returns>The function returns a string of a number representing base 60</returns>
-        private string LongitudeBonus(double num)
-        {
+        private string LongitudeBonus(double num) {
             char dir = 'W';
             if (num < 0)
                 num = -num;
@@ -43,8 +39,7 @@ namespace BO
         /// </summary>
         /// <param name="num">The number to change</param>
         /// <returns>The function returns a string of a number representing base 60</returns>
-        private string LattitudeBonus(double num)
-        {
+        private string LattitudeBonus(double num) {
             char dir = 'S';
             if (num < 0)
                 num = -num;

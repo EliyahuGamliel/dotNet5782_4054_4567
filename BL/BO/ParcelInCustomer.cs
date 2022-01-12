@@ -1,7 +1,3 @@
-using System;
-using DO;
-using DalApi;
-
 namespace BO
 {
     /// <summary>
@@ -18,7 +14,6 @@ namespace BO
         /// <summary><returns>
         /// The function returns a string to print on all entity data
         /// </returns></summary>
-        public override string ToString()
-        { return $"    Id: {Id}\n    Weight: {Weight}\n    Priority: {Priority}\n    Status: {Status}\n    Customer In Parcel: {CParcel}"; }
+        public override string ToString() { return $"    Id: {Id}\n    Weight: {Weight}\n    Priority: {Priority}\n    Status: {Status}\n    Customer In Parcel: {CParcel}"; }
     }
 }

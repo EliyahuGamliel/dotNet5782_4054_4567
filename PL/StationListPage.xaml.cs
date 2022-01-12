@@ -1,18 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Collections.ObjectModel;
 using BlApi;
 using BO;
 
@@ -42,7 +34,7 @@ namespace PL
             stationPage.Unloaded += UpdateList;
             this.NavigationService.Navigate(stationPage);
         }
-        
+
         private void UpdateList(object sender = null, EventArgs e = null) {
             while (stationList.Count != 0) {
                 StationList st = stationList.First();
@@ -90,7 +82,7 @@ namespace PL
         private void ChangeViewList(object sender = null, RoutedEventArgs e = null) {
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(stationList);
             PropertyGroupDescription groupDescription = new PropertyGroupDescription("ChargeSlots");
-            if (view.GroupDescriptions.Count != 0) 
+            if (view.GroupDescriptions.Count != 0)
                 view.GroupDescriptions.Clear();
             else
                 view.GroupDescriptions.Add(groupDescription);

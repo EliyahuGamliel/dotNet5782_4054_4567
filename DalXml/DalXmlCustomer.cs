@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DO;
-using DalApi;
-using System.Xml.Serialization;
-using System.IO;
 using System.Runtime.CompilerServices;
+using DalApi;
+using DO;
 
 namespace Dal
 {
-    partial class DalXml : IDal
+    internal partial class DalXml : IDal
     {
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddCustomer(Customer c) {
@@ -40,10 +35,10 @@ namespace Dal
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Customer GetCustomerById(int Id) {
-            List<Customer> customers = Read<Customer> ();
+            List<Customer> customers = Read<Customer>();
             CheckNotExistId<Customer>(customers, Id);
             return customers.Find(c => c.Id == Id);
-            
+
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]

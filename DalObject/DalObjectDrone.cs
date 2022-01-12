@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using DO;
 using DalApi;
+using DO;
 
 namespace Dal
 {
     /// <summary>
     /// Class partial DalObject - All functions running on the list of drones
     /// </summary>
-    partial class DalObject : IDal
+    public partial class DalObject : IDal
     {
         /// <summary>
         /// If everything is fine, add a drone to the list of drones

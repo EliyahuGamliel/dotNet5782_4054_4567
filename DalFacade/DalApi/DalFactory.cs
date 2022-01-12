@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Reflection;
 
 
@@ -10,14 +6,13 @@ namespace DalApi
 {
     static public class DalFactory
     {
-        static public IDal GetDal()
-        {
+        static public IDal GetDal() {
             string dalType = DalConfig.DalName;
             string dalPkg = DalConfig.DalPackages[dalType];
             string dalNamespace = DalConfig.DalNamespaces[dalType];
             string dalClass = DalConfig.DalClasses[dalType];
             if (dalPkg == null) throw new DalConfigException($"Package {dalType} is not found in packages list in dal-config.xml");
-            
+
             try { Assembly.Load(dalPkg); }
             catch (Exception) { throw new DalConfigException("Failed to load the dal-config.xml"); }
 
