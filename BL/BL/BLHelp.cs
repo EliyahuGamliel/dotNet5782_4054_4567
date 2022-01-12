@@ -16,8 +16,7 @@ namespace BL
         /// </summary>
         /// <param name="p">Object of parcel</param>
         /// <returns>int of Status of parcel</returns>
-        private int ReturnStatus(DO.Parcel chosenp)
-        {
+        private int ReturnStatus(DO.Parcel chosenp) {
             if (chosenp.Scheduled == null)
                 return (int)Statuses.Created;
             else if (chosenp.PickedUp == null)
@@ -34,8 +33,7 @@ namespace BL
         /// <param name="l1">Object Location 1</param>
         /// <param name="l2">Object Location 2</param>
         /// <returns>Returns the amount of battery consumed</returns>
-        private double ReturnBattery(int weight, Location l1, Location l2)
-        {
+        private double ReturnBattery(int weight, Location l1, Location l2) {
             if (weight == 0)
                 return DistanceTo(l1, l2) * WeightLight;
             else if (weight == 1)
@@ -52,21 +50,19 @@ namespace BL
         /// <param name="s">list of Station</param>
         /// <param name="drone">Object of Drone's Location</param>
         /// <returns>Returns a station object</returns>
-        private BO.Station ReturnCloseStation(IEnumerable<DO.Station> s, Location drone)
-        {
+        private BO.Station ReturnCloseStation(IEnumerable<DO.Station> s, Location drone) {
             if (s.Count() == 0)
                 throw new DroneCannotAssigan();
             DO.Station st = s.OrderBy(sta => DistanceTo(ReturnLocation(sta), drone)).First();
             return GetStationById(st.Id);
         }
-        
+
         /// <summary>
         /// returns the location of the station
         /// </summary>
         /// <param name="s">the station that we want its location</param>
         /// <returns></returns>
-        private Location ReturnLocation(DO.Station s)
-        {
+        private Location ReturnLocation(DO.Station s) {
             Location location = new Location();
             location.Lattitude = s.Lattitude;
             location.Longitude = s.Longitude;
@@ -79,8 +75,7 @@ namespace BL
         /// <param name="l1">Object Location 1</param>
         /// <param name="l2">Object Location 2</param>
         /// <returns>Returns the distance between two locations</returns>
-        private double DistanceTo(Location l1, Location l2)
-        {
+        private double DistanceTo(Location l1, Location l2) {
             var coord1 = new GeoCoordinate(l1.Lattitude.Value, l1.Longitude.Value);
             var coord2 = new GeoCoordinate(l2.Lattitude.Value, l2.Longitude.Value);
             return Math.Round((coord1.GetDistanceTo(coord2) / 1000), 3);
@@ -105,11 +100,8 @@ namespace BL
         /// </summary>
         /// <param name="idStation">id of station</param>
         /// <returns>the number of taken slots</returns>
-        private int ChargeSlotsCatched(int idStation)
-        {
-            lock (data) {
-                return data.GetDroneChargeByFilter(dc => dc.StationId == idStation && dc.Active).Count();
-            }
+        private int ChargeSlotsCatched(int idStation) {
+            return data.GetDroneChargeByFilter(dc => dc.StationId == idStation && dc.Active).Count();
         }
 
         /// <summary>
@@ -119,10 +111,8 @@ namespace BL
         /// <param name="id">The id for check</param>
         /// <typeparam name="T">The type of the list</typeparam>
         /// <returns>Nothing</returns>
-        private void CheckNotExistId<T>(IEnumerable<T> list, int id)
-        {
-            foreach (var item in list)
-            {
+        private void CheckNotExistId<T>(IEnumerable<T> list, int id) {
+            foreach (var item in list) {
                 int idobject = (int)(typeof(T).GetProperty("Id").GetValue(item, null));
                 if (idobject == id)
                     return;
@@ -130,12 +120,11 @@ namespace BL
             throw new BO.IdNotExistException(id);
         }
 
-       /// <summary>
-       /// Checks if the id is valid, if not it throws an error
-       /// </summary>
-       /// <param name="id">The id that we want to check</param>
-        private void CheckValidId(int id)
-        {
+        /// <summary>
+        /// Checks if the id is valid, if not it throws an error
+        /// </summary>
+        /// <param name="id">The id that we want to check</param>
+        private void CheckValidId(int id) {
             if (id <= 0)
                 throw new IdNotValid(id);
         }
@@ -144,8 +133,7 @@ namespace BL
         /// All the choice need to be between 0-2
         /// </summary>
         /// <param name="choice">the choice</param>
-        private void CheckLegelChoice(int choice)
-        {
+        private void CheckLegelChoice(int choice) {
             if (choice > 2 || choice < 0)
                 throw new ChoiceNotLegal(choice);
         }
@@ -157,20 +145,17 @@ namespace BL
         /// <param name="dl">Object of Drone</param>
         /// <typeparam name="T">he type of the list</typeparam>
         /// <returns>Nothing</returns>
-        private double CheckDroneCannotSend(IEnumerable<DO.Station> list, DroneList dl)
-        {
+        private double CheckDroneCannotSend(IEnumerable<DO.Station> list, DroneList dl) {
             if (list.Count() == 0)
                 throw new DroneCannotSend();
 
             Location lst = new Location();
             Location locationStation = new Location();
             bool cntsn = false;
-            foreach (var item in list)
-            {
+            foreach (var item in list) {
                 locationStation.Lattitude = item.Lattitude;
                 locationStation.Longitude = item.Longitude;
-                if ((!cntsn || DistanceTo(locationStation, dl.CLocation) < DistanceTo(lst, dl.CLocation)))
-                {
+                if ((!cntsn || DistanceTo(locationStation, dl.CLocation) < DistanceTo(lst, dl.CLocation))) {
                     cntsn = true;
                     lst.Lattitude = locationStation.Lattitude;
                     lst.Longitude = locationStation.Longitude;
@@ -190,8 +175,7 @@ namespace BL
         /// </summary>
         /// <param name="Longitude">The longitude of the location</param>
         /// <param name="Lattitude">The lattitude of the location</param>
-        private void CheckLegelLocation(double Longitude, double Lattitude)
-        {
+        private void CheckLegelLocation(double Longitude, double Lattitude) {
             if (90 < Lattitude || -90 > Lattitude || 180 < Longitude || -180 > Longitude)
                 throw new LocationNotLegal(Longitude, Lattitude);
         }
@@ -204,7 +188,7 @@ namespace BL
         private void CheckDeleteCustomer(int customerID) {
             BO.Customer customer = GetCustomerById(customerID);
             foreach (var item in customer.ForCustomer) {
-                if(item.Status != Statuses.Provided)
+                if (item.Status != Statuses.Provided)
                     throw new CanntDeleteCustomer(customerID);
             }
         }

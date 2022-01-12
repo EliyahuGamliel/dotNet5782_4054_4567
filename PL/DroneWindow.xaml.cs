@@ -261,11 +261,11 @@ namespace PL
         }
 
         private void worker_DoWork(object sender, DoWorkEventArgs e) {
-            bl.PlaySimulator(dr.Id.Value, () => worker.ReportProgress(0), () => worker.CancellationPending);
+            bl.PlaySimulator(dr.Id.Value, () => worker.ReportProgress(1), () => worker.CancellationPending);
         }
 
         protected override void OnClosing(CancelEventArgs e) {
-            if (worker.IsBusy) {
+            if (worker != null && worker.IsBusy) {
                 e.Cancel = true;
                 closeWindow = true;
                 worker.CancelAsync();
