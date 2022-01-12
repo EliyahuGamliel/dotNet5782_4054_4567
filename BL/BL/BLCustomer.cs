@@ -15,8 +15,8 @@ namespace BL
         /// <returns>Notice if the addition was successful</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public string AddCustomer(BO.Customer c) {
-            lock (data) {
-                try {
+            try {
+                lock (data) {
                     CheckValidId(c.Id.Value);
                     DO.Customer cu = new DO.Customer();
                     cu.Active = true;
@@ -26,14 +26,12 @@ namespace BL
                     cu.Lattitude = c.Location.Lattitude.Value;
                     cu.Longitude = c.Location.Longitude.Value;
                     CheckLegelLocation(cu.Longitude, cu.Lattitude);
-                    lock (data) {
-                        data.AddCustomer(cu);
-                    }
-                    return "The addition was successful\n";
+                    data.AddCustomer(cu);
                 }
-                catch (DO.IdExistException) {
-                    throw new BO.IdExistException(c.Id.Value);
-                }
+                return "The addition was successful\n";
+            }
+            catch (DO.IdExistException) {
+                throw new BO.IdExistException(c.Id.Value);
             }
         }
 
@@ -46,21 +44,19 @@ namespace BL
         /// <returns>Notice if the addition was successful</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public string UpdateCustomer(int id, string nameCustomer, string phoneCustomer) {
-            lock (data) {
-                try {
-                    lock (data) {
-                        DO.Customer chosenc = data.GetCustomerById(id);
-                        //If input is received
-                        chosenc.Name = nameCustomer;
-                        //If input is received
-                        chosenc.Phone = phoneCustomer;
-                        data.UpdateCustomer(chosenc);
-                        return "The update was successful\n";
-                    }
+            try {
+                lock (data) {
+                    DO.Customer chosenc = data.GetCustomerById(id);
+                    //If input is received
+                    chosenc.Name = nameCustomer;
+                    //If input is received
+                    chosenc.Phone = phoneCustomer;
+                    data.UpdateCustomer(chosenc);
+                    return "The update was successful\n";
                 }
-                catch (DO.IdNotExistException) {
-                    throw new BO.IdNotExistException(id);
-                }
+            }
+            catch (DO.IdNotExistException) {
+                throw new BO.IdNotExistException(id);
             }
         }
 

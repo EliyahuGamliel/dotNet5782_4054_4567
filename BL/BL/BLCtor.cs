@@ -14,13 +14,12 @@ namespace BL
         public BL() {
             data = DalApi.DalFactory.GetDal();
 
-            lock (data) {
-                Avaliable = data.DroneElectricityUse()[0];
-                WeightLight = data.DroneElectricityUse()[1];
-                WeightMedium = data.DroneElectricityUse()[2];
-                WeightHeavy = data.DroneElectricityUse()[3];
-                ChargingRate = data.DroneElectricityUse()[4];
-            }
+            Avaliable = data.DroneElectricityUse()[0];
+            WeightLight = data.DroneElectricityUse()[1];
+            WeightMedium = data.DroneElectricityUse()[2];
+            WeightHeavy = data.DroneElectricityUse()[3];
+            ChargingRate = data.DroneElectricityUse()[4];
+
 
             IEnumerable<DO.Drone> droneslist = data.GetDroneByFilter(d => d.Active);
 

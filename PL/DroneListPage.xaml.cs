@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -17,6 +18,7 @@ namespace PL
     {
         private IBL bl = BlFactory.GetBl();
         private ObservableCollection<DroneList> droneList;
+        private Dictionary<int, DroneWindow> drnWin = new Dictionary<int, DroneWindow>();
         private bool isGroup;
 
         /// <summary>
@@ -105,10 +107,20 @@ namespace PL
         private void DroneActions(object sender, MouseButtonEventArgs e) {
             if (DroneListView.SelectedItem != null) {
                 DroneList d = (DroneList)DroneListView.SelectedItem;
-                DroneWindow droneWindow = new DroneWindow(bl.GetDroneById(d.Id));
-                droneWindow.DataContextChanged += UpdateList;
-                this.Unloaded += (sender, e) => droneWindow.Close();
-                droneWindow.Show();
+                DroneWindow droneWindow;
+                if (!drnWin.TryGetValue(d.Id, out droneWindow)) {
+                    droneWindow = new DroneWindow(bl.GetDroneById(d.Id));
+                    drnWin.Add(d.Id, droneWindow);
+                    droneWindow.DataContextChanged += UpdateList;
+                    this.Unloaded += (sender, e) => droneWindow.Close();
+                    droneWindow.Show();
+                }
+                else {
+                    if (!drnWin[d.Id].Activate()) {
+                        drnWin[d.Id] = new DroneWindow(bl.GetDroneById(d.Id));
+                        drnWin[d.Id].Show();
+                    }
+                }
             }
         }
 

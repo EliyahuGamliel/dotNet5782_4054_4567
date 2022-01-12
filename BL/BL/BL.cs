@@ -54,10 +54,11 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public string AssignDroneParcel(int DroneId) {
             CheckNotExistId(dronesList, DroneId);
-            DroneList d = dronesList.Find(dr => dr.Id == DroneId);
-            int index = dronesList.IndexOf(d);
 
             lock (data) {
+                DroneList d = dronesList.Find(dr => dr.Id == DroneId);
+                int index = dronesList.IndexOf(d);
+
                 //Removed all the parcels that cann't assign to the Drone
                 IEnumerable<DO.Parcel> parcelslist = data.GetParcelByFilter(p => p.Active && ((BO.WeightCategories)p.Weight <= d.MaxWeight) &&
                     (ReturnBattery(3, d.CLocation, GetCustomerById(p.SenderId).Location) +
@@ -105,12 +106,12 @@ namespace BL
         /// <returns>Notice if the addition was successful</returns>        
         [MethodImpl(MethodImplOptions.Synchronized)]
         public string PickUpDroneParcel(int id) {
-            CheckNotExistId(dronesList, id);
-            DroneList d = dronesList.Find(dr => dr.Id == id);
-            BO.Drone chosendrone = GetDroneById(id);
-            int index = dronesList.IndexOf(d);
-
             lock (data) {
+                CheckNotExistId(dronesList, id);
+                DroneList d = dronesList.Find(dr => dr.Id == id);
+                BO.Drone chosendrone = GetDroneById(id);
+                int index = dronesList.IndexOf(d);
+
                 DO.Parcel chosenp = data.GetParcelById(d.ParcelId);
                 if (ReturnStatus(chosenp) != 1)
                     throw new DroneCannotPickUp();
@@ -123,7 +124,6 @@ namespace BL
                 data.UpdateParcel(chosenp);
             }
             return "The update was successful\n";
-
         }
 
         /// <summary>
@@ -133,12 +133,12 @@ namespace BL
         /// <returns>Notice if the addition was successful</returns>   
         [MethodImpl(MethodImplOptions.Synchronized)]
         public string DeliverParcelCustomer(int id) {
-            CheckNotExistId(dronesList, id);
-            DroneList d = dronesList.Find(dr => dr.Id == id);
-            BO.Drone chosendrone = GetDroneById(id);
-            int index = dronesList.IndexOf(d);
-
             lock (data) {
+                CheckNotExistId(dronesList, id);
+                DroneList d = dronesList.Find(dr => dr.Id == id);
+                BO.Drone chosendrone = GetDroneById(id);
+                int index = dronesList.IndexOf(d);
+
                 DO.Parcel chosenp = data.GetParcelById(d.ParcelId);
                 if (ReturnStatus(chosenp) != 2)
                     throw new DroneCannotDeliver();

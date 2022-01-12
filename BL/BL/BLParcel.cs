@@ -18,10 +18,11 @@ namespace BL
         /// <returns>Notice if the addition was successful</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public string AddParcel(BO.Parcel p, int SenderId, int TargetId) {
-            lock (data) {
-                try {
-                    if (SenderId == TargetId)
-                        throw new SameCustomerException(TargetId);
+            try {
+                if (SenderId == TargetId)
+                    throw new SameCustomerException(TargetId);
+                lock (data) {
+
                     CheckLegelChoice((int)p.Weight);
                     CheckLegelChoice((int)p.Priority);
                     DO.Parcel pa = new DO.Parcel();
@@ -34,12 +35,12 @@ namespace BL
                     int Id = data.AddParcel(pa);
                     return $"The number of parcel: {Id}\n";
                 }
-                catch (DO.IdExistException) {
-                    throw new BO.IdExistException(p.Id.Value);
-                }
-                catch (DO.IdNotExistException exp) {
-                    throw new BO.IdNotExistException(exp.id);
-                }
+            }
+            catch (DO.IdExistException exp) {
+                throw new BO.IdExistException(exp.id);
+            }
+            catch (DO.IdNotExistException exp) {
+                throw new BO.IdNotExistException(exp.id);
             }
         }
 
@@ -49,8 +50,8 @@ namespace BL
                 DO.Parcel pa = data.GetParcelById(id);
                 pa.Priority = (DO.Priorities)(int)priorty;
                 data.UpdateParcel(pa);
-                return "The update was successful\n";
             }
+            return "The update was successful\n";
         }
 
         /// <summary>
@@ -60,8 +61,9 @@ namespace BL
         /// <returns>The object of the requested parcel</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Parcel GetParcelById(int Id) {
-            lock (data) {
-                try {
+            try {
+                lock (data) {
+
                     DO.Parcel chosenp = data.GetParcelById(Id);
                     BO.Parcel pa = new BO.Parcel();
                     pa.Id = chosenp.Id;
@@ -96,9 +98,9 @@ namespace BL
 
                     return pa;
                 }
-                catch (DO.IdNotExistException) {
-                    throw new BO.IdNotExistException(Id);
-                }
+            }
+            catch (DO.IdNotExistException exp) {
+                throw new BO.IdNotExistException(exp.id);
             }
         }
 
@@ -174,8 +176,8 @@ namespace BL
                     throw new CanntDeleteParcel(p.Id);
                 p.Active = false;
                 data.DeleteParcel(p);
-                return "The delete was successful\n";
             }
+            return "The delete was successful\n";
         }
     }
 }

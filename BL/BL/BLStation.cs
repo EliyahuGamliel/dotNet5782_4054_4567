@@ -14,8 +14,9 @@ namespace BL
         /// <returns>Notice if the addition was successful</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public string AddStation(BO.Station s) {
-            lock (data) {
-                try {
+            try {
+                lock (data) {
+
                     CheckValidId(s.Id.Value);
                     DO.Station st = new DO.Station();
                     st.Id = s.Id.Value;
@@ -28,11 +29,11 @@ namespace BL
                         throw new ChargeSlotsNotLegal(st.ChargeSlots);
                     st.Active = true;
                     data.AddStation(st);
-                    return "The addition was successful\n";
                 }
-                catch (DO.IdExistException) {
-                    throw new BO.IdExistException(s.Id.Value);
-                }
+                return "The addition was successful\n";
+            }
+            catch (DO.IdExistException exp) {
+                throw new BO.IdExistException(exp.id);
             }
         }
 
@@ -45,8 +46,8 @@ namespace BL
         /// <returns>Notice if the addition was successful</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public string UpdateStation(int id, string name, int? chargeSlots) {
-            lock (data) {
-                try {
+            try {
+                lock (data) {
                     DO.Station s = data.GetStationById(id);
                     if (name != "")
                         s.Name = name;
@@ -56,11 +57,11 @@ namespace BL
                         s.ChargeSlots = (int)chargeSlots;
                     }
                     data.UpdateStation(s);
-                    return "The update was successful\n";
                 }
-                catch (DO.IdNotExistException) {
-                    throw new BO.IdNotExistException(id);
-                }
+                return "The update was successful\n";
+            }
+            catch (DO.IdNotExistException) {
+                throw new BO.IdNotExistException(id);
             }
         }
 
@@ -71,8 +72,8 @@ namespace BL
         /// <returns>The object of the requested station</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Station GetStationById(int Id) {
-            lock (data) {
-                try {
+            try {
+                lock (data) {
                     DO.Station chosens = data.GetStationById(Id);
                     BO.Station st = new BO.Station();
                     st.Id = chosens.Id;
@@ -93,9 +94,9 @@ namespace BL
                     }
                     return st;
                 }
-                catch (DO.IdNotExistException) {
-                    throw new BO.IdNotExistException(Id);
-                }
+            }
+            catch (DO.IdNotExistException exp) {
+                throw new BO.IdNotExistException(exp.id);
             }
         }
 
@@ -147,8 +148,8 @@ namespace BL
                     throw new CanntDeleteStation(s.Id);
                 s.Active = false;
                 data.DeleteStation(s);
-                return "The delete was successful\n";
             }
+            return "The delete was successful\n";
         }
     }
 }

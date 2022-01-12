@@ -24,4 +24,16 @@
     <Start>2022-01-05T10:18:38.7153991+02:00</Start>
     <Active>true</Active>
   </DroneCharge>
+  <DroneCharge>
+    <DroneId>943965121</DroneId>
+    <StationId>231066144</StationId>
+    <Start>2022-01-12T18:44:24.9855436+02:00</Start>
+    <Active>false</Active>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>943965121</DroneId>
+    <StationId>344722783</StationId>
+    <Start>2022-01-12T18:46:56.2513321+02:00</Start>
+    <Active>false</Active>
+  </DroneCharge>
 </ArrayOfDroneCharge>
