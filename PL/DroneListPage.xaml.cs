@@ -91,8 +91,15 @@ namespace PL
 
         private void DeleteDrone(object sender, RoutedEventArgs e) {
             try {
-                MessageBox.Show(bl.DeleteDrone((DroneList)DroneListView.SelectedItem));
-                UpdateList();
+                DroneList d = (DroneList)DroneListView.SelectedItem;
+                DroneWindow droneWindow;
+                if (!drnWin.TryGetValue(d.Id, out droneWindow) || !droneWindow.Activate()) {
+                    MessageBox.Show(bl.DeleteDrone((DroneList)DroneListView.SelectedItem));
+                    UpdateList();
+                }
+                else {
+                    MessageBox.Show("Close the Window of Drone!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);

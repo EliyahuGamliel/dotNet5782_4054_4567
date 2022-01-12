@@ -14,13 +14,23 @@ namespace PL
         private Drone dr;
         private Parcel pa;
         private IBL bl = BlFactory.GetBl();
-
+        private BackgroundWorker worker;
+        private bool closeWindow;
+        
         /// <summary>
         /// The ctor
         /// </summary>
         /// <param name="drone">The drone to make on it actions</param>
         public DroneWindow(Drone drone = null) {
             InitializeComponent();
+
+            worker = new BackgroundWorker();
+            worker.DoWork += worker_DoWork;
+            worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
+            worker.ProgressChanged += worker_PrograssChanged;
+            worker.WorkerReportsProgress = true;
+            worker.WorkerSupportsCancellation = true;
+
             if (drone == null) {
                 dr = new Drone();
                 dr.Status = DroneStatuses.Maintenance;
@@ -220,16 +230,9 @@ namespace PL
             this.HostPage.Content = parcelPage;
         }
 
-        private BackgroundWorker worker;
-        private bool closeWindow;
         private void SimulatorChecked(object sender, RoutedEventArgs e) {
-            worker = new BackgroundWorker();
-            worker.DoWork += worker_DoWork;
-            worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
-            worker.ProgressChanged += worker_PrograssChanged;
-            worker.WorkerReportsProgress = true;
-            worker.WorkerSupportsCancellation = true;
-            worker.RunWorkerAsync();
+            if (!worker.IsBusy)
+                worker.RunWorkerAsync();
         }
 
         private void SimulatorUnChecked(object sender, RoutedEventArgs e) {
