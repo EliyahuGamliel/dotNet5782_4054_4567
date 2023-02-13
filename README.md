@@ -32,8 +32,10 @@
 
 ## Examples of photos from the project: ##
 <img src="https://user-images.githubusercontent.com/76405628/218548102-0ed5387e-5620-4214-8c43-d82530de678e.jpg" width=35% height=35%>
-<img src="https://user-images.githubusercontent.com/76405628/218547518-b47c57ec-e523-4ffc-82b1-b3fb4868ef77.jpg" width=25% height=25%><img src="https://user-images.githubusercontent.com/76405628/218548013-dcb00986-f038-49a1-8f4f-ced9725b57c4.jpg" width=25% height=25%>
-<img src="https://user-images.githubusercontent.com/76405628/218547819-b0a5c5a4-0a6f-434a-865c-ae89a27bc01c.jpg" width=25% height=25%><img src="https://user-images.githubusercontent.com/76405628/218548206-b7cfce4c-b935-4066-9f62-512b0e461ac1.jpg" width=25% height=25%>
+<img src="https://user-images.githubusercontent.com/76405628/218547518-b47c57ec-e523-4ffc-82b1-b3fb4868ef77.jpg" width=25% height=25%>
+<img src="https://user-images.githubusercontent.com/76405628/218548013-dcb00986-f038-49a1-8f4f-ced9725b57c4.jpg" width=25% height=25%>
+<img src="https://user-images.githubusercontent.com/76405628/218547819-b0a5c5a4-0a6f-434a-865c-ae89a27bc01c.jpg" width=25% height=25%>
+<img src="https://user-images.githubusercontent.com/76405628/218548206-b7cfce4c-b935-4066-9f62-512b0e461ac1.jpg" width=25% height=25%>
 <img src="https://user-images.githubusercontent.com/76405628/218548319-4a1f376b-1a24-49f3-a8b9-5d39ed6e7d10.jpg" width=25% height=25%>
 
 
