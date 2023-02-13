@@ -31,4 +31,5 @@
 #### *כדי לשנות בין Object ל-Xml יש לשנות בקובץ dal-config.xml ובמקום שיהיה כתוב list לשנות ל-xml*
 
 ## Examples of photos from the project: ##
-<img src="file:///Users/lyhwgmlyl/Desktop/IMAGE%202023-02-13%2020:47:50.jpg" width=25% height=25%>
+<img src="file![IMAGE 2023-02-13 20:48:00](https://user-images.githubusercontent.com/76405628/218547433-c82d03d8-5048-423c-93e4-462ffc8242ce.jpg)
+:///Users/lyhwgmlyl/Desktop/IMAGE%202023-02-13%2020:47:50.jpg" width=25% height=25%>
