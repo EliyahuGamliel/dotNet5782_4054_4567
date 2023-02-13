@@ -29,3 +29,6 @@
 ##### לקוחות - להריץ את הפרוייקט PLCustomer
   
 #### *כדי לשנות בין Object ל-Xml יש לשנות בקובץ dal-config.xml ובמקום שיהיה כתוב list לשנות ל-xml*
+
+## Examples of photos from the project: ##
+<img src="file:///Users/lyhwgmlyl/Desktop/IMAGE%202023-02-13%2020:47:50.jpg" width=25% height=25%>
